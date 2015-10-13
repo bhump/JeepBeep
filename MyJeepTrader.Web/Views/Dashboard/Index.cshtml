@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+<head>
+    <title>My Dashboard</title>
+    @*<script type="text/javascript" src="~/Scripts/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                type: "Post",
+                contentType: "application/json; charset=utf-8",
+                url: "Webservices/RetrieveWidgets.asmx/GetWidgets",
+                dataType: "json",
+                success: function (response) {
+                    var te = response;
+                    function sortResults(prop, asc) {
+                        te.d = te.d.sort(function (a, b) {
+                            if (asc) return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+                            else return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+                        });
+                    }
+
+                    sortResults('SortNo', true);
+
+                    for (var i = 0; i < te.d.length; i++) {
+                        $('#column' + te.d[i].ColumnId).append($('<li>' + te.d[i].Titlen + '</li>'));
+                        if (te.d[i].Collapsed == 1) {
+                            //collapse
+                            $('<li>' + te.d[i].Title).children('.dragbox-content').addClass('hidden');
+                        }
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    $("#console").html('<div class="fail">Dashboard could not load!</div>').css('visibility', 'visible').fadeTo(600, 1);
+                    setTimeout(function () {
+                        $('#console').delay(500).fadeTo(600, 0);
+                    }, 1000);
+                }
+            });
+        });
+
+        $(function () {
+            $('.dragbox')
+            .each(function () {
+                $(this).hover(function () {
+                    //$(this).find('h2').addClass('collapse');
+                }, function () {
+                    $(this).find('h2').removeClass('collapse');
+                })
+                .find('h2').hover(function () {
+                    $(this).find('.configure').css('visibility', 'visible');
+                }, function () {
+                    $(this).find('.configure').css('visibility', 'hidden');
+                })
+                .click(function () {
+                    $(this).siblings('.dragbox-content').toggle();
+                    updateWidgetData();
+                })
+                .end()
+                .find('.configure').css('visibility', 'hidden');
+            });
+
+            $('.column').sortable({
+                connectWith: '.column',
+                handle: 'h2',
+                cursor: 'move',
+                placeholder: 'placeholder',
+                forcePlaceholderSize: true,
+                opacity: 0.4,
+                stop: function (event, ui) {
+                    updateWidgetData();
+                }
+            })
+            .disableSelection();
+        });
+
+        function updateWidgetData() {
+            var items = [];
+            $('.column').each(function () {
+                var columnId = $(this).attr('id');
+                $('.dragbox', this).each(function (i) {
+                    var collapsed = 0;
+                    if ($(this).find('.dragbox-content').css('display') == "none")
+                        collapsed = 1;
+                    //Create Item object for current panel
+                    var item = {
+                        id: $(this).attr('id'),
+                        collapsed: collapsed,
+                        order: i,
+                        column: columnId
+                    };
+                    //Push item object into items array
+                    items.push(item);
+                });
+            });
+            //Assign items array to sortorder JSON variable
+            var sortorder = { items: items };
+
+            $.ajax({
+                url: "Handlers/SaveWidgets.ashx",
+                type: "POST",
+                contentType: "application/json; charset=uft-8",
+                dataType: "json",
+                data: JSON.stringify(sortorder),
+                success: function (response) {
+                    $("#console").html('<div class="success">Dashboard Saved</div>').css('visibility', 'visible').fadeTo(600, 1);
+                    setTimeout(function () {
+                        $('#console').delay(500).fadeTo(600, 0);
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error);
+                    $("#console").html('<div class="fail">Dashboard was not saved!</div>').css('visibility', 'visible').fadeTo(600, 1);
+                    setTimeout(function () {
+                        $('#console').delay(500).fadeTo(600, 0);
+                    }, 1000);
+                }
+            });
+        }
+    </script>*@
+</head>
+<body>
+    <div class="column" id="column1">
+        <div class="dragbox" id="item1">
+            <h2>Handle 1</h2>
+            <div class="dragbox-content">
+                <!-- Panel Content Here -->
+            </div>
+        </div>
+        <div class="dragbox" id="item2">
+            <h2>Handle 2</h2>
+            <div class="dragbox-content">
+                <!-- Panel Content Here -->
+            </div>
+        </div>
+        <div class="dragbox" id="item3">
+            <h2>Handle 3</h2>
+            <div class="dragbox-content">
+                <!-- Panel Content Here -->
+            </div>
+        </div>
+    </div>
+    <div class="column" id="column2">
+        <div class="dragbox" id="item4">
+            <h2>Handle 4</h2>
+            <div class="dragbox-content">
+                <!-- Panel Content Here-->
+            </div>
+        </div>
+        <div class="dragbox" id="item5">
+            <h2>Handle 5</h2>
+            <div class="dragbox-content">
+                <!--Panel Content Here-->
+            </div>
+        </div>
+        <div class="dragbox" id="item6">
+            <h2>Handle 5</h2>
+            <div class="dragbox-content">
+                <!--Panel Content Here-->
+            </div>
+        </div>
+    </div>
+</body>
+
+
