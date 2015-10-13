@@ -7,3 +7,13 @@ c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrade
 c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.xml
 c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
 c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.dll
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.xml
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.csprojResolveAssemblyReference.cache
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
