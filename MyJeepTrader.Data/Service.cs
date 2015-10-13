@@ -24,6 +24,11 @@ namespace MyJeepTrader.Data
         public IEnumerable<tPost> GetAllPosts()
         {
             return (from p in _context.tPosts select p).ToList();
-        } 
+        }
+ 
+        public IEnumerable<tUserProfile> GetAllUserProfiles()
+        {
+            return (from up in _context.tUserProfiles select up).ToList();
+        }
     }
 }
