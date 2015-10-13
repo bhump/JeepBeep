@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MyJeepTraderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tAccount">
+    <Key>
+      <PropertyRef Name="AccountId" />
+    </Key>
+    <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tMembership" Relationship="Self.FK_tMemberships_tAccounts" FromRole="tAccounts" ToRole="tMemberships" />
+    <NavigationProperty Name="tPostsControls" Relationship="Self.FK_tPostsControl_tAccounts" FromRole="tAccounts" ToRole="tPostsControl" />
+    <NavigationProperty Name="tUserProfiles" Relationship="Self.FK_tUserProfiles_tAccounts" FromRole="tAccounts" ToRole="tUserProfiles" />
+    <NavigationProperty Name="tVehicleProfileControls" Relationship="Self.FK_tVehicleProfileControl_tAccounts" FromRole="tAccounts" ToRole="tVehicleProfileControl" />
+  </EntityType>
+  <EntityType Name="tImageControl">
+    <Key>
+      <PropertyRef Name="ImageControlId" />
+    </Key>
+    <Property Name="ImageControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ImageId" Type="Int32" />
+    <Property Name="PostId" Type="Int32" />
+    <NavigationProperty Name="tImage" Relationship="Self.FK_tImageControl_tImages" FromRole="tImageControl" ToRole="tImages" />
+    <NavigationProperty Name="tPost" Relationship="Self.FK_tImageControl_tPosts" FromRole="tImageControl" ToRole="tPosts" />
+  </EntityType>
+  <EntityType Name="tImage">
+    <Key>
+      <PropertyRef Name="Imageid" />
+    </Key>
+    <Property Name="Imageid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="tImageControls" Relationship="Self.FK_tImageControl_tImages" FromRole="tImages" ToRole="tImageControl" />
+  </EntityType>
+  <EntityType Name="tMembership">
+    <Key>
+      <PropertyRef Name="MembershipId" />
+    </Key>
+    <Property Name="MembershipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaidMembership" Type="Boolean" />
+    <Property Name="FreeMembership" Type="Boolean" />
+    <Property Name="MemberSince" Type="DateTime" Precision="0" />
+    <Property Name="Expired" Type="Boolean" />
+    <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+    <Property Name="AutoRenew" Type="Boolean" />
+    <Property Name="Renewed" Type="Boolean" />
+    <Property Name="AccountId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="tAccount" Relationship="Self.FK_tMemberships_tAccounts" FromRole="tMemberships" ToRole="tAccounts" />
+  </EntityType>
+  <EntityType Name="tPost">
+    <Key>
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PostTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PostDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Part" Type="Boolean" />
+    <Property Name="PartType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PartBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Vehicle" Type="Boolean" />
+    <Property Name="VehicleMake" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VehicleModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VehicleYear" Type="DateTime" Precision="0" />
+    <Property Name="Active" Type="Boolean" />
+    <NavigationProperty Name="tImageControls" Relationship="Self.FK_tImageControl_tPosts" FromRole="tPosts" ToRole="tImageControl" />
+    <NavigationProperty Name="tPostsControls" Relationship="Self.FK_tPostsControl_tPosts" FromRole="tPosts" ToRole="tPostsControl" />
+  </EntityType>
+  <EntityType Name="tPostsControl">
+    <Key>
+      <PropertyRef Name="PostControlId" />
+    </Key>
+    <Property Name="PostControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PostId" Type="Int32" />
+    <Property Name="AccountId" Type="Int32" />
+    <NavigationProperty Name="tAccount" Relationship="Self.FK_tPostsControl_tAccounts" FromRole="tPostsControl" ToRole="tAccounts" />
+    <NavigationProperty Name="tPost" Relationship="Self.FK_tPostsControl_tPosts" FromRole="tPostsControl" ToRole="tPosts" />
+  </EntityType>
+  <EntityType Name="tUserProfile">
+    <Key>
+      <PropertyRef Name="UserProfileId" />
+    </Key>
+    <Property Name="UserProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Facebook" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="GooglePlus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Twitter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Ello" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tAccount" Relationship="Self.FK_tUserProfiles_tAccounts" FromRole="tUserProfiles" ToRole="tAccounts" />
+  </EntityType>
+  <EntityType Name="tVehicleProfileControl">
+    <Key>
+      <PropertyRef Name="VehicleProfileControlId" />
+    </Key>
+    <Property Name="VehicleProfileControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountId" Type="Int32" />
+    <Property Name="VehicleProfileId" Type="Int32" />
+    <NavigationProperty Name="tAccount" Relationship="Self.FK_tVehicleProfileControl_tAccounts" FromRole="tVehicleProfileControl" ToRole="tAccounts" />
+    <NavigationProperty Name="tVehicleProfile" Relationship="Self.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfileControl" ToRole="tVehicleProfiles" />
+  </EntityType>
+  <EntityType Name="tVehicleProfile">
+    <Key>
+      <PropertyRef Name="VehicleProfileId" />
+    </Key>
+    <Property Name="VehicleProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Make" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Year" Type="DateTime" Precision="0" />
+    <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tVehicleProfileControls" Relationship="Self.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfiles" ToRole="tVehicleProfileControl" />
+  </EntityType>
+  <Association Name="FK_tMemberships_tAccounts">
+    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="1" />
+    <End Role="tMemberships" Type="Self.tMembership" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tAccounts">
+        <PropertyRef Name="AccountId" />
+      </Principal>
+      <Dependent Role="tMemberships">
+        <PropertyRef Name="MembershipId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPostsControl_tAccounts">
+    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="0..1" />
+    <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tAccounts">
+        <PropertyRef Name="AccountId" />
+      </Principal>
+      <Dependent Role="tPostsControl">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tUserProfiles_tAccounts">
+    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="1" />
+    <End Role="tUserProfiles" Type="Self.tUserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tAccounts">
+        <PropertyRef Name="AccountId" />
+      </Principal>
+      <Dependent Role="tUserProfiles">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tVehicleProfileControl_tAccounts">
+    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="0..1" />
+    <End Role="tVehicleProfileControl" Type="Self.tVehicleProfileControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tAccounts">
+        <PropertyRef Name="AccountId" />
+      </Principal>
+      <Dependent Role="tVehicleProfileControl">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tImageControl_tImages">
+    <End Role="tImages" Type="Self.tImage" Multiplicity="0..1" />
+    <End Role="tImageControl" Type="Self.tImageControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tImages">
+        <PropertyRef Name="Imageid" />
+      </Principal>
+      <Dependent Role="tImageControl">
+        <PropertyRef Name="ImageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tImageControl_tPosts">
+    <End Role="tPosts" Type="Self.tPost" Multiplicity="0..1" />
+    <End Role="tImageControl" Type="Self.tImageControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPosts">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="tImageControl">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPostsControl_tPosts">
+    <End Role="tPosts" Type="Self.tPost" Multiplicity="0..1" />
+    <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPosts">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="tPostsControl">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tVehicleProfileControl_tVehicleProfiles">
+    <End Role="tVehicleProfiles" Type="Self.tVehicleProfile" Multiplicity="0..1" />
+    <End Role="tVehicleProfileControl" Type="Self.tVehicleProfileControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tVehicleProfiles">
+        <PropertyRef Name="VehicleProfileId" />
+      </Principal>
+      <Dependent Role="tVehicleProfileControl">
+        <PropertyRef Name="VehicleProfileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dboMyJeepTraderEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="tAccounts" EntityType="Self.tAccount" />
+    <EntitySet Name="tImageControls" EntityType="Self.tImageControl" />
+    <EntitySet Name="tImages" EntityType="Self.tImage" />
+    <EntitySet Name="tMemberships" EntityType="Self.tMembership" />
+    <EntitySet Name="tPosts" EntityType="Self.tPost" />
+    <EntitySet Name="tPostsControls" EntityType="Self.tPostsControl" />
+    <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfile" />
+    <EntitySet Name="tVehicleProfileControls" EntityType="Self.tVehicleProfileControl" />
+    <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfile" />
+    <AssociationSet Name="FK_tMemberships_tAccounts" Association="Self.FK_tMemberships_tAccounts">
+      <End Role="tAccounts" EntitySet="tAccounts" />
+      <End Role="tMemberships" EntitySet="tMemberships" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPostsControl_tAccounts" Association="Self.FK_tPostsControl_tAccounts">
+      <End Role="tAccounts" EntitySet="tAccounts" />
+      <End Role="tPostsControl" EntitySet="tPostsControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tUserProfiles_tAccounts" Association="Self.FK_tUserProfiles_tAccounts">
+      <End Role="tAccounts" EntitySet="tAccounts" />
+      <End Role="tUserProfiles" EntitySet="tUserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tVehicleProfileControl_tAccounts" Association="Self.FK_tVehicleProfileControl_tAccounts">
+      <End Role="tAccounts" EntitySet="tAccounts" />
+      <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tImageControl_tImages" Association="Self.FK_tImageControl_tImages">
+      <End Role="tImages" EntitySet="tImages" />
+      <End Role="tImageControl" EntitySet="tImageControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tImageControl_tPosts" Association="Self.FK_tImageControl_tPosts">
+      <End Role="tPosts" EntitySet="tPosts" />
+      <End Role="tImageControl" EntitySet="tImageControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPostsControl_tPosts" Association="Self.FK_tPostsControl_tPosts">
+      <End Role="tPosts" EntitySet="tPosts" />
+      <End Role="tPostsControl" EntitySet="tPostsControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="Self.FK_tVehicleProfileControl_tVehicleProfiles">
+      <End Role="tVehicleProfiles" EntitySet="tVehicleProfiles" />
+      <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

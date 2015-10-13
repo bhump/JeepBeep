@@ -1,0 +1,93 @@
+﻿@model IEnumerable<MyJeepTrader.Data.tPost>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PostTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Part)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PartType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PartBrand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PartName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleMake)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Part)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PartType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PartBrand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PartName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vehicle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleMake)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleModel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
+        </td>
+    </tr>
+}
+
+</table>

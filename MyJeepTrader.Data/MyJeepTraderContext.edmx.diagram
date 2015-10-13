@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b8f5354bf6074e8b9455dbed198c6b86" Name="Diagram1">
+        <EntityTypeShape EntityType="MyJeepTraderModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tAccount" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tImageControl" Width="1.5" PointX="6" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tImage" Width="1.5" PointX="3.75" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tMembership" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tPost" Width="1.5" PointX="3.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tPostsControl" Width="1.5" PointX="6" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tUserProfile" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tVehicleProfileControl" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tVehicleProfile" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tMemberships_tAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tPostsControl_tAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tUserProfiles_tAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tImageControl_tImages" ManuallyRouted="false" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tImageControl_tPosts" ManuallyRouted="false" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tPostsControl_tPosts" ManuallyRouted="false" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
