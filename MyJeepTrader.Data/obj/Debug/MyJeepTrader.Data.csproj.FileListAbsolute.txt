@@ -1,12 +1,3 @@
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.dll
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.dll
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.xml
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.xml
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
-c:\users\mcdonoje\documents\visual studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
