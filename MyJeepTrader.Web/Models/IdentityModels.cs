@@ -20,8 +20,13 @@ namespace MyJeepTrader.Web.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        //public ApplicationDbContext()
+        //    : base("dboMyJeepTraderEntities", throwIfV1Schema: false)
+        //{
+        //}
+
         public ApplicationDbContext()
-            : base("dboMyJeepTraderEntities", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
         }
 

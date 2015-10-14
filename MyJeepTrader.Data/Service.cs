@@ -50,8 +50,17 @@ namespace MyJeepTrader.Data
                 predicate = predicate.Or(p => p.PostDescription.Contains(temp));
                 //TODO What else do we want to search for?
             }
-          
+
             return _context.tPosts.AsExpandable().Where(predicate);
         }
-    }
-}
+
+        public object GetAvatarImage(int id)
+        {
+            var avatar = _context.tUserProfiles.FirstOrDefault(a => a.AccountId == id);
+            return(avatar);
+        }
+
+
+
+    }// public class service
+} // namespace

@@ -56,7 +56,8 @@
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Avatar)
+            <img src='@Url.Action( "show", "image", new { id = item.Avatar })' />
+            @*@Html.DisplayFor(modelItem => item.Avatar)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
