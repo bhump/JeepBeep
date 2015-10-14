@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
+using MyJeepTrader.Web.ViewModels;
+
 //test comment.
 namespace MyJeepTrader.Web.Controllers
 {
@@ -13,9 +15,25 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult Index()
         {
             Service service = new Service();
-            var posts = new Service().GetAllPosts();
-            return View(posts);
+            PostIndexViewModel model = new PostIndexViewModel
+            {
+                Posts = service.GetAllPosts()
+            };
+            return View(model);
         }
+
+        [HttpPost]
+        public ActionResult SearchPosts(string search)
+        {
+            Service service = new Service();
+            PostIndexViewModel model = new PostIndexViewModel
+            {
+                SearchedPosts = service.SearchAllPosts(search)
+            };
+
+            return View("Index", model);
+        }
+
 
         // GET: Post/Details/5
         public ActionResult Details(int id)

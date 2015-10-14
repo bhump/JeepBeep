@@ -1,93 +1,132 @@
-﻿@model IEnumerable<MyJeepTrader.Data.tPost>
+﻿@using System.Web.UI.WebControls
+@model MyJeepTrader.Web.ViewModels.PostIndexViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>My Jeep Trader Posts</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PostTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Part)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PartType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PartBrand)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PartName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleMake)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleModel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Part)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartBrand)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vehicle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleMake)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleModel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Active)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
-        </td>
-    </tr>
+@using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
+{
+    <div class="input-group">
+        @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search Posts" })
+        <span class="input-group-btn">
+            <button class="btn btn-default btn-group-lg btn-lg" type="button">Go!</button>
+        </span>
+    </div>
 }
+
+<br/>
+
+<div>
+    <i class="glyphicon glyphicon-plus"></i>&nbsp;@Html.ActionLink("Create New", "Create")
+</div>
+
+<br/>
+
+@if (Model != null && Model.SearchedPosts != null)
+{
+    <table class="table">
+        <tr>
+            <th>Post Title</th>
+            <th>Post Description</th>
+            <th>Part</th>
+            <th>Part Name</th>
+        </tr>
+        @foreach (var item in Model.SearchedPosts)
+        {
+            <tr>
+                <td>@item.PostTitle</td>
+                <td>@item.PostDescription</td>
+                <td>@item.Part</td>
+                <td>@item.PartName</td>
+            </tr>
+            
+        }
+        
+    </table>
+}
+    
+<table class="table">
+    @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PostTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Part)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartBrand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleMake)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Part)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartBrand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehicle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleMake)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
+            </td>
+        </tr>
+    }*@
 
 </table>

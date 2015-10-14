@@ -76,3 +76,8 @@ textarea {
         padding: 5px;
          font-weight: bold;
 }  
+
+
+.no-max-width {
+     max-width:none;
+}
