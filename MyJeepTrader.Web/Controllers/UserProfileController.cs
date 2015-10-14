@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
+using System.IO;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -36,7 +37,6 @@ namespace MyJeepTrader.Web.Controllers
             try
             {
                 // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
             catch

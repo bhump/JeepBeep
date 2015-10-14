@@ -16,9 +16,9 @@ namespace MyJeepTrader.Data
     {
         public int PostControlId { get; set; }
         public Nullable<int> PostId { get; set; }
-        public Nullable<int> AccountId { get; set; }
+        public string Id { get; set; }
     
-        public virtual tAccount tAccount { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual tPost tPost { get; set; }
     }
 }

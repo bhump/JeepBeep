@@ -12,13 +12,12 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tVehicleProfileControl
+    public partial class AspNetUserLogin
     {
-        public int VehicleProfileControlId { get; set; }
-        public string Id { get; set; }
-        public Nullable<int> VehicleProfileId { get; set; }
+        public string LoginProvider { get; set; }
+        public string ProviderKey { get; set; }
+        public string UserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual tVehicleProfile tVehicleProfile { get; set; }
     }
 }

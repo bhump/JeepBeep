@@ -42,7 +42,7 @@
             @Html.DisplayNameFor(model => model.Ello)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tAccount.UserName)
+            @Html.DisplayNameFor(model => model.AspNetUser.UserName)
         </th>
         <th></th>
     </tr>
@@ -81,7 +81,7 @@
             @Html.DisplayFor(modelItem => item.Ello)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.tAccount.UserName)
+            @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.UserProfileId }) |

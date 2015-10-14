@@ -1,5 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MyJeepTraderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
@@ -9,15 +70,6 @@
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
-  <EntityType Name="tAccounts">
-    <Key>
-      <PropertyRef Name="AccountId" />
-    </Key>
-    <Property Name="AccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserName" Type="varchar" MaxLength="50" />
-    <Property Name="Email" Type="varchar" MaxLength="50" />
-    <Property Name="Password" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tImageControl">
     <Key>
@@ -34,6 +86,18 @@
     <Property Name="Imageid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Image" Type="image" />
   </EntityType>
+  <EntityType Name="tLocations">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Line1" Type="varchar" MaxLength="50" />
+    <Property Name="Line2" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+    <Property Name="State" Type="varchar" MaxLength="50" />
+    <Property Name="CountryId" Type="int" />
+  </EntityType>
   <EntityType Name="tMemberships">
     <Key>
       <PropertyRef Name="MembershipId" />
@@ -46,7 +110,7 @@
     <Property Name="ExpirationDate" Type="date" />
     <Property Name="AutoRenew" Type="bit" />
     <Property Name="Renewed" Type="bit" />
-    <Property Name="AccountId" Type="nchar" MaxLength="10" />
+    <Property Name="Id" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="tPosts">
     <Key>
@@ -64,6 +128,7 @@
     <Property Name="VehicleModel" Type="varchar" MaxLength="50" />
     <Property Name="VehicleYear" Type="date" />
     <Property Name="Active" Type="bit" />
+    <Property Name="LocationId" Type="int" />
   </EntityType>
   <EntityType Name="tPostsControl">
     <Key>
@@ -71,14 +136,14 @@
     </Key>
     <Property Name="PostControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PostId" Type="int" />
-    <Property Name="AccountId" Type="int" />
+    <Property Name="Id" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="tUserProfiles">
     <Key>
       <PropertyRef Name="UserProfileId" />
     </Key>
     <Property Name="UserProfileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AccountId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="nvarchar" MaxLength="128" />
     <Property Name="FirstName" Type="varchar" MaxLength="50" />
     <Property Name="LastName" Type="varchar" MaxLength="50" />
     <Property Name="Avatar" Type="image" />
@@ -95,7 +160,7 @@
       <PropertyRef Name="VehicleProfileControlId" />
     </Key>
     <Property Name="VehicleProfileControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AccountId" Type="int" />
+    <Property Name="Id" Type="nvarchar" MaxLength="128" />
     <Property Name="VehicleProfileId" Type="int" />
   </EntityType>
   <EntityType Name="tVehicleProfiles">
@@ -108,6 +173,62 @@
     <Property Name="Year" Type="date" />
     <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
   </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tImageControl_tImages">
     <End Role="tImages" Type="Self.tImages" Multiplicity="0..1" />
     <End Role="tImageControl" Type="Self.tImageControl" Multiplicity="*" />
@@ -132,27 +253,39 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tMemberships_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccounts" Multiplicity="1" />
-    <End Role="tMemberships" Type="Self.tMemberships" Multiplicity="0..1" />
+  <Association Name="FK_tMemberships_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="tMemberships" Type="Self.tMemberships" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tMemberships">
-        <PropertyRef Name="MembershipId" />
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tPostsControl_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccounts" Multiplicity="0..1" />
+  <Association Name="FK_tPosts_tLocations">
+    <End Role="tLocations" Type="Self.tLocations" Multiplicity="0..1" />
+    <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tLocations">
+        <PropertyRef Name="LocationId" />
+      </Principal>
+      <Dependent Role="tPosts">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPostsControl_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tPostsControl">
-        <PropertyRef Name="AccountId" />
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -168,27 +301,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tUserProfiles_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccounts" Multiplicity="1" />
+  <Association Name="FK_tUserProfiles_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="tUserProfiles" Type="Self.tUserProfiles" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tUserProfiles">
-        <PropertyRef Name="AccountId" />
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tVehicleProfileControl_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccounts" Multiplicity="0..1" />
+  <Association Name="FK_tVehicleProfileControl_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="tVehicleProfileControl" Type="Self.tVehicleProfileControl" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tVehicleProfileControl">
-        <PropertyRef Name="AccountId" />
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -205,16 +338,38 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="MyJeepTraderModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tAccounts" EntityType="Self.tAccounts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tImageControl" EntityType="Self.tImageControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tLocations" EntityType="Self.tLocations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tMemberships" EntityType="Self.tMemberships" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPostsControl" EntityType="Self.tPostsControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfiles" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
     <AssociationSet Name="FK_tImageControl_tImages" Association="Self.FK_tImageControl_tImages">
       <End Role="tImages" EntitySet="tImages" />
       <End Role="tImageControl" EntitySet="tImageControl" />
@@ -223,24 +378,28 @@
       <End Role="tPosts" EntitySet="tPosts" />
       <End Role="tImageControl" EntitySet="tImageControl" />
     </AssociationSet>
-    <AssociationSet Name="FK_tMemberships_tAccounts" Association="Self.FK_tMemberships_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
+    <AssociationSet Name="FK_tMemberships_AspNetUsers" Association="Self.FK_tMemberships_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="tMemberships" EntitySet="tMemberships" />
     </AssociationSet>
-    <AssociationSet Name="FK_tPostsControl_tAccounts" Association="Self.FK_tPostsControl_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
+    <AssociationSet Name="FK_tPosts_tLocations" Association="Self.FK_tPosts_tLocations">
+      <End Role="tLocations" EntitySet="tLocations" />
+      <End Role="tPosts" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPostsControl_AspNetUsers" Association="Self.FK_tPostsControl_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="tPostsControl" EntitySet="tPostsControl" />
     </AssociationSet>
     <AssociationSet Name="FK_tPostsControl_tPosts" Association="Self.FK_tPostsControl_tPosts">
       <End Role="tPosts" EntitySet="tPosts" />
       <End Role="tPostsControl" EntitySet="tPostsControl" />
     </AssociationSet>
-    <AssociationSet Name="FK_tUserProfiles_tAccounts" Association="Self.FK_tUserProfiles_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
+    <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="Self.FK_tUserProfiles_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="tUserProfiles" EntitySet="tUserProfiles" />
     </AssociationSet>
-    <AssociationSet Name="FK_tVehicleProfileControl_tAccounts" Association="Self.FK_tVehicleProfileControl_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
+    <AssociationSet Name="FK_tVehicleProfileControl_AspNetUsers" Association="Self.FK_tVehicleProfileControl_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControl" />
     </AssociationSet>
     <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="Self.FK_tVehicleProfileControl_tVehicleProfiles">

@@ -32,8 +32,10 @@ namespace MyJeepTrader.Data
         public string VehicleModel { get; set; }
         public Nullable<System.DateTime> VehicleYear { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<int> LocationId { get; set; }
     
         public virtual ICollection<tImageControl> tImageControls { get; set; }
+        public virtual tLocation tLocation { get; set; }
         public virtual ICollection<tPostsControl> tPostsControls { get; set; }
     }
 }

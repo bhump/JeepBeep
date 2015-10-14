@@ -12,13 +12,11 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tVehicleProfileControl
+    public partial class C__MigrationHistory
     {
-        public int VehicleProfileControlId { get; set; }
-        public string Id { get; set; }
-        public Nullable<int> VehicleProfileId { get; set; }
-    
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual tVehicleProfile tVehicleProfile { get; set; }
+        public string MigrationId { get; set; }
+        public string ContextKey { get; set; }
+        public byte[] Model { get; set; }
+        public string ProductVersion { get; set; }
     }
 }

@@ -1,27 +1,142 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MyJeepTraderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="dboMyJeepTraderEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="MyJeepTraderModel.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="MyJeepTraderModel.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="MyJeepTraderModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="MyJeepTraderModel.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="MyJeepTraderModel.AspNetUser" />
+    <EntitySet Name="sysdiagrams" EntityType="MyJeepTraderModel.sysdiagram" />
+    <EntitySet Name="tImageControls" EntityType="MyJeepTraderModel.tImageControl" />
+    <EntitySet Name="tImages" EntityType="MyJeepTraderModel.tImage" />
+    <EntitySet Name="tLocations" EntityType="MyJeepTraderModel.tLocation" />
+    <EntitySet Name="tMemberships" EntityType="MyJeepTraderModel.tMembership" />
+    <EntitySet Name="tPosts" EntityType="MyJeepTraderModel.tPost" />
+    <EntitySet Name="tPostsControls" EntityType="MyJeepTraderModel.tPostsControl" />
+    <EntitySet Name="tUserProfiles" EntityType="MyJeepTraderModel.tUserProfile" />
+    <EntitySet Name="tVehicleProfileControls" EntityType="MyJeepTraderModel.tVehicleProfileControl" />
+    <EntitySet Name="tVehicleProfiles" EntityType="MyJeepTraderModel.tVehicleProfile" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="MyJeepTraderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="MyJeepTraderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tMemberships_AspNetUsers" Association="MyJeepTraderModel.FK_tMemberships_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tMembership" EntitySet="tMemberships" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPostsControl_AspNetUsers" Association="MyJeepTraderModel.FK_tPostsControl_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tPostsControl" EntitySet="tPostsControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tUserProfile" EntitySet="tUserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tVehicleProfileControl_AspNetUsers" Association="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tImageControl_tImages" Association="MyJeepTraderModel.FK_tImageControl_tImages">
+      <End Role="tImage" EntitySet="tImages" />
+      <End Role="tImageControl" EntitySet="tImageControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tImageControl_tPosts" Association="MyJeepTraderModel.FK_tImageControl_tPosts">
+      <End Role="tPost" EntitySet="tPosts" />
+      <End Role="tImageControl" EntitySet="tImageControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tLocations" Association="MyJeepTraderModel.FK_tPosts_tLocations">
+      <End Role="tLocation" EntitySet="tLocations" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPostsControl_tPosts" Association="MyJeepTraderModel.FK_tPostsControl_tPosts">
+      <End Role="tPost" EntitySet="tPosts" />
+      <End Role="tPostsControl" EntitySet="tPostsControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles">
+      <End Role="tVehicleProfile" EntitySet="tVehicleProfiles" />
+      <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="tMemberships" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="AspNetUser" ToRole="tMembership" />
+    <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_AspNetUsers" FromRole="AspNetUser" ToRole="tPostsControl" />
+    <NavigationProperty Name="tUserProfiles" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="AspNetUser" ToRole="tUserProfile" />
+    <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="AspNetUser" ToRole="tVehicleProfileControl" />
+    <NavigationProperty Name="AspNetRoles" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+  </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="principal_id" Type="Int32" Nullable="false" />
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="tAccount">
-    <Key>
-      <PropertyRef Name="AccountId" />
-    </Key>
-    <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tMembership" Relationship="Self.FK_tMemberships_tAccounts" FromRole="tAccounts" ToRole="tMemberships" />
-    <NavigationProperty Name="tPostsControls" Relationship="Self.FK_tPostsControl_tAccounts" FromRole="tAccounts" ToRole="tPostsControl" />
-    <NavigationProperty Name="tUserProfiles" Relationship="Self.FK_tUserProfiles_tAccounts" FromRole="tAccounts" ToRole="tUserProfiles" />
-    <NavigationProperty Name="tVehicleProfileControls" Relationship="Self.FK_tVehicleProfileControl_tAccounts" FromRole="tAccounts" ToRole="tVehicleProfileControl" />
   </EntityType>
   <EntityType Name="tImageControl">
     <Key>
@@ -30,8 +145,8 @@
     <Property Name="ImageControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ImageId" Type="Int32" />
     <Property Name="PostId" Type="Int32" />
-    <NavigationProperty Name="tImage" Relationship="Self.FK_tImageControl_tImages" FromRole="tImageControl" ToRole="tImages" />
-    <NavigationProperty Name="tPost" Relationship="Self.FK_tImageControl_tPosts" FromRole="tImageControl" ToRole="tPosts" />
+    <NavigationProperty Name="tImage" Relationship="MyJeepTraderModel.FK_tImageControl_tImages" FromRole="tImageControl" ToRole="tImage" />
+    <NavigationProperty Name="tPost" Relationship="MyJeepTraderModel.FK_tImageControl_tPosts" FromRole="tImageControl" ToRole="tPost" />
   </EntityType>
   <EntityType Name="tImage">
     <Key>
@@ -39,7 +154,20 @@
     </Key>
     <Property Name="Imageid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <NavigationProperty Name="tImageControls" Relationship="Self.FK_tImageControl_tImages" FromRole="tImages" ToRole="tImageControl" />
+    <NavigationProperty Name="tImageControls" Relationship="MyJeepTraderModel.FK_tImageControl_tImages" FromRole="tImage" ToRole="tImageControl" />
+  </EntityType>
+  <EntityType Name="tLocation">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Line1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Line2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tLocation" ToRole="tPost" />
   </EntityType>
   <EntityType Name="tMembership">
     <Key>
@@ -53,8 +181,8 @@
     <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
     <Property Name="AutoRenew" Type="Boolean" />
     <Property Name="Renewed" Type="Boolean" />
-    <Property Name="AccountId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="tAccount" Relationship="Self.FK_tMemberships_tAccounts" FromRole="tMemberships" ToRole="tAccounts" />
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="tMembership" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="tPost">
     <Key>
@@ -72,8 +200,10 @@
     <Property Name="VehicleModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="VehicleYear" Type="DateTime" Precision="0" />
     <Property Name="Active" Type="Boolean" />
-    <NavigationProperty Name="tImageControls" Relationship="Self.FK_tImageControl_tPosts" FromRole="tPosts" ToRole="tImageControl" />
-    <NavigationProperty Name="tPostsControls" Relationship="Self.FK_tPostsControl_tPosts" FromRole="tPosts" ToRole="tPostsControl" />
+    <Property Name="LocationId" Type="Int32" />
+    <NavigationProperty Name="tImageControls" Relationship="MyJeepTraderModel.FK_tImageControl_tPosts" FromRole="tPost" ToRole="tImageControl" />
+    <NavigationProperty Name="tLocation" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tPost" ToRole="tLocation" />
+    <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPost" ToRole="tPostsControl" />
   </EntityType>
   <EntityType Name="tPostsControl">
     <Key>
@@ -81,16 +211,16 @@
     </Key>
     <Property Name="PostControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PostId" Type="Int32" />
-    <Property Name="AccountId" Type="Int32" />
-    <NavigationProperty Name="tAccount" Relationship="Self.FK_tPostsControl_tAccounts" FromRole="tPostsControl" ToRole="tAccounts" />
-    <NavigationProperty Name="tPost" Relationship="Self.FK_tPostsControl_tPosts" FromRole="tPostsControl" ToRole="tPosts" />
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPostsControl_AspNetUsers" FromRole="tPostsControl" ToRole="AspNetUser" />
+    <NavigationProperty Name="tPost" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPostsControl" ToRole="tPost" />
   </EntityType>
   <EntityType Name="tUserProfile">
     <Key>
       <PropertyRef Name="UserProfileId" />
     </Key>
     <Property Name="UserProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="AccountId" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -101,17 +231,17 @@
     <Property Name="GooglePlus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Twitter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Ello" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tAccount" Relationship="Self.FK_tUserProfiles_tAccounts" FromRole="tUserProfiles" ToRole="tAccounts" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="tUserProfile" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="tVehicleProfileControl">
     <Key>
       <PropertyRef Name="VehicleProfileControlId" />
     </Key>
     <Property Name="VehicleProfileControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="AccountId" Type="Int32" />
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="VehicleProfileId" Type="Int32" />
-    <NavigationProperty Name="tAccount" Relationship="Self.FK_tVehicleProfileControl_tAccounts" FromRole="tVehicleProfileControl" ToRole="tAccounts" />
-    <NavigationProperty Name="tVehicleProfile" Relationship="Self.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfileControl" ToRole="tVehicleProfiles" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="tVehicleProfileControl" ToRole="AspNetUser" />
+    <NavigationProperty Name="tVehicleProfile" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfileControl" ToRole="tVehicleProfile" />
   </EntityType>
   <EntityType Name="tVehicleProfile">
     <Key>
@@ -122,61 +252,89 @@
     <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Year" Type="DateTime" Precision="0" />
     <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tVehicleProfileControls" Relationship="Self.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfiles" ToRole="tVehicleProfileControl" />
+    <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfile" ToRole="tVehicleProfileControl" />
   </EntityType>
-  <Association Name="FK_tMemberships_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="1" />
-    <End Role="tMemberships" Type="Self.tMembership" Multiplicity="0..1" />
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MyJeepTraderModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="tMemberships">
-        <PropertyRef Name="MembershipId" />
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tPostsControl_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="0..1" />
-    <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="MyJeepTraderModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tMemberships_AspNetUsers">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tMembership">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPostsControl_AspNetUsers">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPostsControl" Role="tPostsControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tPostsControl">
-        <PropertyRef Name="AccountId" />
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tUserProfiles_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="1" />
-    <End Role="tUserProfiles" Type="Self.tUserProfile" Multiplicity="*" />
+  <Association Name="FK_tUserProfiles_AspNetUsers">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tUserProfile" Role="tUserProfile" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="tUserProfiles">
-        <PropertyRef Name="AccountId" />
+      <Dependent Role="tUserProfile">
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tVehicleProfileControl_tAccounts">
-    <End Role="tAccounts" Type="Self.tAccount" Multiplicity="0..1" />
-    <End Role="tVehicleProfileControl" Type="Self.tVehicleProfileControl" Multiplicity="*" />
+  <Association Name="FK_tVehicleProfileControl_AspNetUsers">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tVehicleProfileControl" Role="tVehicleProfileControl" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tAccounts">
-        <PropertyRef Name="AccountId" />
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="tVehicleProfileControl">
-        <PropertyRef Name="AccountId" />
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tImageControl_tImages">
-    <End Role="tImages" Type="Self.tImage" Multiplicity="0..1" />
-    <End Role="tImageControl" Type="Self.tImageControl" Multiplicity="*" />
+    <End Type="MyJeepTraderModel.tImage" Role="tImage" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tImageControl" Role="tImageControl" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tImages">
+      <Principal Role="tImage">
         <PropertyRef Name="Imageid" />
       </Principal>
       <Dependent Role="tImageControl">
@@ -185,10 +343,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tImageControl_tPosts">
-    <End Role="tPosts" Type="Self.tPost" Multiplicity="0..1" />
-    <End Role="tImageControl" Type="Self.tImageControl" Multiplicity="*" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tImageControl" Role="tImageControl" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tPosts">
+      <Principal Role="tPost">
         <PropertyRef Name="PostId" />
       </Principal>
       <Dependent Role="tImageControl">
@@ -196,11 +354,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tPostsControl_tPosts">
-    <End Role="tPosts" Type="Self.tPost" Multiplicity="0..1" />
-    <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
+  <Association Name="FK_tPosts_tLocations">
+    <End Type="MyJeepTraderModel.tLocation" Role="tLocation" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tPosts">
+      <Principal Role="tLocation">
+        <PropertyRef Name="LocationId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPostsControl_tPosts">
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPostsControl" Role="tPostsControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPost">
         <PropertyRef Name="PostId" />
       </Principal>
       <Dependent Role="tPostsControl">
@@ -209,10 +379,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tVehicleProfileControl_tVehicleProfiles">
-    <End Role="tVehicleProfiles" Type="Self.tVehicleProfile" Multiplicity="0..1" />
-    <End Role="tVehicleProfileControl" Type="Self.tVehicleProfileControl" Multiplicity="*" />
+    <End Type="MyJeepTraderModel.tVehicleProfile" Role="tVehicleProfile" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tVehicleProfileControl" Role="tVehicleProfileControl" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tVehicleProfiles">
+      <Principal Role="tVehicleProfile">
         <PropertyRef Name="VehicleProfileId" />
       </Principal>
       <Dependent Role="tVehicleProfileControl">
@@ -220,48 +390,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="dboMyJeepTraderEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-    <EntitySet Name="tAccounts" EntityType="Self.tAccount" />
-    <EntitySet Name="tImageControls" EntityType="Self.tImageControl" />
-    <EntitySet Name="tImages" EntityType="Self.tImage" />
-    <EntitySet Name="tMemberships" EntityType="Self.tMembership" />
-    <EntitySet Name="tPosts" EntityType="Self.tPost" />
-    <EntitySet Name="tPostsControls" EntityType="Self.tPostsControl" />
-    <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfile" />
-    <EntitySet Name="tVehicleProfileControls" EntityType="Self.tVehicleProfileControl" />
-    <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfile" />
-    <AssociationSet Name="FK_tMemberships_tAccounts" Association="Self.FK_tMemberships_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
-      <End Role="tMemberships" EntitySet="tMemberships" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPostsControl_tAccounts" Association="Self.FK_tPostsControl_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
-      <End Role="tPostsControl" EntitySet="tPostsControls" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tUserProfiles_tAccounts" Association="Self.FK_tUserProfiles_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
-      <End Role="tUserProfiles" EntitySet="tUserProfiles" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tVehicleProfileControl_tAccounts" Association="Self.FK_tVehicleProfileControl_tAccounts">
-      <End Role="tAccounts" EntitySet="tAccounts" />
-      <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tImageControl_tImages" Association="Self.FK_tImageControl_tImages">
-      <End Role="tImages" EntitySet="tImages" />
-      <End Role="tImageControl" EntitySet="tImageControls" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tImageControl_tPosts" Association="Self.FK_tImageControl_tPosts">
-      <End Role="tPosts" EntitySet="tPosts" />
-      <End Role="tImageControl" EntitySet="tImageControls" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPostsControl_tPosts" Association="Self.FK_tPostsControl_tPosts">
-      <End Role="tPosts" EntitySet="tPosts" />
-      <End Role="tPostsControl" EntitySet="tPostsControls" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="Self.FK_tVehicleProfileControl_tVehicleProfiles">
-      <End Role="tVehicleProfiles" EntitySet="tVehicleProfiles" />
-      <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
-    </AssociationSet>
-  </EntityContainer>
+  <Association Name="AspNetUserRoles">
+    <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
 </Schema>

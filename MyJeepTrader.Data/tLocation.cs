@@ -12,13 +12,21 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tVehicleProfileControl
+    public partial class tLocation
     {
-        public int VehicleProfileControlId { get; set; }
-        public string Id { get; set; }
-        public Nullable<int> VehicleProfileId { get; set; }
+        public tLocation()
+        {
+            this.tPosts = new HashSet<tPost>();
+        }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual tVehicleProfile tVehicleProfile { get; set; }
+        public int LocationId { get; set; }
+        public string Line1 { get; set; }
+        public string Line2 { get; set; }
+        public string City { get; set; }
+        public string Zip { get; set; }
+        public string State { get; set; }
+        public Nullable<int> CountryId { get; set; }
+    
+        public virtual ICollection<tPost> tPosts { get; set; }
     }
 }

@@ -56,8 +56,8 @@ namespace MyJeepTrader.Data
 
         public object GetAvatarImage(int id)
         {
-            var avatar = _context.tUserProfiles.FirstOrDefault(a => a.AccountId == id);
-            return(avatar);
+            //var avatar = _context.tUserProfiles.FirstOrDefault(a => a.AccountId == id);
+            return null;
         }
 
 

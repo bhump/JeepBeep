@@ -22,8 +22,8 @@ namespace MyJeepTrader.Data
         public Nullable<System.DateTime> ExpirationDate { get; set; }
         public Nullable<bool> AutoRenew { get; set; }
         public Nullable<bool> Renewed { get; set; }
-        public string AccountId { get; set; }
+        public string Id { get; set; }
     
-        public virtual tAccount tAccount { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

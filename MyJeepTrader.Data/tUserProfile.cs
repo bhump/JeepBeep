@@ -15,7 +15,7 @@ namespace MyJeepTrader.Data
     public partial class tUserProfile
     {
         public int UserProfileId { get; set; }
-        public int AccountId { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public byte[] Avatar { get; set; }
@@ -27,6 +27,6 @@ namespace MyJeepTrader.Data
         public string Twitter { get; set; }
         public string Ello { get; set; }
     
-        public virtual tAccount tAccount { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }
