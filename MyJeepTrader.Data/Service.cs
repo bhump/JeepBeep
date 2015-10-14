@@ -30,5 +30,11 @@ namespace MyJeepTrader.Data
         {
             return (from up in _context.tUserProfiles select up).ToList();
         }
+
+        public object GetAvatarImage(int id)
+        {
+            var avatar = _context.tUserProfiles.FirstOrDefault(a => a.AccountId == id);
+            return(avatar);
+        }
     }
 }

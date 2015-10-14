@@ -88,5 +88,15 @@ namespace MyJeepTrader.Web.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ViewAvatar()
+        {
+            Service service = new Service();
+            int id = 1;
+            var image = Convert.ToString(service.GetAvatarImage(id));
+            return File(image, "image/jpg");
+        }
     }
 }
