@@ -110,3 +110,4 @@ C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrade
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.dll
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.pdb
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.xml
+C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.50.0.dll
