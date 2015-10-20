@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
 using Braintree;
+using MyJeepTrader.Web.Models;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -13,7 +14,13 @@ namespace MyJeepTrader.Web.Controllers
         // GET: PayPal
         public ActionResult Index()
         {
-            return View();
+            PayPalIndexViewModel model = new PayPalIndexViewModel();
+
+            var PayPalService = new PayPalService();
+            var gateway = PayPalService.PayPalGateway();
+            var clientToken = gateway.ClientToken.generate();
+            model.ClientToken = gateway.ClientToken.generate();
+            return View(model);
         }
 
         public ActionResult Checkout()
@@ -22,24 +29,25 @@ namespace MyJeepTrader.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreatePurchase(FormCollection collection)
+        public ActionResult Checkout(FormCollection collection)
         {
             var PayPalService = new PayPalService();
             var gateway = PayPalService.PayPalGateway();
 
-            string nonce = collection["payment_method_nonce"];
+            string nonce = collection["fake-valid-nonce"];
             // Use payment method nonce here
 
             var request = new TransactionRequest
             {
                 Amount = 5.99M,
-                CreditCard = new TransactionCreditCardRequest
-                {
-                    Number = collection["number"],
-                    CVV = collection["cvv"],
-                    ExpirationMonth = collection["month"],
-                    ExpirationYear = collection["year"]
-                }
+                PaymentMethodNonce = "fake-valid-nonce"
+                //CreditCard = new TransactionCreditCardRequest
+                //{
+                //    Number = collection["number"],
+                //    CVV = collection["cvv"],
+                //    ExpirationMonth = collection["month"],
+                //    ExpirationYear = collection["year"]
+                //}
             };
 
             Result<Transaction> result = gateway.Transaction.Sale(request);
