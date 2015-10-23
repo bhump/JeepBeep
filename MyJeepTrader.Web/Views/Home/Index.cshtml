@@ -3,9 +3,78 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>My Jeep Trader</h1>
+    <p>Welcome to My Jeep Trader! Your one stop shop to sell, trade, or buy Jeep's and Jeep Accessories!</p>
+</div>
+
+<div class="center">
+    <ul class="nav nav-pills">
+        <li class="active"><a data-toggle="pill" href="#JeepSearch">Jeep Search</a></li>
+        <li><a data-toggle="pill" href="#AccessorySearch">Accessory Search</a></li>
+    </ul>
+
+    <div class="tab-content findYourJeepBox">
+        <div id="JeepSearch" class="tab-pane fade in active">
+            <p>
+                Search for a Jeep!
+            </p>
+            <div class="findYourJeepBoxInner">
+                <div class="dropdown homepageMakeWrappers">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Current Models <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Wrangler</a></li>
+                        <li><a href="#">Grand Cherokee</a></li>
+                        <li><a href="#">Compass</a></li>
+                        <li><a href="#">Patriot</a></li>
+                        <li><a href="#">Cherokee</a></li>
+                        <li><a href="#">Renegade</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown homepageMakeWrappers">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Year <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">2015</a></li>
+                        <li><a href="#">2014</a></li>
+                        <li><a href="#">2013</a></li>
+                        <li><a href="#">2012</a></li>
+                        <li><a href="#">2011</a></li>
+                        <li><a href="#">2010</a></li>
+                        <li><a href="#">2009</a></li>
+                        <li><a href="#">2008</a></li>
+                        <li><a href="#">2007</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="findYourJeepBoxInner topSpace">
+                <div class="dropdown homepageMakeWrappers">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Color <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Red</a></li>
+                        <li><a href="#">Blue</a></li>
+                        <li><a href="#">Brown</a></li>
+                        <li><a href="#">Yellow</a></li>
+                        <li><a href="#">Orange</a></li>
+                        <li><a href="#">Green</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown homepageMakeWrappers">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Buy or Trade <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Buy</a></li>
+                        <li><a href="#">Trade</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="boxCenter">
+                <button class="btn">Search</button>
+            </div>
+        </div>
+        <div id="AccessorySearch" class="tab-pane fade">
+            <p>
+                Search for an Accessory!
+            </p>
+        </div>
+    </div>
 </div>
 
 <div class="row">
