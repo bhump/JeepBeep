@@ -115,8 +115,8 @@
             <PropertyRef Name="MembershipId" />
           </Key>
           <Property Name="MembershipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PaidMembership" Type="bit" />
-          <Property Name="FreeMembership" Type="bit" />
+          <Property Name="PremiumMembership" Type="bit" />
+          <Property Name="BasicMembership" Type="bit" />
           <Property Name="MemberSince" Type="date" />
           <Property Name="Expired" Type="bit" />
           <Property Name="ExpirationDate" Type="date" />
@@ -170,8 +170,8 @@
           <Key>
             <PropertyRef Name="SubModelId" />
           </Key>
-          <Property Name="SubModelId" Type="int" Nullable="false" />
-          <Property Name="SubModel" Type="nchar" MaxLength="10" />
+          <Property Name="SubModelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubModel" Type="varchar" MaxLength="50" />
           <Property Name="ModelId" Type="int" />
         </EntityType>
         <EntityType Name="tUserProfiles">
@@ -525,7 +525,6 @@
       <Schema Namespace="MyJeepTraderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="dboMyJeepTraderEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="MyJeepTraderModel.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="MyJeepTraderModel.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="MyJeepTraderModel.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="MyJeepTraderModel.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="MyJeepTraderModel.AspNetUser" />
@@ -604,6 +603,7 @@
             <End Role="tVehicleProfile" EntitySet="tVehicleProfiles" />
             <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
           </AssociationSet>
+          <EntitySet Name="AspNetRoles" EntityType="MyJeepTraderModel.AspNetRole" />
           <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -618,14 +618,6 @@
           <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="AspNetRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -726,8 +718,6 @@
             <PropertyRef Name="MembershipId" />
           </Key>
           <Property Name="MembershipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PaidMembership" Type="Boolean" />
-          <Property Name="FreeMembership" Type="Boolean" />
           <Property Name="MemberSince" Type="DateTime" Precision="0" />
           <Property Name="Expired" Type="Boolean" />
           <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
@@ -735,6 +725,8 @@
           <Property Name="Renewed" Type="Boolean" />
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="tMembership" ToRole="AspNetUser" />
+          <Property Name="PremiumMembership" Type="Boolean" />
+          <Property Name="BasicMembership" Type="Boolean" />
         </EntityType>
         <EntityType Name="tModel">
           <Key>
@@ -793,7 +785,7 @@
             <PropertyRef Name="SubModelId" />
           </Key>
           <Property Name="SubModelId" Type="Int32" Nullable="false" />
-          <Property Name="SubModel" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SubModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModelId" Type="Int32" />
           <NavigationProperty Name="tModel" Relationship="MyJeepTraderModel.FK_tSubModel_tModel" FromRole="tSubModel" ToRole="tModel" />
         </EntityType>
@@ -1028,6 +1020,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
         <Association Name="AspNetUserRoles">
           <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
@@ -1045,14 +1045,6 @@
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetRole">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1145,14 +1137,14 @@
           <EntitySetMapping Name="tMemberships">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tMembership">
               <MappingFragment StoreEntitySet="tMemberships">
+                <ScalarProperty Name="BasicMembership" ColumnName="BasicMembership" />
+                <ScalarProperty Name="PremiumMembership" ColumnName="PremiumMembership" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Renewed" ColumnName="Renewed" />
                 <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="Expired" ColumnName="Expired" />
                 <ScalarProperty Name="MemberSince" ColumnName="MemberSince" />
-                <ScalarProperty Name="FreeMembership" ColumnName="FreeMembership" />
-                <ScalarProperty Name="PaidMembership" ColumnName="PaidMembership" />
                 <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1255,6 +1247,14 @@
               <MappingFragment StoreEntitySet="tYear">
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="YearId" ColumnName="YearId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

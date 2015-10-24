@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="b8f5354bf6074e8b9455dbed198c6b86" Name="Diagram1">
         <EntityTypeShape EntityType="MyJeepTraderModel.C__MigrationHistory" Width="1.5" PointX="10.75" PointY="11.75" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.AspNetRole" Width="1.5" PointX="0.75" PointY="11" />
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="17.75" />
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="15.25" />
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetUser" Width="1.5" PointX="3" PointY="9.375" />
@@ -40,6 +39,7 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tModelYearControl_tYear" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPostsControl_tPosts" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.AspNetRole" Width="1.5" PointX="0.75" PointY="10.875" />
         <AssociationConnector Association="MyJeepTraderModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>

@@ -90,9 +90,12 @@ textarea {
     font-weight: bold;
 }
 
-.center {
+.searchBox {
     display: table;
     margin: 0 auto;
+    border: 1px solid black;
+    height: 60px;
+    width:60px
 }
 
 .boxCenter{

@@ -26,7 +26,7 @@ namespace MyJeepTrader.Data
         {
             return (from p in _context.tPosts select p).ToList();
         }
- 
+
         public IEnumerable<tUserProfile> GetAllUserProfiles()
         {
             return (from up in _context.tUserProfiles select up).ToList();
@@ -60,7 +60,33 @@ namespace MyJeepTrader.Data
             return null;
         }
 
+        public void CreateMembership(string userId)
+        {
+            using (_context)
+            {
+                tMembership membership = new tMembership
+                    {
+                        Id = userId,
+                        PremiumMembership = false,
+                        BasicMembership = true,
+                        MemberSince = DateTime.Now.Date,
+                        AutoRenew = false,
+                        Renewed = false,
+                        Expired = false,
+                        ExpirationDate = DateTime.Now.Date,
+                    };
+                _context.tMemberships.Add(membership);
+                _context.SaveChanges();
+            }
+        }
 
+        public void AddRole(string userId)
+        {
+            using (_context)
+            {
+                
+            }
+        }
 
     }// public class service
 } // namespace

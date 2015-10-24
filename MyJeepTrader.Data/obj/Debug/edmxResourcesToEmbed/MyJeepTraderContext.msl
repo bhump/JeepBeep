@@ -11,14 +11,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AspNetRoles">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetRole">
-        <MappingFragment StoreEntitySet="AspNetRoles">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserClaims">
       <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetUserClaim">
         <MappingFragment StoreEntitySet="AspNetUserClaims">
@@ -97,18 +89,44 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tMakes">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tMake">
+        <MappingFragment StoreEntitySet="tMake">
+          <ScalarProperty Name="Make" ColumnName="Make" />
+          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tMemberships">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tMembership">
         <MappingFragment StoreEntitySet="tMemberships">
+          <ScalarProperty Name="BasicMembership" ColumnName="BasicMembership" />
+          <ScalarProperty Name="PremiumMembership" ColumnName="PremiumMembership" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Renewed" ColumnName="Renewed" />
           <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="Expired" ColumnName="Expired" />
           <ScalarProperty Name="MemberSince" ColumnName="MemberSince" />
-          <ScalarProperty Name="FreeMembership" ColumnName="FreeMembership" />
-          <ScalarProperty Name="PaidMembership" ColumnName="PaidMembership" />
           <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tModels">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tModel">
+        <MappingFragment StoreEntitySet="tModel">
+          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tModelYearControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelYearControl">
+        <MappingFragment StoreEntitySet="tModelYearControl">
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="YearId" ColumnName="YearId" />
+          <ScalarProperty Name="ModelYearControlId" ColumnName="ModelYearControlId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -137,6 +155,15 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PostId" ColumnName="PostId" />
           <ScalarProperty Name="PostControlId" ColumnName="PostControlId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tSubModels">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tSubModel">
+        <MappingFragment StoreEntitySet="tSubModel">
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="SubModel" ColumnName="SubModel" />
+          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -175,6 +202,22 @@
           <ScalarProperty Name="Model" ColumnName="Model" />
           <ScalarProperty Name="Make" ColumnName="Make" />
           <ScalarProperty Name="VehicleProfileId" ColumnName="VehicleProfileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tYears">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tYear">
+        <MappingFragment StoreEntitySet="tYear">
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="YearId" ColumnName="YearId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
