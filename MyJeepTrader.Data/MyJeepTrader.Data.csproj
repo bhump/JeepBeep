@@ -105,13 +105,25 @@
     <Compile Include="tLocation.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tMake.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tMembership.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tModel.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tModelYearControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tPost.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tPostsControl.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tSubModel.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tUserProfile.cs">
@@ -121,6 +133,9 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tVehicleProfileControl.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tYear.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
   </ItemGroup>
