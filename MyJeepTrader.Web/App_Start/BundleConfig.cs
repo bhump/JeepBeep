@@ -26,6 +26,11 @@ namespace MyJeepTrader.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/MyJeepTrader")
+                .IncludeDirectory("~/Scripts/Controllers", "*.js")
+                .Include("~/Scripts/MyJeepTrader.js"));
+
         }
     }
 }

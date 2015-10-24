@@ -172,3 +172,4 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.csprojResolveAssemblyReference.cache
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.pdb
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.50.0.dll

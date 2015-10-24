@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h3>New Posting</h3>
 
 
 @using (Html.BeginForm()) 
@@ -12,105 +12,77 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>tPost</h4>
+       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.PostTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PostTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PostTitle, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PostDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PostDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PostDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Part, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Part)
-                    @Html.ValidationMessageFor(model => model.Part, "", new { @class = "text-danger" })
+           <label class="col-sm-2">Select Action:</label>
+            <div class="col-sm-10">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" onclick=" userActionClick(); ">Sell</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" onclick=" userActionClick(); ">Trade</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" onclick=" userActionClick(); ">Looking For</button>
+                    </div>
                 </div>
             </div>
+            
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PartType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PartType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PartType, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
+
+
+        @*<ul class="nav nav-pills nav-justified">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
+            <li role="presentation"><a href="#">Profile</a></li>
+            <li role="presentation"><a href="#">Messages</a></li>
+        </ul>*@
+
+        <br/>
+
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PartBrand, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PartBrand, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PartBrand, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PartName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PartName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PartName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Vehicle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Vehicle)
-                    @Html.ValidationMessageFor(model => model.Vehicle, "", new { @class = "text-danger" })
+            <label class="col-sm-2">Select Product:</label>
+            <div class="col-sm-10">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" onclick=" userActionClick(); ">Jeep</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" onclick=" userActionClick(); ">Accessories</button>
+                    </div>
+                    
                 </div>
             </div>
+
         </div>
 
+        <br/>
         <div class="form-group">
-            @Html.LabelFor(model => model.VehicleMake, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VehicleMake, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VehicleMake, "", new { @class = "text-danger" })
+            <label class="col-sm-2">Select Jeep Type:</label>
+            <div class="col-sm-10" id="jeepTypeDiv">
+                <input type="checkbox"/> Wrangler <br/>
+                <input type="checkbox"/> Wrangler <br/>
+                <input type="checkbox"/> Wrangler <br/>
+                <input type="checkbox"/> Wrangler <br/>
+                <input type="checkbox"/> Wrangler <br/>
+                <input type="checkbox"/> Wrangler
+
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VehicleModel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VehicleModel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VehicleModel, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VehicleYear, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VehicleYear, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VehicleYear, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <br/>
 
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Active)
-                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div>
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
@@ -123,4 +95,25 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+
+
+    <script type="text/javascript">
+        
+        function userActionClick() {
+            $("#productTypeDiv").show();
+        }
+
+        function jeepClick() {
+           
+            $("#jeepTypeDiv").show();
+        }
+
+        function partClick() {
+            $("#jeepTypeDiv").show();
+        }
+
+
+
+    </script>
 }

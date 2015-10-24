@@ -103,6 +103,13 @@
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="CountryId" Type="int" />
         </EntityType>
+        <EntityType Name="tMake">
+          <Key>
+            <PropertyRef Name="MakeId" />
+          </Key>
+          <Property Name="MakeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Make" Type="nchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="tMemberships">
           <Key>
             <PropertyRef Name="MembershipId" />
@@ -116,6 +123,22 @@
           <Property Name="AutoRenew" Type="bit" />
           <Property Name="Renewed" Type="bit" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="tModel">
+          <Key>
+            <PropertyRef Name="ModelId" />
+          </Key>
+          <Property Name="ModelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Model" Type="varchar" MaxLength="50" />
+          <Property Name="MakeId" Type="int" />
+        </EntityType>
+        <EntityType Name="tModelYearControl">
+          <Key>
+            <PropertyRef Name="ModelYearControlId" />
+          </Key>
+          <Property Name="ModelYearControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YearId" Type="int" />
+          <Property Name="ModelId" Type="int" />
         </EntityType>
         <EntityType Name="tPosts">
           <Key>
@@ -142,6 +165,14 @@
           <Property Name="PostControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostId" Type="int" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="tSubModel">
+          <Key>
+            <PropertyRef Name="SubModelId" />
+          </Key>
+          <Property Name="SubModelId" Type="int" Nullable="false" />
+          <Property Name="SubModel" Type="nchar" MaxLength="10" />
+          <Property Name="ModelId" Type="int" />
         </EntityType>
         <EntityType Name="tUserProfiles">
           <Key>
@@ -177,6 +208,13 @@
           <Property Name="Model" Type="varchar" MaxLength="50" />
           <Property Name="Year" Type="date" />
           <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tYear">
+          <Key>
+            <PropertyRef Name="YearId" />
+          </Key>
+          <Property Name="YearId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="varchar" MaxLength="4" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -270,6 +308,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tModel_tMake">
+          <End Role="tMake" Type="Self.tMake" Multiplicity="0..1" />
+          <End Role="tModel" Type="Self.tModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMake">
+              <PropertyRef Name="MakeId" />
+            </Principal>
+            <Dependent Role="tModel">
+              <PropertyRef Name="MakeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tModelYearControl_tModelYearControl">
+          <End Role="tModel" Type="Self.tModel" Multiplicity="0..1" />
+          <End Role="tModelYearControl" Type="Self.tModelYearControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tModel">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="tModelYearControl">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tModelYearControl_tYear">
+          <End Role="tYear" Type="Self.tYear" Multiplicity="0..1" />
+          <End Role="tModelYearControl" Type="Self.tModelYearControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tYear">
+              <PropertyRef Name="YearId" />
+            </Principal>
+            <Dependent Role="tModelYearControl">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tPosts_tLocations">
           <End Role="tLocations" Type="Self.tLocations" Multiplicity="0..1" />
           <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
@@ -303,6 +377,18 @@
             </Principal>
             <Dependent Role="tPostsControl">
               <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tSubModel_tModel">
+          <End Role="tModel" Type="Self.tModel" Multiplicity="0..1" />
+          <End Role="tSubModel" Type="Self.tSubModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tModel">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="tSubModel">
+              <PropertyRef Name="ModelId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -353,12 +439,17 @@
           <EntitySet Name="tImageControl" EntityType="Self.tImageControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tLocations" EntityType="Self.tLocations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tMake" EntityType="Self.tMake" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMemberships" EntityType="Self.tMemberships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tModel" EntityType="Self.tModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPostsControl" EntityType="Self.tPostsControl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tYear" EntityType="Self.tYear" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -387,6 +478,18 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tMemberships" EntitySet="tMemberships" />
           </AssociationSet>
+          <AssociationSet Name="FK_tModel_tMake" Association="Self.FK_tModel_tMake">
+            <End Role="tMake" EntitySet="tMake" />
+            <End Role="tModel" EntitySet="tModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tModelYearControl_tModelYearControl" Association="Self.FK_tModelYearControl_tModelYearControl">
+            <End Role="tModel" EntitySet="tModel" />
+            <End Role="tModelYearControl" EntitySet="tModelYearControl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tModelYearControl_tYear" Association="Self.FK_tModelYearControl_tYear">
+            <End Role="tYear" EntitySet="tYear" />
+            <End Role="tModelYearControl" EntitySet="tModelYearControl" />
+          </AssociationSet>
           <AssociationSet Name="FK_tPosts_tLocations" Association="Self.FK_tPosts_tLocations">
             <End Role="tLocations" EntitySet="tLocations" />
             <End Role="tPosts" EntitySet="tPosts" />
@@ -398,6 +501,10 @@
           <AssociationSet Name="FK_tPostsControl_tPosts" Association="Self.FK_tPostsControl_tPosts">
             <End Role="tPosts" EntitySet="tPosts" />
             <End Role="tPostsControl" EntitySet="tPostsControl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tSubModel_tModel" Association="Self.FK_tSubModel_tModel">
+            <End Role="tModel" EntitySet="tModel" />
+            <End Role="tSubModel" EntitySet="tSubModel" />
           </AssociationSet>
           <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="Self.FK_tUserProfiles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -426,12 +533,17 @@
           <EntitySet Name="tImageControls" EntityType="MyJeepTraderModel.tImageControl" />
           <EntitySet Name="tImages" EntityType="MyJeepTraderModel.tImage" />
           <EntitySet Name="tLocations" EntityType="MyJeepTraderModel.tLocation" />
+          <EntitySet Name="tMakes" EntityType="MyJeepTraderModel.tMake" />
           <EntitySet Name="tMemberships" EntityType="MyJeepTraderModel.tMembership" />
+          <EntitySet Name="tModels" EntityType="MyJeepTraderModel.tModel" />
+          <EntitySet Name="tModelYearControls" EntityType="MyJeepTraderModel.tModelYearControl" />
           <EntitySet Name="tPosts" EntityType="MyJeepTraderModel.tPost" />
           <EntitySet Name="tPostsControls" EntityType="MyJeepTraderModel.tPostsControl" />
+          <EntitySet Name="tSubModels" EntityType="MyJeepTraderModel.tSubModel" />
           <EntitySet Name="tUserProfiles" EntityType="MyJeepTraderModel.tUserProfile" />
           <EntitySet Name="tVehicleProfileControls" EntityType="MyJeepTraderModel.tVehicleProfileControl" />
           <EntitySet Name="tVehicleProfiles" EntityType="MyJeepTraderModel.tVehicleProfile" />
+          <EntitySet Name="tYears" EntityType="MyJeepTraderModel.tYear" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="MyJeepTraderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -467,6 +579,22 @@
           <AssociationSet Name="FK_tPosts_tLocations" Association="MyJeepTraderModel.FK_tPosts_tLocations">
             <End Role="tLocation" EntitySet="tLocations" />
             <End Role="tPost" EntitySet="tPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tModel_tMake" Association="MyJeepTraderModel.FK_tModel_tMake">
+            <End Role="tMake" EntitySet="tMakes" />
+            <End Role="tModel" EntitySet="tModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tModelYearControl_tModelYearControl" Association="MyJeepTraderModel.FK_tModelYearControl_tModelYearControl">
+            <End Role="tModel" EntitySet="tModels" />
+            <End Role="tModelYearControl" EntitySet="tModelYearControls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tSubModel_tModel" Association="MyJeepTraderModel.FK_tSubModel_tModel">
+            <End Role="tModel" EntitySet="tModels" />
+            <End Role="tSubModel" EntitySet="tSubModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tModelYearControl_tYear" Association="MyJeepTraderModel.FK_tModelYearControl_tYear">
+            <End Role="tYear" EntitySet="tYears" />
+            <End Role="tModelYearControl" EntitySet="tModelYearControls" />
           </AssociationSet>
           <AssociationSet Name="FK_tPostsControl_tPosts" Association="MyJeepTraderModel.FK_tPostsControl_tPosts">
             <End Role="tPost" EntitySet="tPosts" />
@@ -585,6 +713,14 @@
           <Property Name="CountryId" Type="Int32" />
           <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tLocation" ToRole="tPost" />
         </EntityType>
+        <EntityType Name="tMake">
+          <Key>
+            <PropertyRef Name="MakeId" />
+          </Key>
+          <Property Name="MakeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Make" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="tModels" Relationship="MyJeepTraderModel.FK_tModel_tMake" FromRole="tMake" ToRole="tModel" />
+        </EntityType>
         <EntityType Name="tMembership">
           <Key>
             <PropertyRef Name="MembershipId" />
@@ -599,6 +735,27 @@
           <Property Name="Renewed" Type="Boolean" />
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="tMembership" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="tModel">
+          <Key>
+            <PropertyRef Name="ModelId" />
+          </Key>
+          <Property Name="ModelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MakeId" Type="Int32" />
+          <NavigationProperty Name="tMake" Relationship="MyJeepTraderModel.FK_tModel_tMake" FromRole="tModel" ToRole="tMake" />
+          <NavigationProperty Name="tModelYearControls" Relationship="MyJeepTraderModel.FK_tModelYearControl_tModelYearControl" FromRole="tModel" ToRole="tModelYearControl" />
+          <NavigationProperty Name="tSubModels" Relationship="MyJeepTraderModel.FK_tSubModel_tModel" FromRole="tModel" ToRole="tSubModel" />
+        </EntityType>
+        <EntityType Name="tModelYearControl">
+          <Key>
+            <PropertyRef Name="ModelYearControlId" />
+          </Key>
+          <Property Name="ModelYearControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YearId" Type="Int32" />
+          <Property Name="ModelId" Type="Int32" />
+          <NavigationProperty Name="tModel" Relationship="MyJeepTraderModel.FK_tModelYearControl_tModelYearControl" FromRole="tModelYearControl" ToRole="tModel" />
+          <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tModelYearControl_tYear" FromRole="tModelYearControl" ToRole="tYear" />
         </EntityType>
         <EntityType Name="tPost">
           <Key>
@@ -630,6 +787,15 @@
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPostsControl_AspNetUsers" FromRole="tPostsControl" ToRole="AspNetUser" />
           <NavigationProperty Name="tPost" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPostsControl" ToRole="tPost" />
+        </EntityType>
+        <EntityType Name="tSubModel">
+          <Key>
+            <PropertyRef Name="SubModelId" />
+          </Key>
+          <Property Name="SubModelId" Type="Int32" Nullable="false" />
+          <Property Name="SubModel" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ModelId" Type="Int32" />
+          <NavigationProperty Name="tModel" Relationship="MyJeepTraderModel.FK_tSubModel_tModel" FromRole="tSubModel" ToRole="tModel" />
         </EntityType>
         <EntityType Name="tUserProfile">
           <Key>
@@ -669,6 +835,14 @@
           <Property Name="Year" Type="DateTime" Precision="0" />
           <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfile" ToRole="tVehicleProfileControl" />
+        </EntityType>
+        <EntityType Name="tYear">
+          <Key>
+            <PropertyRef Name="YearId" />
+          </Key>
+          <Property Name="YearId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tModelYearControls" Relationship="MyJeepTraderModel.FK_tModelYearControl_tYear" FromRole="tYear" ToRole="tModelYearControl" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -779,6 +953,54 @@
             </Principal>
             <Dependent Role="tPost">
               <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tModel_tMake">
+          <End Type="MyJeepTraderModel.tMake" Role="tMake" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tModel" Role="tModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMake">
+              <PropertyRef Name="MakeId" />
+            </Principal>
+            <Dependent Role="tModel">
+              <PropertyRef Name="MakeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tModelYearControl_tModelYearControl">
+          <End Type="MyJeepTraderModel.tModel" Role="tModel" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tModelYearControl" Role="tModelYearControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tModel">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="tModelYearControl">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tSubModel_tModel">
+          <End Type="MyJeepTraderModel.tModel" Role="tModel" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tSubModel" Role="tSubModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tModel">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="tSubModel">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tModelYearControl_tYear">
+          <End Type="MyJeepTraderModel.tYear" Role="tYear" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tModelYearControl" Role="tModelYearControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tYear">
+              <PropertyRef Name="YearId" />
+            </Principal>
+            <Dependent Role="tModelYearControl">
+              <PropertyRef Name="YearId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -912,6 +1134,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tMakes">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tMake">
+              <MappingFragment StoreEntitySet="tMake">
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tMemberships">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tMembership">
               <MappingFragment StoreEntitySet="tMemberships">
@@ -924,6 +1154,24 @@
                 <ScalarProperty Name="FreeMembership" ColumnName="FreeMembership" />
                 <ScalarProperty Name="PaidMembership" ColumnName="PaidMembership" />
                 <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tModels">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tModel">
+              <MappingFragment StoreEntitySet="tModel">
+                <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tModelYearControls">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tModelYearControl">
+              <MappingFragment StoreEntitySet="tModelYearControl">
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
+                <ScalarProperty Name="ModelYearControlId" ColumnName="ModelYearControlId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -952,6 +1200,15 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="PostControlId" ColumnName="PostControlId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tSubModels">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tSubModel">
+              <MappingFragment StoreEntitySet="tSubModel">
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="SubModel" ColumnName="SubModel" />
+                <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -990,6 +1247,14 @@
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="Make" ColumnName="Make" />
                 <ScalarProperty Name="VehicleProfileId" ColumnName="VehicleProfileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tYears">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tYear">
+              <MappingFragment StoreEntitySet="tYear">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
