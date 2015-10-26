@@ -80,13 +80,5 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public void AddRole(string userId)
-        {
-            using (_context)
-            {
-                
-            }
-        }
-
     }// public class service
 } // namespace
