@@ -133,6 +133,7 @@
     <EntitySetMapping Name="tPosts">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
         <MappingFragment StoreEntitySet="tPosts">
+          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="VehicleYear" ColumnName="VehicleYear" />
@@ -229,5 +230,13 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="tPostTypes">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tPostType">
+        <MappingFragment StoreEntitySet="tPostType">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
