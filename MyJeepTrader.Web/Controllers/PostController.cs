@@ -46,10 +46,12 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult Create()
         {
             Service service = new Service();
-            PostCreateViewModel model = new PostCreateViewModel();
-            model.Models = service.GetAllModels();
+            PostCreateViewModel model = new PostCreateViewModel
+            {
+                Models = service.GetAllModels()
+            };
 
-            return View();
+            return View(model);
         }
 
         // POST: Post/Create
