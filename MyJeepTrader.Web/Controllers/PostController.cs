@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
+using MyJeepTrader.Web.Models;
 using MyJeepTrader.Web.ViewModels;
 
 //test comment.
@@ -44,6 +45,10 @@ namespace MyJeepTrader.Web.Controllers
         // GET: Post/Create
         public ActionResult Create()
         {
+            Service service = new Service();
+            PostCreateViewModel model = new PostCreateViewModel();
+            model.Models = service.GetAllModels();
+
             return View();
         }
 

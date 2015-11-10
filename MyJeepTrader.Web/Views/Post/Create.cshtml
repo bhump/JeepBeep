@@ -1,4 +1,4 @@
-﻿@model MyJeepTrader.Data.tPost
+﻿@model MyJeepTrader.Web.Models.PostCreateViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -66,13 +66,10 @@
         <div class="form-group">
             <label class="col-sm-2">Select Jeep Type:</label>
             <div class="col-sm-10" id="jeepTypeDiv">
-                <input type="checkbox"/> Wrangler <br/>
-                <input type="checkbox"/> Wrangler <br/>
-                <input type="checkbox"/> Wrangler <br/>
-                <input type="checkbox"/> Wrangler <br/>
-                <input type="checkbox"/> Wrangler <br/>
-                <input type="checkbox"/> Wrangler
-
+                @foreach (var m in Model.Models)
+                {
+                    <input type="checkbox" /> <label>@m.Model</label>
+                }
             </div>
         </div>
 
