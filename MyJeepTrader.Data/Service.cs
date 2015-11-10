@@ -80,21 +80,5 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public void AddRole(string userId)
-        {
-            using (_context)
-            {
-                
-            }
-        }
-
-        public IList<tModel> GetAllModels()
-        {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            return (from m in context.tModels select m).ToList();
-        }
-
-
-
     }// public class service
 } // namespace

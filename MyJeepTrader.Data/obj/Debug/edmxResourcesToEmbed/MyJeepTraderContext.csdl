@@ -85,6 +85,11 @@
       <End Role="AspNetRole" EntitySet="AspNetRoles" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <EntitySet Name="tPostTypes" EntityType="MyJeepTraderModel.tPostType" />
+    <AssociationSet Name="FK_tPosts_tPostType" Association="MyJeepTraderModel.FK_tPosts_tPostType">
+      <End Role="tPostType" EntitySet="tPostTypes" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -246,6 +251,8 @@
     <NavigationProperty Name="tImageControls" Relationship="MyJeepTraderModel.FK_tImageControl_tPosts" FromRole="tPost" ToRole="tImageControl" />
     <NavigationProperty Name="tLocation" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tPost" ToRole="tLocation" />
     <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPost" ToRole="tPostsControl" />
+    <Property Name="PostTypeId" Type="Int32" />
+    <NavigationProperty Name="tPostType" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPost" ToRole="tPostType" />
   </EntityType>
   <EntityType Name="tPostsControl">
     <Key>
@@ -508,5 +515,25 @@
   <Association Name="AspNetUserRoles">
     <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
     <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="tPostType">
+    <Key>
+      <PropertyRef Name="PostTypeId" />
+    </Key>
+    <Property Name="PostTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPostType" ToRole="tPost" />
+  </EntityType>
+  <Association Name="FK_tPosts_tPostType">
+    <End Type="MyJeepTraderModel.tPostType" Role="tPostType" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPostType">
+        <PropertyRef Name="PostTypeId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="PostTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

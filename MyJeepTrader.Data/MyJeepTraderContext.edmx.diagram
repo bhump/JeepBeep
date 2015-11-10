@@ -41,6 +41,8 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" />
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetRole" Width="1.5" PointX="0.75" PointY="10.875" />
         <AssociationConnector Association="MyJeepTraderModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tPostType" Width="1.5" PointX="0.75" PointY="8.25" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tPostType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -123,6 +123,9 @@
     <Compile Include="tPostsControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tPostType.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tSubModel.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>

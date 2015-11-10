@@ -157,6 +157,7 @@
           <Property Name="VehicleYear" Type="date" />
           <Property Name="Active" Type="bit" />
           <Property Name="LocationId" Type="int" />
+          <Property Name="PostTypeId" Type="int" />
         </EntityType>
         <EntityType Name="tPostsControl">
           <Key>
@@ -165,6 +166,13 @@
           <Property Name="PostControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostId" Type="int" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="tPostType">
+          <Key>
+            <PropertyRef Name="PostTypeId" />
+          </Key>
+          <Property Name="PostTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tSubModel">
           <Key>
@@ -356,6 +364,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tPosts_tPostType">
+          <End Role="tPostType" Type="Self.tPostType" Multiplicity="0..1" />
+          <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tPostType">
+              <PropertyRef Name="PostTypeId" />
+            </Principal>
+            <Dependent Role="tPosts">
+              <PropertyRef Name="PostTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tPostsControl_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
@@ -445,6 +465,7 @@
           <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPostsControl" EntityType="Self.tPostsControl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
@@ -492,6 +513,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_tPosts_tLocations" Association="Self.FK_tPosts_tLocations">
             <End Role="tLocations" EntitySet="tLocations" />
+            <End Role="tPosts" EntitySet="tPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPosts_tPostType" Association="Self.FK_tPosts_tPostType">
+            <End Role="tPostType" EntitySet="tPostType" />
             <End Role="tPosts" EntitySet="tPosts" />
           </AssociationSet>
           <AssociationSet Name="FK_tPostsControl_AspNetUsers" Association="Self.FK_tPostsControl_AspNetUsers">
@@ -607,6 +632,11 @@
           <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="tPostTypes" EntityType="MyJeepTraderModel.tPostType" />
+          <AssociationSet Name="FK_tPosts_tPostType" Association="MyJeepTraderModel.FK_tPosts_tPostType">
+            <End Role="tPostType" EntitySet="tPostTypes" />
+            <End Role="tPost" EntitySet="tPosts" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
@@ -769,6 +799,8 @@
           <NavigationProperty Name="tImageControls" Relationship="MyJeepTraderModel.FK_tImageControl_tPosts" FromRole="tPost" ToRole="tImageControl" />
           <NavigationProperty Name="tLocation" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tPost" ToRole="tLocation" />
           <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPost" ToRole="tPostsControl" />
+          <Property Name="PostTypeId" Type="Int32" />
+          <NavigationProperty Name="tPostType" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPost" ToRole="tPostType" />
         </EntityType>
         <EntityType Name="tPostsControl">
           <Key>
@@ -1032,6 +1064,26 @@
           <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="tPostType">
+          <Key>
+            <PropertyRef Name="PostTypeId" />
+          </Key>
+          <Property Name="PostTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPostType" ToRole="tPost" />
+        </EntityType>
+        <Association Name="FK_tPosts_tPostType">
+          <End Type="MyJeepTraderModel.tPostType" Role="tPostType" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tPostType">
+              <PropertyRef Name="PostTypeId" />
+            </Principal>
+            <Dependent Role="tPost">
+              <PropertyRef Name="PostTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1170,6 +1222,7 @@
           <EntitySetMapping Name="tPosts">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
               <MappingFragment StoreEntitySet="tPosts">
+                <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="VehicleYear" ColumnName="VehicleYear" />
@@ -1266,6 +1319,14 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tPostTypes">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tPostType">
+              <MappingFragment StoreEntitySet="tPostType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

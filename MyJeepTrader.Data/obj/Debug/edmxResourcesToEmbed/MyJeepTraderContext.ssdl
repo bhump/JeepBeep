@@ -152,6 +152,7 @@
     <Property Name="VehicleYear" Type="date" />
     <Property Name="Active" Type="bit" />
     <Property Name="LocationId" Type="int" />
+    <Property Name="PostTypeId" Type="int" />
   </EntityType>
   <EntityType Name="tPostsControl">
     <Key>
@@ -160,6 +161,13 @@
     <Property Name="PostControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PostId" Type="int" />
     <Property Name="Id" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="tPostType">
+    <Key>
+      <PropertyRef Name="PostTypeId" />
+    </Key>
+    <Property Name="PostTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tSubModel">
     <Key>
@@ -351,6 +359,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tPosts_tPostType">
+    <End Role="tPostType" Type="Self.tPostType" Multiplicity="0..1" />
+    <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPostType">
+        <PropertyRef Name="PostTypeId" />
+      </Principal>
+      <Dependent Role="tPosts">
+        <PropertyRef Name="PostTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tPostsControl_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
@@ -440,6 +460,7 @@
     <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPostsControl" EntityType="Self.tPostsControl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
@@ -487,6 +508,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_tPosts_tLocations" Association="Self.FK_tPosts_tLocations">
       <End Role="tLocations" EntitySet="tLocations" />
+      <End Role="tPosts" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tPostType" Association="Self.FK_tPosts_tPostType">
+      <End Role="tPostType" EntitySet="tPostType" />
       <End Role="tPosts" EntitySet="tPosts" />
     </AssociationSet>
     <AssociationSet Name="FK_tPostsControl_AspNetUsers" Association="Self.FK_tPostsControl_AspNetUsers">
