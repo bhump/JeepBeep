@@ -195,6 +195,7 @@
     <Compile Include="Models\PayPalIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DasbhoardIndexViewModel.cs" />
     <Compile Include="ViewModels\PostIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
