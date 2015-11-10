@@ -80,5 +80,10 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public IList<tModel> GetAllModels()
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            return (from m in context.tModels select m).ToList();
+        }
     }// public class service
 } // namespace
