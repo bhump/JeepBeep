@@ -16,7 +16,42 @@ namespace MyJeepTrader.Web.Controllers
 {
     public class DashboardController : Controller
     {
+        private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        public DashboardController()
+        {
+        }
+
+        public DashboardController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Dashboard
         [Authorize]
@@ -61,24 +96,31 @@ namespace MyJeepTrader.Web.Controllers
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                //return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
-            //AddErrors(result);
+            AddErrors(result);
             return View(model);
         }
 
-        public ApplicationUserManager UserManager
+        private void AddErrors(IdentityResult result)
         {
-            get
+            foreach (var error in result.Errors)
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ModelState.AddModelError("", error);
             }
-            private set
-            {
-                _userManager = value;
-            }
+        }
+
+        public enum ManageMessageId
+        {
+            AddPhoneSuccess,
+            ChangePasswordSuccess,
+            SetTwoFactorSuccess,
+            SetPasswordSuccess,
+            RemoveLoginSuccess,
+            RemovePhoneSuccess,
+            Error
         }
     }
 }
