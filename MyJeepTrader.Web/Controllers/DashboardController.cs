@@ -22,28 +22,51 @@ namespace MyJeepTrader.Web.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            DasbhoardIndexViewModel model = new DasbhoardIndexViewModel
+            var user = UserManager.FindByName(User.Identity.Name);
+
+            DashboardIndexViewModel model = new DashboardIndexViewModel
             {
-                Username = User.Identity.Name
+                Email = user.Email
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateUserInfo(DasbhoardIndexViewModel model)
+        public async Task<ActionResult> ChangeEmail(DashboardIndexViewModel model)
         {
-            using(var context = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
-                if(ModelState.IsValid)
-                {
-                    var user = await UserManager.FindByNameAsync(User.Identity.Name);
-                    user.UserName = model.Username;
-                    await UserManager.UpdateAsync(user);
-                }
+                //if (ModelState.IsValid)
+                //{
+                var user = await UserManager.FindByNameAsync(User.Identity.Name);
+                user.Email = model.Email;
+                await UserManager.UpdateAsync(user);
+                //}
             }
-            //i hate mvc.
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(DashboardIndexViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                //return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+            }
+            //AddErrors(result);
+            return View(model);
         }
 
         public ApplicationUserManager UserManager
