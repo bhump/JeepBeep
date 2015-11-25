@@ -104,6 +104,41 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult CreateUserProfile(FormCollection collection)
+        {
+
+            var user = UserManager.FindByName(User.Identity.Name);
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+
+                var firstName = collection["FirstName"].ToString();
+                var lastName = collection["LastName"].ToString();
+                var birthDate = Convert.ToDateTime(collection["BirthDate"].ToString());
+                var avatar = collection["Avatar"].ToString();
+                var description = collection["Description"].ToString();
+                var facebook = collection["Facebook"].ToString();
+                var twitter = collection["Twitter"].ToString();
+                var ello = collection["Ello"].ToString();
+                var googlePlus = collection["GooglePlus"].ToString();
+                var website = collection["Website"].ToString();
+
+                Service service = new Service();
+                service.CreateProfile(user.Id, firstName, lastName, birthDate, description, facebook, twitter, ello, googlePlus, website);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

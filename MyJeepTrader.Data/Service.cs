@@ -80,6 +80,28 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public void CreateProfile(string userId, string firstName, string lastName, DateTime birthDate, string description, string facebook, string twitter, string ello, string google, string website)
+        {
+            using (_context)
+            {
+                tUserProfile userProfile = new tUserProfile
+                {
+                    Id = userId,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    BirthDate = birthDate,
+                    Description = description,
+                    Facebook = facebook,
+                    Twitter = twitter,
+                    Ello = ello,
+                    GooglePlus = google,
+                    Website = website
+                };
+                _context.tUserProfiles.Add(userProfile);
+                _context.SaveChanges();
+            }
+        }
+
         public IList<tModel> GetAllModels()
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
