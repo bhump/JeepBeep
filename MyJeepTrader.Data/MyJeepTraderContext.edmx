@@ -225,6 +225,8 @@
           <Property Name="Year" Type="date" />
           <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Image" Type="binary" MaxLength="50" />
+          <Property Name="DefaultJeep" Type="bit" />
         </EntityType>
         <EntityType Name="tYear">
           <Key>
@@ -981,6 +983,8 @@
           <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfile" ToRole="tVehicleProfileControl" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="Binary" MaxLength="50" FixedLength="true" />
+          <Property Name="DefaultJeep" Type="Boolean" />
         </EntityType>
         <EntityType Name="tYear">
           <Key>
@@ -1480,6 +1484,8 @@
           <EntitySetMapping Name="tVehicleProfiles">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tVehicleProfile">
               <MappingFragment StoreEntitySet="tVehicleProfiles">
+                <ScalarProperty Name="DefaultJeep" ColumnName="DefaultJeep" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
                 <ScalarProperty Name="Year" ColumnName="Year" />

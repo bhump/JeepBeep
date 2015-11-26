@@ -25,6 +25,8 @@ namespace MyJeepTrader.Data
         public Nullable<System.DateTime> Year { get; set; }
         public string Manufacturer { get; set; }
         public string Description { get; set; }
+        public byte[] Image { get; set; }
+        public Nullable<bool> DefaultJeep { get; set; }
     
         public virtual ICollection<tVehicleProfileControl> tVehicleProfileControls { get; set; }
     }

@@ -46,21 +46,43 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "About you")]
         public string Description { get; set; }
-        
+
         [Display(Name = "Facebook url")]
         public string Facebook { get; set; }
-        
+
         [Display(Name = "Twitter url")]
         public string Twitter { get; set; }
-        
+
         [Display(Name = "Ello url")]
         public string Ello { get; set; }
-        
+
         [Display(Name = "Google+ url")]
         public string GooglePlus { get; set; }
 
         [Display(Name = "Your website")]
         public string Website { get; set; }
+        #endregion
+
+        #region jeep profile
+
+        [Display(Name = "Manufactuer")]
+        public string Manufactuer { get; set; }
+
+        [Display(Name = "Make")]
+        public string Make { get; set; }
+
+        [Display(Name = "Model")]
+        public string Model { get; set; }
+
+        [Display(Name = "Year")]
+        public string Year { get; set; }
+
+        [Display(Name = "Description")]
+        public string JeepDescription { get; set; }
+
+        [Display(Name = "Jeep Image")]
+        public byte[] Image { get; set; }
+
         #endregion
     }
 }
