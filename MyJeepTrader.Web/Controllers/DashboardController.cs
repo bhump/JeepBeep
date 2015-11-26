@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using MyJeepTrader.Web.ViewModels;
 using MyJeepTrader.Web.Models;
 using System.Threading.Tasks;
+using System.Text;
+using System.Globalization;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -59,10 +61,21 @@ namespace MyJeepTrader.Web.Controllers
         {
             var user = UserManager.FindByName(User.Identity.Name);
 
-            DashboardIndexViewModel model = new DashboardIndexViewModel
-            {
-                Email = user.Email
-            };
+            Service service = new Service();
+            var profileInfo = service.GetProfileInfo(user.Id);
+
+            DashboardIndexViewModel model = new DashboardIndexViewModel();
+            
+                model.Email = user.Email;
+                model.FirstName = profileInfo == null ? "" : profileInfo.FirstName;
+                model.LastName = profileInfo == null ? "" : profileInfo.LastName;
+                model.Description = profileInfo == null ? "" : profileInfo.Description;
+                model.BirthDate = profileInfo == null ? DateTime.Now : Convert.ToDateTime(profileInfo.BirthDate);
+                model.Facebook = profileInfo == null ? "" : profileInfo.Facebook;
+                model.Twitter = profileInfo == null ? "" : profileInfo.Twitter;
+                model.GooglePlus = profileInfo == null ? "" : profileInfo.GooglePlus;
+                model.Website = profileInfo == null ? "" : profileInfo.Website;
+                model.Ello = profileInfo == null ? "" : profileInfo.Ello;
 
             return View(model);
         }
@@ -105,10 +118,12 @@ namespace MyJeepTrader.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateUserProfile(FormCollection collection)
+        public ActionResult CreateUserProfile(FormCollection collection, HttpPostedFileBase fileUpload)
         {
+            Service service = new Service();
 
             var user = UserManager.FindByName(User.Identity.Name);
+
             try
             {
 
@@ -120,7 +135,7 @@ namespace MyJeepTrader.Web.Controllers
                 var firstName = collection["FirstName"].ToString();
                 var lastName = collection["LastName"].ToString();
                 var birthDate = Convert.ToDateTime(collection["BirthDate"].ToString());
-                var avatar = collection["Avatar"].ToString();
+                var avatar = Encoding.ASCII.GetBytes(Request.Files[0].ToString());
                 var description = collection["Description"].ToString();
                 var facebook = collection["Facebook"].ToString();
                 var twitter = collection["Twitter"].ToString();
@@ -128,8 +143,14 @@ namespace MyJeepTrader.Web.Controllers
                 var googlePlus = collection["GooglePlus"].ToString();
                 var website = collection["Website"].ToString();
 
-                Service service = new Service();
-                service.CreateProfile(user.Id, firstName, lastName, birthDate, description, facebook, twitter, ello, googlePlus, website);
+                if (service.CheckForProfile(user.Id) == false)
+                {
+                    service.CreateProfile(user.Id, firstName, lastName, birthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
+                }
+                else
+                {
+                    service.UpdateProfile(user.Id, firstName, lastName, birthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
+                }
 
                 return RedirectToAction("Index");
             }

@@ -38,10 +38,11 @@ namespace MyJeepTrader.Web.ViewModels
         public string LastName { get; set; }
 
         [Display(Name = "Birth date")]
-        public DateTime BirthDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Avatar")]
-        public byte Avatar { get; set; }
+        public byte[] Avatar { get; set; }
 
         [Display(Name = "About you")]
         public string Description { get; set; }
