@@ -24,6 +24,7 @@ namespace MyJeepTrader.Data
         public string Model { get; set; }
         public Nullable<System.DateTime> Year { get; set; }
         public string Manufacturer { get; set; }
+        public string Description { get; set; }
     
         public virtual ICollection<tVehicleProfileControl> tVehicleProfileControls { get; set; }
     }

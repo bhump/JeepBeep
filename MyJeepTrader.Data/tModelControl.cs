@@ -12,18 +12,13 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tYear
+    public partial class tModelControl
     {
-        public tYear()
-        {
-            this.tModelYearControls = new HashSet<tModelYearControl>();
-            this.tPosts = new HashSet<tPost>();
-        }
+        public int ModelControlId { get; set; }
+        public Nullable<int> ModelId { get; set; }
+        public Nullable<int> PostId { get; set; }
     
-        public int YearId { get; set; }
-        public string Year { get; set; }
-    
-        public virtual ICollection<tModelYearControl> tModelYearControls { get; set; }
-        public virtual ICollection<tPost> tPosts { get; set; }
+        public virtual tModel tModel { get; set; }
+        public virtual tPost tPost { get; set; }
     }
 }

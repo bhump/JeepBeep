@@ -46,5 +46,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tYear> tYears { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<tPostType> tPostTypes { get; set; }
+        public virtual DbSet<tModelControl> tModelControls { get; set; }
     }
 }
