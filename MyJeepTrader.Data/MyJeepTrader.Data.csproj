@@ -114,6 +114,9 @@
     <Compile Include="tModel.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tModelControl.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tModelYearControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>

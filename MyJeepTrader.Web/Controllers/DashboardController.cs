@@ -160,6 +160,45 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult CreateJeepProfile(FormCollection collection, HttpPostedFileBase fileUpload)
+        {
+            Service service = new Service();
+
+            var user = UserManager.FindByName(User.Identity.Name);
+
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+
+                var manufactuer = collection["Manufactuer"].ToString();
+                var make = collection["Make"].ToString();
+                var model = collection["Model"].ToString();
+                var jeepImage = Encoding.ASCII.GetBytes(Request.Files[0].ToString());
+                var jeepDescription = collection["JeepDescription"].ToString();
+                var defaultJeep = Convert.ToBoolean(collection["DefaultJeep"].ToString());
+
+               // if (service.CheckForProfile(user.Id) == false)
+               // {
+                    service.CreateJeepProfile(user.Id, manufactuer, make, model, jeepImage, jeepDescription, defaultJeep);
+               // }
+               // else
+               // {
+                    //service.UpdateProfile(user.Id, firstName, lastName, birthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
+                //}
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

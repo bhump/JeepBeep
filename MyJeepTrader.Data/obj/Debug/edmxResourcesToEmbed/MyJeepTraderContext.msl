@@ -133,12 +133,12 @@
     <EntitySetMapping Name="tPosts">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
         <MappingFragment StoreEntitySet="tPosts">
+          <ScalarProperty Name="YearId" ColumnName="YearId" />
+          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
+          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
           <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="VehicleYear" ColumnName="VehicleYear" />
-          <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
-          <ScalarProperty Name="VehicleMake" ColumnName="VehicleMake" />
           <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
           <ScalarProperty Name="PartName" ColumnName="PartName" />
           <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
@@ -198,6 +198,9 @@
     <EntitySetMapping Name="tVehicleProfiles">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tVehicleProfile">
         <MappingFragment StoreEntitySet="tVehicleProfiles">
+          <ScalarProperty Name="DefaultJeep" ColumnName="DefaultJeep" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Model" ColumnName="Model" />
@@ -235,6 +238,15 @@
         <MappingFragment StoreEntitySet="tPostType">
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tModelControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelControl">
+        <MappingFragment StoreEntitySet="tModelControl">
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="ModelControlId" ColumnName="ModelControlId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

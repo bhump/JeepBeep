@@ -17,8 +17,8 @@ namespace MyJeepTrader.Data
         public tPost()
         {
             this.tImageControls = new HashSet<tImageControl>();
-            this.tPostsControls = new HashSet<tPostsControl>();
             this.tModelControls = new HashSet<tModelControl>();
+            this.tPostsControls = new HashSet<tPostsControl>();
         }
     
         public int PostId { get; set; }
@@ -29,23 +29,20 @@ namespace MyJeepTrader.Data
         public string PartBrand { get; set; }
         public string PartName { get; set; }
         public Nullable<bool> Vehicle { get; set; }
-        public string VehicleMake { get; set; }
-        public string VehicleModel { get; set; }
-        public Nullable<System.DateTime> VehicleYear { get; set; }
-        public Nullable<bool> Active { get; set; }
-        public Nullable<int> LocationId { get; set; }
-        public Nullable<int> PostTypeId { get; set; }
         public Nullable<int> MakeId { get; set; }
         public Nullable<int> SubModelId { get; set; }
         public Nullable<int> YearId { get; set; }
+        public Nullable<bool> Active { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public Nullable<int> PostTypeId { get; set; }
     
         public virtual ICollection<tImageControl> tImageControls { get; set; }
         public virtual tLocation tLocation { get; set; }
-        public virtual ICollection<tPostsControl> tPostsControls { get; set; }
-        public virtual tPostType tPostType { get; set; }
         public virtual tMake tMake { get; set; }
         public virtual ICollection<tModelControl> tModelControls { get; set; }
+        public virtual tPostType tPostType { get; set; }
         public virtual tSubModel tSubModel { get; set; }
         public virtual tYear tYear { get; set; }
+        public virtual ICollection<tPostsControl> tPostsControls { get; set; }
     }
 }

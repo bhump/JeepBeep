@@ -141,5 +141,32 @@ namespace MyJeepTrader.Data
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             return (from m in context.tModels select m).ToList();
         }
+
+        public void CreateJeepProfile(string userId, string manufactuer, string make, string model, byte[] jeepImage, string jeepDescription, bool defaultJeep)
+        {
+            using (_context)
+            {
+                tVehicleProfile jeep = new tVehicleProfile
+                {
+                    Manufacturer = manufactuer,
+                    Make = make,
+                    Model = model,
+                    Image = jeepImage,
+                    Description = jeepDescription,
+                    DefaultJeep = defaultJeep
+                };
+
+                tVehicleProfileControl jeepControl = new tVehicleProfileControl
+                {
+                    VehicleProfileId = jeep.VehicleProfileId,
+                    Id = userId
+                };
+
+                _context.tVehicleProfiles.Add(jeep);
+                _context.tVehicleProfileControls.Add(jeepControl);
+                _context.SaveChanges();
+            }
+        }
+
     }// public class service
 } // namespace
