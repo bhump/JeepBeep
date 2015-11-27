@@ -22,11 +22,11 @@ namespace MyJeepTrader.Data
         public int VehicleProfileId { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
-        public Nullable<System.DateTime> Year { get; set; }
+        public Nullable<short> Year { get; set; }
         public string Manufacturer { get; set; }
         public string Description { get; set; }
         public byte[] Image { get; set; }
-        public Nullable<bool> DefaultJeep { get; set; }
+        public Nullable<bool> PrimaryJeep { get; set; }
     
         public virtual ICollection<tVehicleProfileControl> tVehicleProfileControls { get; set; }
     }

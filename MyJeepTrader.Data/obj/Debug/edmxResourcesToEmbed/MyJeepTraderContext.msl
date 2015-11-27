@@ -130,26 +130,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tPosts">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
-        <MappingFragment StoreEntitySet="tPosts">
-          <ScalarProperty Name="YearId" ColumnName="YearId" />
-          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
-          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
-          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
-          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
-          <ScalarProperty Name="PartName" ColumnName="PartName" />
-          <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
-          <ScalarProperty Name="PartType" ColumnName="PartType" />
-          <ScalarProperty Name="Part" ColumnName="Part" />
-          <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
-          <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
-          <ScalarProperty Name="PostId" ColumnName="PostId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tPostsControls">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tPostsControl">
         <MappingFragment StoreEntitySet="tPostsControl">
@@ -195,20 +175,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tVehicleProfiles">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tVehicleProfile">
-        <MappingFragment StoreEntitySet="tVehicleProfiles">
-          <ScalarProperty Name="DefaultJeep" ColumnName="DefaultJeep" />
-          <ScalarProperty Name="Image" ColumnName="Image" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
-          <ScalarProperty Name="Model" ColumnName="Model" />
-          <ScalarProperty Name="Make" ColumnName="Make" />
-          <ScalarProperty Name="VehicleProfileId" ColumnName="VehicleProfileId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tYears">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tYear">
         <MappingFragment StoreEntitySet="tYear">
@@ -247,6 +213,40 @@
           <ScalarProperty Name="PostId" ColumnName="PostId" />
           <ScalarProperty Name="ModelId" ColumnName="ModelId" />
           <ScalarProperty Name="ModelControlId" ColumnName="ModelControlId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tPosts">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
+        <MappingFragment StoreEntitySet="tPosts">
+          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="YearId" ColumnName="YearId" />
+          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
+          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+          <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
+          <ScalarProperty Name="PartName" ColumnName="PartName" />
+          <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
+          <ScalarProperty Name="PartType" ColumnName="PartType" />
+          <ScalarProperty Name="Part" ColumnName="Part" />
+          <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
+          <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tVehicleProfiles">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tVehicleProfile">
+        <MappingFragment StoreEntitySet="tVehicleProfiles">
+          <ScalarProperty Name="PrimaryJeep" ColumnName="PrimaryJeep" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Make" ColumnName="Make" />
+          <ScalarProperty Name="VehicleProfileId" ColumnName="VehicleProfileId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

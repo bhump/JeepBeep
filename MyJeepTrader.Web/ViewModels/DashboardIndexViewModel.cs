@@ -75,7 +75,10 @@ namespace MyJeepTrader.Web.ViewModels
         public string Model { get; set; }
 
         [Display(Name = "Year")]
-        public string Year { get; set; }
+        public short Year { get; set; }
+
+        [Display(Name = "Primary Jeep")]
+        public bool PrimaryJeep { get; set; }
 
         [Display(Name = "Description")]
         public string JeepDescription { get; set; }

@@ -63,19 +63,27 @@ namespace MyJeepTrader.Web.Controllers
 
             Service service = new Service();
             var profileInfo = service.GetProfileInfo(user.Id);
+            var jeepInfo = service.GetPrimaryJeepInfo(user.Id);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
-            
-                model.Email = user.Email;
-                model.FirstName = profileInfo == null ? "" : profileInfo.FirstName;
-                model.LastName = profileInfo == null ? "" : profileInfo.LastName;
-                model.Description = profileInfo == null ? "" : profileInfo.Description;
-                model.BirthDate = profileInfo == null ? DateTime.Now : Convert.ToDateTime(profileInfo.BirthDate);
-                model.Facebook = profileInfo == null ? "" : profileInfo.Facebook;
-                model.Twitter = profileInfo == null ? "" : profileInfo.Twitter;
-                model.GooglePlus = profileInfo == null ? "" : profileInfo.GooglePlus;
-                model.Website = profileInfo == null ? "" : profileInfo.Website;
-                model.Ello = profileInfo == null ? "" : profileInfo.Ello;
+
+            model.Email = user.Email;
+            model.FirstName = profileInfo == null ? "" : profileInfo.FirstName;
+            model.LastName = profileInfo == null ? "" : profileInfo.LastName;
+            model.Description = profileInfo == null ? "" : profileInfo.Description;
+            model.BirthDate = profileInfo == null ? DateTime.Now : Convert.ToDateTime(profileInfo.BirthDate);
+            model.Facebook = profileInfo == null ? "" : profileInfo.Facebook;
+            model.Twitter = profileInfo == null ? "" : profileInfo.Twitter;
+            model.GooglePlus = profileInfo == null ? "" : profileInfo.GooglePlus;
+            model.Website = profileInfo == null ? "" : profileInfo.Website;
+            model.Ello = profileInfo == null ? "" : profileInfo.Ello;
+
+            model.Manufactuer = jeepInfo == null ? "" : jeepInfo.Manufacturer;
+            model.Make = jeepInfo == null ? "" : jeepInfo.Make;
+            model.Model = jeepInfo == null ? "" : jeepInfo.Model;
+            model.Year = jeepInfo == null ? Convert.ToInt16(0) : Convert.ToInt16(jeepInfo.Year);
+            model.JeepDescription = jeepInfo == null ? "" : jeepInfo.Description;
+            model.PrimaryJeep = jeepInfo == null ? false : Convert.ToBoolean(jeepInfo.PrimaryJeep);
 
             return View(model);
         }
@@ -178,18 +186,19 @@ namespace MyJeepTrader.Web.Controllers
                 var manufactuer = collection["Manufactuer"].ToString();
                 var make = collection["Make"].ToString();
                 var model = collection["Model"].ToString();
+                var year = Convert.ToInt16(collection["Year"].ToString());
                 var jeepImage = Encoding.ASCII.GetBytes(Request.Files[0].ToString());
                 var jeepDescription = collection["JeepDescription"].ToString();
-                var defaultJeep = Convert.ToBoolean(collection["DefaultJeep"].ToString());
+                bool primaryJeep = Convert.ToBoolean(collection["PrimaryJeep"].Split(',')[0]);
 
-               // if (service.CheckForProfile(user.Id) == false)
-               // {
-                    service.CreateJeepProfile(user.Id, manufactuer, make, model, jeepImage, jeepDescription, defaultJeep);
-               // }
-               // else
-               // {
-                    //service.UpdateProfile(user.Id, firstName, lastName, birthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
-                //}
+                if (service.CheckForPrimaryJeep(user.Id) == false)
+                {
+                    service.CreatePrimaryJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, primaryJeep);
+                }
+                else
+                {
+                    service.UpdatePrimaryJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, primaryJeep);
+                }
 
                 return RedirectToAction("Index");
             }

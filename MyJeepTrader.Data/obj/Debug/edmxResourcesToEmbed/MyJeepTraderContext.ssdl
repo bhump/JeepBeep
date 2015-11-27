@@ -217,11 +217,11 @@
     <Property Name="VehicleProfileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Make" Type="varchar" MaxLength="50" />
     <Property Name="Model" Type="varchar" MaxLength="50" />
-    <Property Name="Year" Type="date" />
+    <Property Name="Year" Type="smallint" />
     <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
     <Property Name="Description" Type="varchar(max)" />
     <Property Name="Image" Type="binary" MaxLength="50" />
-    <Property Name="DefaultJeep" Type="bit" />
+    <Property Name="PrimaryJeep" Type="bit" />
   </EntityType>
   <EntityType Name="tYear">
     <Key>
