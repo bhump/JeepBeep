@@ -106,9 +106,10 @@ namespace MyJeepTrader.Web.ViewModels
         [Display(Name = "Read On")]
         public DateTime DateRead { get; set; }
 
-        public IEnumerable<tMessage> SentMessages { get; set; }
+        public List<MyJeepTrader.Data.Service.SentMessages> SentMessages { get; set; }
 
-        public IEnumerable<tMessageControl> MessageControl { get; set; }
+        //public IEnumerable<tMessageControl> MessageControl { get; set; }
+
         #endregion
     }
 }

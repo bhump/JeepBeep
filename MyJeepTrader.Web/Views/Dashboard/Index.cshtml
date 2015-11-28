@@ -199,6 +199,7 @@
         </ul>
         <div class="tab-content">
             <div id="Inbox" class="tab-pane fade in active">
+                <label>Empty</label>
             </div>
             <div id="CreateMessage" class="tab-pane fade">
                 @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
@@ -228,7 +229,7 @@
                     </div>
                 }
             </div>
-            <div id="Sent Messages" class="tab-pane fade">
+            <div id="SentMessages" class="tab-pane fade">
                 @if (Model.SentMessages != null)
                 {
                     <table class="table">
@@ -243,7 +244,7 @@
                         {
                             <tr>
                                 <td>@item.DateSent</td>
-                                <td></td>
+                                <td>@item.To</td>
                                 <td>@item.Subject</td>
                                 <td>@item.Message</td>
                             </tr>

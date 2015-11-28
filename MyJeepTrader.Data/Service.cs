@@ -253,5 +253,41 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public List<SentMessages> GetSentMessages(string userId)
+        {
+            using (_context)
+            {
+                var sentMessages = (from m in _context.tMessages
+                                    join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
+                                    join u in _context.AspNetUsers on mc.ToUserId equals u.Id
+                                    where mc.FromUserId == userId
+                                    select new SentMessages { Subject = m.Subject, Message = m.Message, DateSent = m.DateSent, DateRead = m.DateRead, MessageId = m.MessageId, From = mc.FromUserId, To = u.UserName }).ToList();
+
+                return sentMessages;
+            }
+        }
+
+        public class SentMessages
+        {
+            public SentMessages()
+            {
+
+            }
+
+            public int MessageId { get; set; }
+
+            public string To { get; set; }
+
+            public string From { get; set; }
+
+            public string Subject { get; set; }
+
+            public string Message { get; set; }
+
+            public DateTime? DateSent { get; set; }
+
+            public DateTime? DateRead { get; set; }
+        }
+
     }// public class service
 } // namespace

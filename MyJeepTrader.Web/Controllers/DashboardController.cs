@@ -85,6 +85,9 @@ namespace MyJeepTrader.Web.Controllers
             model.JeepDescription = jeepInfo == null ? "" : jeepInfo.Description;
             model.PrimaryJeep = jeepInfo == null ? false : Convert.ToBoolean(jeepInfo.PrimaryJeep);
 
+            model.SentMessages = service.GetSentMessages(user.Id);
+            
+            
             return View(model);
         }
 
