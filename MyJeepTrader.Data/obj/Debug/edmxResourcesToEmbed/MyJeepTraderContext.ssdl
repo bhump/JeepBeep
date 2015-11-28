@@ -119,6 +119,25 @@
     <Property Name="Renewed" Type="bit" />
     <Property Name="Id" Type="nvarchar" MaxLength="128" />
   </EntityType>
+  <EntityType Name="tMessageControl">
+    <Key>
+      <PropertyRef Name="MessageControlId" />
+    </Key>
+    <Property Name="MessageControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ToUserId" Type="nvarchar" MaxLength="128" />
+    <Property Name="FromUserId" Type="nvarchar" MaxLength="128" />
+    <Property Name="MessageId" Type="int" />
+  </EntityType>
+  <EntityType Name="tMessages">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subject" Type="varchar" MaxLength="50" />
+    <Property Name="Message" Type="varchar(max)" />
+    <Property Name="DateSent" Type="date" />
+    <Property Name="DateRead" Type="date" />
+  </EntityType>
   <EntityType Name="tModel">
     <Key>
       <PropertyRef Name="ModelId" />
@@ -319,6 +338,18 @@
       </Principal>
       <Dependent Role="tMemberships">
         <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tMessageControl_tMessages">
+    <End Role="tMessages" Type="Self.tMessages" Multiplicity="0..1" />
+    <End Role="tMessageControl" Type="Self.tMessageControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tMessages">
+        <PropertyRef Name="MessageId" />
+      </Principal>
+      <Dependent Role="tMessageControl">
+        <PropertyRef Name="MessageId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -527,6 +558,8 @@
     <EntitySet Name="tLocations" EntityType="Self.tLocations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tMake" EntityType="Self.tMake" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tMemberships" EntityType="Self.tMemberships" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tMessageControl" EntityType="Self.tMessageControl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tMessages" EntityType="Self.tMessages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModel" EntityType="Self.tModel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelControl" EntityType="Self.tModelControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
@@ -565,6 +598,10 @@
     <AssociationSet Name="FK_tMemberships_AspNetUsers" Association="Self.FK_tMemberships_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="tMemberships" EntitySet="tMemberships" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tMessageControl_tMessages" Association="Self.FK_tMessageControl_tMessages">
+      <End Role="tMessages" EntitySet="tMessages" />
+      <End Role="tMessageControl" EntitySet="tMessageControl" />
     </AssociationSet>
     <AssociationSet Name="FK_tModel_tMake" Association="Self.FK_tModel_tMake">
       <End Role="tMake" EntitySet="tMake" />

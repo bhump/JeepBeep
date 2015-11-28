@@ -126,6 +126,7 @@ namespace MyJeepTrader.Data
             var noProfile = (from up in context.tUserProfiles where up.Id == userId select up).Any();
             return noProfile;
         }
+
         public tUserProfile GetProfileInfo(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
@@ -201,7 +202,6 @@ namespace MyJeepTrader.Data
             return post.PostId;
         }
 
-
         public tVehicleProfile GetPrimaryJeepInfo(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
@@ -227,17 +227,31 @@ namespace MyJeepTrader.Data
             return (from y in context.tYears select y).ToList();
         }
 
+        public void CreateMessage(string toUser, string fromUserId, string subject, string message)
+        {
+            using(_context)
+            {
+                string toUserId = (from u in _context.AspNetUsers where u.UserName == toUser select u.Id).FirstOrDefault();
 
+                tMessage mess  = new tMessage
+                {
+                    Subject = subject,
+                    Message = message,
+                    DateSent = DateTime.Now
+                };
 
+                tMessageControl messControl = new tMessageControl
+                {
+                    ToUserId = toUserId,
+                    FromUserId = fromUserId,
+                    MessageId = mess.MessageId
+                };
 
-
-
-
-
-
-
-
-
+                _context.tMessages.Add(mess);
+                _context.tMessageControls.Add(messControl);
+                _context.SaveChanges();
+            }
+        }
 
     }// public class service
 } // namespace

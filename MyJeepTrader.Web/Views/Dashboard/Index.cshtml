@@ -190,5 +190,47 @@
             </div>
         }
     </div>
-</div>
+    <div class="form-group">
+        <h2>Your Mailbox</h2>
+        <ul class="nav nav-pills">
+            <li class="active"><a data-toggle="pill" href="#Inbox">Inbox</a></li>
+            <li><a data-toggle="pill" href="#CreateMessage">Create Message</a></li>
+            <li><a data-toggle="pill" href="#SentMessages">Sent Messages</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="Inbox" class="tab-pane fade in active">
+            </div>
+            <div id="CreateMessage" class="tab-pane fade">
+                @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.To, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Subject, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Message, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Send Message" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="Sent Messages" class="tab-pane fade">
 
+            </div>
+        </div>
+    </div>
+</div>

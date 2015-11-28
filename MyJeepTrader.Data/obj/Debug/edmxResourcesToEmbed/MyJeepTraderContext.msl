@@ -11,6 +11,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserClaims">
       <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetUserClaim">
         <MappingFragment StoreEntitySet="AspNetUserClaims">
@@ -100,15 +108,36 @@
     <EntitySetMapping Name="tMemberships">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tMembership">
         <MappingFragment StoreEntitySet="tMemberships">
-          <ScalarProperty Name="BasicMembership" ColumnName="BasicMembership" />
-          <ScalarProperty Name="PremiumMembership" ColumnName="PremiumMembership" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Renewed" ColumnName="Renewed" />
           <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="Expired" ColumnName="Expired" />
           <ScalarProperty Name="MemberSince" ColumnName="MemberSince" />
+          <ScalarProperty Name="BasicMembership" ColumnName="BasicMembership" />
+          <ScalarProperty Name="PremiumMembership" ColumnName="PremiumMembership" />
           <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tMessageControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessageControl">
+        <MappingFragment StoreEntitySet="tMessageControl">
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+          <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+          <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
+          <ScalarProperty Name="MessageControlId" ColumnName="MessageControlId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tMessages">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessage">
+        <MappingFragment StoreEntitySet="tMessages">
+          <ScalarProperty Name="DateRead" ColumnName="DateRead" />
+          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -121,6 +150,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tModelControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelControl">
+        <MappingFragment StoreEntitySet="tModelControl">
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="ModelControlId" ColumnName="ModelControlId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tModelYearControls">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tModelYearControl">
         <MappingFragment StoreEntitySet="tModelYearControl">
@@ -130,12 +168,40 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tPosts">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
+        <MappingFragment StoreEntitySet="tPosts">
+          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="YearId" ColumnName="YearId" />
+          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
+          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+          <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
+          <ScalarProperty Name="PartName" ColumnName="PartName" />
+          <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
+          <ScalarProperty Name="PartType" ColumnName="PartType" />
+          <ScalarProperty Name="Part" ColumnName="Part" />
+          <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
+          <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tPostsControls">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tPostsControl">
         <MappingFragment StoreEntitySet="tPostsControl">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PostId" ColumnName="PostId" />
           <ScalarProperty Name="PostControlId" ColumnName="PostControlId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tPostTypes">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tPostType">
+        <MappingFragment StoreEntitySet="tPostType">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -175,67 +241,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tYears">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tYear">
-        <MappingFragment StoreEntitySet="tYear">
-          <ScalarProperty Name="Year" ColumnName="Year" />
-          <ScalarProperty Name="YearId" ColumnName="YearId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AspNetRoles">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetRole">
-        <MappingFragment StoreEntitySet="AspNetRoles">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="AspNetUserRoles" TypeName="MyJeepTraderModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-      <EndProperty Name="AspNetUser">
-        <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-      <EndProperty Name="AspNetRole">
-        <ScalarProperty Name="Id" ColumnName="RoleId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <EntitySetMapping Name="tPostTypes">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tPostType">
-        <MappingFragment StoreEntitySet="tPostType">
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tModelControls">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelControl">
-        <MappingFragment StoreEntitySet="tModelControl">
-          <ScalarProperty Name="PostId" ColumnName="PostId" />
-          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
-          <ScalarProperty Name="ModelControlId" ColumnName="ModelControlId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tPosts">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
-        <MappingFragment StoreEntitySet="tPosts">
-          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
-          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="YearId" ColumnName="YearId" />
-          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
-          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
-          <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
-          <ScalarProperty Name="PartName" ColumnName="PartName" />
-          <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
-          <ScalarProperty Name="PartType" ColumnName="PartType" />
-          <ScalarProperty Name="Part" ColumnName="Part" />
-          <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
-          <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
-          <ScalarProperty Name="PostId" ColumnName="PostId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tVehicleProfiles">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tVehicleProfile">
         <MappingFragment StoreEntitySet="tVehicleProfiles">
@@ -250,5 +255,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tYears">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tYear">
+        <MappingFragment StoreEntitySet="tYear">
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="YearId" ColumnName="YearId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="MyJeepTraderModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -111,6 +111,12 @@
     <Compile Include="tMembership.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tMessage.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tMessageControl.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tModel.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>

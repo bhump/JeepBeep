@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using MyJeepTrader.Data;
 
 namespace MyJeepTrader.Web.ViewModels
 {
@@ -64,7 +65,6 @@ namespace MyJeepTrader.Web.ViewModels
         #endregion
 
         #region jeep profile
-
         [Display(Name = "Manufactuer")]
         public string Manufactuer { get; set; }
 
@@ -85,7 +85,30 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Jeep Image")]
         public byte[] Image { get; set; }
+        #endregion
 
+        #region mailbox
+        [Display(Name = "To")]
+        public string To { get; set; }
+
+        [Display(Name = "From")]
+        public string From { get; set; }
+
+        [Display(Name = "Subject")]
+        public string Subject { get; set; }
+
+        [Display(Name = "Message")]
+        public string Message { get; set; }
+
+        [Display(Name = "Date Sent")]
+        public DateTime DateSent { get; set; }
+
+        [Display(Name = "Read On")]
+        public DateTime DateRead { get; set; }
+
+        public IEnumerable<tMessage> SentMessages { get; set; }
+
+        public IEnumerable<tMessageControl> MessageControl { get; set; }
         #endregion
     }
 }

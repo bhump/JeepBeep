@@ -208,6 +208,30 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult CreateMessage(FormCollection collection)
+        {
+            var user = UserManager.FindByName(User.Identity.Name);
+
+            try
+            {
+                Service service = new Service();
+
+                var to = collection["To"].ToString();
+                var subject = collection["subject"].ToString();
+                var message = collection["Message"].ToString();
+
+
+                service.CreateMessage(to, user.Id, subject, message);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
