@@ -10,7 +10,7 @@ namespace MyJeepTrader.Data
     public class Service
     {
 
-        private readonly dboMyJeepTraderEntities _context;
+        private dboMyJeepTraderEntities _context;
 
         public Service()
         {
@@ -80,6 +80,12 @@ namespace MyJeepTrader.Data
             }
         }
 
+<<<<<<< HEAD
+        /// <summary>
+        /// Gets a list of all the jeep models from the model table.
+        /// </summary>
+        /// <returns></returns>
+=======
         public void CreateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website)
         {
             using (_context)
@@ -102,6 +108,7 @@ namespace MyJeepTrader.Data
                 _context.SaveChanges();
             }
         }
+
         public void UpdateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
@@ -117,27 +124,51 @@ namespace MyJeepTrader.Data
                 updateProfile.Ello = ello;
                 updateProfile.GooglePlus = google;
                 updateProfile.Website = website;
+
                 context.SaveChanges();
             }
         }
+
         public bool CheckForProfile(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             var noProfile = (from up in context.tUserProfiles where up.Id == userId select up).Any();
             return noProfile;
         }
+
         public tUserProfile GetProfileInfo(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             return context.tUserProfiles.Where(up => up.Id == userId).FirstOrDefault();
         }
 
+>>>>>>> 5ea0487c7bdc054952f802816dea6f99f238def3
         public IList<tModel> GetAllModels()
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             return (from m in context.tModels select m).ToList();
         }
 
+<<<<<<< HEAD
+        /// <summary>
+        /// Gets a list of all the years from the year table.
+        /// </summary>
+        /// <returns></returns>
+        public List<tYear> GetAllYears()
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            return (from y in context.tYears select y).ToList();
+        }
+
+
+        public int CreateNewPost(tPost post)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            context.tPosts.Add(post);
+            context.SaveChanges();
+
+            return post.PostId;
+=======
         public void CreatePrimaryJeepProfile(string userId, string manufactuer, string make, string model, short year, byte[] jeepImage, string jeepDescription, bool primaryJeep)
         {
             using (_context)
@@ -187,21 +218,6 @@ namespace MyJeepTrader.Data
             }
         }
 
-        /// <summary>
-        /// Creates the new post.
-        /// </summary>
-        /// <param name="post">The post.</param>
-        /// <returns></returns>
-        public int CreateNewPost(tPost post)
-        {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            context.tPosts.Add(post);
-            context.SaveChanges();
-
-            return post.PostId;
-        }
-
-
         public tVehicleProfile GetPrimaryJeepInfo(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
@@ -219,25 +235,7 @@ namespace MyJeepTrader.Data
                                  where vpc.Id == userId
                                  select vp).Any();
             return noPrimaryJeep;
+>>>>>>> 5ea0487c7bdc054952f802816dea6f99f238def3
         }
-
-        public List<tYear> GetAllYears()
-        {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            return (from y in context.tYears select y).ToList();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }// public class service
 } // namespace
