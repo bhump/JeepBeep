@@ -48,7 +48,9 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             PostCreateViewModel model = new PostCreateViewModel
             {
-                Models = service.GetAllModels()
+                Models = service.GetAllModels(),
+                Years = service.GetAllYears()
+
             };
 
             return View(model);
@@ -56,11 +58,14 @@ namespace MyJeepTrader.Web.Controllers
 
         // POST: Post/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(PostCreateViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
+                Service service = new Service();
+                //model.Post.MakeID = 
+                //model.Post.YearID = model.Years.Where(x => x.IsSelected)
+                var newPostId = service.CreateNewPost(model.Post);
 
                 return RedirectToAction("Index");
             }

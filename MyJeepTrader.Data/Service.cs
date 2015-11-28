@@ -80,10 +80,34 @@ namespace MyJeepTrader.Data
             }
         }
 
+        /// <summary>
+        /// Gets a list of all the jeep models from the model table.
+        /// </summary>
+        /// <returns></returns>
         public IList<tModel> GetAllModels()
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             return (from m in context.tModels select m).ToList();
+        }
+
+        /// <summary>
+        /// Gets a list of all the years from the year table.
+        /// </summary>
+        /// <returns></returns>
+        public List<tYear> GetAllYears()
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            return (from y in context.tYears select y).ToList();
+        }
+
+
+        public int CreateNewPost(tPost post)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            context.tPosts.Add(post);
+            context.SaveChanges();
+
+            return post.PostId;
         }
     }// public class service
 } // namespace
