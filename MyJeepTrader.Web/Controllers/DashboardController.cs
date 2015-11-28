@@ -86,7 +86,7 @@ namespace MyJeepTrader.Web.Controllers
             model.PrimaryJeep = jeepInfo == null ? false : Convert.ToBoolean(jeepInfo.PrimaryJeep);
 
             model.SentMessages = service.GetSentMessages(user.Id);
-            
+            model.Inbox = service.GetInboxMessages(user.Id);
             
             return View(model);
         }

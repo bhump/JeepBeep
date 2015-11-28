@@ -199,7 +199,28 @@
         </ul>
         <div class="tab-content">
             <div id="Inbox" class="tab-pane fade in active">
-                <label>Empty</label>
+                @if (Model.Inbox != null)
+                {
+                    <table class="table">
+                        <tr>
+                            <th>Date Sent</th>
+                            <th>Sent To</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                        </tr>
+
+                        @foreach (var item in Model.Inbox)
+                        {
+                            <tr>
+                                <td>@item.DateSent</td>
+                                <td>@item.From</td>
+                                <td>@item.Subject</td>
+                                <td>@item.Message</td>
+                            </tr>
+                        }
+
+                    </table>
+                }
             </div>
             <div id="CreateMessage" class="tab-pane fade">
                 @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))

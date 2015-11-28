@@ -205,10 +205,11 @@ namespace MyJeepTrader.Data
         public tVehicleProfile GetPrimaryJeepInfo(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            return (from vp in context.tVehicleProfiles 
-                   join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
-                   where vpc.Id == userId select vp).FirstOrDefault();
-                    
+            return (from vp in context.tVehicleProfiles
+                    join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                    where vpc.Id == userId
+                    select vp).FirstOrDefault();
+
         }
 
         public bool CheckForPrimaryJeep(string userId)
@@ -229,11 +230,11 @@ namespace MyJeepTrader.Data
 
         public void CreateMessage(string toUser, string fromUserId, string subject, string message)
         {
-            using(_context)
+            using (_context)
             {
                 string toUserId = (from u in _context.AspNetUsers where u.UserName == toUser select u.Id).FirstOrDefault();
 
-                tMessage mess  = new tMessage
+                tMessage mess = new tMessage
                 {
                     Subject = subject,
                     Message = message,
@@ -253,23 +254,31 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public List<SentMessages> GetSentMessages(string userId)
+        public List<MailMessages> GetSentMessages(string userId)
         {
-            using (_context)
-            {
-                var sentMessages = (from m in _context.tMessages
-                                    join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
-                                    join u in _context.AspNetUsers on mc.ToUserId equals u.Id
-                                    where mc.FromUserId == userId
-                                    select new SentMessages { Subject = m.Subject, Message = m.Message, DateSent = m.DateSent, DateRead = m.DateRead, MessageId = m.MessageId, From = mc.FromUserId, To = u.UserName }).ToList();
+            var sentMessages = (from m in _context.tMessages
+                                join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
+                                join u in _context.AspNetUsers on mc.ToUserId equals u.Id
+                                where mc.FromUserId == userId
+                                select new MailMessages { Subject = m.Subject, Message = m.Message, DateSent = m.DateSent, DateRead = m.DateRead, MessageId = m.MessageId, From = mc.FromUserId, To = u.UserName }).ToList();
 
-                return sentMessages;
-            }
+            return sentMessages;
         }
 
-        public class SentMessages
+        public List<MailMessages> GetInboxMessages(string userId)
         {
-            public SentMessages()
+            var inbox = (from m in _context.tMessages
+                         join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
+                         join u in _context.AspNetUsers on mc.ToUserId equals u.Id
+                         where mc.ToUserId == userId
+                         select new MailMessages { Subject = m.Subject, Message = m.Message, DateSent = m.DateSent, DateRead = m.DateRead, MessageId = m.MessageId, From = u.UserName, To = mc.ToUserId }).ToList();
+
+            return inbox;
+        }
+
+        public class MailMessages
+        {
+            public MailMessages()
             {
 
             }
