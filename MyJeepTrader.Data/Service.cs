@@ -220,5 +220,24 @@ namespace MyJeepTrader.Data
                                  select vp).Any();
             return noPrimaryJeep;
         }
+
+        public List<tYear> GetAllYears()
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            return (from y in context.tYears select y).ToList();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }// public class service
 } // namespace
