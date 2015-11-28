@@ -17,11 +17,13 @@ namespace MyJeepTrader.Data
         public tMake()
         {
             this.tModels = new HashSet<tModel>();
+            this.tPosts = new HashSet<tPost>();
         }
     
         public int MakeId { get; set; }
         public string Make { get; set; }
     
         public virtual ICollection<tModel> tModels { get; set; }
+        public virtual ICollection<tPost> tPosts { get; set; }
     }
 }

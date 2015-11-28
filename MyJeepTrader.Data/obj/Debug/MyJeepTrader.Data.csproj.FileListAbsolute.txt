@@ -24,6 +24,7 @@ C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\L
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.pdb
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.xml
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.50.0.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.50.0.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
@@ -35,8 +36,5 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Entit
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.xml
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.csprojResolveAssemblyReference.cache
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.50.0.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.csprojResolveAssemblyReference.cache

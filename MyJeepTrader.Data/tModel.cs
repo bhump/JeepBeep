@@ -18,6 +18,7 @@ namespace MyJeepTrader.Data
         {
             this.tModelYearControls = new HashSet<tModelYearControl>();
             this.tSubModels = new HashSet<tSubModel>();
+            this.tModelControls = new HashSet<tModelControl>();
         }
     
         public int ModelId { get; set; }
@@ -27,5 +28,6 @@ namespace MyJeepTrader.Data
         public virtual tMake tMake { get; set; }
         public virtual ICollection<tModelYearControl> tModelYearControls { get; set; }
         public virtual ICollection<tSubModel> tSubModels { get; set; }
+        public virtual ICollection<tModelControl> tModelControls { get; set; }
     }
 }

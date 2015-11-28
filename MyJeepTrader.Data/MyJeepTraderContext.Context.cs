@@ -37,14 +37,15 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tMembership> tMemberships { get; set; }
         public virtual DbSet<tModel> tModels { get; set; }
         public virtual DbSet<tModelYearControl> tModelYearControls { get; set; }
-        public virtual DbSet<tPost> tPosts { get; set; }
         public virtual DbSet<tPostsControl> tPostsControls { get; set; }
         public virtual DbSet<tSubModel> tSubModels { get; set; }
         public virtual DbSet<tUserProfile> tUserProfiles { get; set; }
         public virtual DbSet<tVehicleProfileControl> tVehicleProfileControls { get; set; }
-        public virtual DbSet<tVehicleProfile> tVehicleProfiles { get; set; }
         public virtual DbSet<tYear> tYears { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<tPostType> tPostTypes { get; set; }
+        public virtual DbSet<tModelControl> tModelControls { get; set; }
+        public virtual DbSet<tPost> tPosts { get; set; }
+        public virtual DbSet<tVehicleProfile> tVehicleProfiles { get; set; }
     }
 }

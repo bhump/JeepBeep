@@ -14,10 +14,16 @@ namespace MyJeepTrader.Data
     
     public partial class tSubModel
     {
+        public tSubModel()
+        {
+            this.tPosts = new HashSet<tPost>();
+        }
+    
         public int SubModelId { get; set; }
         public string SubModel { get; set; }
         public Nullable<int> ModelId { get; set; }
     
         public virtual tModel tModel { get; set; }
+        public virtual ICollection<tPost> tPosts { get; set; }
     }
 }
