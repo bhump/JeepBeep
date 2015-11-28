@@ -229,7 +229,28 @@
                 }
             </div>
             <div id="Sent Messages" class="tab-pane fade">
+                @if (Model.SentMessages != null)
+                {
+                    <table class="table">
+                        <tr>
+                            <th>Date Sent</th>
+                            <th>Sent To</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                        </tr>
 
+                        @foreach (var item in Model.SentMessages)
+                        {
+                            <tr>
+                                <td>@item.DateSent</td>
+                                <td></td>
+                                <td>@item.Subject</td>
+                                <td>@item.Message</td>
+                            </tr>
+                        }
+
+                    </table>
+                }
             </div>
         </div>
     </div>
