@@ -111,7 +111,6 @@ C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.pdb
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.xml
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.50.0.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.50.0.dll
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Facebook.dll
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Google.dll
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
@@ -181,3 +180,4 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeep
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.52.0.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.52.0.dll

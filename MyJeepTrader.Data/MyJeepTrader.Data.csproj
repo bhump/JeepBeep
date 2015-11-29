@@ -75,6 +75,7 @@
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MailMessages.cs" />
     <Compile Include="MyJeepTraderContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

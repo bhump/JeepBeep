@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using MyJeepTrader.Data;
+using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Web.ViewModels
 {
@@ -106,9 +107,9 @@ namespace MyJeepTrader.Web.ViewModels
         [Display(Name = "Read On")]
         public DateTime DateRead { get; set; }
 
-        public List<MyJeepTrader.Data.Service.MailMessages> SentMessages { get; set; }
+        public List<MailMessages> SentMessages { get; set; }
 
-        public List<MyJeepTrader.Data.Service.MailMessages> Inbox { get; set; }
+        public List<MailMessages> Inbox { get; set; }
 
         #endregion
     }

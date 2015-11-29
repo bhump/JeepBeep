@@ -49,8 +49,9 @@ namespace MyJeepTrader.Web.Controllers
             PostCreateViewModel model = new PostCreateViewModel
             {
                 Models = service.GetAllModels(),
-                Years = service.GetAllYears()
-
+                Years = service.GetAllYears(),
+                PostTypes = service.GetAllPostTypes()
+                
             };
 
             return View(model);

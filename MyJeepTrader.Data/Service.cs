@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LinqKit;
+using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Data
 {
@@ -276,26 +277,19 @@ namespace MyJeepTrader.Data
             return inbox;
         }
 
-        public class MailMessages
+        public List<tPostType> GetAllPostTypes()
         {
-            public MailMessages()
-            {
-            }
-
-            public int MessageId { get; set; }
-
-            public string To { get; set; }
-
-            public string From { get; set; }
-
-            public string Subject { get; set; }
-
-            public string Message { get; set; }
-
-            public DateTime? DateSent { get; set; }
-
-            public DateTime? DateRead { get; set; }
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            return (from p in context.tPostTypes select p).ToList();
         }
+
+
+
+
+
+
+
+
 
     }// public class service
 } // namespace

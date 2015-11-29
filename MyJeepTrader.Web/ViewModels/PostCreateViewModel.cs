@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MyJeepTrader.Data;
 
-namespace MyJeepTrader.Web.Models
+namespace MyJeepTrader.Web.ViewModels
 {
     public class PostCreateViewModel
     {
@@ -23,6 +23,10 @@ namespace MyJeepTrader.Web.Models
         /// </value>
         public tYear SelectedYear { get; set; }
 
-      
+        public List<tPostType> PostTypes { get; set; }
+
+        public bool IsJeep { get; set; }
+        public bool IsAccessory { get; set; }
+
     }
 }
