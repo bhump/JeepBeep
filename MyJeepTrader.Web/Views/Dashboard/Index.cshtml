@@ -203,7 +203,7 @@
                 {
                     <table class="table" id="inbox">
                         <tr>
-                            @*<th></th>*@
+                            <th></th>
                             <th>Date Sent</th>
                             <th>From</th>
                             <th>Subject</th>
@@ -213,7 +213,8 @@
                         @foreach (var item in Model.Inbox)
                         {
                             <tr>
-                                @*<td><input type="button" class="btn-link" value="View" /></td>*@
+                                <td><a href='@item.Message'>View</a></td>
+                                @*<td><input type="button" class="btn-link" id="btnView" value="View" /></td>*@
                                 <td>@item.DateSent</td>
                                 <td>@item.From</td>
                                 <td>@item.Subject</td>
@@ -275,6 +276,8 @@
                     </table>
                 }
             </div>
+            <button id="opener">open the dialog</button>
+            <div id="dialog1" title="Dialog Title" hidden="hidden">I'm a dialog</div>
         </div>
     </div>
 </div>
@@ -296,7 +299,7 @@
         background-color: #fff;
     }
 
-    #inbox th, #example td {
+    #inbox th, #inbox td {
         padding: 3px 5px;
     }
 
@@ -304,7 +307,9 @@
         cursor: pointer;
     }
 </style>
-<script language="Javascript">
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+<script type="text/javascript">
 
     $(document).ready(function () {
 
@@ -317,6 +322,18 @@
             }
         });
 
+        $(function () {
+            $("#dialog1").dialog({
+                autoOpen: false
+            });
+
+            $("#opener").click(function () {
+                $("#dialog1").dialog('open');
+            });
+        });
     });
 
+
+
 </script>
+
