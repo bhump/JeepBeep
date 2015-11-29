@@ -212,9 +212,8 @@
                         @foreach (var item in Model.Inbox)
                         {
                             <tr>
-                                @*<td><a href='@item.Message'>View</a></td>*@
                                 <td>
-                                    <button type="button" class="btn-link" onclick="loadModal('@item.Message')">View</button>
+                                    <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message')">View</button>
                                 </td>
                                 <td>@item.DateSent</td>
                                 <td>@item.From</td>
@@ -261,7 +260,6 @@
                             <th>Date Sent</th>
                             <th>To</th>
                             <th>Subject</th>
-                            @*<th>Message</th>*@
                         </tr>
 
                         @foreach (var item in Model.SentMessages)
@@ -270,7 +268,6 @@
                                 <td>@item.DateSent</td>
                                 <td>@item.To</td>
                                 <td>@item.Subject</td>
-                                @*<td>@item.Message</td>*@
                             </tr>
                         }
                     </table>
@@ -289,7 +286,11 @@
                 <h4 class="modal-title">Message</h4>
             </div>
             <div class="modal-body">
+                <p id="From"></p>
                 <p id="modalMessage">Some text in the modal.</p>
+                <div>
+                    <textarea cols="200" rows="5" name="textAreaReply"></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default">Reply</button>
@@ -328,9 +329,10 @@
 <script src="~/Scripts/jquery-2.1.4.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 <script type="text/javascript">
-    function loadModal(text) {
+    function loadModal(from, message) {
         $('#myMessage').modal('show'); //show bootsrap modal manually
-        $('#modalMessage').html(text);
+        $('#From').html("From: " + from);
+        $('#modalMessage').html("Message: " + message);
     }
 </script>
 
