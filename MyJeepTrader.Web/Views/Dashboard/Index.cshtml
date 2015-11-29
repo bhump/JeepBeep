@@ -207,18 +207,18 @@
                             <th>Date Sent</th>
                             <th>From</th>
                             <th>Subject</th>
-                            @* <th>Message</th>*@
                         </tr>
 
                         @foreach (var item in Model.Inbox)
                         {
                             <tr>
-                                <td><a href='@item.Message'>View</a></td>
-                                @*<td><input type="button" class="btn-link" id="btnView" value="View" /></td>*@
+                                @*<td><a href='@item.Message'>View</a></td>*@
+                                <td>
+                                    <button type="button" class="btn-link" onclick="loadModal('@item.Message')">View</button>
+                                </td>
                                 <td>@item.DateSent</td>
                                 <td>@item.From</td>
                                 <td>@item.Subject</td>
-                                @*<td>@item.Message</td>*@
                             </tr>
                         }
 
@@ -276,9 +276,27 @@
                     </table>
                 }
             </div>
-            <button id="opener">open the dialog</button>
-            <div id="dialog1" title="Dialog Title" hidden="hidden">I'm a dialog</div>
         </div>
+    </div>
+</div>
+
+<div id="myMessage" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Message</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default">Reply</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
 </div>
 <style>
@@ -303,14 +321,13 @@
         padding: 3px 5px;
     }
 
-    #inbox td:hover {
-        cursor: pointer;
-    }
+        #inbox td:hover {
+            cursor: pointer;
+        }
 </style>
 <script src="~/Scripts/jquery-2.1.4.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 <script type="text/javascript">
-
     $(document).ready(function () {
 
         $('#inbox tr').click(function () {
@@ -321,19 +338,11 @@
                 window.location = href;
             }
         });
-
-        $(function () {
-            $("#dialog1").dialog({
-                autoOpen: false
-            });
-
-            $("#opener").click(function () {
-                $("#dialog1").dialog('open');
-            });
-        });
     });
 
-
-
+    function loadModal(text) {
+        $('#myMessage').modal('show'); //show bootsrap modal manually
+        $('#modalMessage').html(text);
+    }
 </script>
 
