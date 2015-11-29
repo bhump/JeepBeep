@@ -328,18 +328,6 @@
 <script src="~/Scripts/jquery-2.1.4.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-
-        $('#inbox tr').click(function () {
-            var href = $(this).find("a").attr("href");
-            if (href) {
-                alert(href);
-                return false;
-                window.location = href;
-            }
-        });
-    });
-
     function loadModal(text) {
         $('#myMessage').modal('show'); //show bootsrap modal manually
         $('#modalMessage').html(text);
