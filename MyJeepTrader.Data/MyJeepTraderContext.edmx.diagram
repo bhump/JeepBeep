@@ -16,8 +16,6 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.tLocation" Width="1.5" PointX="3.75" PointY="2.875" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tMake" Width="1.5" PointX="1.5" PointY="0.75" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tMembership" Width="1.5" PointX="8.25" PointY="15" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tMessageControl" Width="1.5" PointX="13" PointY="2.25" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tMessage" Width="1.5" PointX="10.75" PointY="2.125" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tModel" Width="1.5" PointX="0.75" PointY="3.5" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tModelControl" Width="1.5" PointX="8.25" PointY="3.625" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tModelYearControl" Width="1.5" PointX="3" PointY="6.625" />
@@ -40,7 +38,6 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tLocations" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModel_tMake" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tMake" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_tMessageControl_tMessages" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModelControl_tModel" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModelYearControl_tModelYearControl" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tSubModel_tModel" />
@@ -52,6 +49,9 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPostsControl_tPosts" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" />
         <AssociationConnector Association="MyJeepTraderModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tMessageControl" Width="1.5" PointX="12.625" PointY="1" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tMessage" Width="1.5" PointX="10.375" PointY="0.875" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tMessageControl_tMessages" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

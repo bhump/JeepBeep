@@ -201,21 +201,23 @@
             <div id="Inbox" class="tab-pane fade in active">
                 @if (Model.Inbox != null)
                 {
-                    <table class="table">
+                    <table class="table" id="inbox">
                         <tr>
+                            @*<th></th>*@
                             <th>Date Sent</th>
-                            <th>Sent To</th>
+                            <th>From</th>
                             <th>Subject</th>
-                            <th>Message</th>
+                            @* <th>Message</th>*@
                         </tr>
 
                         @foreach (var item in Model.Inbox)
                         {
                             <tr>
+                                @*<td><input type="button" class="btn-link" value="View" /></td>*@
                                 <td>@item.DateSent</td>
                                 <td>@item.From</td>
                                 <td>@item.Subject</td>
-                                <td>@item.Message</td>
+                                @*<td>@item.Message</td>*@
                             </tr>
                         }
 
@@ -256,9 +258,9 @@
                     <table class="table">
                         <tr>
                             <th>Date Sent</th>
-                            <th>Sent To</th>
+                            <th>To</th>
                             <th>Subject</th>
-                            <th>Message</th>
+                            @*<th>Message</th>*@
                         </tr>
 
                         @foreach (var item in Model.SentMessages)
@@ -267,13 +269,54 @@
                                 <td>@item.DateSent</td>
                                 <td>@item.To</td>
                                 <td>@item.Subject</td>
-                                <td>@item.Message</td>
+                                @*<td>@item.Message</td>*@
                             </tr>
                         }
-
                     </table>
                 }
             </div>
         </div>
     </div>
 </div>
+<style>
+    table#inbox {
+        border-collapse: collapse;
+    }
+
+    #inbox tr {
+        background-color: #eee;
+        border-top: 1px solid #fff;
+    }
+
+        #inbox tr:hover {
+            background-color: #ccc;
+        }
+
+    #inbox th {
+        background-color: #fff;
+    }
+
+    #inbox th, #example td {
+        padding: 3px 5px;
+    }
+
+    #inbox td:hover {
+        cursor: pointer;
+    }
+</style>
+<script language="Javascript">
+
+    $(document).ready(function () {
+
+        $('#inbox tr').click(function () {
+            var href = $(this).find("a").attr("href");
+            if (href) {
+                alert(href);
+                return false;
+                window.location = href;
+            }
+        });
+
+    });
+
+</script>

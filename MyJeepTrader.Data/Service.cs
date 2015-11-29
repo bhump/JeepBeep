@@ -280,7 +280,6 @@ namespace MyJeepTrader.Data
         {
             public MailMessages()
             {
-
             }
 
             public int MessageId { get; set; }

@@ -135,8 +135,8 @@
     <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Subject" Type="varchar" MaxLength="50" />
     <Property Name="Message" Type="varchar(max)" />
-    <Property Name="DateSent" Type="date" />
-    <Property Name="DateRead" Type="date" />
+    <Property Name="DateSent" Type="datetime" />
+    <Property Name="DateRead" Type="datetime" />
   </EntityType>
   <EntityType Name="tModel">
     <Key>

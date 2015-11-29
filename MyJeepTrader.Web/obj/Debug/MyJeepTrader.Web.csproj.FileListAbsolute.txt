@@ -124,7 +124,6 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Antlr3.Runtime.dll
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.50.0.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.SqlServer.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.Core.dll
@@ -181,3 +180,4 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.csprojResolveAssemblyReference.cache
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.pdb
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.52.0.dll

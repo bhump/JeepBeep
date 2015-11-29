@@ -12,8 +12,6 @@
     <EntitySet Name="tLocations" EntityType="MyJeepTraderModel.tLocation" />
     <EntitySet Name="tMakes" EntityType="MyJeepTraderModel.tMake" />
     <EntitySet Name="tMemberships" EntityType="MyJeepTraderModel.tMembership" />
-    <EntitySet Name="tMessageControls" EntityType="MyJeepTraderModel.tMessageControl" />
-    <EntitySet Name="tMessages" EntityType="MyJeepTraderModel.tMessage" />
     <EntitySet Name="tModels" EntityType="MyJeepTraderModel.tModel" />
     <EntitySet Name="tModelControls" EntityType="MyJeepTraderModel.tModelControl" />
     <EntitySet Name="tModelYearControls" EntityType="MyJeepTraderModel.tModelYearControl" />
@@ -69,10 +67,6 @@
       <End Role="tMake" EntitySet="tMakes" />
       <End Role="tPost" EntitySet="tPosts" />
     </AssociationSet>
-    <AssociationSet Name="FK_tMessageControl_tMessages" Association="MyJeepTraderModel.FK_tMessageControl_tMessages">
-      <End Role="tMessage" EntitySet="tMessages" />
-      <End Role="tMessageControl" EntitySet="tMessageControls" />
-    </AssociationSet>
     <AssociationSet Name="FK_tModelControl_tModel" Association="MyJeepTraderModel.FK_tModelControl_tModel">
       <End Role="tModel" EntitySet="tModels" />
       <End Role="tModelControl" EntitySet="tModelControls" />
@@ -116,6 +110,12 @@
     <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
       <End Role="AspNetRole" EntitySet="AspNetRoles" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="tMessageControls" EntityType="MyJeepTraderModel.tMessageControl" />
+    <EntitySet Name="tMessages" EntityType="MyJeepTraderModel.tMessage" />
+    <AssociationSet Name="FK_tMessageControl_tMessages" Association="MyJeepTraderModel.FK_tMessageControl_tMessages">
+      <End Role="tMessage" EntitySet="tMessages" />
+      <End Role="tMessageControl" EntitySet="tMessageControls" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
@@ -245,27 +245,6 @@
     <Property Name="Renewed" Type="Boolean" />
     <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="tMembership" ToRole="AspNetUser" />
-  </EntityType>
-  <EntityType Name="tMessageControl">
-    <Key>
-      <PropertyRef Name="MessageControlId" />
-    </Key>
-    <Property Name="MessageControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ToUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="FromUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="MessageId" Type="Int32" />
-    <NavigationProperty Name="tMessage" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessageControl" ToRole="tMessage" />
-  </EntityType>
-  <EntityType Name="tMessage">
-    <Key>
-      <PropertyRef Name="MessageId" />
-    </Key>
-    <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="DateSent" Type="DateTime" Precision="0" />
-    <Property Name="DateRead" Type="DateTime" Precision="0" />
-    <NavigationProperty Name="tMessageControls" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessage" ToRole="tMessageControl" />
   </EntityType>
   <EntityType Name="tModel">
     <Key>
@@ -541,18 +520,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tMessageControl_tMessages">
-    <End Type="MyJeepTraderModel.tMessage" Role="tMessage" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tMessageControl" Role="tMessageControl" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tMessage">
-        <PropertyRef Name="MessageId" />
-      </Principal>
-      <Dependent Role="tMessageControl">
-        <PropertyRef Name="MessageId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tModelControl_tModel">
     <End Type="MyJeepTraderModel.tModel" Role="tModel" Multiplicity="0..1" />
     <End Type="MyJeepTraderModel.tModelControl" Role="tModelControl" Multiplicity="*" />
@@ -676,5 +643,38 @@
   <Association Name="AspNetUserRoles">
     <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
     <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="tMessageControl">
+    <Key>
+      <PropertyRef Name="MessageControlId" />
+    </Key>
+    <Property Name="MessageControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ToUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FromUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="MessageId" Type="Int32" />
+    <NavigationProperty Name="tMessage" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessageControl" ToRole="tMessage" />
+  </EntityType>
+  <EntityType Name="tMessage">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DateSent" Type="DateTime" Precision="3" />
+    <Property Name="DateRead" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tMessageControls" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessage" ToRole="tMessageControl" />
+  </EntityType>
+  <Association Name="FK_tMessageControl_tMessages">
+    <End Type="MyJeepTraderModel.tMessage" Role="tMessage" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tMessageControl" Role="tMessageControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tMessage">
+        <PropertyRef Name="MessageId" />
+      </Principal>
+      <Dependent Role="tMessageControl">
+        <PropertyRef Name="MessageId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

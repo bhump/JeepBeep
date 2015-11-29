@@ -36,8 +36,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tLocation> tLocations { get; set; }
         public virtual DbSet<tMake> tMakes { get; set; }
         public virtual DbSet<tMembership> tMemberships { get; set; }
-        public virtual DbSet<tMessageControl> tMessageControls { get; set; }
-        public virtual DbSet<tMessage> tMessages { get; set; }
         public virtual DbSet<tModel> tModels { get; set; }
         public virtual DbSet<tModelControl> tModelControls { get; set; }
         public virtual DbSet<tModelYearControl> tModelYearControls { get; set; }
@@ -49,5 +47,7 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tVehicleProfileControl> tVehicleProfileControls { get; set; }
         public virtual DbSet<tVehicleProfile> tVehicleProfiles { get; set; }
         public virtual DbSet<tYear> tYears { get; set; }
+        public virtual DbSet<tMessageControl> tMessageControls { get; set; }
+        public virtual DbSet<tMessage> tMessages { get; set; }
     }
 }

@@ -120,27 +120,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tMessageControls">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessageControl">
-        <MappingFragment StoreEntitySet="tMessageControl">
-          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
-          <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
-          <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
-          <ScalarProperty Name="MessageControlId" ColumnName="MessageControlId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tMessages">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessage">
-        <MappingFragment StoreEntitySet="tMessages">
-          <ScalarProperty Name="DateRead" ColumnName="DateRead" />
-          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-          <ScalarProperty Name="Subject" ColumnName="Subject" />
-          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tModels">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tModel">
         <MappingFragment StoreEntitySet="tModel">
@@ -271,5 +250,26 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="tMessageControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessageControl">
+        <MappingFragment StoreEntitySet="tMessageControl">
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+          <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+          <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
+          <ScalarProperty Name="MessageControlId" ColumnName="MessageControlId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tMessages">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessage">
+        <MappingFragment StoreEntitySet="tMessages">
+          <ScalarProperty Name="DateRead" ColumnName="DateRead" />
+          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
