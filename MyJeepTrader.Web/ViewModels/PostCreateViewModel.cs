@@ -24,7 +24,7 @@ namespace MyJeepTrader.Web.ViewModels
         public tYear SelectedYear { get; set; }
 
         public List<tPostType> PostTypes { get; set; }
-
+        public tPostType SelectedPostType { get; set; }
         public bool IsJeep { get; set; }
         public bool IsAccessory { get; set; }
 
