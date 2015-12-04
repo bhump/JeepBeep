@@ -307,11 +307,25 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public List<tMessage> CheckForReadMessages()
+        public List<MailMessages> CheckForReadMessages(string userId)
         {
             using (_context)
             {
-                var getReadMessages = _context.tMessages.Where(m => m.DateRead != null).ToList();
+                var getReadMessages = (from m in _context.tMessages
+                         join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
+                         join u in _context.AspNetUsers on mc.FromUserId equals u.Id
+                         where mc.ToUserId == userId && m.DateRead != null
+                         select new MailMessages
+                         { 
+                             Subject = m.Subject, 
+                             Message = m.Message, 
+                             DateSent = m.DateSent, 
+                             DateRead = m.DateRead, 
+                             MessageId = m.MessageId, 
+                             From = u.UserName,
+                             ToUserId = mc.ToUserId, 
+                             FromUserId = mc.FromUserId 
+                         }).ToList();
 
                 return getReadMessages;
             }

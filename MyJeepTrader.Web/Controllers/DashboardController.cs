@@ -253,6 +253,27 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
+        public void MarkReadMessages()
+        {
+            var user = UserManager.FindByName(User.Identity.Name);
+
+            try
+            {
+                Service service = new Service();
+                var readMessages = service.CheckForReadMessages(user.Id);
+
+                foreach(var message in readMessages)
+                {
+
+                }
+
+            }
+            catch
+            {
+                return;
+            }
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

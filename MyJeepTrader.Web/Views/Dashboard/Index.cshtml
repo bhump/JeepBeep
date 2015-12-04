@@ -215,9 +215,19 @@
                                 <td>
                                     <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId', '@item.MessageId')">View</button>
                                 </td>
-                                <td style="font-weight:bold">@item.DateSent</td>
-                                <td style="font-weight:bold">@item.From</td>
-                                <td style="font-weight:bold">@item.Subject</td>
+                                @if (item.DateRead == null)
+                                {
+                                    <td style="font-weight:bold">@item.DateSent</td>
+                                    <td style="font-weight:bold">@item.From</td>
+                                    <td style="font-weight:bold">@item.Subject</td>
+                                }
+                                else
+                                {
+                                    <td>@item.DateSent</td>
+                                    <td>@item.From</td>
+                                    <td>@item.Subject</td>
+                                }
+
                             </tr>
                         }
 
