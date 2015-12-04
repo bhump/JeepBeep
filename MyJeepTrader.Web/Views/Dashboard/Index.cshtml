@@ -289,10 +289,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <p id="fromUserId" hidden="hidden"></p>
                         <div class="hidden">
-                            <label>From: </label>@Html.TextAreaFor(m => m.To, new { @class = "form-control readonly", ID = "from" })
-                            <label>Subject: </label>@Html.TextAreaFor(m => m.Subject, new { @class = "form-control readonly", ID = "subject" })
+                            @Html.TextAreaFor(m => m.To, new { @class = "form-control readonly", ID = "from" })
+                            @Html.TextAreaFor(m => m.Subject, new { @class = "form-control readonly", ID = "subject" })
                         </div>
                         <label>Message: </label><p id="message"></p>
                     </div>
@@ -345,7 +344,6 @@
         $('#from').html(from);
         $('#message').html(message);
         $('#subject').html("RE: " + subject);
-        $('#fromUserId').html("FromUserId: " + fromUserId)
     }
 </script>
 
