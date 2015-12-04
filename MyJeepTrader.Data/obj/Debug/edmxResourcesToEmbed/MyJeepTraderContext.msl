@@ -150,17 +150,16 @@
     <EntitySetMapping Name="tPosts">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
         <MappingFragment StoreEntitySet="tPosts">
+          <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
           <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="YearId" ColumnName="YearId" />
           <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
           <ScalarProperty Name="MakeId" ColumnName="MakeId" />
-          <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
           <ScalarProperty Name="PartName" ColumnName="PartName" />
           <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
           <ScalarProperty Name="PartType" ColumnName="PartType" />
-          <ScalarProperty Name="Part" ColumnName="Part" />
           <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
           <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
           <ScalarProperty Name="PostId" ColumnName="PostId" />
@@ -253,6 +252,8 @@
     <EntitySetMapping Name="tMessageControls">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tMessageControl">
         <MappingFragment StoreEntitySet="tMessageControl">
+          <ScalarProperty Name="RemoveSent" ColumnName="RemoveSent" />
+          <ScalarProperty Name="RemoveInbox" ColumnName="RemoveInbox" />
           <ScalarProperty Name="MessageId" ColumnName="MessageId" />
           <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
           <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />

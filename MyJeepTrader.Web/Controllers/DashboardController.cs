@@ -235,6 +235,24 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult UpdateReadMessage(string MessageId)
+        {
+            try
+            {
+                Service service = new Service();
+                int messageId = Convert.ToInt32(MessageId);
+
+                service.MarkMessageAsRead(messageId);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

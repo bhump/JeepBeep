@@ -111,6 +111,8 @@ namespace MyJeepTrader.Web.ViewModels
 
         public List<MailMessages> Inbox { get; set; }
 
+        public int MessageId { get; set; }
+
         #endregion
     }
 }

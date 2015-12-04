@@ -213,11 +213,11 @@
                         {
                             <tr>
                                 <td>
-                                    <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId')">View</button>
+                                    <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId', '@item.MessageId')">View</button>
                                 </td>
-                                <td>@item.DateSent</td>
-                                <td>@item.From</td>
-                                <td>@item.Subject</td>
+                                <td style="font-weight:bold">@item.DateSent</td>
+                                <td style="font-weight:bold">@item.From</td>
+                                <td style="font-weight:bold">@item.Subject</td>
                             </tr>
                         }
 
@@ -290,6 +290,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="hidden">
+                            @Html.TextAreaFor(m => m.MessageId, new { @class = "form-control", ID = "messageId" })
                             @Html.TextAreaFor(m => m.To, new { @class = "form-control readonly", ID = "from" })
                             @Html.TextAreaFor(m => m.Subject, new { @class = "form-control readonly", ID = "subject" })
                         </div>
@@ -339,11 +340,21 @@
 <script src="~/Scripts/jquery-2.1.4.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 <script type="text/javascript">
-    function loadModal(from, message, subject, fromUserId) {
+    function loadModal(from, message, subject, fromUserId, messageId) {
         $('#myMessage').modal('show'); //show bootsrap modal manually
         $('#from').html(from);
         $('#message').html(message);
         $('#subject').html("RE: " + subject);
+
+        var data = {
+            MessageId: messageId
+        };
+
+        $.ajax({
+            url: '/Dashboard/UpdateReadMessage',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8'
+        });
     }
 </script>
-

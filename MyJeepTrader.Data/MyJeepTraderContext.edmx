@@ -132,6 +132,8 @@
           <Property Name="ToUserId" Type="nvarchar" MaxLength="128" />
           <Property Name="FromUserId" Type="nvarchar" MaxLength="128" />
           <Property Name="MessageId" Type="int" />
+          <Property Name="RemoveInbox" Type="bit" />
+          <Property Name="RemoveSent" Type="bit" />
         </EntityType>
         <EntityType Name="tMessages">
           <Key>
@@ -174,11 +176,10 @@
           <Property Name="PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostTitle" Type="varchar" MaxLength="50" />
           <Property Name="PostDescription" Type="varchar(max)" />
-          <Property Name="Part" Type="bit" />
           <Property Name="PartType" Type="varchar" MaxLength="50" />
           <Property Name="PartBrand" Type="varchar" MaxLength="50" />
           <Property Name="PartName" Type="varchar" MaxLength="50" />
-          <Property Name="Vehicle" Type="bit" />
+          <Property Name="IsVehicle" Type="bit" />
           <Property Name="MakeId" Type="int" />
           <Property Name="SubModelId" Type="int" />
           <Property Name="YearId" Type="int" />
@@ -962,11 +963,9 @@
           <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PostTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PostDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Part" Type="Boolean" />
           <Property Name="PartType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PartBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Vehicle" Type="Boolean" />
           <Property Name="MakeId" Type="Int32" />
           <Property Name="SubModelId" Type="Int32" />
           <Property Name="YearId" Type="Int32" />
@@ -981,6 +980,7 @@
           <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
           <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
           <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPost" ToRole="tPostsControl" />
+          <Property Name="IsVehicle" Type="Boolean" />
         </EntityType>
         <EntityType Name="tPostsControl">
           <Key>
@@ -1330,6 +1330,8 @@
           <Property Name="FromUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="MessageId" Type="Int32" />
           <NavigationProperty Name="tMessage" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessageControl" ToRole="tMessage" />
+          <Property Name="RemoveInbox" Type="Boolean" />
+          <Property Name="RemoveSent" Type="Boolean" />
         </EntityType>
         <EntityType Name="tMessage">
           <Key>
@@ -1509,17 +1511,16 @@
           <EntitySetMapping Name="tPosts">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
               <MappingFragment StoreEntitySet="tPosts">
+                <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
                 <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="YearId" ColumnName="YearId" />
                 <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
                 <ScalarProperty Name="MakeId" ColumnName="MakeId" />
-                <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
                 <ScalarProperty Name="PartName" ColumnName="PartName" />
                 <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
                 <ScalarProperty Name="PartType" ColumnName="PartType" />
-                <ScalarProperty Name="Part" ColumnName="Part" />
                 <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
                 <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
@@ -1612,6 +1613,8 @@
           <EntitySetMapping Name="tMessageControls">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tMessageControl">
               <MappingFragment StoreEntitySet="tMessageControl">
+                <ScalarProperty Name="RemoveSent" ColumnName="RemoveSent" />
+                <ScalarProperty Name="RemoveInbox" ColumnName="RemoveInbox" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
                 <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />

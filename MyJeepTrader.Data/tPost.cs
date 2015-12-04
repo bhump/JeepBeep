@@ -24,17 +24,16 @@ namespace MyJeepTrader.Data
         public int PostId { get; set; }
         public string PostTitle { get; set; }
         public string PostDescription { get; set; }
-        public Nullable<bool> Part { get; set; }
         public string PartType { get; set; }
         public string PartBrand { get; set; }
         public string PartName { get; set; }
-        public Nullable<bool> Vehicle { get; set; }
         public Nullable<int> MakeId { get; set; }
         public Nullable<int> SubModelId { get; set; }
         public Nullable<int> YearId { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<int> LocationId { get; set; }
         public Nullable<int> PostTypeId { get; set; }
+        public Nullable<bool> IsVehicle { get; set; }
     
         public virtual ICollection<tImageControl> tImageControls { get; set; }
         public virtual tLocation tLocation { get; set; }

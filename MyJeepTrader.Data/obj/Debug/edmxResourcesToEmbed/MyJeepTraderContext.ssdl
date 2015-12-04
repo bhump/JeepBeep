@@ -127,6 +127,8 @@
     <Property Name="ToUserId" Type="nvarchar" MaxLength="128" />
     <Property Name="FromUserId" Type="nvarchar" MaxLength="128" />
     <Property Name="MessageId" Type="int" />
+    <Property Name="RemoveInbox" Type="bit" />
+    <Property Name="RemoveSent" Type="bit" />
   </EntityType>
   <EntityType Name="tMessages">
     <Key>
@@ -169,11 +171,10 @@
     <Property Name="PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PostTitle" Type="varchar" MaxLength="50" />
     <Property Name="PostDescription" Type="varchar(max)" />
-    <Property Name="Part" Type="bit" />
     <Property Name="PartType" Type="varchar" MaxLength="50" />
     <Property Name="PartBrand" Type="varchar" MaxLength="50" />
     <Property Name="PartName" Type="varchar" MaxLength="50" />
-    <Property Name="Vehicle" Type="bit" />
+    <Property Name="IsVehicle" Type="bit" />
     <Property Name="MakeId" Type="int" />
     <Property Name="SubModelId" Type="int" />
     <Property Name="YearId" Type="int" />

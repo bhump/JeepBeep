@@ -285,11 +285,9 @@
     <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PostTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PostDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Part" Type="Boolean" />
     <Property Name="PartType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PartBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Vehicle" Type="Boolean" />
     <Property Name="MakeId" Type="Int32" />
     <Property Name="SubModelId" Type="Int32" />
     <Property Name="YearId" Type="Int32" />
@@ -304,6 +302,7 @@
     <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
     <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
     <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPost" ToRole="tPostsControl" />
+    <Property Name="IsVehicle" Type="Boolean" />
   </EntityType>
   <EntityType Name="tPostsControl">
     <Key>
@@ -653,6 +652,8 @@
     <Property Name="FromUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="MessageId" Type="Int32" />
     <NavigationProperty Name="tMessage" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessageControl" ToRole="tMessage" />
+    <Property Name="RemoveInbox" Type="Boolean" />
+    <Property Name="RemoveSent" Type="Boolean" />
   </EntityType>
   <EntityType Name="tMessage">
     <Key>
