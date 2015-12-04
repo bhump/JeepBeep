@@ -134,7 +134,7 @@ namespace MyJeepTrader.Data
             return context.tUserProfiles.Where(up => up.Id == userId).FirstOrDefault();
         }
 
-        public IList<tModel> GetAllModels()
+        public List<tModel> GetAllModels()
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             return (from m in context.tModels select m).ToList();

@@ -41,7 +41,7 @@
             <div class="col-sm-10">
                 @foreach (tPostType item in Model.PostTypes)
                 {
-                    @Html.RadioButtonFor(model => Model.SelectedPostType, item, new {id=item.Type})
+                    @Html.RadioButton("SelectedPostTypeId", item.PostTypeId, new {id=item.Type})
                     <label for="@item.Type">@item.Type </label>
                    
                 }
@@ -79,11 +79,11 @@
         <div class="form-group">
             <label class="col-sm-2">Select Jeep Type:</label>
             <div class="col-sm-10" id="jeepTypeDiv">
-                @foreach (var m in Model.Models)
+                @for (var i = 0; i < Model.Models.Count(); i++)
                 {
-                    @Html.CheckBoxFor(model => model.)
-                    
-                    <input type="checkbox" id="@m.Model"/> <label for="@m.Model">@m.Model</label>
+                    @Html.CheckBoxFor(model => model.Models[i].IsSelected)
+                    @Html.HiddenFor(model => model.Models[i].Model)
+                    <label>@Model.Models[i].Model.Model</label>
                 }
             </div>
         </div>
@@ -91,7 +91,8 @@
         <div class="form-group">
             <label class="col-sm-2">Select Year:</label>
             <div class="col-sm-10" id="jeepTypeDiv">
-                @Html.DropDownListFor(model => model.SelectedYear, new SelectList(Model.Years, null, "Year", "YearId"), "--Select Year--", new {@class="form-control"})
+                @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "--Select Year--", new {@class="form-control"})
+                
             </div>
         </div>
 
