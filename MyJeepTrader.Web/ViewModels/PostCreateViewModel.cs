@@ -11,7 +11,7 @@ namespace MyJeepTrader.Web.ViewModels
     {
         public tPost Post { get; set; }
 
-        public IList<tModel> Models { get; set; }
+        public List<tModelWithSelected> Models { get; set; }
 
         public List<tYear> Years { get; set; }
 
@@ -21,12 +21,19 @@ namespace MyJeepTrader.Web.ViewModels
         /// <value>
         /// The selected year.
         /// </value>
-        public tYear SelectedYear { get; set; }
+        public int SelectedYearId { get; set; }
 
         public List<tPostType> PostTypes { get; set; }
-
+        public int SelectedPostTypeId { get; set; }
         public bool IsJeep { get; set; }
         public bool IsAccessory { get; set; }
+
+    }
+
+    public class tModelWithSelected
+    {
+        public tModel Model { get; set; }
+        public bool IsSelected { get; set; }
 
     }
 }

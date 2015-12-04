@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
+using MyJeepTrader.Web.Helpers;
 using MyJeepTrader.Web.Models;
 using MyJeepTrader.Web.ViewModels;
 
@@ -48,7 +49,7 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             PostCreateViewModel model = new PostCreateViewModel
             {
-                Models = service.GetAllModels(),
+                Models = service.GetAllModels().ToModelWithSelected(),
                 Years = service.GetAllYears(),
                 PostTypes = service.GetAllPostTypes()
                 
@@ -66,6 +67,10 @@ namespace MyJeepTrader.Web.Controllers
                 Service service = new Service();
                 //model.Post.MakeID = 
                 //model.Post.YearID = model.Years.Where(x => x.IsSelected)
+                model.Post.PostTypeId = model.SelectedPostTypeId;
+                model.Post.YearId = model.SelectedYearId;
+                model.Post.IsVehicle = model.IsJeep;
+
                 var newPostId = service.CreateNewPost(model.Post);
 
                 return RedirectToAction("Index");
