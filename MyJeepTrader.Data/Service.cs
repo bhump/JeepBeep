@@ -261,6 +261,7 @@ namespace MyJeepTrader.Data
                                 join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
                                 join u in _context.AspNetUsers on mc.ToUserId equals u.Id
                                 where mc.FromUserId == userId
+                                orderby m.DateSent descending
                                 select new MailMessages 
                                 { 
                                     Subject = m.Subject, 
@@ -282,6 +283,7 @@ namespace MyJeepTrader.Data
                          join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
                          join u in _context.AspNetUsers on mc.FromUserId equals u.Id
                          where mc.ToUserId == userId
+                         orderby m.DateSent descending
                          select new MailMessages
                          { 
                              Subject = m.Subject, 
@@ -304,30 +306,6 @@ namespace MyJeepTrader.Data
                 var getMessage = _context.tMessages.Where(m => m.MessageId == messageId).FirstOrDefault();
                 getMessage.DateRead = DateTime.Now;
                 _context.SaveChanges();
-            }
-        }
-
-        public List<MailMessages> CheckForReadMessages(string userId)
-        {
-            using (_context)
-            {
-                var getReadMessages = (from m in _context.tMessages
-                         join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
-                         join u in _context.AspNetUsers on mc.FromUserId equals u.Id
-                         where mc.ToUserId == userId && m.DateRead != null
-                         select new MailMessages
-                         { 
-                             Subject = m.Subject, 
-                             Message = m.Message, 
-                             DateSent = m.DateSent, 
-                             DateRead = m.DateRead, 
-                             MessageId = m.MessageId, 
-                             From = u.UserName,
-                             ToUserId = mc.ToUserId, 
-                             FromUserId = mc.FromUserId 
-                         }).ToList();
-
-                return getReadMessages;
             }
         }
 
