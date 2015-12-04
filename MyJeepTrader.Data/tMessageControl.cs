@@ -18,6 +18,8 @@ namespace MyJeepTrader.Data
         public string ToUserId { get; set; }
         public string FromUserId { get; set; }
         public Nullable<int> MessageId { get; set; }
+        public Nullable<bool> RemoveInbox { get; set; }
+        public Nullable<bool> RemoveSent { get; set; }
     
         public virtual tMessage tMessage { get; set; }
     }

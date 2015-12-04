@@ -297,6 +297,26 @@ namespace MyJeepTrader.Data
             return inbox;
         }
 
+        public void MarkMessageAsRead(int messageId)
+        {
+            using (_context)
+            {
+                var getMessage = _context.tMessages.Where(m => m.MessageId == messageId).FirstOrDefault();
+                getMessage.DateRead = DateTime.Now;
+                _context.SaveChanges();
+            }
+        }
+
+        public List<tMessage> CheckForReadMessages()
+        {
+            using (_context)
+            {
+                var getReadMessages = _context.tMessages.Where(m => m.DateRead != null).ToList();
+
+                return getReadMessages;
+            }
+        }
+
         public List<tPostType> GetAllPostTypes()
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
