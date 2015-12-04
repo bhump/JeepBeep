@@ -261,7 +261,17 @@ namespace MyJeepTrader.Data
                                 join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
                                 join u in _context.AspNetUsers on mc.ToUserId equals u.Id
                                 where mc.FromUserId == userId
-                                select new MailMessages { Subject = m.Subject, Message = m.Message, DateSent = m.DateSent, DateRead = m.DateRead, MessageId = m.MessageId, FromUserId = mc.FromUserId, To = u.UserName, ToUserId = mc.ToUserId }).ToList();
+                                select new MailMessages 
+                                { 
+                                    Subject = m.Subject, 
+                                    Message = m.Message, 
+                                    DateSent = m.DateSent, 
+                                    DateRead = m.DateRead, 
+                                    MessageId = m.MessageId, 
+                                    FromUserId = mc.FromUserId, 
+                                    To = u.UserName, 
+                                    ToUserId = mc.ToUserId 
+                                }).ToList();
 
             return sentMessages;
         }
@@ -270,9 +280,19 @@ namespace MyJeepTrader.Data
         {
             var inbox = (from m in _context.tMessages
                          join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
-                         join u in _context.AspNetUsers on mc.ToUserId equals u.Id
+                         join u in _context.AspNetUsers on mc.FromUserId equals u.Id
                          where mc.ToUserId == userId
-                         select new MailMessages { Subject = m.Subject, Message = m.Message, DateSent = m.DateSent, DateRead = m.DateRead, MessageId = m.MessageId, From = u.UserName, ToUserId = mc.ToUserId, FromUserId = mc.FromUserId }).ToList();
+                         select new MailMessages
+                         { 
+                             Subject = m.Subject, 
+                             Message = m.Message, 
+                             DateSent = m.DateSent, 
+                             DateRead = m.DateRead, 
+                             MessageId = m.MessageId, 
+                             From = u.UserName,
+                             ToUserId = mc.ToUserId, 
+                             FromUserId = mc.FromUserId 
+                         }).ToList();
 
             return inbox;
         }

@@ -278,7 +278,7 @@
 </div>
 
 <div id="myMessage" class="modal fade" role="dialog">
-    @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { role = "form" }))
+    @using (Ajax.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, HttpMethod = "POST" }))
     {
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -290,17 +290,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <p id="fromUserId" hidden="hidden"></p>
-                        <p id="from"></p>
-                        <p id="subject"></p>
-                        <p id="message"></p>
+                        <div class="hidden">
+                            <label>From: </label>@Html.TextAreaFor(m => m.To, new { @class = "form-control readonly", ID = "from" })
+                            <label>Subject: </label>@Html.TextAreaFor(m => m.Subject, new { @class = "form-control readonly", ID = "subject" })
+                        </div>
+                        <label>Message: </label><p id="message"></p>
                     </div>
                     <div class="form-group">
-                        <textarea cols="200" rows="5" name="textAreaReply"></textarea>
+                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Reply</button>
+                        <button type="submit" class="btn btn-default" data->Reply</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -340,9 +342,9 @@
 <script type="text/javascript">
     function loadModal(from, message, subject, fromUserId) {
         $('#myMessage').modal('show'); //show bootsrap modal manually
-        $('#from').html("From: " + from);
-        $('#message').html("Message: " + message);
-        $('#subject').html("Subject: " + subject);
+        $('#from').html(from);
+        $('#message').html(message);
+        $('#subject').html("RE: " + subject);
         $('#fromUserId').html("FromUserId: " + fromUserId)
     }
 </script>
