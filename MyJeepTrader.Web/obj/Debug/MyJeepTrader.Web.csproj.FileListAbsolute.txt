@@ -119,15 +119,19 @@ C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrade
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.52.0.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll.config
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Antlr3.Runtime.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.52.0.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.SqlServer.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Host.SystemWeb.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Cookies.dll
@@ -157,6 +161,8 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramew
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.xml
@@ -179,5 +185,3 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.csprojResolveAssemblyReference.cache
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.pdb
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.52.0.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.52.0.dll
