@@ -67,6 +67,7 @@ namespace MyJeepTrader.Web.Controllers
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 
+            model.UserProfileId = profileInfo == null ? 0 : profileInfo.UserProfileId;
             model.Email = user.Email;
             model.FirstName = profileInfo == null ? "" : profileInfo.FirstName;
             model.LastName = profileInfo == null ? "" : profileInfo.LastName;

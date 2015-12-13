@@ -665,6 +665,7 @@
     <Property Name="DateSent" Type="DateTime" Precision="3" />
     <Property Name="DateRead" Type="DateTime" Precision="3" />
     <NavigationProperty Name="tMessageControls" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessage" ToRole="tMessageControl" />
+    <Property Name="IsIM" Type="Boolean" />
   </EntityType>
   <Association Name="FK_tMessageControl_tMessages">
     <End Type="MyJeepTraderModel.tMessage" Role="tMessage" Multiplicity="0..1" />

@@ -139,6 +139,7 @@
     <Property Name="Message" Type="varchar(max)" />
     <Property Name="DateSent" Type="datetime" />
     <Property Name="DateRead" Type="datetime" />
+    <Property Name="IsIM" Type="bit" />
   </EntityType>
   <EntityType Name="tModel">
     <Key>

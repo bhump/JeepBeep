@@ -122,6 +122,12 @@
         <h2>Update Your Profile</h2>
         @using (Html.BeginForm("CreateUserProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
         {
+            <div class="hidden">
+                @Html.LabelFor(m => m.UserProfileId, new { @class = "col-sm-3 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.UserProfileId, new { @class = "form-control" })
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-3 control-label" })
                 <div class="col-md-8">
@@ -185,7 +191,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Update Profile" class="btn btn-default" />
-                    <input type="button" value="View Profile" class="btn-link" />
+                    @Html.ActionLink("View Profile", "Details", "UserProfile", new { UserProfileId = @Model.UserProfileId }, new { }) 
                 </div>
             </div>
         }

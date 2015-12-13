@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
 using System.IO;
+using MyJeepTrader.Web.ViewModels;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -14,14 +15,31 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult Index()
         {
             Service service = new Service();
-            var userProfiles = new Service().GetAllUserProfiles();
+            var userProfiles = service.GetAllUserProfiles();
+            
             return View(userProfiles);
         }
 
         // GET: UserProfile/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int UserProfileId)
         {
-            return View();
+            Service service = new Service();
+            var userProfile = service.GetProfileInfoByProfileId(UserProfileId);
+
+            UserProfileDetailsViewModel model = new UserProfileDetailsViewModel();
+            model.FirstName = userProfile.FirstName;
+            model.LastName = userProfile.LastName;
+            model.BirthDate = userProfile.BirthDate;
+
+            return View(model);
+        }
+
+        public ActionResult ShowAvatar(int UserProfileId)
+        {
+            Service service = new Service();
+            var getAvatar = service.GetAvatarImage(UserProfileId);
+
+            return File(getAvatar, "image/jpeg");
         }
 
         // GET: UserProfile/Create
@@ -89,14 +107,14 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult ViewAvatar()
-        {
-            Service service = new Service();
-            int id = 1;
-            var image = Convert.ToString(service.GetAvatarImage(id));
-            return File(image, "image/jpg");
-        }
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public ActionResult ViewAvatar()
+        //{
+        //    Service service = new Service();
+        //    int id = 1;
+        //    var image = Convert.ToString(service.GetAvatarImage(id));
+        //    return File(image, "image/jpg");
+        //}
     }
 }

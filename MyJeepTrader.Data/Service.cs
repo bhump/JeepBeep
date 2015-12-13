@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LinqKit;
 using MyJeepTrader.Data.Models;
+using System.IO;
 
 namespace MyJeepTrader.Data
 {
@@ -55,10 +56,16 @@ namespace MyJeepTrader.Data
             return _context.tPosts.AsExpandable().Where(predicate);
         }
 
-        public object GetAvatarImage(int id)
+        public byte[] GetAvatarImage(int UserProfileId)
         {
-            //var avatar = _context.tUserProfiles.FirstOrDefault(a => a.AccountId == id);
-            return null;
+            using (_context)
+            {
+                var avatar = (from up in _context.tUserProfiles
+                              where up.UserProfileId == UserProfileId
+                              select up.Avatar).FirstOrDefault();
+
+                return avatar;
+            }
         }
 
         public void CreateMembership(string userId)
@@ -123,21 +130,36 @@ namespace MyJeepTrader.Data
         }
         public bool CheckForProfile(string userId)
         {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            var noProfile = (from up in context.tUserProfiles where up.Id == userId select up).Any();
-            return noProfile;
+            using (_context)
+            {
+                var noProfile = (from up in _context.tUserProfiles where up.Id == userId select up).Any();
+
+                return noProfile;
+            }
         }
 
         public tUserProfile GetProfileInfo(string userId)
         {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            return context.tUserProfiles.Where(up => up.Id == userId).FirstOrDefault();
+            using (_context)
+            {
+                return _context.tUserProfiles.Where(up => up.Id == userId).FirstOrDefault();
+            }
+        }
+
+        public tUserProfile GetProfileInfoByProfileId(int profileId)
+        {
+            using (_context)
+            {
+                return _context.tUserProfiles.Where(up => up.UserProfileId == profileId).First();
+            }
         }
 
         public List<tModel> GetAllModels()
         {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            return (from m in context.tModels select m).ToList();
+            using (_context)
+            {
+                return (from m in _context.tModels select m).ToList();
+            }
         }
 
         public void CreatePrimaryJeepProfile(string userId, string manufactuer, string make, string model, short year, byte[] jeepImage, string jeepDescription, bool primaryJeep)
@@ -169,7 +191,7 @@ namespace MyJeepTrader.Data
 
         public void UpdatePrimaryJeepProfile(string userId, string manufactuer, string make, string model, short year, byte[] jeepImage, string jeepDescription, bool primaryJeep)
         {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            using (_context)
             {
                 var updateJeepProfile = (from vp in _context.tVehicleProfiles
                                          join vpc in _context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
@@ -206,6 +228,7 @@ namespace MyJeepTrader.Data
         public tVehicleProfile GetPrimaryJeepInfo(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
             return (from vp in context.tVehicleProfiles
                     join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
                     where vpc.Id == userId
@@ -216,16 +239,19 @@ namespace MyJeepTrader.Data
         public bool CheckForPrimaryJeep(string userId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
             var noPrimaryJeep = (from vp in context.tVehicleProfiles
                                  join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
                                  where vpc.Id == userId
                                  select vp).Any();
+
             return noPrimaryJeep;
         }
 
         public List<tYear> GetAllYears()
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
             return (from y in context.tYears select y).ToList();
         }
 
@@ -257,46 +283,52 @@ namespace MyJeepTrader.Data
 
         public List<MailMessages> GetSentMessages(string userId)
         {
-            var sentMessages = (from m in _context.tMessages
-                                join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
-                                join u in _context.AspNetUsers on mc.ToUserId equals u.Id
-                                where mc.FromUserId == userId
-                                orderby m.DateSent descending
-                                select new MailMessages 
-                                { 
-                                    Subject = m.Subject, 
-                                    Message = m.Message, 
-                                    DateSent = m.DateSent, 
-                                    DateRead = m.DateRead, 
-                                    MessageId = m.MessageId, 
-                                    FromUserId = mc.FromUserId, 
-                                    To = u.UserName, 
-                                    ToUserId = mc.ToUserId 
-                                }).ToList();
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var sentMessages = (from m in context.tMessages
+                                    join mc in context.tMessageControls on m.MessageId equals mc.MessageId
+                                    join u in context.AspNetUsers on mc.ToUserId equals u.Id
+                                    where mc.FromUserId == userId
+                                    orderby m.DateSent descending
+                                    select new MailMessages
+                                    {
+                                        Subject = m.Subject,
+                                        Message = m.Message,
+                                        DateSent = m.DateSent,
+                                        DateRead = m.DateRead,
+                                        MessageId = m.MessageId,
+                                        FromUserId = mc.FromUserId,
+                                        To = u.UserName,
+                                        ToUserId = mc.ToUserId
+                                    }).ToList();
 
-            return sentMessages;
+                return sentMessages;
+            }
         }
 
         public List<MailMessages> GetInboxMessages(string userId)
         {
-            var inbox = (from m in _context.tMessages
-                         join mc in _context.tMessageControls on m.MessageId equals mc.MessageId
-                         join u in _context.AspNetUsers on mc.FromUserId equals u.Id
-                         where mc.ToUserId == userId
-                         orderby m.DateSent descending
-                         select new MailMessages
-                         { 
-                             Subject = m.Subject, 
-                             Message = m.Message, 
-                             DateSent = m.DateSent, 
-                             DateRead = m.DateRead, 
-                             MessageId = m.MessageId, 
-                             From = u.UserName,
-                             ToUserId = mc.ToUserId, 
-                             FromUserId = mc.FromUserId 
-                         }).ToList();
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var inbox = (from m in context.tMessages
+                             join mc in context.tMessageControls on m.MessageId equals mc.MessageId
+                             join u in context.AspNetUsers on mc.FromUserId equals u.Id
+                             where mc.ToUserId == userId
+                             orderby m.DateSent descending
+                             select new MailMessages
+                             {
+                                 Subject = m.Subject,
+                                 Message = m.Message,
+                                 DateSent = m.DateSent,
+                                 DateRead = m.DateRead,
+                                 MessageId = m.MessageId,
+                                 From = u.UserName,
+                                 ToUserId = mc.ToUserId,
+                                 FromUserId = mc.FromUserId
+                             }).ToList();
 
-            return inbox;
+                return inbox;
+            }
         }
 
         public void MarkMessageAsRead(int messageId)
@@ -311,8 +343,10 @@ namespace MyJeepTrader.Data
 
         public List<tPostType> GetAllPostTypes()
         {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            return (from p in context.tPostTypes select p).ToList();
+            using (_context)
+            {
+                return (from p in _context.tPostTypes select p).ToList();
+            }
         }
 
 

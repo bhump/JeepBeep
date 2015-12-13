@@ -1,106 +1,117 @@
-﻿@model MyJeepTrader.Data.tUserProfile
+﻿@model MyJeepTrader.Web.ViewModels.UserProfileDetailsViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "User Profile";
+    ViewBag.UserProfileId = @Model.UserProfileId;
 }
 
 <h2>Details</h2>
 
 <div>
-    <h4>tUserProfile</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Avatar)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Avatar)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Website)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Website)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Facebook)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Facebook)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GooglePlus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GooglePlus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Twitter)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Twitter)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ello)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ello)
-        </dd>
-
-        <dt>
-            @*@Html.DisplayNameFor(model => model.tAccount.UserName)*@
-        </dt>
-
-        <dd>
-            @*@Html.DisplayFor(model => model.tAccount.UserName)*@
-        </dd>
-
-    </dl>
+    <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserProfileId = ViewBag.UserProfileId } )" />  
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserProfileId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    <label>Name:</label> @Html.DisplayFor(m => m.FirstName) @Html.DisplayFor(m => m.LastName)
+</div>
+<div>
+    <label>Birth Day:</label> @Html.DisplayFor(m => m.BirthDate, "{0:MM/dd/yyyy}")
+</div>
+
+@*<div>
+        <h4>Profile</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Avatar)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Avatar)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BirthDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Website)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Website)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Facebook)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Facebook)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.GooglePlus)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GooglePlus)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Twitter)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Twitter)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ello)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ello)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tAccount.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tAccount.UserName)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.UserProfileId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

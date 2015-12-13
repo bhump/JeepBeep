@@ -9,7 +9,6 @@ namespace MyJeepTrader.Web.Models
     {
         public String ClientToken { get; set; }
 
-
         public string Nonce { get; set; }
     }
 }

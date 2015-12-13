@@ -264,6 +264,7 @@
     <EntitySetMapping Name="tMessages">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tMessage">
         <MappingFragment StoreEntitySet="tMessages">
+          <ScalarProperty Name="IsIM" ColumnName="IsIM" />
           <ScalarProperty Name="DateRead" ColumnName="DateRead" />
           <ScalarProperty Name="DateSent" ColumnName="DateSent" />
           <ScalarProperty Name="Message" ColumnName="Message" />

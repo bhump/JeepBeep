@@ -24,6 +24,7 @@ namespace MyJeepTrader.Data
         public string Message { get; set; }
         public Nullable<System.DateTime> DateSent { get; set; }
         public Nullable<System.DateTime> DateRead { get; set; }
+        public Nullable<bool> IsIM { get; set; }
     
         public virtual ICollection<tMessageControl> tMessageControls { get; set; }
     }

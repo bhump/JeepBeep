@@ -32,7 +32,7 @@ namespace MyJeepTrader.Web.ViewModels
         public string ConfirmPassword { get; set; }
         #endregion
 
-        #region update profile
+        #region User profile
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
@@ -66,6 +66,9 @@ namespace MyJeepTrader.Web.ViewModels
         #endregion
 
         #region jeep profile
+        [Display(Name = "UserProfileId")]
+        public int UserProfileId { get; set; }
+
         [Display(Name = "Manufactuer")]
         public string Manufactuer { get; set; }
 

@@ -144,6 +144,7 @@
           <Property Name="Message" Type="varchar(max)" />
           <Property Name="DateSent" Type="datetime" />
           <Property Name="DateRead" Type="datetime" />
+          <Property Name="IsIM" Type="bit" />
         </EntityType>
         <EntityType Name="tModel">
           <Key>
@@ -1343,6 +1344,7 @@
           <Property Name="DateSent" Type="DateTime" Precision="3" />
           <Property Name="DateRead" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tMessageControls" Relationship="MyJeepTraderModel.FK_tMessageControl_tMessages" FromRole="tMessage" ToRole="tMessageControl" />
+          <Property Name="IsIM" Type="Boolean" />
         </EntityType>
         <Association Name="FK_tMessageControl_tMessages">
           <End Type="MyJeepTraderModel.tMessage" Role="tMessage" Multiplicity="0..1" />
@@ -1625,6 +1627,7 @@
           <EntitySetMapping Name="tMessages">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tMessage">
               <MappingFragment StoreEntitySet="tMessages">
+                <ScalarProperty Name="IsIM" ColumnName="IsIM" />
                 <ScalarProperty Name="DateRead" ColumnName="DateRead" />
                 <ScalarProperty Name="DateSent" ColumnName="DateSent" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
