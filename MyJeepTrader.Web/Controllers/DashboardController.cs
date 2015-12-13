@@ -13,6 +13,7 @@ using MyJeepTrader.Web.Models;
 using System.Threading.Tasks;
 using System.Text;
 using System.Globalization;
+using System.IO;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -144,10 +145,18 @@ namespace MyJeepTrader.Web.Controllers
                     return View();
                 }
 
+                byte[] imageData = null;
+
+                using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
+                }
+
                 var firstName = collection["FirstName"].ToString();
                 var lastName = collection["LastName"].ToString();
                 var birthDate = Convert.ToDateTime(collection["BirthDate"].ToString());
-                var avatar = Encoding.ASCII.GetBytes(Request.Files[0].ToString());
+                //var avatar = Encoding.ASCII.GetBytes(Request.Files[0].ToString());
+                var avatar = imageData;
                 var description = collection["Description"].ToString();
                 var facebook = collection["Facebook"].ToString();
                 var twitter = collection["Twitter"].ToString();

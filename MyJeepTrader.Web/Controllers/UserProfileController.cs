@@ -39,7 +39,9 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             var getAvatar = service.GetAvatarImage(UserProfileId);
 
-            return File(getAvatar, "image/jpeg");
+            var stream = new MemoryStream(getAvatar.ToArray());
+
+            return new FileStreamResult(stream, "image/jpg");
         }
 
         // GET: UserProfile/Create
@@ -106,15 +108,5 @@ namespace MyJeepTrader.Web.Controllers
                 return View();
             }
         }
-
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public ActionResult ViewAvatar()
-        //{
-        //    Service service = new Service();
-        //    int id = 1;
-        //    var image = Convert.ToString(service.GetAvatarImage(id));
-        //    return File(image, "image/jpg");
-        //}
     }
 }

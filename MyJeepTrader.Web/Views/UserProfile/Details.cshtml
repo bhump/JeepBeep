@@ -8,7 +8,7 @@
 <h2>Details</h2>
 
 <div>
-    <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserProfileId = ViewBag.UserProfileId } )" />  
+    <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserProfileId = Request.QueryString["UserProfileId"] } )" alt="Image Unavailable" width="10%" height="10%" />  
 </div>
 <div>
     <label>Name:</label> @Html.DisplayFor(m => m.FirstName) @Html.DisplayFor(m => m.LastName)

@@ -118,13 +118,14 @@ namespace MyJeepTrader.Data
                 updateProfile.FirstName = firstName;
                 updateProfile.LastName = lastName;
                 updateProfile.BirthDate = birthDate;
-                //updateProfile.Avatar = avatar;
                 updateProfile.Description = description;
                 updateProfile.Facebook = facebook;
                 updateProfile.Twitter = twitter;
                 updateProfile.Ello = ello;
                 updateProfile.GooglePlus = google;
                 updateProfile.Website = website;
+                updateProfile.Avatar = avatar;
+
                 context.SaveChanges();
             }
         }
