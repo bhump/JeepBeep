@@ -187,6 +187,7 @@
           <Property Name="Active" Type="bit" />
           <Property Name="LocationId" Type="int" />
           <Property Name="PostTypeId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
         </EntityType>
         <EntityType Name="tPostsControl">
           <Key>
@@ -982,6 +983,7 @@
           <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
           <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPost" ToRole="tPostsControl" />
           <Property Name="IsVehicle" Type="Boolean" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tPostsControl">
           <Key>
@@ -1513,6 +1515,7 @@
           <EntitySetMapping Name="tPosts">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
               <MappingFragment StoreEntitySet="tPosts">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
                 <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />

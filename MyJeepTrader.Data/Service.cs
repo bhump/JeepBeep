@@ -342,12 +342,62 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public List<UsersPosts> GetAllPostsForUser(int userProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var result = (from p in context.tPosts
+                              join pc in context.tPostsControls on p.PostId equals pc.PostId
+                              join u in context.AspNetUsers on pc.Id equals u.Id
+                              join up in context.tUserProfiles on u.Id equals up.Id
+                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              where up.UserProfileId == userProfileId
+                              select new UsersPosts
+                              {
+                                  PostId = p.PostId,
+                                  PostDescription = p.PostDescription,
+                                  Active = p.Active,
+                                  IsVehicle = p.IsVehicle,
+                                  PostTitle = p.PostTitle,
+                                  PostType = pt.Type,
+                                  DateCreated = p.DateCreated
+                              }).ToList();
+
+                return result;
+            }
+        }
+
+        public UsersPosts GetUsersMostRecentPost(int userProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var result = (from p in context.tPosts
+                              join pc in context.tPostsControls on p.PostId equals pc.PostId
+                              join u in context.AspNetUsers on pc.Id equals u.Id
+                              join up in context.tUserProfiles on u.Id equals up.Id
+                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              where up.UserProfileId == userProfileId
+                              select new UsersPosts
+                              {
+                                  PostId = p.PostId,
+                                  PostDescription = p.PostDescription,
+                                  Active = p.Active,
+                                  IsVehicle = p.IsVehicle,
+                                  PostTitle = p.PostTitle,
+                                  PostType = pt.Type,
+                                  DateCreated = p.DateCreated
+                              }).OrderByDescending(p => p.DateCreated).FirstOrDefault();
+
+                return result;
+            }
+        }
+
         public List<tPostType> GetAllPostTypes()
         {
-            using (_context)
-            {
+            //using (_context)
+            //{
                 return (from p in _context.tPostTypes select p).ToList();
-            }
+            //}
         }
 
 

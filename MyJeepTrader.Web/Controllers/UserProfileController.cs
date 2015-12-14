@@ -35,6 +35,8 @@ namespace MyJeepTrader.Web.Controllers
             model.Ello = userProfile.Ello;
             model.Website = userProfile.Website;
             model.Description = userProfile.Description;
+            model.UserPosts = service.GetAllPostsForUser(UserProfileId);
+            model.RecentPost = service.GetUsersMostRecentPost(UserProfileId);
 
             return View(model);
         }

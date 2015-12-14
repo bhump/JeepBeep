@@ -150,6 +150,7 @@
     <EntitySetMapping Name="tPosts">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
         <MappingFragment StoreEntitySet="tPosts">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
           <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />

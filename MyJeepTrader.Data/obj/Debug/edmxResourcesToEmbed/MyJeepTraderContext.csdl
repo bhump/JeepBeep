@@ -303,6 +303,7 @@
     <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
     <NavigationProperty Name="tPostsControls" Relationship="MyJeepTraderModel.FK_tPostsControl_tPosts" FromRole="tPost" ToRole="tPostsControl" />
     <Property Name="IsVehicle" Type="Boolean" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="tPostsControl">
     <Key>

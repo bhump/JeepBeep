@@ -182,6 +182,7 @@
     <Property Name="Active" Type="bit" />
     <Property Name="LocationId" Type="int" />
     <Property Name="PostTypeId" Type="int" />
+    <Property Name="DateCreated" Type="datetime" />
   </EntityType>
   <EntityType Name="tPostsControl">
     <Key>

@@ -34,6 +34,7 @@ namespace MyJeepTrader.Data
         public Nullable<int> LocationId { get; set; }
         public Nullable<int> PostTypeId { get; set; }
         public Nullable<bool> IsVehicle { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
     
         public virtual ICollection<tImageControl> tImageControls { get; set; }
         public virtual tLocation tLocation { get; set; }

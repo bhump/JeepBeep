@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
-
+using MyJeepTrader.Data.Models;
 using System.Web;
 
 namespace MyJeepTrader.Web.ViewModels
 {
     public class UserProfileDetailsViewModel
     {
+        #region User Profile
         public int UserProfileId { get; set; }
 
         [Display(Name = "First name")]
@@ -41,5 +42,13 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Your website")]
         public string Website { get; set; }
+        #endregion
+
+        #region posts
+        public List<UsersPosts> UserPosts { get; set; }
+
+        public UsersPosts RecentPost { get; set; }
+
+        #endregion
     }
 }
