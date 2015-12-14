@@ -30,6 +30,11 @@ namespace MyJeepTrader.Web.Controllers
             model.FirstName = userProfile.FirstName;
             model.LastName = userProfile.LastName;
             model.BirthDate = userProfile.BirthDate;
+            model.Facebook = userProfile.Facebook;
+            model.GooglePlus = userProfile.GooglePlus;
+            model.Ello = userProfile.Ello;
+            model.Website = userProfile.Website;
+            model.Description = userProfile.Description;
 
             return View(model);
         }
