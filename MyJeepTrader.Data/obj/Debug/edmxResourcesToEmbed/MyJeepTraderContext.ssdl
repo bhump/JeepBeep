@@ -242,7 +242,7 @@
     <Property Name="Year" Type="smallint" />
     <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
     <Property Name="Description" Type="varchar(max)" />
-    <Property Name="Image" Type="binary" MaxLength="50" />
+    <Property Name="Image" Type="image" />
     <Property Name="PrimaryJeep" Type="bit" />
   </EntityType>
   <EntityType Name="tYear">

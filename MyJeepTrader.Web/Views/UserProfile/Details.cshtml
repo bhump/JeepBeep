@@ -68,9 +68,22 @@
 
 <div class="column" id="column2">
     <div class="form-group-sm">
+        <h2>Primary Jeep</h2>
+        <div class="form-horizontal">
+            <div>
+                <div class="form-group">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-sm">
         <h2>Recent Post</h2>
         <div class="form-horizontal">
             <div>
+                <div class="hidden">
+                    @Html.TextAreaFor(m => m.RecentPost.PostId)
+                </div>
                 <div class="form-group">
                     <label class="col-sm-3">Title: </label>@Html.DisplayFor(m => m.RecentPost.PostTitle)
                 </div>

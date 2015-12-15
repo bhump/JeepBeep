@@ -247,7 +247,7 @@
           <Property Name="Year" Type="smallint" />
           <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar(max)" />
-          <Property Name="Image" Type="binary" MaxLength="50" />
+          <Property Name="Image" Type="image" />
           <Property Name="PrimaryJeep" Type="bit" />
         </EntityType>
         <EntityType Name="tYear">
@@ -1051,7 +1051,7 @@
           <Property Name="Year" Type="Int16" />
           <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="Binary" MaxLength="50" FixedLength="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="PrimaryJeep" Type="Boolean" />
           <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfile" ToRole="tVehicleProfileControl" />
         </EntityType>

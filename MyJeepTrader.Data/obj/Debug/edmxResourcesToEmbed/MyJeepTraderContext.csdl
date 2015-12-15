@@ -371,7 +371,7 @@
     <Property Name="Year" Type="Int16" />
     <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Image" Type="Binary" MaxLength="50" FixedLength="true" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="PrimaryJeep" Type="Boolean" />
     <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" FromRole="tVehicleProfile" ToRole="tVehicleProfileControl" />
   </EntityType>

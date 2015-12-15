@@ -192,10 +192,10 @@ namespace MyJeepTrader.Data
 
         public void UpdatePrimaryJeepProfile(string userId, string manufactuer, string make, string model, short year, byte[] jeepImage, string jeepDescription, bool primaryJeep)
         {
-            using (_context)
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var updateJeepProfile = (from vp in _context.tVehicleProfiles
-                                         join vpc in _context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                var updateJeepProfile = (from vp in context.tVehicleProfiles
+                                         join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
                                          where vpc.Id == userId
                                          && vp.PrimaryJeep == true
                                          select vp).FirstOrDefault();
@@ -208,7 +208,7 @@ namespace MyJeepTrader.Data
                 updateJeepProfile.Description = jeepDescription;
                 updateJeepProfile.PrimaryJeep = primaryJeep;
 
-                _context.SaveChanges();
+                context.SaveChanges();
             }
         }
 

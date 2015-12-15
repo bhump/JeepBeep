@@ -155,7 +155,6 @@ namespace MyJeepTrader.Web.Controllers
                 var firstName = collection["FirstName"].ToString();
                 var lastName = collection["LastName"].ToString();
                 var birthDate = Convert.ToDateTime(collection["BirthDate"].ToString());
-                //var avatar = Encoding.ASCII.GetBytes(Request.Files[0].ToString());
                 var avatar = imageData;
                 var description = collection["Description"].ToString();
                 var facebook = collection["Facebook"].ToString();
@@ -196,11 +195,18 @@ namespace MyJeepTrader.Web.Controllers
                     return View();
                 }
 
+                byte[] imageData = null;
+
+                using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
+                }
+
                 var manufactuer = collection["Manufactuer"].ToString();
                 var make = collection["Make"].ToString();
                 var model = collection["Model"].ToString();
                 var year = Convert.ToInt16(collection["Year"].ToString());
-                var jeepImage = Encoding.ASCII.GetBytes(Request.Files[0].ToString());
+                var jeepImage = imageData;
                 var jeepDescription = collection["JeepDescription"].ToString();
                 bool primaryJeep = Convert.ToBoolean(collection["PrimaryJeep"].Split(',')[0]);
 
