@@ -26,6 +26,7 @@ namespace MyJeepTrader.Data
         public string GooglePlus { get; set; }
         public string Twitter { get; set; }
         public string Ello { get; set; }
+        public Nullable<long> ViewCount { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

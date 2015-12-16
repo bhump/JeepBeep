@@ -19,7 +19,7 @@ namespace MyJeepTrader.Data
             _context = new dboMyJeepTraderEntities();
         }
 
-
+        #region Posts
         /// <summary>
         /// Gets all the posts.
         /// </summary>
@@ -56,18 +56,80 @@ namespace MyJeepTrader.Data
             return _context.tPosts.AsExpandable().Where(predicate);
         }
 
-        public byte[] GetAvatarImage(int UserProfileId)
+        /// <summary>
+        /// Creates the new post.
+        /// </summary>
+        /// <param name="post">The post.</param>
+        /// <returns></returns>
+        public int CreateNewPost(tPost post)
         {
-            using (_context)
-            {
-                var avatar = (from up in _context.tUserProfiles
-                              where up.UserProfileId == UserProfileId
-                              select up.Avatar).FirstOrDefault();
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            context.tPosts.Add(post);
+            context.SaveChanges();
 
-                return avatar;
+            return post.PostId;
+        }
+
+        public List<UsersPosts> GetAllPostsForUser(int userProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var result = (from p in context.tPosts
+                              join pc in context.tPostsControls on p.PostId equals pc.PostId
+                              join u in context.AspNetUsers on pc.Id equals u.Id
+                              join up in context.tUserProfiles on u.Id equals up.Id
+                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              where up.UserProfileId == userProfileId
+                              select new UsersPosts
+                              {
+                                  PostId = p.PostId,
+                                  PostDescription = p.PostDescription,
+                                  Active = p.Active,
+                                  IsVehicle = p.IsVehicle,
+                                  PostTitle = p.PostTitle,
+                                  PostType = pt.Type,
+                                  DateCreated = p.DateCreated
+                              }).ToList();
+
+                return result;
             }
         }
 
+        public UsersPosts GetUsersMostRecentPost(int userProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var result = (from p in context.tPosts
+                              join pc in context.tPostsControls on p.PostId equals pc.PostId
+                              join u in context.AspNetUsers on pc.Id equals u.Id
+                              join up in context.tUserProfiles on u.Id equals up.Id
+                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              where up.UserProfileId == userProfileId
+                              select new UsersPosts
+                              {
+                                  PostId = p.PostId,
+                                  PostDescription = p.PostDescription,
+                                  Active = p.Active,
+                                  IsVehicle = p.IsVehicle,
+                                  PostTitle = p.PostTitle,
+                                  PostType = pt.Type,
+                                  DateCreated = p.DateCreated
+                              }).OrderByDescending(p => p.DateCreated).FirstOrDefault();
+
+                return result;
+            }
+        }
+
+        public List<tPostType> GetAllPostTypes()
+        {
+            //using (_context)
+            //{
+            return (from p in _context.tPostTypes select p).ToList();
+            //}
+        }
+        #endregion 
+
+        #region Membership
         public void CreateMembership(string userId)
         {
             using (_context)
@@ -85,6 +147,20 @@ namespace MyJeepTrader.Data
                     };
                 _context.tMemberships.Add(membership);
                 _context.SaveChanges();
+            }
+        }
+        #endregion
+
+        #region User Profile
+        public byte[] GetAvatarImage(int UserProfileId)
+        {
+            using (_context)
+            {
+                var avatar = (from up in _context.tUserProfiles
+                              where up.UserProfileId == UserProfileId
+                              select up.Avatar).FirstOrDefault();
+
+                return avatar;
             }
         }
 
@@ -154,12 +230,18 @@ namespace MyJeepTrader.Data
                 return _context.tUserProfiles.Where(up => up.UserProfileId == profileId).First();
             }
         }
+        #endregion
 
-        public List<tModel> GetAllModels()
+        #region Jeep Profile
+        public byte[] GetJeepImage(int JeepProfileId)
         {
-            using (_context)
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                return (from m in _context.tModels select m).ToList();
+                var image = (from jp in context.tVehicleProfiles
+                             where jp.VehicleProfileId == JeepProfileId
+                             select jp.Image).FirstOrDefault();
+
+                return image;
             }
         }
 
@@ -212,29 +294,27 @@ namespace MyJeepTrader.Data
             }
         }
 
-        /// <summary>
-        /// Creates the new post.
-        /// </summary>
-        /// <param name="post">The post.</param>
-        /// <returns></returns>
-        public int CreateNewPost(tPost post)
-        {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            context.tPosts.Add(post);
-            context.SaveChanges();
-
-            return post.PostId;
-        }
-
         public tVehicleProfile GetPrimaryJeepInfo(string userId)
         {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                return (from vp in context.tVehicleProfiles
+                        join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                        where vpc.Id == userId
+                        select vp).FirstOrDefault();
+            }
 
-            return (from vp in context.tVehicleProfiles
-                    join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
-                    where vpc.Id == userId
-                    select vp).FirstOrDefault();
+        }
 
+        public tVehicleProfile GetPrimaryJeepInfoByProfileId(int jeepProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                return (from vp in context.tVehicleProfiles
+                        join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                        where vpc.VehicleProfileId == jeepProfileId
+                        select vp).FirstOrDefault();
+            }
         }
 
         public bool CheckForPrimaryJeep(string userId)
@@ -248,6 +328,16 @@ namespace MyJeepTrader.Data
 
             return noPrimaryJeep;
         }
+        #endregion
+
+        #region Vehicle Details
+        public List<tModel> GetAllModels()
+        {
+            using (_context)
+            {
+                return (from m in _context.tModels select m).ToList();
+            }
+        }
 
         public List<tYear> GetAllYears()
         {
@@ -255,7 +345,9 @@ namespace MyJeepTrader.Data
 
             return (from y in context.tYears select y).ToList();
         }
+        #endregion
 
+        #region Mailbox
         public void CreateMessage(string toUser, string fromUserId, string subject, string message)
         {
             using (_context)
@@ -341,65 +433,7 @@ namespace MyJeepTrader.Data
                 _context.SaveChanges();
             }
         }
-
-        public List<UsersPosts> GetAllPostsForUser(int userProfileId)
-        {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var result = (from p in context.tPosts
-                              join pc in context.tPostsControls on p.PostId equals pc.PostId
-                              join u in context.AspNetUsers on pc.Id equals u.Id
-                              join up in context.tUserProfiles on u.Id equals up.Id
-                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
-                              where up.UserProfileId == userProfileId
-                              select new UsersPosts
-                              {
-                                  PostId = p.PostId,
-                                  PostDescription = p.PostDescription,
-                                  Active = p.Active,
-                                  IsVehicle = p.IsVehicle,
-                                  PostTitle = p.PostTitle,
-                                  PostType = pt.Type,
-                                  DateCreated = p.DateCreated
-                              }).ToList();
-
-                return result;
-            }
-        }
-
-        public UsersPosts GetUsersMostRecentPost(int userProfileId)
-        {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var result = (from p in context.tPosts
-                              join pc in context.tPostsControls on p.PostId equals pc.PostId
-                              join u in context.AspNetUsers on pc.Id equals u.Id
-                              join up in context.tUserProfiles on u.Id equals up.Id
-                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
-                              where up.UserProfileId == userProfileId
-                              select new UsersPosts
-                              {
-                                  PostId = p.PostId,
-                                  PostDescription = p.PostDescription,
-                                  Active = p.Active,
-                                  IsVehicle = p.IsVehicle,
-                                  PostTitle = p.PostTitle,
-                                  PostType = pt.Type,
-                                  DateCreated = p.DateCreated
-                              }).OrderByDescending(p => p.DateCreated).FirstOrDefault();
-
-                return result;
-            }
-        }
-
-        public List<tPostType> GetAllPostTypes()
-        {
-            //using (_context)
-            //{
-                return (from p in _context.tPostTypes select p).ToList();
-            //}
-        }
-
+        #endregion
 
     }// public class service
 } // namespace

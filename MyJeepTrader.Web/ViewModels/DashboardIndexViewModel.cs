@@ -33,6 +33,9 @@ namespace MyJeepTrader.Web.ViewModels
         #endregion
 
         #region User profile
+        [Display(Name = "UserProfileId")]
+        public int UserProfileId { get; set; }
+
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
@@ -66,8 +69,7 @@ namespace MyJeepTrader.Web.ViewModels
         #endregion
 
         #region jeep profile
-        [Display(Name = "UserProfileId")]
-        public int UserProfileId { get; set; }
+        public int JeepProfileId { get; set; }
 
         [Display(Name = "Manufactuer")]
         public string Manufactuer { get; set; }

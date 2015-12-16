@@ -34,6 +34,7 @@
                 </div>
             </div>
         </div>
+        <div style="margin-bottom: 10%"></div>
         <div class="form-group-sm">
             <h2>Social Networks</h2>
             <div class="form-horizontal">
@@ -72,11 +73,24 @@
         <div class="form-horizontal">
             <div>
                 <div class="form-group">
-
+                    <img src="@Url.Action("ShowJeepImage", "UserProfile", new { JeepProfileId = Request.QueryString["JeepProfileId"] })" alt="Image Unavailable" width="10%" height="10%" class="col-md-3" />
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3">Make: </label>@Html.DisplayFor(m => m.Make)
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3">Model: </label>@Html.DisplayFor(m => m.Model)
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3">Year: </label>@Html.DisplayFor(m => m.Year)
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3">Description: </label>@Html.DisplayFor(m => m.JeepDescription)
                 </div>
             </div>
         </div>
     </div>
+    <div style="margin-bottom: 10%"></div>
     <div class="form-group-sm">
         <h2>Recent Post</h2>
         <div class="form-horizontal">
@@ -88,7 +102,7 @@
                     <label class="col-sm-3">Title: </label>@Html.DisplayFor(m => m.RecentPost.PostTitle)
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3">Post Type: </label> @Html.DisplayFor(m => m.RecentPost.PostType)
+                    <label class="col-sm-3">Type: </label> @Html.DisplayFor(m => m.RecentPost.PostType)
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3">Description: </label> @Html.DisplayFor(m => m.RecentPost.PostDescription)
@@ -96,6 +110,7 @@
             </div>
         </div>
     </div>
+    <div style="margin-bottom: 10%"></div>
     <div class="form-group-sm">
         <h2>All Posts</h2>
         <div class="form-horizontal">
@@ -103,19 +118,21 @@
                 <table class="table">
                     <tr>
                         <th></th>
+                        <th>Date</th>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Type</th>
+                        <th>Description</th>
                     </tr>
                     @foreach (var item in Model.UserPosts)
                     {
-                        <tr>
+                        <tr id="@item.PostId">
                             <td>
                                 <button type="button" class="btn-link">View</button>
                             </td>
+                            <td>@item.DateCreated.Value.ToShortDateString()</td>
                             <td>@item.PostTitle</td>
-                            <td>@item.PostDescription</td>
                             <td>@item.PostType</td>
+                            <td>@item.PostDescription</td>
                         </tr>
                     }
                 </table>

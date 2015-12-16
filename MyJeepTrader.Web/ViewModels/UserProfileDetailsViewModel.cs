@@ -9,9 +9,9 @@ namespace MyJeepTrader.Web.ViewModels
 {
     public class UserProfileDetailsViewModel
     {
-        #region User Profile
         public int UserProfileId { get; set; }
 
+        #region User Profile
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
@@ -42,6 +42,31 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Your website")]
         public string Website { get; set; }
+        #endregion
+
+        #region primary jeep profile
+        public int JeepProfileId { get; set; }
+
+        [Display(Name = "Manufactuer")]
+        public string Manufactuer { get; set; }
+
+        [Display(Name = "Make")]
+        public string Make { get; set; }
+
+        [Display(Name = "Model")]
+        public string Model { get; set; }
+
+        [Display(Name = "Year")]
+        public short ?Year { get; set; }
+
+        [Display(Name = "Primary Jeep")]
+        public bool PrimaryJeep { get; set; }
+
+        [Display(Name = "Description")]
+        public string JeepDescription { get; set; }
+
+        [Display(Name = "Jeep Image")]
+        public byte[] Image { get; set; }
         #endregion
 
         #region posts

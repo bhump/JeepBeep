@@ -190,7 +190,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Update Profile" class="btn btn-default" />
-                    @Html.ActionLink("View Profile", "Details", "UserProfile", new { UserProfileId = @Model.UserProfileId }, new { }) 
+                    @Html.ActionLink("View Profile", "Details", "UserProfile", new { UserProfileId = @Model.UserProfileId, JeepProfileId = @Model.JeepProfileId }, new { }) 
                 </div>
             </div>
         }

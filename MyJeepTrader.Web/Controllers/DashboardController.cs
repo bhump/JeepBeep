@@ -80,6 +80,7 @@ namespace MyJeepTrader.Web.Controllers
             model.Website = profileInfo == null ? "" : profileInfo.Website;
             model.Ello = profileInfo == null ? "" : profileInfo.Ello;
 
+            model.JeepProfileId = jeepInfo.VehicleProfileId;
             model.Manufactuer = jeepInfo == null ? "" : jeepInfo.Manufacturer;
             model.Make = jeepInfo == null ? "" : jeepInfo.Make;
             model.Model = jeepInfo == null ? "" : jeepInfo.Model;

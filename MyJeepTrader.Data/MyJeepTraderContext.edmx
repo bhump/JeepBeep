@@ -228,6 +228,7 @@
           <Property Name="GooglePlus" Type="varchar(max)" />
           <Property Name="Twitter" Type="varchar(max)" />
           <Property Name="Ello" Type="varchar(max)" />
+          <Property Name="ViewCount" Type="bigint" />
         </EntityType>
         <EntityType Name="tVehicleProfileControl">
           <Key>
@@ -1030,6 +1031,7 @@
           <Property Name="Twitter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Ello" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="tUserProfile" ToRole="AspNetUser" />
+          <Property Name="ViewCount" Type="Int64" />
         </EntityType>
         <EntityType Name="tVehicleProfileControl">
           <Key>
@@ -1561,6 +1563,7 @@
           <EntitySetMapping Name="tUserProfiles">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tUserProfile">
               <MappingFragment StoreEntitySet="tUserProfiles">
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
                 <ScalarProperty Name="Ello" ColumnName="Ello" />
                 <ScalarProperty Name="Twitter" ColumnName="Twitter" />
                 <ScalarProperty Name="GooglePlus" ColumnName="GooglePlus" />
