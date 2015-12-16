@@ -11,7 +11,14 @@
             <div>
                 <div class="form-group">
                     <div>
-                        <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserName = Request.QueryString["UserName"] } )" alt="Image Unavailable" width="10%" height="10%" class="col-md-3" />
+                        @if (Model.Avatar != null)
+                        {
+                            <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserName = Request.QueryString["UserName"] } )" alt="Image Unavailable" width="10%" height="10%" class="col-md-3" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/placeholder.jpg" height="10%" width="10%" class="col-md-3" />
+                        }
                     </div>
                 </div>
                 <div class="form-group">
@@ -79,7 +86,15 @@
         <div class="form-horizontal">
             <div>
                 <div class="form-group">
-                    <img src="@Url.Action("ShowJeepImage", "UserProfile", new { UserName = Request.QueryString["UserName"] })" alt="Image Unavailable" width="10%" height="10%" class="col-md-3" />
+                    @if (Model.Image != null)
+                    {
+                        <img src="@Url.Action("ShowJeepImage", "UserProfile", new { UserName = Request.QueryString["UserName"] })" alt="Image Unavailable" width="10%" height="10%" class="col-md-3" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/placeholder.jpg" width="10%" height="10%" class="col-md-3" />
+
+                    }
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3">Make: </label>@Html.DisplayFor(m => m.Make)

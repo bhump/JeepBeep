@@ -48,6 +48,7 @@ namespace MyJeepTrader.Web.Controllers
             model.Website = userProfile.Website;
             model.Description = userProfile.Description;
             model.ViewCount = userProfile.ViewCount == null ? 0 : userProfile.ViewCount;
+            model.Avatar = userProfile.Avatar;
             //model.UserName = userProfile.AspNetUser.UserName;
 
             model.UserPosts = service.GetAllPostsForUser(UserName);
@@ -60,6 +61,7 @@ namespace MyJeepTrader.Web.Controllers
                 model.JeepDescription = jeepProfile.Description;
                 model.Make = jeepProfile.Make;
                 model.Model = jeepProfile.Model;
+                model.Image = jeepProfile.Image;
             }
 
             return View(model);
