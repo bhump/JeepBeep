@@ -117,10 +117,8 @@ namespace MyJeepTrader.Data
 
         public List<tPostType> GetAllPostTypes()
         {
-            //using (_context)
-            //{
-            return (from p in _context.tPostTypes select p).ToList();
-            //}
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            return (from p in context.tPostTypes select p).ToList();
         }
         #endregion
 

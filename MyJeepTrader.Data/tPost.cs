@@ -17,8 +17,8 @@ namespace MyJeepTrader.Data
         public tPost()
         {
             this.tImageControls = new HashSet<tImageControl>();
-            this.tModelControls = new HashSet<tModelControl>();
             this.tPostsControls = new HashSet<tPostsControl>();
+            this.tModelPostControls = new HashSet<tModelPostControl>();
         }
     
         public int PostId { get; set; }
@@ -39,10 +39,10 @@ namespace MyJeepTrader.Data
         public virtual ICollection<tImageControl> tImageControls { get; set; }
         public virtual tLocation tLocation { get; set; }
         public virtual tMake tMake { get; set; }
-        public virtual ICollection<tModelControl> tModelControls { get; set; }
         public virtual tPostType tPostType { get; set; }
         public virtual tSubModel tSubModel { get; set; }
         public virtual tYear tYear { get; set; }
         public virtual ICollection<tPostsControl> tPostsControls { get; set; }
+        public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
     }
 }
