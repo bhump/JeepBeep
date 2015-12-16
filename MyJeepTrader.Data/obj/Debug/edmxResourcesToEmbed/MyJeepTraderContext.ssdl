@@ -223,6 +223,7 @@
     <Property Name="GooglePlus" Type="varchar(max)" />
     <Property Name="Twitter" Type="varchar(max)" />
     <Property Name="Ello" Type="varchar(max)" />
+    <Property Name="ViewCount" Type="bigint" />
   </EntityType>
   <EntityType Name="tVehicleProfileControl">
     <Key>

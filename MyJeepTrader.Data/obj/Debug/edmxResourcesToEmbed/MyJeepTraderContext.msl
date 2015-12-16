@@ -196,6 +196,7 @@
     <EntitySetMapping Name="tUserProfiles">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tUserProfile">
         <MappingFragment StoreEntitySet="tUserProfiles">
+          <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
           <ScalarProperty Name="Ello" ColumnName="Ello" />
           <ScalarProperty Name="Twitter" ColumnName="Twitter" />
           <ScalarProperty Name="GooglePlus" ColumnName="GooglePlus" />

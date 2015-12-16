@@ -127,7 +127,7 @@ namespace MyJeepTrader.Data
             return (from p in _context.tPostTypes select p).ToList();
             //}
         }
-        #endregion 
+        #endregion
 
         #region Membership
         public void CreateMembership(string userId)
@@ -228,6 +228,26 @@ namespace MyJeepTrader.Data
             using (_context)
             {
                 return _context.tUserProfiles.Where(up => up.UserProfileId == profileId).First();
+            }
+        }
+
+        public long? GetViewCount(int UserProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var count = (from up in context.tUserProfiles where up.UserProfileId == UserProfileId select up.ViewCount).FirstOrDefault();
+
+                return count;
+            }
+        }
+
+        public void UpdateViewCount(int UserProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var updateProfile = context.tUserProfiles.Where(up => up.UserProfileId == UserProfileId).FirstOrDefault();
+                updateProfile.ViewCount = GetViewCount(UserProfileId) + 1;
+                context.SaveChanges();
             }
         }
         #endregion

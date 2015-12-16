@@ -15,6 +15,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3">Profile Views: </label>
+                    <div class="col-md-8">
+                        @Html.DisplayFor(m => m.ViewCount)
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3">Name: </label>
                     <div class="col-md-8">
                         @Html.DisplayFor(m => m.FirstName) @Html.DisplayFor(m => m.LastName)

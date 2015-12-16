@@ -33,6 +33,7 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             var userProfile = service.GetProfileInfoByProfileId(UserProfileId);
             var jeepProfile = service.GetPrimaryJeepInfoByProfileId(JeepProfileId);
+            service.UpdateViewCount(UserProfileId);
 
             UserProfileDetailsViewModel model = new UserProfileDetailsViewModel();
             model.FirstName = userProfile.FirstName;
@@ -43,8 +44,11 @@ namespace MyJeepTrader.Web.Controllers
             model.Ello = userProfile.Ello;
             model.Website = userProfile.Website;
             model.Description = userProfile.Description;
+            model.ViewCount = userProfile.ViewCount == null ? 0 : userProfile.ViewCount;
+
             model.UserPosts = service.GetAllPostsForUser(UserProfileId);
             model.RecentPost = service.GetUsersMostRecentPost(UserProfileId);
+
             model.Year = jeepProfile.Year;
             model.JeepDescription = jeepProfile.Description;
             model.Make = jeepProfile.Make;

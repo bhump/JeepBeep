@@ -350,6 +350,7 @@
     <Property Name="Twitter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Ello" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="tUserProfile" ToRole="AspNetUser" />
+    <Property Name="ViewCount" Type="Int64" />
   </EntityType>
   <EntityType Name="tVehicleProfileControl">
     <Key>

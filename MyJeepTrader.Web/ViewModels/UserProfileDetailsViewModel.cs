@@ -67,13 +67,15 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Jeep Image")]
         public byte[] Image { get; set; }
+
+        [Display(Name = "Profile Views")]
+        public long ?ViewCount { get; set; }
         #endregion
 
         #region posts
         public List<UsersPosts> UserPosts { get; set; }
 
         public UsersPosts RecentPost { get; set; }
-
         #endregion
     }
 }
