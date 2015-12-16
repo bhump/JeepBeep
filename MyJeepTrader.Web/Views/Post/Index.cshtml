@@ -7,6 +7,12 @@
 
 <h2>My Jeep Trader Posts</h2>
 
+@if (ViewBag.Message != null)
+{
+    @:toastr.success("@ViewBag.Header", "@ViewBag.Message");
+}
+
+
 @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
 {
     <div class="input-group">

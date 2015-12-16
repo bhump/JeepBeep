@@ -21,6 +21,8 @@ namespace MyJeepTrader.Web.Controllers
             {
                 Posts = service.GetAllPosts()
             };
+
+            if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
             return View(model);
         }
 
@@ -72,7 +74,14 @@ namespace MyJeepTrader.Web.Controllers
                 model.Post.IsVehicle = model.IsJeep;
 
                 var newPostId = service.CreateNewPost(model.Post);
+                AspNetUser user = new AspNetUser();
+                //service.AddPostUserControl(newPostId, user.Id); TODO
+                foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
+                {
+                    service.AddModelPost(selectedModel.Model.ModelId, newPostId);
+                }
 
+                TempData["Message"] = "Post Created Successfully!";
                 return RedirectToAction("Index");
             }
             catch

@@ -120,6 +120,22 @@ namespace MyJeepTrader.Data
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             return (from p in context.tPostTypes select p).ToList();
         }
+
+        public void AddModelPost(int modelId, int newPostId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            tModelPostControl entity = new tModelPostControl
+            {
+                ModelId = modelId, 
+                PostId = newPostId
+            };
+
+            context.tModelPostControls.Add(entity);
+            context.SaveChanges();
+
+        }
+
+
         #endregion
 
         #region Membership
@@ -479,5 +495,6 @@ namespace MyJeepTrader.Data
         }
         #endregion
 
+        
     }// public class service
 } // namespace
