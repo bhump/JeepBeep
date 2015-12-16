@@ -29,11 +29,6 @@ namespace MyJeepTrader.Data
             return (from p in _context.tPosts select p).ToList();
         }
 
-        public IEnumerable<tUserProfile> GetAllUserProfiles()
-        {
-            return (from up in _context.tUserProfiles select up).ToList();
-        }
-
         /// <summary>
         /// Searches all posts. Making use of predicate builder and linqkit, this method searches for whatever fields
         /// you want to include and combines the results.
@@ -70,7 +65,7 @@ namespace MyJeepTrader.Data
             return post.PostId;
         }
 
-        public List<UsersPosts> GetAllPostsForUser(int userProfileId)
+        public List<UsersPosts> GetAllPostsForUser(string userName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
@@ -79,7 +74,7 @@ namespace MyJeepTrader.Data
                               join u in context.AspNetUsers on pc.Id equals u.Id
                               join up in context.tUserProfiles on u.Id equals up.Id
                               join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
-                              where up.UserProfileId == userProfileId
+                              where up.AspNetUser.UserName == userName
                               select new UsersPosts
                               {
                                   PostId = p.PostId,
@@ -95,7 +90,7 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public UsersPosts GetUsersMostRecentPost(int userProfileId)
+        public UsersPosts GetUsersMostRecentPost(string userName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
@@ -104,7 +99,7 @@ namespace MyJeepTrader.Data
                               join u in context.AspNetUsers on pc.Id equals u.Id
                               join up in context.tUserProfiles on u.Id equals up.Id
                               join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
-                              where up.UserProfileId == userProfileId
+                              where up.AspNetUser.UserName == userName
                               select new UsersPosts
                               {
                                   PostId = p.PostId,
@@ -152,12 +147,37 @@ namespace MyJeepTrader.Data
         #endregion
 
         #region User Profile
-        public byte[] GetAvatarImage(int UserProfileId)
+        public List<UserProfiles> GetAllUserProfiles()
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var result = (from up in context.tUserProfiles
+                              select new UserProfiles
+                              {
+                                  UserProfileId = up.UserProfileId,
+                                  FirstName = up.FirstName,
+                                  LastName = up.LastName,
+                                  BirthDate = up.BirthDate,
+                                  Avatar = up.Avatar,
+                                  Description = up.Description,
+                                  Facebook = up.Facebook,
+                                  Twitter = up.Twitter,
+                                  Ello = up.Ello,
+                                  GooglePlus = up.GooglePlus,
+                                  Website = up.Website,
+                                  UserName = up.AspNetUser.UserName,
+                              }).ToList();
+
+                return result;
+            }
+        }
+
+        public byte[] GetAvatarImage(string userName)
         {
             using (_context)
             {
                 var avatar = (from up in _context.tUserProfiles
-                              where up.UserProfileId == UserProfileId
+                              where up.AspNetUser.UserName == userName
                               select up.Avatar).FirstOrDefault();
 
                 return avatar;
@@ -223,43 +243,44 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public tUserProfile GetProfileInfoByProfileId(int profileId)
+        public tUserProfile GetProfileInfoByUserName(string userName)
         {
             using (_context)
             {
-                return _context.tUserProfiles.Where(up => up.UserProfileId == profileId).First();
+                return _context.tUserProfiles.Where(up => up.AspNetUser.UserName == userName).First();
             }
         }
 
-        public long? GetViewCount(int UserProfileId)
+        public long? GetViewCount(string userName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var count = (from up in context.tUserProfiles where up.UserProfileId == UserProfileId select up.ViewCount).FirstOrDefault();
+                var count = (from up in context.tUserProfiles where up.AspNetUser.UserName == userName select up.ViewCount).FirstOrDefault();
 
                 return count;
             }
         }
 
-        public void UpdateViewCount(int UserProfileId)
+        public void UpdateViewCount(string userName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var updateProfile = context.tUserProfiles.Where(up => up.UserProfileId == UserProfileId).FirstOrDefault();
-                updateProfile.ViewCount = GetViewCount(UserProfileId) + 1;
+                var updateProfile = context.tUserProfiles.Where(up => up.AspNetUser.UserName == userName).FirstOrDefault();
+                updateProfile.ViewCount = GetViewCount(userName) + 1;
                 context.SaveChanges();
             }
         }
         #endregion
 
         #region Jeep Profile
-        public byte[] GetJeepImage(int JeepProfileId)
+        public byte[] GetJeepImage(string userName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var image = (from jp in context.tVehicleProfiles
-                             where jp.VehicleProfileId == JeepProfileId
-                             select jp.Image).FirstOrDefault();
+                var image = (from vp in context.tVehicleProfiles
+                             join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                             where vpc.AspNetUser.UserName == userName
+                             select vp.Image).FirstOrDefault();
 
                 return image;
             }
@@ -314,13 +335,18 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public tVehicleProfile GetPrimaryJeepInfo(string userId)
+        public tVehicleProfile GetPrimaryJeepInfo(/*string userId*/ string UserName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
+                //return (from vp in context.tVehicleProfiles
+                //        join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                //        where vpc.Id == userId
+                //        select vp).FirstOrDefault();
+
                 return (from vp in context.tVehicleProfiles
                         join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
-                        where vpc.Id == userId
+                        where vpc.AspNetUser.UserName == UserName
                         select vp).FirstOrDefault();
             }
 

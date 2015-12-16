@@ -64,7 +64,7 @@ namespace MyJeepTrader.Web.Controllers
 
             Service service = new Service();
             var profileInfo = service.GetProfileInfo(user.Id);
-            var jeepInfo = service.GetPrimaryJeepInfo(user.Id);
+            var jeepInfo = service.GetPrimaryJeepInfo(user.UserName);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 

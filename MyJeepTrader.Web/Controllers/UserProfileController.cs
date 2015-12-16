@@ -21,19 +21,22 @@ namespace MyJeepTrader.Web.Controllers
         {
             Service service = new Service();
             var userProfiles = service.GetAllUserProfiles();
-            
-            return View(userProfiles);
+            UserProfileIndexViewModel model = new UserProfileIndexViewModel();
+            model.UserProfiles = userProfiles;
+
+            return View(model);
         }
 
         // GET: UserProfile/Details
-        public ActionResult Details(int UserProfileId, int JeepProfileId)
+        public ActionResult Details(string UserName)
         {
             var user = UserManager.FindByName(User.Identity.Name);
 
             Service service = new Service();
-            var userProfile = service.GetProfileInfoByProfileId(UserProfileId);
-            var jeepProfile = service.GetPrimaryJeepInfoByProfileId(JeepProfileId);
-            service.UpdateViewCount(UserProfileId);
+            var userProfile = service.GetProfileInfoByUserName(UserName);
+            //var jeepProfile = service.GetPrimaryJeepInfoByProfileId(JeepProfileId);
+            var jeepProfile = service.GetPrimaryJeepInfo(UserName);
+            service.UpdateViewCount(UserName);
 
             UserProfileDetailsViewModel model = new UserProfileDetailsViewModel();
             model.FirstName = userProfile.FirstName;
@@ -45,36 +48,44 @@ namespace MyJeepTrader.Web.Controllers
             model.Website = userProfile.Website;
             model.Description = userProfile.Description;
             model.ViewCount = userProfile.ViewCount == null ? 0 : userProfile.ViewCount;
+            //model.UserName = userProfile.AspNetUser.UserName;
 
-            model.UserPosts = service.GetAllPostsForUser(UserProfileId);
-            model.RecentPost = service.GetUsersMostRecentPost(UserProfileId);
+            model.UserPosts = service.GetAllPostsForUser(UserName);
+            model.RecentPost = service.GetUsersMostRecentPost(UserName);
 
-            model.Year = jeepProfile.Year;
-            model.JeepDescription = jeepProfile.Description;
-            model.Make = jeepProfile.Make;
-            model.Model = jeepProfile.Model;
+
+            if (jeepProfile != null)
+            {
+                model.Year = jeepProfile.Year;
+                model.JeepDescription = jeepProfile.Description;
+                model.Make = jeepProfile.Make;
+                model.Model = jeepProfile.Model;
+            }
 
             return View(model);
         }
 
-        public ActionResult ShowAvatar(int UserProfileId)
-        {
+        public ActionResult ShowAvatar(string UserName){
             Service service = new Service();
-            var getAvatar = service.GetAvatarImage(UserProfileId);
+            var getAvatar = service.GetAvatarImage(UserName);
 
             var stream = new MemoryStream(getAvatar.ToArray());
 
             return new FileStreamResult(stream, "image/jpg");
         }
 
-        public ActionResult ShowJeepImage(int JeepProfileId)
+        public ActionResult ShowJeepImage(string UserName)
         {
             Service service = new Service();
-            var getImage = service.GetJeepImage(JeepProfileId);
+            var getImage = service.GetJeepImage(UserName);
 
-            var stream = new MemoryStream(getImage.ToArray());
+            if (getImage != null)
+            {
+                var stream = new MemoryStream(getImage.ToArray());
+                return new FileStreamResult(stream, "image/jpg");
+            }
 
-            return new FileStreamResult(stream, "image/jpg");
+            return View();
         }
 
         // GET: UserProfile/Create

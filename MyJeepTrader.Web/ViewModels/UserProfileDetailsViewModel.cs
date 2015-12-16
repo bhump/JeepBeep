@@ -42,6 +42,9 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Your website")]
         public string Website { get; set; }
+
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
         #endregion
 
         #region primary jeep profile
