@@ -149,11 +149,11 @@
     <Property Name="Model" Type="varchar" MaxLength="50" />
     <Property Name="MakeId" Type="int" />
   </EntityType>
-  <EntityType Name="tModelControl">
+  <EntityType Name="tModelPostControl">
     <Key>
-      <PropertyRef Name="ModelControlId" />
+      <PropertyRef Name="ModelPostControlId" />
     </Key>
-    <Property Name="ModelControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ModelPostControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ModelId" Type="int" />
     <Property Name="PostId" Type="int" />
   </EntityType>
@@ -371,24 +371,24 @@
   </Association>
   <Association Name="FK_tModelControl_tModel">
     <End Role="tModel" Type="Self.tModel" Multiplicity="0..1" />
-    <End Role="tModelControl" Type="Self.tModelControl" Multiplicity="*" />
+    <End Role="tModelPostControl" Type="Self.tModelPostControl" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tModel">
         <PropertyRef Name="ModelId" />
       </Principal>
-      <Dependent Role="tModelControl">
+      <Dependent Role="tModelPostControl">
         <PropertyRef Name="ModelId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tModelControl_tPosts">
     <End Role="tPosts" Type="Self.tPosts" Multiplicity="0..1" />
-    <End Role="tModelControl" Type="Self.tModelControl" Multiplicity="*" />
+    <End Role="tModelPostControl" Type="Self.tModelPostControl" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tPosts">
         <PropertyRef Name="PostId" />
       </Principal>
-      <Dependent Role="tModelControl">
+      <Dependent Role="tModelPostControl">
         <PropertyRef Name="PostId" />
       </Dependent>
     </ReferentialConstraint>
@@ -565,7 +565,7 @@
     <EntitySet Name="tMessageControl" EntityType="Self.tMessageControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tMessages" EntityType="Self.tMessages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModel" EntityType="Self.tModel" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tModelControl" EntityType="Self.tModelControl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tModelPostControl" EntityType="Self.tModelPostControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPostsControl" EntityType="Self.tPostsControl" Schema="dbo" store:Type="Tables" />
@@ -613,11 +613,11 @@
     </AssociationSet>
     <AssociationSet Name="FK_tModelControl_tModel" Association="Self.FK_tModelControl_tModel">
       <End Role="tModel" EntitySet="tModel" />
-      <End Role="tModelControl" EntitySet="tModelControl" />
+      <End Role="tModelPostControl" EntitySet="tModelPostControl" />
     </AssociationSet>
     <AssociationSet Name="FK_tModelControl_tPosts" Association="Self.FK_tModelControl_tPosts">
       <End Role="tPosts" EntitySet="tPosts" />
-      <End Role="tModelControl" EntitySet="tModelControl" />
+      <End Role="tModelPostControl" EntitySet="tModelPostControl" />
     </AssociationSet>
     <AssociationSet Name="FK_tModelYearControl_tModelYearControl" Association="Self.FK_tModelYearControl_tModelYearControl">
       <End Role="tModel" EntitySet="tModel" />

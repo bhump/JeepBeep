@@ -12,9 +12,9 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tModelControl
+    public partial class tModelPostControl
     {
-        public int ModelControlId { get; set; }
+        public int ModelPostControlId { get; set; }
         public Nullable<int> ModelId { get; set; }
         public Nullable<int> PostId { get; set; }
     

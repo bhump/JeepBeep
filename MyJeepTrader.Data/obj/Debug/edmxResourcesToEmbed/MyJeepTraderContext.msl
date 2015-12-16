@@ -129,15 +129,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tModelControls">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelControl">
-        <MappingFragment StoreEntitySet="tModelControl">
-          <ScalarProperty Name="PostId" ColumnName="PostId" />
-          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
-          <ScalarProperty Name="ModelControlId" ColumnName="ModelControlId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tModelYearControls">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tModelYearControl">
         <MappingFragment StoreEntitySet="tModelYearControl">
@@ -272,6 +263,15 @@
           <ScalarProperty Name="Message" ColumnName="Message" />
           <ScalarProperty Name="Subject" ColumnName="Subject" />
           <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tModelPostControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelPostControl">
+        <MappingFragment StoreEntitySet="tModelPostControl">
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="ModelPostControlId" ColumnName="ModelPostControlId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

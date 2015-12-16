@@ -123,7 +123,7 @@
     <Compile Include="tModel.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="tModelControl.cs">
+    <Compile Include="tModelPostControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tModelYearControl.cs">
