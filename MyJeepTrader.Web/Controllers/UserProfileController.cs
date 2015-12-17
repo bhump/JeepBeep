@@ -27,14 +27,15 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
+
         // GET: UserProfile/Details
+        [Route("UserProfile/Details", Name = "ReturnDetails"), HttpGet]
         public ActionResult Details(string UserName)
         {
             var user = UserManager.FindByName(User.Identity.Name);
 
             Service service = new Service();
             var userProfile = service.GetProfileInfoByUserName(UserName);
-            //var jeepProfile = service.GetPrimaryJeepInfoByProfileId(JeepProfileId);
             var jeepProfile = service.GetPrimaryJeepInfo(UserName);
             service.UpdateViewCount(UserName);
 
@@ -67,7 +68,8 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
-        public ActionResult ShowAvatar(string UserName){
+        public ActionResult ShowAvatar(string UserName)
+        {
             Service service = new Service();
             var getAvatar = service.GetAvatarImage(UserName);
 

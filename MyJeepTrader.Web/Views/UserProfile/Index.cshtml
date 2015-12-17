@@ -6,86 +6,29 @@
 
 <h2>Users</h2>
 
-<p>
-    @*@Html.ActionLink("Create New", "Create")*@
-</p>
 <table class="table">
-    <tr>
-        <th>
-            First Name
-        </th>
-        <th>
-            Last Name
-        </th>
-        <th>
-            Avatar
-        </th>
-        <th>
-            About You
-        </th>
-        <th>
-            Birth Day
-        </th>
-        <th>
-            Website
-        </th>
-        <th>
-            Facebook
-        </th>
-        <th>
-            Google Plus
-        </th>
-        <th>
-            Twitter
-        </th>
-        <th>
-            Ello
-        </th>
-        <th>
-            Username
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model.UserProfiles) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            <img src='@Url.Action("ShowAvatar", "UserProfile", new { UserName = item.UserName })' width="43" height="43"  />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BirthDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Facebook)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GooglePlus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Twitter)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ello)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { UserName = item.UserName })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.UserProfiles)
+    {
+        <tr>
+            <td>
+                <div>
+                    @if (item.Avatar != null)
+                    {
+                        <a href='@Url.RouteUrl("Details", new { UserName = item.UserName })'>
+                            <img src='@Url.Action("ShowAvatar", "UserProfile", new { UserName = item.UserName })' width="43" height="43" />
+                        </a>
+                    }
+                    else
+                    {
+                        <img src="~/Images/placeholder.jpg" width="43" height="43" />
+                    }
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </div>
+            </td>
+        </tr>
+    }
 
 </table>

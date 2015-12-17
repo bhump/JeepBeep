@@ -18,6 +18,12 @@ namespace MyJeepTrader.Web
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Details",
+                url: "UserProfile/Details/{id}",
+                defaults: new { controller = "UserProfile", action = "Details", id = UrlParameter.Optional }
+                );
         }
     }
 }
