@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetUserLogin" Width="1.5" PointX="8.25" PointY="12.375" />
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetUser" Width="1.5" PointX="6" PointY="15.25" />
         <EntityTypeShape EntityType="MyJeepTraderModel.sysdiagram" Width="1.5" PointX="10.75" PointY="6" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tImageControl" Width="1.5" PointX="8.25" PointY="9.625" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tImage" Width="1.5" PointX="6" PointY="11.875" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tLocation" Width="1.5" PointX="3.75" PointY="2.875" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tMake" Width="1.5" PointX="1.5" PointY="0.75" />
@@ -19,7 +18,6 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.tModel" Width="1.5" PointX="0.75" PointY="3.5" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tModelYearControl" Width="1.5" PointX="3" PointY="6.625" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tPost" Width="1.5" PointX="6" PointY="5" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tPostsControl" Width="1.5" PointX="8.25" PointY="6.625" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tPostType" Width="1.5" PointX="3.75" PointY="12.875" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tSubModel" Width="1.5" PointX="3.75" PointY="10.125" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tUserProfile" Width="1.5" PointX="8.25" PointY="23.125" />
@@ -29,11 +27,8 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="MyJeepTraderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tMemberships_AspNetUsers" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_tPostsControl_AspNetUsers" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_tImageControl_tImages" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_tImageControl_tPosts" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tLocations" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModel_tMake" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tMake" />
@@ -43,7 +38,6 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tPostType" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tSubModel" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tYear" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_tPostsControl_tPosts" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" />
         <AssociationConnector Association="MyJeepTraderModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tMessageControl" Width="1.5" PointX="12.625" PointY="1" />
@@ -52,6 +46,10 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.tModelPostControl" Width="1.5" PointX="11.25" PointY="8.875" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModelControl_tModel" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModelControl_tPosts" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tImagePostControl" Width="1.5" PointX="8.125" PointY="4.75" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_AspNetUsers" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tImagePostControl_tImages" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tImagePostControl_tPosts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

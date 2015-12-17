@@ -70,11 +70,8 @@ namespace MyJeepTrader.Data
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var result = (from p in context.tPosts
-                              join pc in context.tPostsControls on p.PostId equals pc.PostId
-                              join u in context.AspNetUsers on pc.Id equals u.Id
-                              join up in context.tUserProfiles on u.Id equals up.Id
                               join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
-                              where up.AspNetUser.UserName == userName
+                              where p.AspNetUser.UserName == userName
                               select new UsersPosts
                               {
                                   PostId = p.PostId,
@@ -95,11 +92,8 @@ namespace MyJeepTrader.Data
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var result = (from p in context.tPosts
-                              join pc in context.tPostsControls on p.PostId equals pc.PostId
-                              join u in context.AspNetUsers on pc.Id equals u.Id
-                              join up in context.tUserProfiles on u.Id equals up.Id
                               join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
-                              where up.AspNetUser.UserName == userName
+                              where p.AspNetUser.UserName == userName
                               select new UsersPosts
                               {
                                   PostId = p.PostId,

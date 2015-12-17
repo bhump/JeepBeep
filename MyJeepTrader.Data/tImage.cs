@@ -16,12 +16,12 @@ namespace MyJeepTrader.Data
     {
         public tImage()
         {
-            this.tImageControls = new HashSet<tImageControl>();
+            this.tImagePostControls = new HashSet<tImagePostControl>();
         }
     
         public int Imageid { get; set; }
         public byte[] Image { get; set; }
     
-        public virtual ICollection<tImageControl> tImageControls { get; set; }
+        public virtual ICollection<tImagePostControl> tImagePostControls { get; set; }
     }
 }

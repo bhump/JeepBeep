@@ -102,7 +102,7 @@
     <Compile Include="tImage.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="tImageControl.cs">
+    <Compile Include="tImagePostControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tLocation.cs">
@@ -130,9 +130,6 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tPost.cs">
-      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tPostsControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tPostType.cs">

@@ -71,7 +71,7 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
-  <EntityType Name="tImageControl">
+  <EntityType Name="tImagePostControl">
     <Key>
       <PropertyRef Name="ImageControlId" />
     </Key>
@@ -170,6 +170,7 @@
       <PropertyRef Name="PostId" />
     </Key>
     <Property Name="PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="nvarchar" MaxLength="128" />
     <Property Name="PostTitle" Type="varchar" MaxLength="50" />
     <Property Name="PostDescription" Type="varchar(max)" />
     <Property Name="PartType" Type="varchar" MaxLength="50" />
@@ -183,14 +184,6 @@
     <Property Name="LocationId" Type="int" />
     <Property Name="PostTypeId" Type="int" />
     <Property Name="DateCreated" Type="datetime" />
-  </EntityType>
-  <EntityType Name="tPostsControl">
-    <Key>
-      <PropertyRef Name="PostControlId" />
-    </Key>
-    <Property Name="PostControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PostId" Type="int" />
-    <Property Name="Id" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="tPostType">
     <Key>
@@ -309,26 +302,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tImageControl_tImages">
+  <Association Name="FK_tImagePostControl_tImages">
     <End Role="tImages" Type="Self.tImages" Multiplicity="0..1" />
-    <End Role="tImageControl" Type="Self.tImageControl" Multiplicity="*" />
+    <End Role="tImagePostControl" Type="Self.tImagePostControl" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tImages">
         <PropertyRef Name="Imageid" />
       </Principal>
-      <Dependent Role="tImageControl">
+      <Dependent Role="tImagePostControl">
         <PropertyRef Name="ImageId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tImageControl_tPosts">
+  <Association Name="FK_tImagePostControl_tPosts">
     <End Role="tPosts" Type="Self.tPosts" Multiplicity="0..1" />
-    <End Role="tImageControl" Type="Self.tImageControl" Multiplicity="*" />
+    <End Role="tImagePostControl" Type="Self.tImagePostControl" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tPosts">
         <PropertyRef Name="PostId" />
       </Principal>
-      <Dependent Role="tImageControl">
+      <Dependent Role="tImagePostControl">
         <PropertyRef Name="PostId" />
       </Dependent>
     </ReferentialConstraint>
@@ -417,6 +410,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tPosts_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tPosts">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tPosts_tLocations">
     <End Role="tLocations" Type="Self.tLocations" Multiplicity="0..1" />
     <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
@@ -477,30 +482,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tPostsControl_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-    <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tPostsControl">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tPostsControl_tPosts">
-    <End Role="tPosts" Type="Self.tPosts" Multiplicity="0..1" />
-    <End Role="tPostsControl" Type="Self.tPostsControl" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tPosts">
-        <PropertyRef Name="PostId" />
-      </Principal>
-      <Dependent Role="tPostsControl">
-        <PropertyRef Name="PostId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tSubModel_tModel">
     <End Role="tModel" Type="Self.tModel" Multiplicity="0..1" />
     <End Role="tSubModel" Type="Self.tSubModel" Multiplicity="*" />
@@ -557,7 +538,7 @@
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tImageControl" EntityType="Self.tImageControl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tImagePostControl" EntityType="Self.tImagePostControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tLocations" EntityType="Self.tLocations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tMake" EntityType="Self.tMake" Schema="dbo" store:Type="Tables" />
@@ -568,7 +549,6 @@
     <EntitySet Name="tModelPostControl" EntityType="Self.tModelPostControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tPostsControl" EntityType="Self.tPostsControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
@@ -591,13 +571,13 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
-    <AssociationSet Name="FK_tImageControl_tImages" Association="Self.FK_tImageControl_tImages">
+    <AssociationSet Name="FK_tImagePostControl_tImages" Association="Self.FK_tImagePostControl_tImages">
       <End Role="tImages" EntitySet="tImages" />
-      <End Role="tImageControl" EntitySet="tImageControl" />
+      <End Role="tImagePostControl" EntitySet="tImagePostControl" />
     </AssociationSet>
-    <AssociationSet Name="FK_tImageControl_tPosts" Association="Self.FK_tImageControl_tPosts">
+    <AssociationSet Name="FK_tImagePostControl_tPosts" Association="Self.FK_tImagePostControl_tPosts">
       <End Role="tPosts" EntitySet="tPosts" />
-      <End Role="tImageControl" EntitySet="tImageControl" />
+      <End Role="tImagePostControl" EntitySet="tImagePostControl" />
     </AssociationSet>
     <AssociationSet Name="FK_tMemberships_AspNetUsers" Association="Self.FK_tMemberships_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -627,6 +607,10 @@
       <End Role="tYear" EntitySet="tYear" />
       <End Role="tModelYearControl" EntitySet="tModelYearControl" />
     </AssociationSet>
+    <AssociationSet Name="FK_tPosts_AspNetUsers" Association="Self.FK_tPosts_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="tPosts" EntitySet="tPosts" />
+    </AssociationSet>
     <AssociationSet Name="FK_tPosts_tLocations" Association="Self.FK_tPosts_tLocations">
       <End Role="tLocations" EntitySet="tLocations" />
       <End Role="tPosts" EntitySet="tPosts" />
@@ -646,14 +630,6 @@
     <AssociationSet Name="FK_tPosts_tYear" Association="Self.FK_tPosts_tYear">
       <End Role="tYear" EntitySet="tYear" />
       <End Role="tPosts" EntitySet="tPosts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPostsControl_AspNetUsers" Association="Self.FK_tPostsControl_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="tPostsControl" EntitySet="tPostsControl" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPostsControl_tPosts" Association="Self.FK_tPostsControl_tPosts">
-      <End Role="tPosts" EntitySet="tPosts" />
-      <End Role="tPostsControl" EntitySet="tPostsControl" />
     </AssociationSet>
     <AssociationSet Name="FK_tSubModel_tModel" Association="Self.FK_tSubModel_tModel">
       <End Role="tModel" EntitySet="tModel" />

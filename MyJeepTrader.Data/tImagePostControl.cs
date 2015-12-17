@@ -12,7 +12,7 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tImageControl
+    public partial class tImagePostControl
     {
         public int ImageControlId { get; set; }
         public Nullable<int> ImageId { get; set; }

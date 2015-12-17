@@ -16,9 +16,8 @@ namespace MyJeepTrader.Data
     {
         public tPost()
         {
-            this.tImageControls = new HashSet<tImageControl>();
-            this.tPostsControls = new HashSet<tPostsControl>();
             this.tModelPostControls = new HashSet<tModelPostControl>();
+            this.tImagePostControls = new HashSet<tImagePostControl>();
         }
     
         public int PostId { get; set; }
@@ -35,14 +34,15 @@ namespace MyJeepTrader.Data
         public Nullable<int> PostTypeId { get; set; }
         public Nullable<bool> IsVehicle { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
+        public string Id { get; set; }
     
-        public virtual ICollection<tImageControl> tImageControls { get; set; }
         public virtual tLocation tLocation { get; set; }
         public virtual tMake tMake { get; set; }
         public virtual tPostType tPostType { get; set; }
         public virtual tSubModel tSubModel { get; set; }
         public virtual tYear tYear { get; set; }
-        public virtual ICollection<tPostsControl> tPostsControls { get; set; }
         public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ICollection<tImagePostControl> tImagePostControls { get; set; }
     }
 }
