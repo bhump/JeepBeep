@@ -68,7 +68,6 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Image, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
-                        @*<input type="file" name="Image" id="Image" />*@
                         <img src="@Url.Action("ShowJeepImage", "Dashboard", new { UserName = @User.Identity.Name })" alt="Image Unavailable" width="87" height="85" />
                         <input type="file" name="Image" id="Image" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
                     </div>
@@ -112,6 +111,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Update Jeep" class="btn btn-default" />
+                        @*<input type="button" class="btn-link" value="Add Another Jeep" />*@
                     </div>
                 </div>
             }
