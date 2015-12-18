@@ -15,3 +15,4 @@
 /// <reference path="bootstrap.min.js" />
 /// <reference path="scale.fix.js" />
 /// <reference path="jquery.signalr-2.2.0.min.js" />
+/// <reference path="bootstrap-filestyle.min.js" />

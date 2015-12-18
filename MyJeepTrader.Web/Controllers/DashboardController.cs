@@ -94,6 +94,30 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
+        public ActionResult ShowAvatar(string UserName)
+        {
+            Service service = new Service();
+            var getAvatar = service.GetAvatarImage(UserName);
+
+            var stream = new MemoryStream(getAvatar.ToArray());
+
+            return new FileStreamResult(stream, "image/jpg");
+        }
+
+        public ActionResult ShowJeepImage(string UserName)
+        {
+            Service service = new Service();
+            var getImage = service.GetJeepImage(UserName);
+
+            if (getImage != null)
+            {
+                var stream = new MemoryStream(getImage.ToArray());
+                return new FileStreamResult(stream, "image/jpg");
+            }
+
+            return View();
+        }
+
         [HttpPost]
         public async Task<ActionResult> ChangeEmail(DashboardIndexViewModel model)
         {

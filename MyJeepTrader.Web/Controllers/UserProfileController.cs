@@ -29,7 +29,7 @@ namespace MyJeepTrader.Web.Controllers
 
 
         // GET: UserProfile/Details
-        [Route("UserProfile/Details", Name = "ReturnDetails"), HttpGet]
+        //[Route("UserProfile/Details", Name = "ReturnDetails"), HttpGet]
         public ActionResult Details(string UserName)
         {
             var user = UserManager.FindByName(User.Identity.Name);
