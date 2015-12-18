@@ -23,7 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -201,6 +201,8 @@
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Chat\MessageDetail.cs" />
+    <Compile Include="Models\Chat\UserDetail.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PayPalIndexViewModel.cs" />
@@ -217,6 +219,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ChatStyle.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Images\placeholder.jpg" />
     <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />
