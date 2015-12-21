@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LinqKit;
 using MyJeepTrader.Data.Models;
 using System.IO;
+using System.Data.Entity;
 
 namespace MyJeepTrader.Data
 {
@@ -120,7 +121,7 @@ namespace MyJeepTrader.Data
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
             tModelPostControl entity = new tModelPostControl
             {
-                ModelId = modelId, 
+                ModelId = modelId,
                 PostId = newPostId
             };
 
@@ -401,18 +402,20 @@ namespace MyJeepTrader.Data
         }
         #endregion
 
-        #region Mailbox
-        public void CreateMessage(string toUser, string fromUserId, string subject, string message)
+        #region Mailbox And Instant Chat
+        public void CreateMessage(string toUser, string fromUser, string subject, string message, bool isIm)
         {
             using (_context)
             {
                 string toUserId = (from u in _context.AspNetUsers where u.UserName == toUser select u.Id).FirstOrDefault();
+                string fromUserId = (from u in _context.AspNetUsers where u.UserName == fromUser select u.Id).FirstOrDefault();
 
                 tMessage mess = new tMessage
                 {
                     Subject = subject,
                     Message = message,
-                    DateSent = DateTime.Now
+                    DateSent = DateTime.Now,
+                    IsIM = isIm
                 };
 
                 tMessageControl messControl = new tMessageControl
@@ -435,7 +438,7 @@ namespace MyJeepTrader.Data
                 var sentMessages = (from m in context.tMessages
                                     join mc in context.tMessageControls on m.MessageId equals mc.MessageId
                                     join u in context.AspNetUsers on mc.ToUserId equals u.Id
-                                    where mc.FromUserId == userId
+                                    where mc.FromUserId == userId && m.IsIM == false
                                     orderby m.DateSent descending
                                     select new MailMessages
                                     {
@@ -460,7 +463,7 @@ namespace MyJeepTrader.Data
                 var inbox = (from m in context.tMessages
                              join mc in context.tMessageControls on m.MessageId equals mc.MessageId
                              join u in context.AspNetUsers on mc.FromUserId equals u.Id
-                             where mc.ToUserId == userId
+                             where mc.ToUserId == userId && m.IsIM == false
                              orderby m.DateSent descending
                              select new MailMessages
                              {
@@ -487,8 +490,31 @@ namespace MyJeepTrader.Data
                 _context.SaveChanges();
             }
         }
+
+        public void AddConnectedUser(string connectedId, string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var connection = new tConnectedUser();
+                connection.ConnectionId = connectedId;
+                connection.ConnectionUserName = userName;
+
+                context.tConnectedUsers.Add(connection);
+                context.SaveChanges();
+            }
+        }
+
+        public void RemoveConnectedUser(string connectedId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var delete = context.tConnectedUsers.Where(cu => cu.ConnectionId == connectedId).FirstOrDefault();
+                context.Entry(delete).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
         #endregion
 
-        
+
     }// public class service
 } // namespace

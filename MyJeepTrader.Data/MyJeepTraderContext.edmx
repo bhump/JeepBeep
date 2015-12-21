@@ -76,6 +76,14 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="tConnectedUsers">
+          <Key>
+            <PropertyRef Name="ChatConnectionId" />
+          </Key>
+          <Property Name="ChatConnectionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConnectionId" Type="nvarchar" MaxLength="128" />
+          <Property Name="ConnectionUserName" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tImagePostControl">
           <Key>
             <PropertyRef Name="ImageControlId" />
@@ -543,6 +551,7 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tConnectedUsers" EntityType="Self.tConnectedUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tImagePostControl" EntityType="Self.tImagePostControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tLocations" EntityType="Self.tLocations" Schema="dbo" store:Type="Tables" />
@@ -769,6 +778,7 @@
             <End Role="tPost" EntitySet="tPosts" />
             <End Role="tImagePostControl" EntitySet="tImagePostControls" />
           </AssociationSet>
+          <EntitySet Name="tConnectedUsers" EntityType="MyJeepTraderModel.tConnectedUser" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -1312,6 +1322,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tConnectedUser">
+          <Key>
+            <PropertyRef Name="ChatConnectionId" />
+          </Key>
+          <Property Name="ChatConnectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConnectionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ConnectionUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1581,6 +1599,15 @@
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="ImageControlId" ColumnName="ImageControlId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tConnectedUsers">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tConnectedUser">
+              <MappingFragment StoreEntitySet="tConnectedUsers">
+                <ScalarProperty Name="ConnectionUserName" ColumnName="ConnectionUserName" />
+                <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
+                <ScalarProperty Name="ChatConnectionId" ColumnName="ChatConnectionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

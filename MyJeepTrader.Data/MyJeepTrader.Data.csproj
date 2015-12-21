@@ -99,6 +99,9 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tConnectedUser.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tImage.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>

@@ -1,9 +1,4 @@
-﻿@{
-    ViewBag.Title = "Chat";
-}
-<h2>Chat</h2>
-
-<link type="text/css" rel="stylesheet" href="~/Content/ChatStyle.css" />
+﻿<link type="text/css" rel="stylesheet" href="~/Content/ChatStyle.css" />
 <link rel="stylesheet" href="~/Content/themes/base/jquery.ui.all.css" />
 
 @section scripts {
@@ -18,7 +13,7 @@
 
     <script type="text/javascript">
 
-        $(window).load (function () {
+        $(document).ready(function () {
 
             // Declare a proxy to reference the hub.
             var chatHub = $.connection.chatHub;
@@ -35,9 +30,9 @@
         });
 
         function registerEvents(chatHub) {
-            
+
             var name = $('#hdUserName').val();
-            chatHub.server.onConnect(name);
+            chatHub.server.connect(name);
 
             $('#btnSendMsg').click(function () {
 
@@ -102,7 +97,7 @@
                 //var disc = $('<div class="disconnect">"' + userName + '" logged off.</div>');
 
                 //$(disc).hide();
-                //$('#divusers').prepend(disc);
+                $('#divusers').prepend(disc);
                 //$(disc).fadeIn(200).delay(2000).fadeOut(200);
 
             }
@@ -259,3 +254,4 @@
     <input id="hdId" type="hidden" />
     <input id="hdUserName" type="hidden" value="@User.Identity.Name" />
 </div>
+

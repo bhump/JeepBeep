@@ -221,6 +221,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ChatStyle.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Images\delete.png" />
     <Content Include="Images\placeholder.jpg" />
     <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />
@@ -348,6 +349,7 @@
     <Content Include="Views\PayPal\Index.cshtml" />
     <Content Include="Views\PayPal\Checkout.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Shared\_ChatPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

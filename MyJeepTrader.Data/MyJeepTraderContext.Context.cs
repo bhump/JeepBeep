@@ -48,5 +48,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tMessage> tMessages { get; set; }
         public virtual DbSet<tModelPostControl> tModelPostControls { get; set; }
         public virtual DbSet<tImagePostControl> tImagePostControls { get; set; }
+        public virtual DbSet<tConnectedUser> tConnectedUsers { get; set; }
     }
 }

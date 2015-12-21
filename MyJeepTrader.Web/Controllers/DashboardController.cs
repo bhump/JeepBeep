@@ -80,13 +80,16 @@ namespace MyJeepTrader.Web.Controllers
             model.Website = profileInfo == null ? "" : profileInfo.Website;
             model.Ello = profileInfo == null ? "" : profileInfo.Ello;
 
-            model.JeepProfileId = jeepInfo.VehicleProfileId;
-            model.Manufactuer = jeepInfo == null ? "" : jeepInfo.Manufacturer;
-            model.Make = jeepInfo == null ? "" : jeepInfo.Make;
-            model.Model = jeepInfo == null ? "" : jeepInfo.Model;
-            model.Year = jeepInfo == null ? Convert.ToInt16(0) : Convert.ToInt16(jeepInfo.Year);
-            model.JeepDescription = jeepInfo == null ? "" : jeepInfo.Description;
-            model.PrimaryJeep = jeepInfo == null ? false : Convert.ToBoolean(jeepInfo.PrimaryJeep);
+            if (jeepInfo != null)
+            {
+                model.JeepProfileId = jeepInfo.VehicleProfileId;
+                model.Manufactuer = jeepInfo == null ? "" : jeepInfo.Manufacturer;
+                model.Make = jeepInfo == null ? "" : jeepInfo.Make;
+                model.Model = jeepInfo == null ? "" : jeepInfo.Model;
+                model.Year = jeepInfo == null ? Convert.ToInt16(0) : Convert.ToInt16(jeepInfo.Year);
+                model.JeepDescription = jeepInfo == null ? "" : jeepInfo.Description;
+                model.PrimaryJeep = jeepInfo == null ? false : Convert.ToBoolean(jeepInfo.PrimaryJeep);
+            }
 
             model.SentMessages = service.GetSentMessages(user.Id);
             model.Inbox = service.GetInboxMessages(user.Id);
@@ -264,9 +267,9 @@ namespace MyJeepTrader.Web.Controllers
                 var to = collection["To"].ToString();
                 var subject = collection["subject"].ToString();
                 var message = collection["Message"].ToString();
+                var isIm = false;
 
-
-                service.CreateMessage(to, user.Id, subject, message);
+                service.CreateMessage(to, user.UserName, subject, message, isIm);
 
                 return RedirectToAction("Index");
             }

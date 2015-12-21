@@ -112,6 +112,7 @@
       <End Role="tPost" EntitySet="tPosts" />
       <End Role="tImagePostControl" EntitySet="tImagePostControls" />
     </AssociationSet>
+    <EntitySet Name="tConnectedUsers" EntityType="MyJeepTraderModel.tConnectedUser" />
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -655,4 +656,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="tConnectedUser">
+    <Key>
+      <PropertyRef Name="ChatConnectionId" />
+    </Key>
+    <Property Name="ChatConnectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ConnectionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ConnectionUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

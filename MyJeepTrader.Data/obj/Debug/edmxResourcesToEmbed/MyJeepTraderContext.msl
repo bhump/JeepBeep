@@ -267,5 +267,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tConnectedUsers">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tConnectedUser">
+        <MappingFragment StoreEntitySet="tConnectedUsers">
+          <ScalarProperty Name="ConnectionUserName" ColumnName="ConnectionUserName" />
+          <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
+          <ScalarProperty Name="ChatConnectionId" ColumnName="ChatConnectionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

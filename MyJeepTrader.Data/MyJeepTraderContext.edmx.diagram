@@ -50,6 +50,7 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_AspNetUsers" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tImagePostControl_tImages" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tImagePostControl_tPosts" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tConnectedUser" Width="1.5" PointX="6.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
