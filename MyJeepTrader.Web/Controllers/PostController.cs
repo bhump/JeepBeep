@@ -75,8 +75,8 @@ namespace MyJeepTrader.Web.Controllers
                 model.Post.IsVehicle = model.IsJeep;
                 model.Post.Active = true;
                 model.Post.MakeId = 1; //this site is only for jeep right now
-                var user = UserManager.FindByName(User.Identity.Name);
-                model.Post.Id = user.Id;
+                //var user = UserManager.FindBy
+                //model.Post.Id = user.Id;
                 var newPostId = service.CreateNewPost(model.Post);
                 
                 //service.AddPostUserControl(newPostId, user.Id); 
@@ -136,6 +136,10 @@ namespace MyJeepTrader.Web.Controllers
             {
                 return View();
             }
+        }
+
+        public PostController(ApplicationUserManager userManager, ApplicationSignInManager signInManager) : base(userManager, signInManager)
+        {
         }
     }
 }

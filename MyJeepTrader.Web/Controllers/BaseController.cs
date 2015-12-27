@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -13,9 +10,6 @@ namespace MyJeepTrader.Web.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public BaseController()
-        {
-        }
 
         public BaseController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {

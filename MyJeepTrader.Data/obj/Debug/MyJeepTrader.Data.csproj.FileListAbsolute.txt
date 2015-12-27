@@ -8,23 +8,10 @@ C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\E
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.csprojResolveAssemblyReference.cache
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.xml
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.pdb
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.xml
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.dll
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.pdb
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.xml
 C:\Users\brenthumphrey\Projects\Repos\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.50.0.dll
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.52.0.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
@@ -39,4 +26,16 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqK
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.csprojResolveAssemblyReference.cache
-C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.csprojResolveAssemblyReference.cache
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.52.0.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.xml
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.pdb
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.xml
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
+C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
