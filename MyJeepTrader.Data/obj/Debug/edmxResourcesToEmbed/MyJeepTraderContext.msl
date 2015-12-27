@@ -70,6 +70,7 @@
     <EntitySetMapping Name="tImages">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tImage">
         <MappingFragment StoreEntitySet="tImages">
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
           <ScalarProperty Name="Image" ColumnName="Image" />
           <ScalarProperty Name="Imageid" ColumnName="Imageid" />
         </MappingFragment>
@@ -78,8 +79,8 @@
     <EntitySetMapping Name="tLocations">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tLocation">
         <MappingFragment StoreEntitySet="tLocations">
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
           <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-          <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="Zip" ColumnName="Zip" />
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="Line2" ColumnName="Line2" />
@@ -258,21 +259,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tImagePostControls">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tImagePostControl">
-        <MappingFragment StoreEntitySet="tImagePostControl">
-          <ScalarProperty Name="PostId" ColumnName="PostId" />
-          <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-          <ScalarProperty Name="ImageControlId" ColumnName="ImageControlId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tConnectedUsers">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tConnectedUser">
         <MappingFragment StoreEntitySet="tConnectedUsers">
           <ScalarProperty Name="ConnectionUserName" ColumnName="ConnectionUserName" />
           <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
           <ScalarProperty Name="ChatConnectionId" ColumnName="ChatConnectionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tStates">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tState">
+        <MappingFragment StoreEntitySet="tStates">
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

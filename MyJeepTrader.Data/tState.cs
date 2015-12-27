@@ -12,13 +12,10 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tImagePostControl
+    public partial class tState
     {
-        public int ImageControlId { get; set; }
-        public Nullable<int> ImageId { get; set; }
-        public Nullable<int> PostId { get; set; }
-    
-        public virtual tImage tImage { get; set; }
-        public virtual tPost tPost { get; set; }
+        public int StateId { get; set; }
+        public string StateCode { get; set; }
+        public string State { get; set; }
     }
 }

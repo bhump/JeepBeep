@@ -66,6 +66,15 @@ namespace MyJeepTrader.Data
             return post.PostId;
         }
 
+        public void AddImage(byte[] imageData, int newPostId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            tImage imageToInsert = new tImage();
+            imageToInsert.Image = imageData;
+            imageToInsert.PostId = newPostId;
+            context.tImages.Add(imageToInsert);
+        }
+
         public List<UsersPosts> GetAllPostsForUser(string userName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
