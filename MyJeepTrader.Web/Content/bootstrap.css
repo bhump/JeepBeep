@@ -4964,6 +4964,8 @@ a.badge:focus {
   margin-bottom: 30px;
   color: inherit;
   background-color: #eee;
+  background-image: url("../Images/trintrail6.jpg");
+  background-size: cover;
 }
 .jumbotron h1,
 .jumbotron .h1 {

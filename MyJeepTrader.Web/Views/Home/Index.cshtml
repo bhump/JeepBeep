@@ -4,99 +4,44 @@
 
 
 <div class="jumbotron">
-    <h1>My Jeep Trader</h1>
-    <p>Welcome to My Jeep Trader! Your one stop shop to sell, trade, or buy Jeeps and Jeep Accessories!</p>
+    <div class="container">
+        <h1>My Jeep Trader</h1>
+        <p>Welcome to My Jeep Trader! Your one stop shop to sell, trade, or buy Jeeps and Jeep Accessories!</p>
+    </div>
 </div>
 
 <div class="form-horizontal">
-    <div class="searchBox">
-        <ul class="nav nav-pills">
-            <li class="active"><a data-toggle="pill" href="#JeepSearch">Jeep Search</a></li>
-            <li><a data-toggle="pill" href="#AccessorySearch">Accessory Search</a></li>
-        </ul>
-        <div class="tab-content findYourJeepBox">
-            <div id="JeepSearch" class="tab-pane fade in active">
-                <p>
-                    Search for a Jeep!
-                </p>
-                <div class="findYourJeepBoxInner">
-                    <div class="dropdown homepageMakeWrappers">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Current Models <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Wrangler</a></li>
-                            <li><a href="#">Grand Cherokee</a></li>
-                            <li><a href="#">Compass</a></li>
-                            <li><a href="#">Patriot</a></li>
-                            <li><a href="#">Cherokee</a></li>
-                            <li><a href="#">Renegade</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown homepageMakeWrappers">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Year <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">2015</a></li>
-                            <li><a href="#">2014</a></li>
-                            <li><a href="#">2013</a></li>
-                            <li><a href="#">2012</a></li>
-                            <li><a href="#">2011</a></li>
-                            <li><a href="#">2010</a></li>
-                            <li><a href="#">2009</a></li>
-                            <li><a href="#">2008</a></li>
-                            <li><a href="#">2007</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="findYourJeepBoxInner topSpace">
-                    <div class="dropdown homepageMakeWrappers">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Color <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Red</a></li>
-                            <li><a href="#">Blue</a></li>
-                            <li><a href="#">Brown</a></li>
-                            <li><a href="#">Yellow</a></li>
-                            <li><a href="#">Orange</a></li>
-                            <li><a href="#">Green</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown homepageMakeWrappers">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Buy or Trade <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Buy</a></li>
-                            <li><a href="#">Trade</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="boxCenter">
-                    <button class="btn">Search</button>
-                </div>
-            </div>
-            <div id="AccessorySearch" class="tab-pane fade">
-                <p>
-                    Search for an Accessory!
-                </p>
-            </div>
+    @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
+    {
+        <div class="input-group">
+            @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search By Anything" })
+            <span class="input-group-btn">
+                <button class="btn btn-default btn-group-lg btn-lg" type="button">Search</button>
+            </span>
         </div>
-    </div>
+    }
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Buy</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Search posts now!
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="~/Post/Index">Search for something!</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Sell</h2>
+        <p>
+            To sell, create a fee account now!
+        </p>
+        <p><a class="btn btn-default" href="~/Account/Register">Register Now</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>Trade</h2>
+        <p>
+            Search all trades posts now!
+        </p>
+        <p><a class="btn btn-default" href="~/Post/Index?Trade=true">Search Trades!</a></p>
     </div>
 </div>
