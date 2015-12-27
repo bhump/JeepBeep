@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MyJeepTrader.Data;
 using MyJeepTrader.Web.Helpers;
 using MyJeepTrader.Web.Models;
@@ -11,7 +12,7 @@ using MyJeepTrader.Web.ViewModels;
 //test comment.
 namespace MyJeepTrader.Web.Controllers
 {
-    public class PostController : Controller
+    public class PostController : BaseController
     {
         // GET: Post
         public ActionResult Index()
@@ -72,10 +73,13 @@ namespace MyJeepTrader.Web.Controllers
                 model.Post.PostTypeId = model.SelectedPostTypeId;
                 model.Post.YearId = model.SelectedYearId;
                 model.Post.IsVehicle = model.IsJeep;
-
+                model.Post.Active = true;
+                model.Post.MakeId = 1; //this site is only for jeep right now
+                var user = UserManager.FindByName(User.Identity.Name);
+                model.Post.Id = user.Id;
                 var newPostId = service.CreateNewPost(model.Post);
-                AspNetUser user = new AspNetUser();
-                //service.AddPostUserControl(newPostId, user.Id); TODO
+                
+                //service.AddPostUserControl(newPostId, user.Id); 
                 foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
                 {
                     service.AddModelPost(selectedModel.Model.ModelId, newPostId);
