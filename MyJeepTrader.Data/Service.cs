@@ -73,6 +73,7 @@ namespace MyJeepTrader.Data
             imageToInsert.Image = imageData;
             imageToInsert.PostId = newPostId;
             context.tImages.Add(imageToInsert);
+            context.SaveChanges();
         }
 
         public List<UsersPosts> GetAllPostsForUser(string userName)
