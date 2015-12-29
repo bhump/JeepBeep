@@ -8,6 +8,7 @@ using MyJeepTrader.Data;
 using MyJeepTrader.Web.Helpers;
 using MyJeepTrader.Web.Models;
 using MyJeepTrader.Web.ViewModels;
+using System.IO;
 
 //test comment.
 namespace MyJeepTrader.Web.Controllers
@@ -67,6 +68,18 @@ namespace MyJeepTrader.Web.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+
+                byte[] imageData = null;
+
+                using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
+                }
+
                 Service service = new Service();
                 //model.Post.MakeID = 
                 //model.Post.YearID = model.Years.Where(x => x.IsSelected)
@@ -78,6 +91,7 @@ namespace MyJeepTrader.Web.Controllers
                 //var user = UserManager.FindBy
                 //model.Post.Id = user.Id;
                 var newPostId = service.CreateNewPost(model.Post);
+                service.AddImage(imageData, newPostId);
                 
                 //service.AddPostUserControl(newPostId, user.Id); 
                 foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
@@ -137,7 +151,5 @@ namespace MyJeepTrader.Web.Controllers
                 return View();
             }
         }
-
-        
     }
 }

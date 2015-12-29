@@ -223,6 +223,8 @@
     <Content Include="Content\ChatStyle.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Images\delete.png" />
+    <Content Include="Images\jeep-wallpaper-high-resolution-w00.jpg" />
+    <Content Include="Images\jeep-wrangler-offroad-wallpaper-04.JPG" />
     <Content Include="Images\placeholder.jpg" />
     <Content Include="Images\trintrail6.jpg" />
     <Content Include="Scripts\bootstrap-filestyle.js" />
@@ -303,6 +305,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Images\ice-snowy-rocks-mountains-hd-background-wallpapers-widescreen-high-resolutions-025.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

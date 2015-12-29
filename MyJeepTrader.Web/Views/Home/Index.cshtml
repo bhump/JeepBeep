@@ -5,21 +5,28 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1>My Jeep Trader</h1>
-        <p>Welcome to My Jeep Trader! Your one stop shop to sell, trade, or buy Jeeps and Jeep Accessories!</p>
-    </div>
-</div>
-
-<div class="form-horizontal">
-    @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
-    {
-        <div class="input-group">
-            @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search By Anything" })
-            <span class="input-group-btn">
-                <button class="btn btn-default btn-group-lg btn-lg" type="button">Search</button>
-            </span>
+        <div class="transbox">
+            <h2 style="color:white">MyJeepTrader.com</h2>
+            <p>Make it your own.</p>
+            <div class="rightalign">
+                <label style="color:white">Want more search options?</label>
+                <button type="button" class="btn-info-home">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <div class="form-horizontal">
+                @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
+                {
+                    <div class="input-group">
+                        @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "What are you searching for?" })
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-group-lg btn-lg" type="button">Search</button>
+                        </span>
+                    </div>
+                }
+            </div>
         </div>
-    }
+    </div>
 </div>
 
 <div class="row">

@@ -27,6 +27,7 @@ namespace MyJeepTrader.Web.ViewModels
         public int SelectedPostTypeId { get; set; }
         public bool IsJeep { get; set; }
         public bool IsAccessory { get; set; }
+        public byte[] Image { get; set; }
 
     }
 

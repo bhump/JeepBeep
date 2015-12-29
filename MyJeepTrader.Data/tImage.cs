@@ -14,14 +14,10 @@ namespace MyJeepTrader.Data
     
     public partial class tImage
     {
-        public tImage()
-        {
-            this.tImagePostControls = new HashSet<tImagePostControl>();
-        }
-    
         public int Imageid { get; set; }
         public byte[] Image { get; set; }
+        public Nullable<int> PostId { get; set; }
     
-        public virtual ICollection<tImagePostControl> tImagePostControls { get; set; }
+        public virtual tPost tPost { get; set; }
     }
 }

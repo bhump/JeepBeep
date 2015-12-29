@@ -23,6 +23,27 @@ textarea {
     max-width: 280px;
 }
 
+div.transbox {
+    width: 50%;
+    height: 100%;
+    margin: 30px;
+    background-color: #000000;
+    /*border: 1px solid black;*/
+    opacity: 0.75;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+    div.transbox p {
+        margin: 5%;
+        font-weight: bold;
+        color: white;
+    }
+
+    div.rightalign{
+        text-align:right;
+        padding-right: 2%;
+    }
+
 .column {
     width: 49.5%;
     margin-right: .5%;
@@ -95,45 +116,20 @@ textarea {
     margin: 0 auto;
     border: 1px solid black;
     height: 60px;
-    width:60px
+    width: 60px;
 }
 
-.boxCenter{
-    position:absolute;
+.boxCenter {
+    position: absolute;
     left: 50%;
     margin-left: -100px;
-    margin-top:100px;
+    margin-top: 100px;
 }
 
 .no-max-width {
     max-width: none;
 }
 
-.sidebyside {
-    float: left;
-    width: 30%;
-}
-
-.findYourJeepBox {
-    padding: 10px;
-    top: 10px;
-    height: 285px;
-    width: 550px;
-}
-.findYourJeepBoxInner{
-    position:relative;
-    top: 0;
-    left: 0;
-    margin: 0 auto;
-    width: 100%
-}
-
-.homepageMakeWrappers {
-    display: inline-block;
-    float: left;
-    width: 50%;
-}
-
-.topSpace{
-    top:15px
+.topSpace {
+    top: 15px;
 }

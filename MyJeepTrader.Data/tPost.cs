@@ -17,7 +17,7 @@ namespace MyJeepTrader.Data
         public tPost()
         {
             this.tModelPostControls = new HashSet<tModelPostControl>();
-            this.tImagePostControls = new HashSet<tImagePostControl>();
+            this.tImages = new HashSet<tImage>();
         }
     
         public int PostId { get; set; }
@@ -43,6 +43,6 @@ namespace MyJeepTrader.Data
         public virtual tYear tYear { get; set; }
         public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual ICollection<tImagePostControl> tImagePostControls { get; set; }
+        public virtual ICollection<tImage> tImages { get; set; }
     }
 }

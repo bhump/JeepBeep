@@ -24,8 +24,8 @@ namespace MyJeepTrader.Data
         public string Line2 { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
-        public string State { get; set; }
         public Nullable<int> CountryId { get; set; }
+        public Nullable<int> StateId { get; set; }
     
         public virtual ICollection<tPost> tPosts { get; set; }
     }

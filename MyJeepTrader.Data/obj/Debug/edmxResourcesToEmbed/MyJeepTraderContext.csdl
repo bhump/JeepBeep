@@ -99,20 +99,16 @@
       <End Role="tPost" EntitySet="tPosts" />
       <End Role="tModelPostControl" EntitySet="tModelPostControls" />
     </AssociationSet>
-    <EntitySet Name="tImagePostControls" EntityType="MyJeepTraderModel.tImagePostControl" />
     <AssociationSet Name="FK_tPosts_AspNetUsers" Association="MyJeepTraderModel.FK_tPosts_AspNetUsers">
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="tPost" EntitySet="tPosts" />
     </AssociationSet>
-    <AssociationSet Name="FK_tImagePostControl_tImages" Association="MyJeepTraderModel.FK_tImagePostControl_tImages">
-      <End Role="tImage" EntitySet="tImages" />
-      <End Role="tImagePostControl" EntitySet="tImagePostControls" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tImagePostControl_tPosts" Association="MyJeepTraderModel.FK_tImagePostControl_tPosts">
-      <End Role="tPost" EntitySet="tPosts" />
-      <End Role="tImagePostControl" EntitySet="tImagePostControls" />
-    </AssociationSet>
     <EntitySet Name="tConnectedUsers" EntityType="MyJeepTraderModel.tConnectedUser" />
+    <EntitySet Name="tStates" EntityType="MyJeepTraderModel.tState" />
+    <AssociationSet Name="FK_tImages_tPosts" Association="MyJeepTraderModel.FK_tImages_tPosts">
+      <End Role="tPost" EntitySet="tPosts" />
+      <End Role="tImage" EntitySet="tImages" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -193,7 +189,8 @@
     </Key>
     <Property Name="Imageid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <NavigationProperty Name="tImagePostControls" Relationship="MyJeepTraderModel.FK_tImagePostControl_tImages" FromRole="tImage" ToRole="tImagePostControl" />
+    <Property Name="PostId" Type="Int32" />
+    <NavigationProperty Name="tPost" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tImage" ToRole="tPost" />
   </EntityType>
   <EntityType Name="tLocation">
     <Key>
@@ -204,9 +201,9 @@
     <Property Name="Line2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="CountryId" Type="Int32" />
     <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tLocation" ToRole="tPost" />
+    <Property Name="StateId" Type="Int32" />
   </EntityType>
   <EntityType Name="tMake">
     <Key>
@@ -280,7 +277,7 @@
     <NavigationProperty Name="tModelPostControls" Relationship="MyJeepTraderModel.FK_tModelControl_tPosts" FromRole="tPost" ToRole="tModelPostControl" />
     <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="tPost" ToRole="AspNetUser" />
-    <NavigationProperty Name="tImagePostControls" Relationship="MyJeepTraderModel.FK_tImagePostControl_tPosts" FromRole="tPost" ToRole="tImagePostControl" />
+    <NavigationProperty Name="tImages" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tPost" ToRole="tImage" />
   </EntityType>
   <EntityType Name="tPostType">
     <Key>
@@ -610,16 +607,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="tImagePostControl">
-    <Key>
-      <PropertyRef Name="ImageControlId" />
-    </Key>
-    <Property Name="ImageControlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ImageId" Type="Int32" />
-    <Property Name="PostId" Type="Int32" />
-    <NavigationProperty Name="tImage" Relationship="MyJeepTraderModel.FK_tImagePostControl_tImages" FromRole="tImagePostControl" ToRole="tImage" />
-    <NavigationProperty Name="tPost" Relationship="MyJeepTraderModel.FK_tImagePostControl_tPosts" FromRole="tImagePostControl" ToRole="tPost" />
-  </EntityType>
   <Association Name="FK_tPosts_AspNetUsers">
     <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
     <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
@@ -632,30 +619,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tImagePostControl_tImages">
-    <End Type="MyJeepTraderModel.tImage" Role="tImage" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tImagePostControl" Role="tImagePostControl" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tImage">
-        <PropertyRef Name="Imageid" />
-      </Principal>
-      <Dependent Role="tImagePostControl">
-        <PropertyRef Name="ImageId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tImagePostControl_tPosts">
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tImagePostControl" Role="tImagePostControl" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tPost">
-        <PropertyRef Name="PostId" />
-      </Principal>
-      <Dependent Role="tImagePostControl">
-        <PropertyRef Name="PostId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="tConnectedUser">
     <Key>
       <PropertyRef Name="ChatConnectionId" />
@@ -664,4 +627,24 @@
     <Property Name="ConnectionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="ConnectionUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="tState">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" />
+    <Property Name="StateCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_tImages_tPosts">
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tImage" Role="tImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPost">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="tImage">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
