@@ -12,7 +12,7 @@ using MyJeepTrader.Web.ViewModels;
 //test comment.
 namespace MyJeepTrader.Web.Controllers
 {
-    public class PostController : BaseController
+    public class PostController : Controller
     {
         // GET: Post
         public ActionResult Index()
@@ -138,8 +138,6 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
-        public PostController(ApplicationUserManager userManager, ApplicationSignInManager signInManager) : base(userManager, signInManager)
-        {
-        }
+        
     }
 }
