@@ -14,7 +14,7 @@ namespace MyJeepTrader.Web.Helpers
         public static tModelWithSelected ToModelWithSelected(this tModel model)
         {
             var modelWithSelected = new tModelWithSelected();
-            modelWithSelected.Model = model;
+            modelWithSelected.TModel = model;
             return modelWithSelected;
         }
 
