@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 using MyJeepTrader.Data;
 
 namespace MyJeepTrader.Web.ViewModels
@@ -27,13 +29,14 @@ namespace MyJeepTrader.Web.ViewModels
         public int SelectedPostTypeId { get; set; }
         public bool IsJeep { get; set; }
         public bool IsAccessory { get; set; }
-        public byte[] Image { get; set; }
+        //public byte[] Image { get; set; }
 
+        public HttpPostedFileBase Image { get; set; }
     }
 
     public class tModelWithSelected
     {
-        public tModel Model { get; set; }
+        public tModel TModel { get; set; }
         public bool IsSelected { get; set; }
 
     }

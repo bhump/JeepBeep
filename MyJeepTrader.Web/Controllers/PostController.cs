@@ -68,10 +68,10 @@ namespace MyJeepTrader.Web.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                /*if (!ModelState.IsValid)
                 {
-                    return View();
-                }
+                    return RedirectToAction("Create");
+                }*/
 
                 byte[] imageData = null;
 
@@ -96,7 +96,7 @@ namespace MyJeepTrader.Web.Controllers
                 //service.AddPostUserControl(newPostId, user.Id); 
                 foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
                 {
-                    service.AddModelPost(selectedModel.Model.ModelId, newPostId);
+                    service.AddModelPost(selectedModel.TModel.ModelId, newPostId);
                 }
 
                 TempData["Message"] = "Post Created Successfully!";
