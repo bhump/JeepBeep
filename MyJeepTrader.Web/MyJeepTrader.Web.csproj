@@ -218,10 +218,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap_new.css" />
+    <Content Include="Content\bootstrap.min_new.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrap_default.css" />
-    <Content Include="Content\bootstrap.min_default.css" />
     <Content Include="Content\ChatStyle.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Images\delete.png" />
