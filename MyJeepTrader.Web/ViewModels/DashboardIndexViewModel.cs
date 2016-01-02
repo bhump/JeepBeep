@@ -32,7 +32,7 @@ namespace MyJeepTrader.Web.ViewModels
         public string ConfirmPassword { get; set; }
         #endregion
 
-        #region User profile
+        #region user profile
         [Display(Name = "UserProfileId")]
         public int UserProfileId { get; set; }
 

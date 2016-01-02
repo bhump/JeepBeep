@@ -305,7 +305,7 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public void CreatePrimaryJeepProfile(string userId, string manufactuer, string make, string model, short year, byte[] jeepImage, string jeepDescription, bool primaryJeep)
+        public void CreateJeepProfile(string userId, string manufactuer, string make, string model, short year, byte[] jeepImage, string jeepDescription, bool primaryJeep)
         {
             using (_context)
             {
@@ -350,6 +350,21 @@ namespace MyJeepTrader.Data
                 updateJeepProfile.Description = jeepDescription;
                 updateJeepProfile.PrimaryJeep = primaryJeep;
 
+                context.SaveChanges();
+            }
+        }
+
+        public void ChangePrimaryJeep(string userId, bool primaryJeep)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var changePrimary = (from vp in context.tVehicleProfiles
+                                     join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                                     where vpc.Id == userId
+                                     && vp.PrimaryJeep == true
+                                     select vp).FirstOrDefault();
+
+                changePrimary.PrimaryJeep = primaryJeep;
                 context.SaveChanges();
             }
         }

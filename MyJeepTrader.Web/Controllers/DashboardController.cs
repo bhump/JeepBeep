@@ -236,15 +236,15 @@ namespace MyJeepTrader.Web.Controllers
                 var year = Convert.ToInt16(collection["Year"].ToString());
                 var jeepImage = imageData;
                 var jeepDescription = collection["JeepDescription"].ToString();
-                bool primaryJeep = Convert.ToBoolean(collection["PrimaryJeep"].Split(',')[0]);
+                //bool primaryJeep = Convert.ToBoolean(collection["PrimaryJeep"].Split(',')[0]);
 
                 if (service.CheckForPrimaryJeep(user.Id) == false)
                 {
-                    service.CreatePrimaryJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, primaryJeep);
+                    service.CreateJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, true);
                 }
                 else
                 {
-                    service.UpdatePrimaryJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, primaryJeep);
+                    service.UpdatePrimaryJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, true);
                 }
 
                 return RedirectToAction("Index");
