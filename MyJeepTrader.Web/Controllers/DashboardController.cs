@@ -79,6 +79,7 @@ namespace MyJeepTrader.Web.Controllers
             model.GooglePlus = profileInfo == null ? "" : profileInfo.GooglePlus;
             model.Website = profileInfo == null ? "" : profileInfo.Website;
             model.Ello = profileInfo == null ? "" : profileInfo.Ello;
+            model.Avatar = profileInfo.Avatar;
 
             if (jeepInfo != null)
             {
@@ -89,6 +90,7 @@ namespace MyJeepTrader.Web.Controllers
                 model.Year = jeepInfo == null ? Convert.ToInt16(0) : Convert.ToInt16(jeepInfo.Year);
                 model.JeepDescription = jeepInfo == null ? "" : jeepInfo.Description;
                 model.PrimaryJeep = jeepInfo == null ? false : Convert.ToBoolean(jeepInfo.PrimaryJeep);
+                model.Image = jeepInfo.Image;
             }
 
             model.SentMessages = service.GetSentMessages(user.Id);
