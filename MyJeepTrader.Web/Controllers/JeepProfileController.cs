@@ -27,16 +27,17 @@ namespace MyJeepTrader.Web.Controllers
         }
 
         // GET: JeepProfile
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult AllJeepProfiles()
+        public ActionResult AllJeepProfiles(string UserName)
         {
             Service service = new Service();
 
-            var user = UserManager.FindByName(User.Identity.Name);
+            var user = UserManager.FindByName(UserName);
 
             JeepProfileAllJeepProfilesViewModel model = new JeepProfileAllJeepProfilesViewModel();
             model.jeepProfiles = service.GetAllJeepProfiles(user.Id);
@@ -109,7 +110,7 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             var getImage = service.GetJeepImageByJeepProfileId(JeepProfileId);
 
-            if(getImage != null)
+            if (getImage != null)
             {
                 var stream = new MemoryStream(getImage.ToArray());
                 return new FileStreamResult(stream, "image/jpg");

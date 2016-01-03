@@ -108,6 +108,9 @@
                 <div class="form-group">
                     <label class="col-sm-3">Description: </label>@Html.DisplayFor(m => m.JeepDescription)
                 </div>
+                <div class="form-group">
+                    @Html.ActionLink("View All", "AllJeepProfiles", "JeepProfile", new { UserName = Request.QueryString["UserName"] }, new { })
+                </div>
             </div>
         </div>
     </div>
