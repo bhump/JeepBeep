@@ -305,6 +305,19 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public byte[] GetJeepImageByJeepProfileId(int jeepProfileId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var image = (from vp in context.tVehicleProfiles
+                             join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                             where vp.VehicleProfileId == jeepProfileId
+                             select vp.Image).FirstOrDefault();
+
+                return image;
+            }
+        }
+
         public void CreateJeepProfile(string userId, string manufactuer, string make, string model, short year, byte[] jeepImage, string jeepDescription, bool primaryJeep)
         {
             using (_context)
@@ -403,10 +416,32 @@ namespace MyJeepTrader.Data
 
             var noPrimaryJeep = (from vp in context.tVehicleProfiles
                                  join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
-                                 where vpc.Id == userId
+                                 where vpc.Id == userId && vp.PrimaryJeep == true
                                  select vp).Any();
 
             return noPrimaryJeep;
+        }
+
+        public List<JeepProfiles> GetAllJeepProfiles(string userId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
+            var allJeeps = (from vp in context.tVehicleProfiles
+                            join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
+                            where vpc.Id == userId
+                            select new JeepProfiles
+                            {
+                                JeepDescription = vp.Description,
+                                Make = vp.Make,
+                                Model = vp.Model,
+                                Image = vp.Image,
+                                Manufactuer = vp.Manufacturer,
+                                JeepProfileId = vp.VehicleProfileId,
+                                PrimaryJeep = vp.PrimaryJeep == true ? true : false,
+                                Year = vp.Year.Value
+                            }).ToList();
+
+            return allJeeps;
         }
         #endregion
 

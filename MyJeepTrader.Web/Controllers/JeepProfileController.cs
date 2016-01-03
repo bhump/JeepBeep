@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using MyJeepTrader.Data;
+using MyJeepTrader.Web.ViewModels;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -29,6 +30,18 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult AllJeepProfiles()
+        {
+            Service service = new Service();
+
+            var user = UserManager.FindByName(User.Identity.Name);
+
+            JeepProfileAllJeepProfilesViewModel model = new JeepProfileAllJeepProfilesViewModel();
+            model.jeepProfiles = service.GetAllJeepProfiles(user.Id);
+
+            return View(model);
         }
 
         public ApplicationUserManager UserManager
@@ -89,6 +102,20 @@ namespace MyJeepTrader.Web.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult ShowJeepImage(int JeepProfileId)
+        {
+            Service service = new Service();
+            var getImage = service.GetJeepImageByJeepProfileId(JeepProfileId);
+
+            if(getImage != null)
+            {
+                var stream = new MemoryStream(getImage.ToArray());
+                return new FileStreamResult(stream, "image/jpg");
+            }
+
+            return View();
         }
     }
 }

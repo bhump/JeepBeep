@@ -1,0 +1,36 @@
+﻿@model MyJeepTrader.Web.ViewModels.JeepProfileAllJeepProfilesViewModel
+@{
+    ViewBag.Title = "AllJeepProfiles";
+}
+
+<h2>All Jeeps</h2>
+
+<table class="table">
+    @foreach (var item in Model.jeepProfiles)
+    {
+        <tr>
+            <td>
+                <div>
+                    @if (item.Image != null)
+                    {
+                        //<a href='@Url.RouteUrl("Details", new { UserName = item })'>
+                        <img src='@Url.Action("ShowJeepImage", "JeepProfile", new { JeepProfileId = item.JeepProfileId })' width="43" height="43" />
+                        //</a>
+                    }
+                    else
+                    {
+                        <img src="~/Images/placeholder.jpg" width="43" height="43" />
+                    }
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Make)
+                    @Html.DisplayFor(modelItem => item.Model)
+                    @Html.DisplayFor(modelItem => item.Manufactuer)
+                    @Html.DisplayFor(modelItem => item.PrimaryJeep)
+                    @Html.DisplayFor(modelItem => item.JeepDescription)
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
