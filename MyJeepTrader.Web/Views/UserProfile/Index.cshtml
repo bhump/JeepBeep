@@ -6,11 +6,11 @@
 
 <h2>Users</h2>
 
-<table class="table">
+<table class="userTable">
     @foreach (var item in Model.UserProfiles)
     {
         <tr>
-            <td>
+            <td class="td">
                 <div>
                     @if (item.Avatar != null)
                     {
@@ -24,11 +24,41 @@
                     }
                 </div>
                 <div>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                    @Html.DisplayFor(modelItem => item.UserName)
+                    <div>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </div>
+
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Website)
+                    </div>
                 </div>
             </td>
         </tr>
     }
 
 </table>
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("table").each(function () {
+            var $this = $(this);
+            var newrows = [];
+            $this.find("tr").each(function () {
+                var i = 0;
+                $(this).find("td").each(function () {
+                    i++;
+                    if (newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                    newrows[i].append($(this));
+                });
+            });
+            $this.find("tr").remove();
+            $.each(newrows, function () {
+                $this.append(this);
+            });
+        });
+
+        return false;
+    });
+</script>
+
