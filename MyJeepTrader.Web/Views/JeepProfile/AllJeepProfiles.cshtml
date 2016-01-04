@@ -9,28 +9,90 @@
     @foreach (var item in Model.jeepProfiles)
     {
         <tr>
-            <td>
-                <div>
-                    @if (item.Image != null)
-                    {
-                        //<a href='@Url.RouteUrl("Details", new { UserName = item })'>
-                        <img src='@Url.Action("ShowJeepImage", "JeepProfile", new { JeepProfileId = item.JeepProfileId })' width="43" height="43" />
-                        //</a>
-                    }
-                    else
-                    {
-                        <img src="~/Images/placeholder.jpg" width="43" height="43" />
-                    }
-                </div>
-                <div>
-                    @Html.DisplayFor(modelItem => item.Make)
-                    @Html.DisplayFor(modelItem => item.Model)
-                    @Html.DisplayFor(modelItem => item.Manufactuer)
-                    @Html.DisplayFor(modelItem => item.PrimaryJeep)
-                    @Html.DisplayFor(modelItem => item.JeepDescription)
-                </div>
-            </td>
+            @if (item.PrimaryJeep == true)
+            {
+                <td class="td" style="border-style: solid; border-top: solid">
+                    <div>
+                        @if (item.Image != null)
+                        {
+                            //<a href='@Url.RouteUrl("Details", new { UserName = item })'>
+                            <img src='@Url.Action("ShowJeepImage", "JeepProfile", new { JeepProfileId = item.JeepProfileId })' width="43" height="43" />
+                            //</a>
+                        }
+                        else
+                        {
+                            <img src="~/Images/placeholder.jpg" width="43" height="43" />
+                        }
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Manufactuer)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Make)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.JeepDescription)
+                    </div>
+                </td>
+            }
+            else
+            {
+                <td class="td">
+                    <div>
+                        @if (item.Image != null)
+                        {
+                            //<a href='@Url.RouteUrl("Details", new { UserName = item })'>
+                            <img src='@Url.Action("ShowJeepImage", "JeepProfile", new { JeepProfileId = item.JeepProfileId })' width="43" height="43" />
+                            //</a>
+                        }
+                        else
+                        {
+                            <img src="~/Images/placeholder.jpg" width="43" height="43" />
+                        }
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Manufactuer)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Make)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.JeepDescription)
+                    </div>
+                </td>
+            }
         </tr>
     }
 
 </table>
+
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("table").each(function () {
+            var $this = $(this);
+            var newrows = [];
+            $this.find("tr").each(function () {
+                var i = 0;
+                $(this).find("td").each(function () {
+                    i++;
+                    if (newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                    newrows[i].append($(this));
+                });
+            });
+            $this.find("tr").remove();
+            $.each(newrows, function () {
+                $this.append(this);
+            });
+        });
+
+        return false;
+    });
+</script>
