@@ -100,14 +100,13 @@
     <EntitySetMapping Name="tMemberships">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tMembership">
         <MappingFragment StoreEntitySet="tMemberships">
+          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Renewed" ColumnName="Renewed" />
           <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="Expired" ColumnName="Expired" />
           <ScalarProperty Name="MemberSince" ColumnName="MemberSince" />
-          <ScalarProperty Name="BasicMembership" ColumnName="BasicMembership" />
-          <ScalarProperty Name="PremiumMembership" ColumnName="PremiumMembership" />
           <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -274,6 +273,14 @@
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="StateCode" ColumnName="StateCode" />
           <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tSubscriptions">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
+        <MappingFragment StoreEntitySet="tSubscription">
+          <ScalarProperty Name="Subscription" ColumnName="Subscription" />
+          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

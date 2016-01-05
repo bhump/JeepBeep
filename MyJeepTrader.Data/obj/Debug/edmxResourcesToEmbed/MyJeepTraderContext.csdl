@@ -109,6 +109,11 @@
       <End Role="tPost" EntitySet="tPosts" />
       <End Role="tImage" EntitySet="tImages" />
     </AssociationSet>
+    <EntitySet Name="tSubscriptions" EntityType="MyJeepTraderModel.tSubscription" />
+    <AssociationSet Name="FK_tMemberships_tSubscription" Association="MyJeepTraderModel.FK_tMemberships_tSubscription">
+      <End Role="tSubscription" EntitySet="tSubscriptions" />
+      <End Role="tMembership" EntitySet="tMemberships" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -219,8 +224,6 @@
       <PropertyRef Name="MembershipId" />
     </Key>
     <Property Name="MembershipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PremiumMembership" Type="Boolean" />
-    <Property Name="BasicMembership" Type="Boolean" />
     <Property Name="MemberSince" Type="DateTime" Precision="0" />
     <Property Name="Expired" Type="Boolean" />
     <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
@@ -228,6 +231,8 @@
     <Property Name="Renewed" Type="Boolean" />
     <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="tMembership" ToRole="AspNetUser" />
+    <Property Name="SubscriptionId" Type="Int32" />
+    <NavigationProperty Name="tSubscription" Relationship="MyJeepTraderModel.FK_tMemberships_tSubscription" FromRole="tMembership" ToRole="tSubscription" />
   </EntityType>
   <EntityType Name="tModel">
     <Key>
@@ -644,6 +649,26 @@
       </Principal>
       <Dependent Role="tImage">
         <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tSubscription">
+    <Key>
+      <PropertyRef Name="SubscriptionId" />
+    </Key>
+    <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subscription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tMemberships" Relationship="MyJeepTraderModel.FK_tMemberships_tSubscription" FromRole="tSubscription" ToRole="tMembership" />
+  </EntityType>
+  <Association Name="FK_tMemberships_tSubscription">
+    <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tSubscription">
+        <PropertyRef Name="SubscriptionId" />
+      </Principal>
+      <Dependent Role="tMembership">
+        <PropertyRef Name="SubscriptionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

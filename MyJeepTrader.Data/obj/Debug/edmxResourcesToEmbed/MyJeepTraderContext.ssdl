@@ -111,8 +111,7 @@
       <PropertyRef Name="MembershipId" />
     </Key>
     <Property Name="MembershipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PremiumMembership" Type="bit" />
-    <Property Name="BasicMembership" Type="bit" />
+    <Property Name="SubscriptionId" Type="int" />
     <Property Name="MemberSince" Type="date" />
     <Property Name="Expired" Type="bit" />
     <Property Name="ExpirationDate" Type="date" />
@@ -208,6 +207,13 @@
     <Property Name="SubModelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SubModel" Type="varchar" MaxLength="50" />
     <Property Name="ModelId" Type="int" />
+  </EntityType>
+  <EntityType Name="tSubscription">
+    <Key>
+      <PropertyRef Name="SubscriptionId" />
+    </Key>
+    <Property Name="SubscriptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subscription" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tUserProfiles">
     <Key>
@@ -332,6 +338,18 @@
       </Principal>
       <Dependent Role="tMemberships">
         <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tMemberships_tSubscription">
+    <End Role="tSubscription" Type="Self.tSubscription" Multiplicity="0..1" />
+    <End Role="tMemberships" Type="Self.tMemberships" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tSubscription">
+        <PropertyRef Name="SubscriptionId" />
+      </Principal>
+      <Dependent Role="tMemberships">
+        <PropertyRef Name="SubscriptionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -549,6 +567,7 @@
     <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tStates" EntityType="Self.tStates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tSubscription" EntityType="Self.tSubscription" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfiles" Schema="dbo" store:Type="Tables" />
@@ -575,6 +594,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_tMemberships_AspNetUsers" Association="Self.FK_tMemberships_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="tMemberships" EntitySet="tMemberships" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tMemberships_tSubscription" Association="Self.FK_tMemberships_tSubscription">
+      <End Role="tSubscription" EntitySet="tSubscription" />
       <End Role="tMemberships" EntitySet="tMemberships" />
     </AssociationSet>
     <AssociationSet Name="FK_tMessageControl_tMessages" Association="Self.FK_tMessageControl_tMessages">

@@ -142,6 +142,9 @@
     <Compile Include="tSubModel.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tSubscription.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tUserProfile.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>

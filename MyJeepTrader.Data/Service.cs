@@ -146,21 +146,20 @@ namespace MyJeepTrader.Data
         #region Membership
         public void CreateMembership(string userId)
         {
-            using (_context)
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 tMembership membership = new tMembership
                     {
                         Id = userId,
-                        PremiumMembership = false,
-                        BasicMembership = true,
                         MemberSince = DateTime.Now.Date,
                         AutoRenew = false,
                         Renewed = false,
                         Expired = false,
                         ExpirationDate = DateTime.Now.Date,
+                        SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == "Free").Select(s => s.SubscriptionId).FirstOrDefault()
                     };
-                _context.tMemberships.Add(membership);
-                _context.SaveChanges();
+                context.tMemberships.Add(membership);
+                context.SaveChanges();
             }
         }
         #endregion
@@ -205,24 +204,32 @@ namespace MyJeepTrader.Data
 
         public void CreateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website)
         {
-            using (_context)
+            try
             {
-                tUserProfile userProfile = new tUserProfile
+
+                using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
                 {
-                    Id = userId,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    BirthDate = birthDate,
-                    Avatar = avatar,
-                    Description = description,
-                    Facebook = facebook,
-                    Twitter = twitter,
-                    Ello = ello,
-                    GooglePlus = google,
-                    Website = website
-                };
-                _context.tUserProfiles.Add(userProfile);
-                _context.SaveChanges();
+                    tUserProfile userProfile = new tUserProfile
+                    {
+                        Id = userId,
+                        FirstName = firstName,
+                        LastName = lastName,
+                        BirthDate = birthDate,
+                        Avatar = avatar,
+                        Description = description,
+                        Facebook = facebook,
+                        Twitter = twitter,
+                        Ello = ello,
+                        GooglePlus = google,
+                        Website = website
+                    };
+                    context.tUserProfiles.Add(userProfile);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
         public void UpdateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website)
