@@ -7,34 +7,57 @@
 <title>My Dashboard</title>
 
 <div class="column" id="column1">
-    <div class="form-group-sm">
-        <div>
-
-        </div>
-    </div>
-    <div class="form-group-sm">
-        <h2>Change Email</h2>
-        @using (Html.BeginForm("ChangeEmail", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            <div>
-                <div>
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div>
+        <div class="form-group-sm">
+            <h2>Membership</h2>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <label class="col-md-8">Subscription: </label>
+                        @Html.DisplayFor(m => m.tSubscription.Subscription)
+                    </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        <label class="col-md-8">Member Since: </label>
+                        @Html.DisplayFor(m => m.MemberSince, "{0:MM/dd/yyyy}")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <label class="col-md-8">Expiration Date: </label>
+                        @Html.DisplayFor(m => m.ExpirationDate, "{0:MM/dd/yyyy}")
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Change e-mail" class="btn btn-default" />
+                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" })
                     </div>
                 </div>
             </div>
-        }
-    </div>
-    <div>
+        </div>
+        <div class="form-group-sm">
+            <h2>Change Email</h2>
+            @using (Html.BeginForm("ChangeEmail", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div>
+                    <div>
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Change e-mail" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
         <div class="form-group-sm">
             <h2>Change Password</h2>
             @using (Html.BeginForm("ChangePassword", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -79,7 +102,7 @@
                         }
                         else
                         {
-                            <img src="~/Images/placeholder.jpg" width="87" height="85"/>
+                            <img src="~/Images/placeholder.jpg" width="87" height="85" />
                         }
                         <input type="file" name="Image" id="Image" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
                     </div>
@@ -144,9 +167,9 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Avatar, new { @class = "col-sm-3 control-label" })
                 <div class="col-md-8">
-                    @if(Model.Avatar != null)
-                    { 
-                    <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Dashboard", new { UserName = @User.Identity.Name })' width="87" height="85" />
+                    @if (Model.Avatar != null)
+                    {
+                        <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Dashboard", new { UserName = @User.Identity.Name })' width="87" height="85" />
                     }
                     else
                     {

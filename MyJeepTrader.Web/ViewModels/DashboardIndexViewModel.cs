@@ -122,5 +122,36 @@ namespace MyJeepTrader.Web.ViewModels
         public int MessageId { get; set; }
 
         #endregion
+
+        #region membership and subscription
+        [Display(Name = "MembershipId")]
+        public int MembershipId { get; set; }
+        
+        [Display(Name = "Member Since")]
+        public Nullable<System.DateTime> MemberSince { get; set; }
+        
+        [Display(Name = "Expired")]
+        public Nullable<bool> Expired { get; set; }
+        
+        [Display(Name = "Expiration Date")]
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        
+        [Display(Name = "Auto Renew")]
+        public Nullable<bool> AutoRenew { get; set; }
+        
+        [Display(Name = "Renewed")]
+        public Nullable<bool> Renewed { get; set; }
+        
+        [Display(Name = "Id")]
+        public string Id { get; set; }
+        
+        [Display(Name = "SubscriptionId")]
+        public Nullable<int> SubscriptionId { get; set; }
+        
+        [Display(Name = "AspNetUser")]
+        public AspNetUser AspNetUser { get; set; }
+        
+        public tSubscription tSubscription { get; set; }
+        #endregion
     }
 }

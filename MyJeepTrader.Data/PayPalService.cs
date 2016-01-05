@@ -21,5 +21,22 @@ namespace MyJeepTrader.Data
 
             return gateway;
         }
+
+        public string PayPalSubscription(string planId, string clientToken, string name)
+        {
+            var request = new SubscriptionRequest
+            {
+                PaymentMethodToken = clientToken,
+                PlanId = planId,
+                Descriptor = new DescriptorRequest
+                {
+                    Name = name
+                }
+            };
+
+            Result<Subscription> result = PayPalGateway().Subscription.Create(request);
+
+            return result.Message;
+        }
     }
 }

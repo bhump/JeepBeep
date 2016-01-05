@@ -144,6 +144,26 @@ namespace MyJeepTrader.Data
         #endregion
 
         #region Membership
+        public tMembership GetMembership(string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var membership = context.tMemberships.Where(m => m.AspNetUser.UserName == userName).FirstOrDefault();
+
+                return membership;
+            }
+        }
+
+        public tSubscription GetSubscription(int? subscriptionId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var subscription = context.tSubscriptions.Where(s => s.SubscriptionId == subscriptionId).First();
+
+                return subscription;
+            }
+        }
+
         public void CreateMembership(string userId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
@@ -389,15 +409,10 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public tVehicleProfile GetPrimaryJeepInfo(/*string userId*/ string UserName)
+        public tVehicleProfile GetPrimaryJeepInfo(string UserName)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                //return (from vp in context.tVehicleProfiles
-                //        join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
-                //        where vpc.Id == userId
-                //        select vp).FirstOrDefault();
-
                 return (from vp in context.tVehicleProfiles
                         join vpc in context.tVehicleProfileControls on vp.VehicleProfileId equals vpc.VehicleProfileId
                         where vpc.AspNetUser.UserName == UserName

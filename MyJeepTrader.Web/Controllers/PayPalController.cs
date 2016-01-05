@@ -65,15 +65,14 @@ namespace MyJeepTrader.Web.Controllers
             return View();
         }
 
-        /*Not sure how to pass this to view*/
         public class ClientTokenHandler : IHttpHandler
         {
             public void ProcessRequest(HttpContext context)
             {
                 var PayPalService = new PayPalService();
                 var gateway = PayPalService.PayPalGateway();
-                var clientToken = gateway.ClientToken.generate();//need to pass this to js. 
-                context.Response.Write(clientToken);
+                var clientToken = gateway.ClientToken.generate();
+                //context.Response.Write(clientToken);
             }
 
             public bool IsReusable
