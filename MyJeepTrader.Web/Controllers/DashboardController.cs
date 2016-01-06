@@ -75,7 +75,7 @@ namespace MyJeepTrader.Web.Controllers
             model.FirstName = profileInfo == null ? "" : profileInfo.FirstName;
             model.LastName = profileInfo == null ? "" : profileInfo.LastName;
             model.Description = profileInfo == null ? "" : profileInfo.Description;
-            model.BirthDate = profileInfo == null ? DateTime.Now : Convert.ToDateTime(profileInfo.BirthDate);
+            model.BirthDate = profileInfo == null ? DateTime.MinValue : Convert.ToDateTime(profileInfo.BirthDate);
             model.Facebook = profileInfo == null ? "" : profileInfo.Facebook;
             model.Twitter = profileInfo == null ? "" : profileInfo.Twitter;
             model.GooglePlus = profileInfo == null ? "" : profileInfo.GooglePlus;

@@ -38,6 +38,7 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
         // GET: PayPal
+        [Authorize]
         public ActionResult Index()
         {
             PayPalIndexViewModel model = new PayPalIndexViewModel();
@@ -50,6 +51,7 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult Checkout()
         {
             return View();
@@ -86,7 +88,7 @@ namespace MyJeepTrader.Web.Controllers
             //};
             //Result<Transaction> transResult = gateway.Transaction.Sale(transRequest);
 
-            if(monthly == "on")
+            if (monthly == "on")
             {
                 var subRequest = new SubscriptionRequest
                 {
