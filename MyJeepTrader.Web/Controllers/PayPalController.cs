@@ -90,8 +90,8 @@ namespace MyJeepTrader.Web.Controllers
             {
                 var subRequest = new SubscriptionRequest
                 {
-                    //PaymentMethodToken = model.ClientToken,
-                    PaymentMethodNonce = "fake-valid-visa-nonce",
+                    PaymentMethodToken = model.ClientToken,
+                    //PaymentMethodNonce = "fake-valid-visa-nonce",
                     PlanId = "rphr",
                     Descriptor = new DescriptorRequest
                     {

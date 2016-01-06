@@ -172,13 +172,26 @@ namespace MyJeepTrader.Data
                     {
                         Id = userId,
                         MemberSince = DateTime.Now.Date,
-                        AutoRenew = false,
+                        AutoRenew = true,
                         Renewed = false,
                         Expired = false,
                         ExpirationDate = DateTime.Now.Date,
                         SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == "Free").Select(s => s.SubscriptionId).FirstOrDefault()
                     };
                 context.tMemberships.Add(membership);
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateMembership(string userName, string subscription, DateTime expirationDate)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var updateMembership = context.tMemberships.Where(m => m.AspNetUser.UserName == userName).First();
+                updateMembership.ExpirationDate = expirationDate;
+                updateMembership.Renewed = true;
+                updateMembership.SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == subscription).Select(s => s.SubscriptionId).FirstOrDefault();
+                context.tMemberships.Add(updateMembership);
                 context.SaveChanges();
             }
         }
