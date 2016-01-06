@@ -16,3 +16,5 @@
 /// <reference path="scale.fix.js" />
 /// <reference path="jquery.signalr-2.2.0.min.js" />
 /// <reference path="bootstrap-filestyle.min.js" />
+/// <reference path="sweetalert-dev.js" />
+/// <reference path="sweetalert.min.js" />

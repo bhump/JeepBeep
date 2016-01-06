@@ -68,18 +68,6 @@ namespace MyJeepTrader.Web.Controllers
         {
             try
             {
-                /*if (!ModelState.IsValid)
-                {
-                    return RedirectToAction("Create");
-                }*/
-
-                byte[] imageData = null;
-
-                using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
-                {
-                    imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
-                }
-
                 Service service = new Service();
                 //model.Post.MakeID = 
                 //model.Post.YearID = model.Years.Where(x => x.IsSelected)
@@ -91,7 +79,19 @@ namespace MyJeepTrader.Web.Controllers
                 //var user = UserManager.FindBy
                 //model.Post.Id = user.Id;
                 var newPostId = service.CreateNewPost(model.Post);
-                service.AddImage(imageData, newPostId);
+
+                if (Request.Files[0].ContentLength > 0)
+                {
+                    byte[] imageData = null;
+
+                    using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
+                    }
+
+                    service.AddImage(imageData, newPostId);    
+                }
+                
                 
                 //service.AddPostUserControl(newPostId, user.Id); 
                 foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
