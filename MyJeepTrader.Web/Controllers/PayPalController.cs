@@ -92,7 +92,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     PaymentMethodToken = model.ClientToken,
                     //PaymentMethodNonce = "fake-valid-visa-nonce",
-                    PlanId = "rphr",
+                    PlanId = ConstantStrings.monthlyPlanId,
                     Descriptor = new DescriptorRequest
                     {
                         Name = userInfo.FirstName + " " + userInfo.LastName
@@ -104,6 +104,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
+                    service.UpdateMembership(User.Identity.Name, ConstantStrings.monthlySubscription, DateTime.Now);
                 }
                 else
                 {
@@ -116,7 +117,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     //PaymentMethodToken = model.ClientToken,
                     PaymentMethodNonce = "fake-valid-visa-nonce",
-                    PlanId = "7rjw",
+                    PlanId = ConstantStrings.annualPlanId,
                     Descriptor = new DescriptorRequest
                     {
                         Name = userInfo.FirstName + " " + userInfo.LastName
@@ -129,6 +130,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
+                    service.UpdateMembership(User.Identity.Name, ConstantStrings.annualSubscription, DateTime.Now);
                 }
                 else
                 {

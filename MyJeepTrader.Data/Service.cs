@@ -176,7 +176,7 @@ namespace MyJeepTrader.Data
                         Renewed = false,
                         Expired = false,
                         ExpirationDate = DateTime.Now.Date,
-                        SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == "Free").Select(s => s.SubscriptionId).FirstOrDefault()
+                        SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == ConstantStrings.freeSubscription).Select(s => s.SubscriptionId).FirstOrDefault()
                     };
                 context.tMemberships.Add(membership);
                 context.SaveChanges();
