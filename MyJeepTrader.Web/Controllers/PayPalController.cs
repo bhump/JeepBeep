@@ -140,6 +140,9 @@ namespace MyJeepTrader.Web.Controllers
                 }
             }
 
+            UserManager.RemoveFromRole(user.Id, "Basic");
+            UserManager.AddToRole(user.Id, "Premium");
+
             return View();
         }
 
