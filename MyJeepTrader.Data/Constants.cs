@@ -18,6 +18,10 @@ namespace MyJeepTrader.Data
         public const string monthlySubscription = "Monthly Subscription";
 
         public const string annualSubscription = "Annual Subscription";
+
+        public const string monthlyPlanId = "rphr";
+
+        public const string annualPlanId = "7rjw";
     }
 
 }
