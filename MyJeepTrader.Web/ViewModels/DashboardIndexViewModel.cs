@@ -126,27 +126,31 @@ namespace MyJeepTrader.Web.ViewModels
         #region membership and subscription
         [Display(Name = "MembershipId")]
         public int MembershipId { get; set; }
-        
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}",
+               ApplyFormatInEditMode = true)]
         [Display(Name = "Member Since")]
-        public Nullable<System.DateTime> MemberSince { get; set; }
+        public DateTime? MemberSince { get; set; }
         
         [Display(Name = "Expired")]
-        public Nullable<bool> Expired { get; set; }
-        
+        public bool? Expired { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}",
+               ApplyFormatInEditMode = true)]
         [Display(Name = "Expiration Date")]
-        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         
         [Display(Name = "Auto Renew")]
-        public Nullable<bool> AutoRenew { get; set; }
+        public bool? AutoRenew { get; set; }
         
         [Display(Name = "Renewed")]
-        public Nullable<bool> Renewed { get; set; }
+        public bool? Renewed { get; set; }
         
         [Display(Name = "Id")]
         public string Id { get; set; }
         
         [Display(Name = "SubscriptionId")]
-        public Nullable<int> SubscriptionId { get; set; }
+        public int? SubscriptionId { get; set; }
         
         [Display(Name = "AspNetUser")]
         public AspNetUser AspNetUser { get; set; }

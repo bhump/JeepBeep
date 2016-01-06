@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) @Html.ActionLink("Cancel", "Cancel", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" })
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@
                         }
                         else
                         {
-                            @Html.TextBoxFor(m => m.Year, " ",  new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Year, " ", new { @class = "form-control" })
                         }
                     </div>
                 </div>
