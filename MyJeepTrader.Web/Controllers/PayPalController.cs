@@ -104,6 +104,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
+                    //service.UpdateMembership(User.Identity.Name, "Monthly Subscription", "");
                 }
                 else
                 {
