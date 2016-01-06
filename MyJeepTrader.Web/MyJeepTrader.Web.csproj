@@ -309,8 +309,11 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sweetalert-dev.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Images\ice-snowy-rocks-mountains-hd-background-wallpapers-widescreen-high-resolutions-025.jpg" />
+    <Content Include="Styles\sweetalert.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
