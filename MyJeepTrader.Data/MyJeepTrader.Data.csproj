@@ -131,6 +131,9 @@
     <Compile Include="tModelYearControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tPayPalCustomer.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tPost.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>

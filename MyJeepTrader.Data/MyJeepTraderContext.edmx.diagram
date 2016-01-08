@@ -52,6 +52,8 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tImages_tPosts" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tSubscription" Width="1.5" PointX="10.375" PointY="11.875" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tMemberships_tSubscription" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tPayPalCustomer" Width="1.5" PointX="8.25" PointY="5.75" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tPayPalCustomers_AspNetUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

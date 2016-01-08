@@ -163,6 +163,7 @@ namespace MyJeepTrader.Web.Controllers
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
 
                     Service service = new Service();
+                    PayPalService ppService = new PayPalService();
 
                     if (result.Succeeded)
                     {
@@ -175,6 +176,8 @@ namespace MyJeepTrader.Web.Controllers
                         await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                         service.CreateMembership(user.Id);
+                        ppService.CreateCustomer(user.Email, user.Id);
+
                         UserManager.AddToRole(user.Id, "Basic");
 
                         return RedirectToAction("Index", "Home");

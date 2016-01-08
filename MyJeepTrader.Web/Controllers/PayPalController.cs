@@ -42,10 +42,17 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult Index()
         {
             PayPalIndexViewModel model = new PayPalIndexViewModel();
-
+            Service service = new Service();
+            var user = UserManager.FindByName(User.Identity.Name);
+            var customerId = service.GetCustomer(user.Id);
             var PayPalService = new PayPalService();
             var gateway = PayPalService.PayPalGateway();
-            var clientToken = gateway.ClientToken.generate();
+            var clientToken = gateway.ClientToken.generate(
+                new ClientTokenRequest
+                {
+                    CustomerId = customerId
+                }
+                );
             model.ClientToken = clientToken;
             TempData["ClientToken"] = clientToken;
             return View(model);
@@ -69,7 +76,8 @@ namespace MyJeepTrader.Web.Controllers
             var userInfo = service.GetProfileInfo(user.Id);
             var monthly = collection["Monthly"];
             var annual = collection["Annual"];
-            model.ClientToken = TempData["ClientToken"].ToString();
+            string nonce = collection["payment_method_nonce"];
+            //model.ClientToken = TempData["ClientToken"].ToString();
 
             // Use payment method nonce here
 
@@ -88,17 +96,20 @@ namespace MyJeepTrader.Web.Controllers
             //};
             //Result<Transaction> transResult = gateway.Transaction.Sale(transRequest);
 
+            //var request = new PaymentMethodRequest
+            //{
+            //    CustomerId = user.Id,
+            //    PaymentMethodNonce = "fake-valid-nonce"
+            //};
+
+            //Result<PaymentMethod> result = gateway.PaymentMethod.Create(request);
+
             if (monthly == "on")
             {
                 var subRequest = new SubscriptionRequest
                 {
-                    PaymentMethodToken = model.ClientToken,
-                    //PaymentMethodNonce = "fake-valid-visa-nonce",
-                    PlanId = ConstantStrings.monthlyPlanId,
-                    Descriptor = new DescriptorRequest
-                    {
-                        Name = userInfo.FirstName + " " + userInfo.LastName
-                    }
+                    PaymentMethodNonce = nonce,
+                    PlanId = ConstantStrings.monthlyPlanId
                 };
                 Result<Subscription> subResult = gateway.Subscription.Create(subRequest);
 

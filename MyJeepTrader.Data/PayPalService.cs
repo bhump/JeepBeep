@@ -38,5 +38,23 @@ namespace MyJeepTrader.Data
 
             return result.Message;
         }
+
+        public void CreateCustomer(string email, string userId)
+        {
+            var request = new CustomerRequest
+            {
+                Email = email
+            };
+            Result<Customer> result = PayPalGateway().Customer.Create(request);
+
+            bool success = result.IsSuccess();
+
+            if(success)
+            {
+                Service service = new Service();
+                service.CreateCustomer(result.Target.Id, userId);
+            }
+
+        }
     }
 }

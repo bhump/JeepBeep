@@ -165,6 +165,14 @@
     <Property Name="YearId" Type="int" />
     <Property Name="ModelId" Type="int" />
   </EntityType>
+  <EntityType Name="tPayPalCustomers">
+    <Key>
+      <PropertyRef Name="PayPalCustomerId" />
+    </Key>
+    <Property Name="PayPalCustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="varchar" MaxLength="50" />
+    <Property Name="Id" Type="nvarchar" MaxLength="128" />
+  </EntityType>
   <EntityType Name="tPosts">
     <Key>
       <PropertyRef Name="PostId" />
@@ -425,6 +433,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tPayPalCustomers_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="tPayPalCustomers" Type="Self.tPayPalCustomers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tPayPalCustomers">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tPosts_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
@@ -563,6 +583,7 @@
     <EntitySet Name="tModel" EntityType="Self.tModel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelPostControl" EntityType="Self.tModelPostControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tPayPalCustomers" EntityType="Self.tPayPalCustomers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tStates" EntityType="Self.tStates" Schema="dbo" store:Type="Tables" />
@@ -623,6 +644,10 @@
     <AssociationSet Name="FK_tModelYearControl_tYear" Association="Self.FK_tModelYearControl_tYear">
       <End Role="tYear" EntitySet="tYear" />
       <End Role="tModelYearControl" EntitySet="tModelYearControl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPayPalCustomers_AspNetUsers" Association="Self.FK_tPayPalCustomers_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="tPayPalCustomers" EntitySet="tPayPalCustomers" />
     </AssociationSet>
     <AssociationSet Name="FK_tPosts_AspNetUsers" Association="Self.FK_tPosts_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

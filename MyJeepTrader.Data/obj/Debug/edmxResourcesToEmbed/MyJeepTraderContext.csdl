@@ -114,6 +114,11 @@
       <End Role="tSubscription" EntitySet="tSubscriptions" />
       <End Role="tMembership" EntitySet="tMemberships" />
     </AssociationSet>
+    <EntitySet Name="tPayPalCustomers" EntityType="MyJeepTraderModel.tPayPalCustomer" />
+    <AssociationSet Name="FK_tPayPalCustomers_AspNetUsers" Association="MyJeepTraderModel.FK_tPayPalCustomers_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tPayPalCustomer" EntitySet="tPayPalCustomers" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -177,6 +182,7 @@
     <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="AspNetUser" ToRole="tVehicleProfileControl" />
     <NavigationProperty Name="AspNetRoles" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
     <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="AspNetUser" ToRole="tPost" />
+    <NavigationProperty Name="tPayPalCustomers" Relationship="MyJeepTraderModel.FK_tPayPalCustomers_AspNetUsers" FromRole="AspNetUser" ToRole="tPayPalCustomer" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -669,6 +675,27 @@
       </Principal>
       <Dependent Role="tMembership">
         <PropertyRef Name="SubscriptionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tPayPalCustomer">
+    <Key>
+      <PropertyRef Name="PayPalCustomerId" />
+    </Key>
+    <Property Name="PayPalCustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPayPalCustomers_AspNetUsers" FromRole="tPayPalCustomer" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_tPayPalCustomers_AspNetUsers">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPayPalCustomer" Role="tPayPalCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tPayPalCustomer">
+        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

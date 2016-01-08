@@ -284,5 +284,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tPayPalCustomers">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tPayPalCustomer">
+        <MappingFragment StoreEntitySet="tPayPalCustomers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="PayPalCustomerId" ColumnName="PayPalCustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -195,6 +195,31 @@ namespace MyJeepTrader.Data
                 context.SaveChanges();
             }
         }
+
+        public void CreateCustomer(string customerId, string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                tPayPalCustomer customer = new tPayPalCustomer
+                {
+                    CustomerId = customerId,
+                    Id = userId
+                };
+
+                context.tPayPalCustomers.Add(customer);
+                context.SaveChanges();
+            }
+        }
+
+        public string GetCustomer(string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var customerId = context.tPayPalCustomers.Where(c => c.Id == userId).Select(c => c.CustomerId).First();
+
+                return customerId;
+            }
+        }
         #endregion
 
         #region User Profile

@@ -50,5 +50,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tConnectedUser> tConnectedUsers { get; set; }
         public virtual DbSet<tState> tStates { get; set; }
         public virtual DbSet<tSubscription> tSubscriptions { get; set; }
+        public virtual DbSet<tPayPalCustomer> tPayPalCustomers { get; set; }
     }
 }
