@@ -77,33 +77,8 @@ namespace MyJeepTrader.Web.Controllers
             var monthly = collection["Monthly"];
             var annual = collection["Annual"];
             string nonce = collection["payment_method_nonce"];
-            //model.ClientToken = TempData["ClientToken"].ToString();
 
             // Use payment method nonce here
-
-            //commented out for testing.
-            //var transRequest = new TransactionRequest
-            //{
-            //    Amount = 5.99M,
-            //    PaymentMethodNonce = "fake-valid-nonce"
-            //    //CreditCard = new TransactionCreditCardRequest
-            //    //{
-            //    //    Number = collection["number"],
-            //    //    CVV = collection["cvv"],
-            //    //    ExpirationMonth = collection["month"],
-            //    //    ExpirationYear = collection["year"]
-            //    //}
-            //};
-            //Result<Transaction> transResult = gateway.Transaction.Sale(transRequest);
-
-            //var request = new PaymentMethodRequest
-            //{
-            //    CustomerId = user.Id,
-            //    PaymentMethodNonce = "fake-valid-nonce"
-            //};
-
-            //Result<PaymentMethod> result = gateway.PaymentMethod.Create(request);
-
             if (monthly == "on")
             {
                 var subRequest = new SubscriptionRequest
@@ -128,13 +103,8 @@ namespace MyJeepTrader.Web.Controllers
             {
                 var subRequest = new SubscriptionRequest
                 {
-                    //PaymentMethodToken = model.ClientToken,
-                    PaymentMethodNonce = "fake-valid-visa-nonce",
-                    PlanId = ConstantStrings.annualPlanId,
-                    Descriptor = new DescriptorRequest
-                    {
-                        Name = userInfo.FirstName + " " + userInfo.LastName
-                    }
+                    PaymentMethodNonce = nonce,
+                    PlanId = ConstantStrings.annualPlanId
                 };
 
                 Result<Subscription> subResult = gateway.Subscription.Create(subRequest);
