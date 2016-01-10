@@ -39,7 +39,7 @@ namespace MyJeepTrader.Data
             return result.Message;
         }
 
-        public void CreateCustomer(string email, string userId)
+        public void CreateCustomer(string email, string userId, string userName, DateTime startDate, DateTime expireDate)
         {
             var request = new CustomerRequest
             {
@@ -52,7 +52,11 @@ namespace MyJeepTrader.Data
             if(success)
             {
                 Service service = new Service();
-                service.CreateCustomer(result.Target.Id, userId);
+                service.UpdateMembership(result.Target.Id, userId);
+
+                var memberInfo = service.GetMembership(userName);
+
+                service.CreateSubscription(memberInfo.MembershipId, startDate, startDate.AddYears(100), ConstantStrings.freeSubscription);
             }
 
         }

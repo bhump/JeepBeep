@@ -73,9 +73,6 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\JeepProfiles.cs" />
     <Compile Include="Models\MailMessages.cs" />
     <Compile Include="Models\UserProfiles.cs" />
@@ -131,9 +128,6 @@
     <Compile Include="tModelYearControl.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="tPayPalCustomer.cs">
-      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="tPost.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
@@ -147,6 +141,9 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tSubscription.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tSubscriptionType.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tUserProfile.cs">

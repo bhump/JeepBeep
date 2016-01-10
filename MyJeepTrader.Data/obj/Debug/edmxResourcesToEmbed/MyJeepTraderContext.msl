@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MyJeepTraderModelStoreContainer" CdmEntityContainer="dboMyJeepTraderEntities">
-    <EntitySetMapping Name="C__MigrationHistory">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.C__MigrationHistory">
-        <MappingFragment StoreEntitySet="__MigrationHistory">
-          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-          <ScalarProperty Name="Model" ColumnName="Model" />
-          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="AspNetRoles">
       <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetRole">
         <MappingFragment StoreEntitySet="AspNetRoles">
@@ -67,6 +57,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tConnectedUsers">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tConnectedUser">
+        <MappingFragment StoreEntitySet="tConnectedUsers">
+          <ScalarProperty Name="ConnectionUserName" ColumnName="ConnectionUserName" />
+          <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
+          <ScalarProperty Name="ChatConnectionId" ColumnName="ChatConnectionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tImages">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tImage">
         <MappingFragment StoreEntitySet="tImages">
@@ -79,8 +78,8 @@
     <EntitySetMapping Name="tLocations">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tLocation">
         <MappingFragment StoreEntitySet="tLocations">
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
           <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
           <ScalarProperty Name="Zip" ColumnName="Zip" />
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="Line2" ColumnName="Line2" />
@@ -100,14 +99,35 @@
     <EntitySetMapping Name="tMemberships">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tMembership">
         <MappingFragment StoreEntitySet="tMemberships">
-          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Renewed" ColumnName="Renewed" />
-          <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
-          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-          <ScalarProperty Name="Expired" ColumnName="Expired" />
+          <ScalarProperty Name="PayPalCustomerId" ColumnName="PayPalCustomerId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="MemberSince" ColumnName="MemberSince" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tMessageControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessageControl">
+        <MappingFragment StoreEntitySet="tMessageControl">
+          <ScalarProperty Name="RemoveSent" ColumnName="RemoveSent" />
+          <ScalarProperty Name="RemoveInbox" ColumnName="RemoveInbox" />
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+          <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+          <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
+          <ScalarProperty Name="MessageControlId" ColumnName="MessageControlId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tMessages">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessage">
+        <MappingFragment StoreEntitySet="tMessages">
+          <ScalarProperty Name="IsIM" ColumnName="IsIM" />
+          <ScalarProperty Name="DateRead" ColumnName="DateRead" />
+          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -117,6 +137,15 @@
           <ScalarProperty Name="MakeId" ColumnName="MakeId" />
           <ScalarProperty Name="Model" ColumnName="Model" />
           <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tModelPostControls">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelPostControl">
+        <MappingFragment StoreEntitySet="tModelPostControl">
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+          <ScalarProperty Name="ModelPostControlId" ColumnName="ModelPostControlId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -132,20 +161,20 @@
     <EntitySetMapping Name="tPosts">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
         <MappingFragment StoreEntitySet="tPosts">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
           <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="YearId" ColumnName="YearId" />
           <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
           <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+          <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
           <ScalarProperty Name="PartName" ColumnName="PartName" />
           <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
           <ScalarProperty Name="PartType" ColumnName="PartType" />
           <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
           <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PostId" ColumnName="PostId" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -158,12 +187,43 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tStates">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tState">
+        <MappingFragment StoreEntitySet="tStates">
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tSubModels">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tSubModel">
         <MappingFragment StoreEntitySet="tSubModel">
           <ScalarProperty Name="ModelId" ColumnName="ModelId" />
           <ScalarProperty Name="SubModel" ColumnName="SubModel" />
           <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tSubscriptions">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
+        <MappingFragment StoreEntitySet="tSubscriptions">
+          <ScalarProperty Name="Expired" ColumnName="Expired" />
+          <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
+          <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+          <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
+          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tSubscriptionTypes">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscriptionType">
+        <MappingFragment StoreEntitySet="tSubscriptionTypes">
+          <ScalarProperty Name="SubscriptionType" ColumnName="SubscriptionType" />
+          <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -225,73 +285,5 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="tMessageControls">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessageControl">
-        <MappingFragment StoreEntitySet="tMessageControl">
-          <ScalarProperty Name="RemoveSent" ColumnName="RemoveSent" />
-          <ScalarProperty Name="RemoveInbox" ColumnName="RemoveInbox" />
-          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
-          <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
-          <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
-          <ScalarProperty Name="MessageControlId" ColumnName="MessageControlId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tMessages">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tMessage">
-        <MappingFragment StoreEntitySet="tMessages">
-          <ScalarProperty Name="IsIM" ColumnName="IsIM" />
-          <ScalarProperty Name="DateRead" ColumnName="DateRead" />
-          <ScalarProperty Name="DateSent" ColumnName="DateSent" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-          <ScalarProperty Name="Subject" ColumnName="Subject" />
-          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tModelPostControls">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tModelPostControl">
-        <MappingFragment StoreEntitySet="tModelPostControl">
-          <ScalarProperty Name="PostId" ColumnName="PostId" />
-          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
-          <ScalarProperty Name="ModelPostControlId" ColumnName="ModelPostControlId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tConnectedUsers">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tConnectedUser">
-        <MappingFragment StoreEntitySet="tConnectedUsers">
-          <ScalarProperty Name="ConnectionUserName" ColumnName="ConnectionUserName" />
-          <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
-          <ScalarProperty Name="ChatConnectionId" ColumnName="ChatConnectionId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tStates">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tState">
-        <MappingFragment StoreEntitySet="tStates">
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tSubscriptions">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
-        <MappingFragment StoreEntitySet="tSubscription">
-          <ScalarProperty Name="Subscription" ColumnName="Subscription" />
-          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tPayPalCustomers">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tPayPalCustomer">
-        <MappingFragment StoreEntitySet="tPayPalCustomers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="PayPalCustomerId" ColumnName="PayPalCustomerId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

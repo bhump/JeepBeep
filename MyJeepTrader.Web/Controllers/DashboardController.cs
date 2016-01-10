@@ -66,8 +66,8 @@ namespace MyJeepTrader.Web.Controllers
             var profileInfo = service.GetProfileInfo(user.Id);
             var jeepInfo = service.GetPrimaryJeepInfo(user.UserName);
             var memberInfo = service.GetMembership(user.UserName);
-            //TODO: Update Get Subscription
-            //var subscription = service.GetSubscription(memberInfo.SubscriptionId);
+            var subscriptionInfo = service.GetSubscription(memberInfo.MembershipId);
+            var subscriptionType = service.GetSubscriptionType(subscriptionInfo.SubscriptionId);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 
@@ -83,9 +83,9 @@ namespace MyJeepTrader.Web.Controllers
             model.Website = profileInfo == null ? "" : profileInfo.Website;
             model.Ello = profileInfo == null ? "" : profileInfo.Ello;
             model.Avatar = profileInfo == null ? null : profileInfo.Avatar;
-            //model.tSubscription = subscription;
-            //model.ExpirationDate = subscription.ExpireDate;
-            model.MemberSince = memberInfo.MemberSince;
+            model.SubscriptionType = subscriptionType == null ? null : subscriptionType;
+            model.ExpirationDate = subscriptionInfo == null ? null : subscriptionInfo.ExpireDate;
+            model.MemberSince = memberInfo == null ? null : memberInfo.MemberSince;
 
             if (jeepInfo != null)
             {
@@ -104,7 +104,7 @@ namespace MyJeepTrader.Web.Controllers
 
             model.SentMessages = service.GetSentMessages(user.Id);
             model.Inbox = service.GetInboxMessages(user.Id);
-            
+
             return View(model);
         }
 
@@ -191,24 +191,26 @@ namespace MyJeepTrader.Web.Controllers
                     imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
                 }
 
-                var firstName = collection["FirstName"].ToString();
-                var lastName = collection["LastName"].ToString();
-                var birthDate = Convert.ToDateTime(collection["BirthDate"].ToString());
-                var avatar = imageData;
-                var description = collection["Description"].ToString();
-                var facebook = collection["Facebook"].ToString();
-                var twitter = collection["Twitter"].ToString();
-                var ello = collection["Ello"].ToString();
-                var googlePlus = collection["GooglePlus"].ToString();
-                var website = collection["Website"].ToString();
+                var firstName = collection["FirstName"] == "" ? null : collection["FirstName"].ToString();
+                var lastName = collection["LastName"] == "" ? null : collection["LastName"].ToString();
+                var birthDate = collection["BirthDate"] == " " ? null : collection["BirthDate"].ToString();
+                var avatar = imageData == null ? null : imageData;
+                var description = collection["Description"] == "" ? null : collection["Description"].ToString();
+                var facebook = collection["Facebook"] == "" ? null : collection["Facebook"].ToString();
+                var twitter = collection["Twitter"] == "" ? null : collection["Twitter"].ToString();
+                var ello = collection["Ello"] == "" ? null : collection["Ello"].ToString();
+                var googlePlus = collection["GooglePlus"] == "" ? null : collection["GooglePlus"].ToString();
+                var website = collection["Website"] == "" ? null : collection["Website"].ToString();
+
+                var convertBirthDate = birthDate == null ? DateTime.MinValue : Convert.ToDateTime(birthDate);
 
                 if (service.CheckForProfile(user.Id) == false)
                 {
-                    service.CreateProfile(user.Id, firstName, lastName, birthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
+                    service.CreateProfile(user.Id, firstName, lastName, convertBirthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
                 }
                 else
                 {
-                    service.UpdateProfile(user.Id, firstName, lastName, birthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
+                    service.UpdateProfile(user.Id, firstName, lastName, convertBirthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
                 }
 
                 return RedirectToAction("Index");
@@ -241,21 +243,23 @@ namespace MyJeepTrader.Web.Controllers
                     imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
                 }
 
-                var manufactuer = collection["Manufactuer"].ToString();
-                var make = collection["Make"].ToString();
-                var model = collection["Model"].ToString();
-                var year = Convert.ToInt16(collection["Year"].ToString());
-                var jeepImage = imageData;
+                var manufactuer = collection["Manufactuer"] == "" ? null : collection["Manufactuer"].ToString();
+                var make = collection["Make"] == "" ? null : collection["Make"].ToString();
+                var model = collection["Model"] == "" ? null : collection["Model"].ToString();
+                var year = collection["Year"] == " " ? null : collection["Year"];
+                var jeepImage = imageData.Length == 0  ? null : imageData;
                 var jeepDescription = collection["JeepDescription"].ToString();
                 //bool primaryJeep = Convert.ToBoolean(collection["PrimaryJeep"].Split(',')[0]);
 
+                var convertYear = year == null ? Convert.ToInt16(0) : Convert.ToInt16(year);
+
                 if (service.CheckForPrimaryJeep(user.Id) == false)
                 {
-                    service.CreateJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, true);
+                    service.CreateJeepProfile(user.Id, manufactuer, make, model, convertYear, jeepImage, jeepDescription, true);
                 }
                 else
                 {
-                    service.UpdatePrimaryJeepProfile(user.Id, manufactuer, make, model, year, jeepImage, jeepDescription, true);
+                    service.UpdatePrimaryJeepProfile(user.Id, manufactuer, make, model, convertYear, jeepImage, jeepDescription, true);
                 }
 
                 return RedirectToAction("Index");

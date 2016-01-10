@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MyJeepTraderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="__MigrationHistory">
-    <Key>
-      <PropertyRef Name="MigrationId" />
-      <PropertyRef Name="ContextKey" />
-    </Key>
-    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-  </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
@@ -111,13 +101,10 @@
       <PropertyRef Name="MembershipId" />
     </Key>
     <Property Name="MembershipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SubscriptionId" Type="int" />
-    <Property Name="MemberSince" Type="date" />
-    <Property Name="Expired" Type="bit" />
-    <Property Name="ExpirationDate" Type="date" />
-    <Property Name="AutoRenew" Type="bit" />
-    <Property Name="Renewed" Type="bit" />
     <Property Name="Id" Type="nvarchar" MaxLength="128" />
+    <Property Name="MemberSince" Type="date" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="PayPalCustomerId" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="tMessageControl">
     <Key>
@@ -165,14 +152,6 @@
     <Property Name="YearId" Type="int" />
     <Property Name="ModelId" Type="int" />
   </EntityType>
-  <EntityType Name="tPayPalCustomers">
-    <Key>
-      <PropertyRef Name="PayPalCustomerId" />
-    </Key>
-    <Property Name="PayPalCustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CustomerId" Type="varchar" MaxLength="50" />
-    <Property Name="Id" Type="nvarchar" MaxLength="128" />
-  </EntityType>
   <EntityType Name="tPosts">
     <Key>
       <PropertyRef Name="PostId" />
@@ -216,12 +195,25 @@
     <Property Name="SubModel" Type="varchar" MaxLength="50" />
     <Property Name="ModelId" Type="int" />
   </EntityType>
-  <EntityType Name="tSubscription">
+  <EntityType Name="tSubscriptions">
     <Key>
       <PropertyRef Name="SubscriptionId" />
     </Key>
     <Property Name="SubscriptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Subscription" Type="varchar" MaxLength="50" />
+    <Property Name="SubscriptionTypeId" Type="int" />
+    <Property Name="MembershipId" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="ExpireDate" Type="datetime" />
+    <Property Name="AutoRenew" Type="bit" />
+    <Property Name="Expired" Type="bit" />
+  </EntityType>
+  <EntityType Name="tSubscriptionTypes">
+    <Key>
+      <PropertyRef Name="SubscriptionTypeId" />
+    </Key>
+    <Property Name="SubscriptionTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubscriptionType" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tUserProfiles">
     <Key>
@@ -349,18 +341,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tMemberships_tSubscription">
-    <End Role="tSubscription" Type="Self.tSubscription" Multiplicity="0..1" />
-    <End Role="tMemberships" Type="Self.tMemberships" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tSubscription">
-        <PropertyRef Name="SubscriptionId" />
-      </Principal>
-      <Dependent Role="tMemberships">
-        <PropertyRef Name="SubscriptionId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tMessageControl_tMessages">
     <End Role="tMessages" Type="Self.tMessages" Multiplicity="0..1" />
     <End Role="tMessageControl" Type="Self.tMessageControl" Multiplicity="*" />
@@ -430,18 +410,6 @@
       </Principal>
       <Dependent Role="tModelYearControl">
         <PropertyRef Name="YearId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tPayPalCustomers_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-    <End Role="tPayPalCustomers" Type="Self.tPayPalCustomers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tPayPalCustomers">
-        <PropertyRef Name="Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -529,6 +497,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tSubscriptions_tMemberships">
+    <End Role="tMemberships" Type="Self.tMemberships" Multiplicity="0..1" />
+    <End Role="tSubscriptions" Type="Self.tSubscriptions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tMemberships">
+        <PropertyRef Name="MembershipId" />
+      </Principal>
+      <Dependent Role="tSubscriptions">
+        <PropertyRef Name="MembershipId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tSubscriptions_tSubscriptionTypes">
+    <End Role="tSubscriptionTypes" Type="Self.tSubscriptionTypes" Multiplicity="0..1" />
+    <End Role="tSubscriptions" Type="Self.tSubscriptions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tSubscriptionTypes">
+        <PropertyRef Name="SubscriptionTypeId" />
+      </Principal>
+      <Dependent Role="tSubscriptions">
+        <PropertyRef Name="SubscriptionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tUserProfiles_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="tUserProfiles" Type="Self.tUserProfiles" Multiplicity="*" />
@@ -566,7 +558,6 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="MyJeepTraderModelStoreContainer">
-    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -583,12 +574,12 @@
     <EntitySet Name="tModel" EntityType="Self.tModel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelPostControl" EntityType="Self.tModelPostControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tPayPalCustomers" EntityType="Self.tPayPalCustomers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tStates" EntityType="Self.tStates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="tSubscription" EntityType="Self.tSubscription" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tSubscriptions" EntityType="Self.tSubscriptions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tSubscriptionTypes" EntityType="Self.tSubscriptionTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfiles" Schema="dbo" store:Type="Tables" />
@@ -617,10 +608,6 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="tMemberships" EntitySet="tMemberships" />
     </AssociationSet>
-    <AssociationSet Name="FK_tMemberships_tSubscription" Association="Self.FK_tMemberships_tSubscription">
-      <End Role="tSubscription" EntitySet="tSubscription" />
-      <End Role="tMemberships" EntitySet="tMemberships" />
-    </AssociationSet>
     <AssociationSet Name="FK_tMessageControl_tMessages" Association="Self.FK_tMessageControl_tMessages">
       <End Role="tMessages" EntitySet="tMessages" />
       <End Role="tMessageControl" EntitySet="tMessageControl" />
@@ -644,10 +631,6 @@
     <AssociationSet Name="FK_tModelYearControl_tYear" Association="Self.FK_tModelYearControl_tYear">
       <End Role="tYear" EntitySet="tYear" />
       <End Role="tModelYearControl" EntitySet="tModelYearControl" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPayPalCustomers_AspNetUsers" Association="Self.FK_tPayPalCustomers_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="tPayPalCustomers" EntitySet="tPayPalCustomers" />
     </AssociationSet>
     <AssociationSet Name="FK_tPosts_AspNetUsers" Association="Self.FK_tPosts_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -676,6 +659,14 @@
     <AssociationSet Name="FK_tSubModel_tModel" Association="Self.FK_tSubModel_tModel">
       <End Role="tModel" EntitySet="tModel" />
       <End Role="tSubModel" EntitySet="tSubModel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tSubscriptions_tMemberships" Association="Self.FK_tSubscriptions_tMemberships">
+      <End Role="tMemberships" EntitySet="tMemberships" />
+      <End Role="tSubscriptions" EntitySet="tSubscriptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tSubscriptions_tSubscriptionTypes" Association="Self.FK_tSubscriptions_tSubscriptionTypes">
+      <End Role="tSubscriptionTypes" EntitySet="tSubscriptionTypes" />
+      <End Role="tSubscriptions" EntitySet="tSubscriptions" />
     </AssociationSet>
     <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="Self.FK_tUserProfiles_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

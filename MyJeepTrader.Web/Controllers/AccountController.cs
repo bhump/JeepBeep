@@ -161,6 +161,7 @@ namespace MyJeepTrader.Web.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     var roleStore = new RoleStore<IdentityRole>(context);
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    var startDate = DateTime.Now;
 
                     Service service = new Service();
                     PayPalService ppService = new PayPalService();
@@ -176,8 +177,9 @@ namespace MyJeepTrader.Web.Controllers
                         await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                         service.CreateMembership(user.Id);
-                        ppService.CreateCustomer(user.Email, user.Id);
-
+                        //this creates the paypal customer-then on success creates the membership and the free subscription.
+                        ppService.CreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
+                        
                         UserManager.AddToRole(user.Id, "Basic");
 
                         return RedirectToAction("Index", "Home");

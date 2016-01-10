@@ -74,8 +74,11 @@ namespace MyJeepTrader.Web.Controllers
             var gateway = PayPalService.PayPalGateway();
             var user = UserManager.FindByName(User.Identity.Name);
             var userInfo = service.GetProfileInfo(user.Id);
+            var memberInfo = service.GetMembership(user.UserName);
             var radioButton = collection["radioButton"];
             string nonce = collection["payment_method_nonce"];
+            DateTime startDate = DateTime.Now;
+            DateTime expireDate = DateTime.Now;
 
             // Use payment method nonce here
             if (radioButton == "Monthly")
@@ -91,8 +94,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
-                    //TODO: Create subscription instead of update.
-                    //service.UpdateMembership(User.Identity.Name, ConstantStrings.monthlySubscription, DateTime.Now);
+                    service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.monthlySubscription);
                 }
                 else
                 {
@@ -113,8 +115,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
-                    //TODO: Create subscription instead of update.
-                    //service.UpdateMembership(User.Identity.Name, ConstantStrings.annualSubscription, DateTime.Now);
+                    service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.annualSubscription);
                 }
                 else
                 {

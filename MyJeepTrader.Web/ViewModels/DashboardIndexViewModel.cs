@@ -44,7 +44,7 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Birth date")]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime? BirthDate { get; set; }
+        public Nullable<DateTime> BirthDate { get; set; }
 
         [Display(Name = "Avatar")]
         public byte[] Avatar { get; set; }
@@ -156,6 +156,8 @@ namespace MyJeepTrader.Web.ViewModels
         public AspNetUser AspNetUser { get; set; }
         
         public tSubscription tSubscription { get; set; }
+
+        public string SubscriptionType { get; set; }
         #endregion
     }
 }
