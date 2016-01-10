@@ -16,33 +16,33 @@ namespace MyJeepTrader.Data
     {
         public tPost()
         {
-            this.tModelPostControls = new HashSet<tModelPostControl>();
             this.tImages = new HashSet<tImage>();
+            this.tModelPostControls = new HashSet<tModelPostControl>();
         }
     
         public int PostId { get; set; }
+        public string Id { get; set; }
         public string PostTitle { get; set; }
         public string PostDescription { get; set; }
         public string PartType { get; set; }
         public string PartBrand { get; set; }
         public string PartName { get; set; }
+        public Nullable<bool> IsVehicle { get; set; }
         public Nullable<int> MakeId { get; set; }
         public Nullable<int> SubModelId { get; set; }
         public Nullable<int> YearId { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<int> LocationId { get; set; }
         public Nullable<int> PostTypeId { get; set; }
-        public Nullable<bool> IsVehicle { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
-        public string Id { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ICollection<tImage> tImages { get; set; }
         public virtual tLocation tLocation { get; set; }
         public virtual tMake tMake { get; set; }
+        public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
         public virtual tPostType tPostType { get; set; }
         public virtual tSubModel tSubModel { get; set; }
         public virtual tYear tYear { get; set; }
-        public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual ICollection<tImage> tImages { get; set; }
     }
 }

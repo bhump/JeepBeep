@@ -172,41 +172,48 @@ namespace MyJeepTrader.Data
                     {
                         Id = userId,
                         MemberSince = DateTime.Now.Date,
-                        AutoRenew = true,
-                        Renewed = false,
-                        Expired = false,
-                        ExpirationDate = DateTime.Now.Date,
-                        SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == ConstantStrings.freeSubscription).Select(s => s.SubscriptionId).FirstOrDefault()
+                        //SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == ConstantStrings.freeSubscription).Select(s => s.SubscriptionId).FirstOrDefault()
                     };
                 context.tMemberships.Add(membership);
                 context.SaveChanges();
             }
         }
 
-        public void UpdateMembership(string userName, string subscription, DateTime expirationDate)
+        public void CreateSubscription(string userId, DateTime expireDate)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var updateMembership = context.tMemberships.Where(m => m.AspNetUser.UserName == userName).First();
-                updateMembership.ExpirationDate = expirationDate;
-                updateMembership.Renewed = true;
-                updateMembership.SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == subscription).Select(s => s.SubscriptionId).FirstOrDefault();
-                context.tMemberships.Add(updateMembership);
-                context.SaveChanges();
+                tSubscription subscription = new tSubscription
+                {
+                    Active = true,
+                    AutoRenew = true,
+                    Expired = false,
+                    ExpireDate = expireDate,
+                    StartDate = DateTime.Now,
+                    SubscriptionTypeId = context.tSubscriptionTypes.Where(s => s.SubscriptionType == ConstantStrings.freeSubscription).Select(s => s.SubscriptionTypeId).FirstOrDefault()
+                };
             }
         }
+
+        //public void UpdateMembership(string userName, string subscription, DateTime expirationDate)
+        //{
+        //    using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+        //    {
+        //        var updateMembership = context.tMemberships.Where(m => m.AspNetUser.UserName == userName).First();
+        //        updateMembership.SubscriptionId = context.tSubscriptions.Where(s => s.Subscription == subscription).Select(s => s.SubscriptionId).FirstOrDefault();
+        //        context.tMemberships.Add(updateMembership);
+        //        context.SaveChanges();
+        //    }
+        //}
 
         public void CreateCustomer(string customerId, string userId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                tPayPalCustomer customer = new tPayPalCustomer
-                {
-                    CustomerId = customerId,
-                    Id = userId
-                };
+                var updateMembership = context.tMemberships.Where(m => m.Id == userId).FirstOrDefault();
+                updateMembership.PayPalCustomerId = customerId;
 
-                context.tPayPalCustomers.Add(customer);
+                context.tMemberships.Add(updateMembership);
                 context.SaveChanges();
             }
         }
@@ -215,7 +222,7 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var customerId = context.tPayPalCustomers.Where(c => c.Id == userId).Select(c => c.CustomerId).First();
+                var customerId = context.tMemberships.Where(c => c.Id == userId).Select(c => c.PayPalCustomerId).First();
 
                 return customerId;
             }

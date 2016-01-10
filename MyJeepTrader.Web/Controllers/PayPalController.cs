@@ -74,12 +74,11 @@ namespace MyJeepTrader.Web.Controllers
             var gateway = PayPalService.PayPalGateway();
             var user = UserManager.FindByName(User.Identity.Name);
             var userInfo = service.GetProfileInfo(user.Id);
-            var monthly = collection["Monthly"];
-            var annual = collection["Annual"];
+            var radioButton = collection["radioButton"];
             string nonce = collection["payment_method_nonce"];
 
             // Use payment method nonce here
-            if (monthly == "on")
+            if (radioButton == "Monthly")
             {
                 var subRequest = new SubscriptionRequest
                 {
@@ -92,14 +91,15 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
-                    service.UpdateMembership(User.Identity.Name, ConstantStrings.monthlySubscription, DateTime.Now);
+                    //TODO: Create subscription instead of update.
+                    //service.UpdateMembership(User.Identity.Name, ConstantStrings.monthlySubscription, DateTime.Now);
                 }
                 else
                 {
                     ViewData["Message"] = subResult.Message;
                 }
             }
-            else if (annual == "on")
+            else if (radioButton == "Annually")
             {
                 var subRequest = new SubscriptionRequest
                 {
@@ -113,7 +113,8 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
-                    service.UpdateMembership(User.Identity.Name, ConstantStrings.annualSubscription, DateTime.Now);
+                    //TODO: Create subscription instead of update.
+                    //service.UpdateMembership(User.Identity.Name, ConstantStrings.annualSubscription, DateTime.Now);
                 }
                 else
                 {

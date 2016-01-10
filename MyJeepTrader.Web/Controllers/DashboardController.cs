@@ -66,7 +66,8 @@ namespace MyJeepTrader.Web.Controllers
             var profileInfo = service.GetProfileInfo(user.Id);
             var jeepInfo = service.GetPrimaryJeepInfo(user.UserName);
             var memberInfo = service.GetMembership(user.UserName);
-            var subscription = service.GetSubscription(memberInfo.SubscriptionId);
+            //TODO: Update Get Subscription
+            //var subscription = service.GetSubscription(memberInfo.SubscriptionId);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 
@@ -82,8 +83,8 @@ namespace MyJeepTrader.Web.Controllers
             model.Website = profileInfo == null ? "" : profileInfo.Website;
             model.Ello = profileInfo == null ? "" : profileInfo.Ello;
             model.Avatar = profileInfo == null ? null : profileInfo.Avatar;
-            model.tSubscription = subscription;
-            model.ExpirationDate = memberInfo.ExpirationDate;
+            //model.tSubscription = subscription;
+            //model.ExpirationDate = subscription.ExpireDate;
             model.MemberSince = memberInfo.MemberSince;
 
             if (jeepInfo != null)

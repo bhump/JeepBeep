@@ -12,11 +12,16 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class C__MigrationHistory
+    public partial class tSubscriptionType
     {
-        public string MigrationId { get; set; }
-        public string ContextKey { get; set; }
-        public byte[] Model { get; set; }
-        public string ProductVersion { get; set; }
+        public tSubscriptionType()
+        {
+            this.tSubscriptions = new HashSet<tSubscription>();
+        }
+    
+        public int SubscriptionTypeId { get; set; }
+        public string SubscriptionType { get; set; }
+    
+        public virtual ICollection<tSubscription> tSubscriptions { get; set; }
     }
 }

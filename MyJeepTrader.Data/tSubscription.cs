@@ -14,14 +14,16 @@ namespace MyJeepTrader.Data
     
     public partial class tSubscription
     {
-        public tSubscription()
-        {
-            this.tMemberships = new HashSet<tMembership>();
-        }
-    
         public int SubscriptionId { get; set; }
-        public string Subscription { get; set; }
+        public Nullable<int> SubscriptionTypeId { get; set; }
+        public Nullable<int> MembershipId { get; set; }
+        public Nullable<bool> Active { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> ExpireDate { get; set; }
+        public Nullable<bool> AutoRenew { get; set; }
+        public Nullable<bool> Expired { get; set; }
     
-        public virtual ICollection<tMembership> tMemberships { get; set; }
+        public virtual tMembership tMembership { get; set; }
+        public virtual tSubscriptionType tSubscriptionType { get; set; }
     }
 }

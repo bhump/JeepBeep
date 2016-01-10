@@ -16,9 +16,9 @@ namespace MyJeepTrader.Data
     {
         public tModel()
         {
+            this.tModelPostControls = new HashSet<tModelPostControl>();
             this.tModelYearControls = new HashSet<tModelYearControl>();
             this.tSubModels = new HashSet<tSubModel>();
-            this.tModelPostControls = new HashSet<tModelPostControl>();
         }
     
         public int ModelId { get; set; }
@@ -26,8 +26,8 @@ namespace MyJeepTrader.Data
         public Nullable<int> MakeId { get; set; }
     
         public virtual tMake tMake { get; set; }
+        public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
         public virtual ICollection<tModelYearControl> tModelYearControls { get; set; }
         public virtual ICollection<tSubModel> tSubModels { get; set; }
-        public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
     }
 }
