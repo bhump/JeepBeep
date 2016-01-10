@@ -164,11 +164,11 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public string GetSubscriptionType(int subscriptionId)
+        public string GetSubscriptionType(int subscriptionTypeId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var subType = context.tSubscriptionTypes.Where(t => t.SubscriptionTypeId == subscriptionId).First();
+                var subType = context.tSubscriptionTypes.Where(t => t.SubscriptionTypeId == subscriptionTypeId).First();
 
                 return subType.SubscriptionType;
             }
@@ -204,6 +204,16 @@ namespace MyJeepTrader.Data
                 };
 
                 context.tSubscriptions.Add(subscription);
+                context.SaveChanges();
+            }
+        }
+
+        public void InactivateSubscription(int subscriptionId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var inactive = context.tSubscriptions.Where(s => s.SubscriptionId == subscriptionId).FirstOrDefault();
+                inactive.Active = false;
                 context.SaveChanges();
             }
         }

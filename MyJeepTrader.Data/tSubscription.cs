@@ -15,7 +15,7 @@ namespace MyJeepTrader.Data
     public partial class tSubscription
     {
         public int SubscriptionId { get; set; }
-        public Nullable<int> SubscriptionTypeId { get; set; }
+        public int SubscriptionTypeId { get; set; }
         public Nullable<int> MembershipId { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }

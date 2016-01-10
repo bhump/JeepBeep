@@ -200,7 +200,7 @@
       <PropertyRef Name="SubscriptionId" />
     </Key>
     <Property Name="SubscriptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SubscriptionTypeId" Type="int" />
+    <Property Name="SubscriptionTypeId" Type="int" Nullable="false" />
     <Property Name="MembershipId" Type="int" />
     <Property Name="Active" Type="bit" />
     <Property Name="StartDate" Type="datetime" />
@@ -510,7 +510,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tSubscriptions_tSubscriptionTypes">
-    <End Role="tSubscriptionTypes" Type="Self.tSubscriptionTypes" Multiplicity="0..1" />
+    <End Role="tSubscriptionTypes" Type="Self.tSubscriptionTypes" Multiplicity="1" />
     <End Role="tSubscriptions" Type="Self.tSubscriptions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tSubscriptionTypes">

@@ -205,7 +205,7 @@
             <PropertyRef Name="SubscriptionId" />
           </Key>
           <Property Name="SubscriptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SubscriptionTypeId" Type="int" />
+          <Property Name="SubscriptionTypeId" Type="int" Nullable="false" />
           <Property Name="MembershipId" Type="int" />
           <Property Name="Active" Type="bit" />
           <Property Name="StartDate" Type="datetime" />
@@ -515,7 +515,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tSubscriptions_tSubscriptionTypes">
-          <End Role="tSubscriptionTypes" Type="Self.tSubscriptionTypes" Multiplicity="0..1" />
+          <End Role="tSubscriptionTypes" Type="Self.tSubscriptionTypes" Multiplicity="1" />
           <End Role="tSubscriptions" Type="Self.tSubscriptions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tSubscriptionTypes">
@@ -710,7 +710,6 @@
           <EntitySet Name="tPostTypes" EntityType="MyJeepTraderModel.tPostType" />
           <EntitySet Name="tStates" EntityType="MyJeepTraderModel.tState" />
           <EntitySet Name="tSubModels" EntityType="MyJeepTraderModel.tSubModel" />
-          <EntitySet Name="tSubscriptions" EntityType="MyJeepTraderModel.tSubscription" />
           <EntitySet Name="tSubscriptionTypes" EntityType="MyJeepTraderModel.tSubscriptionType" />
           <EntitySet Name="tUserProfiles" EntityType="MyJeepTraderModel.tUserProfile" />
           <EntitySet Name="tVehicleProfileControls" EntityType="MyJeepTraderModel.tVehicleProfileControl" />
@@ -756,10 +755,6 @@
             <End Role="tMake" EntitySet="tMakes" />
             <End Role="tPost" EntitySet="tPosts" />
           </AssociationSet>
-          <AssociationSet Name="FK_tSubscriptions_tMemberships" Association="MyJeepTraderModel.FK_tSubscriptions_tMemberships">
-            <End Role="tMembership" EntitySet="tMemberships" />
-            <End Role="tSubscription" EntitySet="tSubscriptions" />
-          </AssociationSet>
           <AssociationSet Name="FK_tMessageControl_tMessages" Association="MyJeepTraderModel.FK_tMessageControl_tMessages">
             <End Role="tMessage" EntitySet="tMessages" />
             <End Role="tMessageControl" EntitySet="tMessageControls" />
@@ -796,10 +791,6 @@
             <End Role="tYear" EntitySet="tYears" />
             <End Role="tPost" EntitySet="tPosts" />
           </AssociationSet>
-          <AssociationSet Name="FK_tSubscriptions_tSubscriptionTypes" Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes">
-            <End Role="tSubscriptionType" EntitySet="tSubscriptionTypes" />
-            <End Role="tSubscription" EntitySet="tSubscriptions" />
-          </AssociationSet>
           <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles">
             <End Role="tVehicleProfile" EntitySet="tVehicleProfiles" />
             <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
@@ -807,6 +798,15 @@
           <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="tSubscriptions" EntityType="MyJeepTraderModel.tSubscription" />
+          <AssociationSet Name="FK_tSubscriptions_tMemberships" Association="MyJeepTraderModel.FK_tSubscriptions_tMemberships">
+            <End Role="tMembership" EntitySet="tMemberships" />
+            <End Role="tSubscription" EntitySet="tSubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tSubscriptions_tSubscriptionTypes" Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes">
+            <End Role="tSubscriptionType" EntitySet="tSubscriptionTypes" />
+            <End Role="tSubscription" EntitySet="tSubscriptions" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1033,21 +1033,6 @@
           <NavigationProperty Name="tModel" Relationship="MyJeepTraderModel.FK_tSubModel_tModel" FromRole="tSubModel" ToRole="tModel" />
           <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tSubModel" ToRole="tPost" />
         </EntityType>
-        <EntityType Name="tSubscription">
-          <Key>
-            <PropertyRef Name="SubscriptionId" />
-          </Key>
-          <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubscriptionTypeId" Type="Int32" />
-          <Property Name="MembershipId" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
-          <Property Name="AutoRenew" Type="Boolean" />
-          <Property Name="Expired" Type="Boolean" />
-          <NavigationProperty Name="tMembership" Relationship="MyJeepTraderModel.FK_tSubscriptions_tMemberships" FromRole="tSubscription" ToRole="tMembership" />
-          <NavigationProperty Name="tSubscriptionType" Relationship="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" FromRole="tSubscription" ToRole="tSubscriptionType" />
-        </EntityType>
         <EntityType Name="tSubscriptionType">
           <Key>
             <PropertyRef Name="SubscriptionTypeId" />
@@ -1232,18 +1217,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tSubscriptions_tMemberships">
-          <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tMembership">
-              <PropertyRef Name="MembershipId" />
-            </Principal>
-            <Dependent Role="tSubscription">
-              <PropertyRef Name="MembershipId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tMessageControl_tMessages">
           <End Type="MyJeepTraderModel.tMessage" Role="tMessage" Multiplicity="0..1" />
           <End Type="MyJeepTraderModel.tMessageControl" Role="tMessageControl" Multiplicity="*" />
@@ -1352,18 +1325,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tSubscriptions_tSubscriptionTypes">
-          <End Type="MyJeepTraderModel.tSubscriptionType" Role="tSubscriptionType" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tSubscriptionType">
-              <PropertyRef Name="SubscriptionTypeId" />
-            </Principal>
-            <Dependent Role="tSubscription">
-              <PropertyRef Name="SubscriptionTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tVehicleProfileControl_tVehicleProfiles">
           <End Type="MyJeepTraderModel.tVehicleProfile" Role="tVehicleProfile" Multiplicity="0..1" />
           <End Type="MyJeepTraderModel.tVehicleProfileControl" Role="tVehicleProfileControl" Multiplicity="*" />
@@ -1379,6 +1340,45 @@
         <Association Name="AspNetUserRoles">
           <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="tSubscription">
+          <Key>
+            <PropertyRef Name="SubscriptionId" />
+          </Key>
+          <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriptionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="MembershipId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="AutoRenew" Type="Boolean" />
+          <Property Name="Expired" Type="Boolean" />
+          <NavigationProperty Name="tMembership" Relationship="MyJeepTraderModel.FK_tSubscriptions_tMemberships" FromRole="tSubscription" ToRole="tMembership" />
+          <NavigationProperty Name="tSubscriptionType" Relationship="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" FromRole="tSubscription" ToRole="tSubscriptionType" />
+        </EntityType>
+        <Association Name="FK_tSubscriptions_tMemberships">
+          <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="MembershipId" />
+            </Principal>
+            <Dependent Role="tSubscription">
+              <PropertyRef Name="MembershipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tSubscriptions_tSubscriptionTypes">
+          <End Type="MyJeepTraderModel.tSubscriptionType" Role="tSubscriptionType" Multiplicity="1" />
+          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tSubscriptionType">
+              <PropertyRef Name="SubscriptionTypeId" />
+            </Principal>
+            <Dependent Role="tSubscription">
+              <PropertyRef Name="SubscriptionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1590,20 +1590,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tSubscriptions">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
-              <MappingFragment StoreEntitySet="tSubscriptions">
-                <ScalarProperty Name="Expired" ColumnName="Expired" />
-                <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
-                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
-                <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
-                <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tSubscriptionTypes">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscriptionType">
               <MappingFragment StoreEntitySet="tSubscriptionTypes">
@@ -1670,6 +1656,20 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tSubscriptions">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
+              <MappingFragment StoreEntitySet="tSubscriptions">
+                <ScalarProperty Name="Expired" ColumnName="Expired" />
+                <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+                <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
+                <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

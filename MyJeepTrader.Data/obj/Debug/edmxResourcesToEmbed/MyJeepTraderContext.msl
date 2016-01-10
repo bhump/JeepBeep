@@ -205,20 +205,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tSubscriptions">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
-        <MappingFragment StoreEntitySet="tSubscriptions">
-          <ScalarProperty Name="Expired" ColumnName="Expired" />
-          <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
-          <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
-          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
-          <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
-          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tSubscriptionTypes">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscriptionType">
         <MappingFragment StoreEntitySet="tSubscriptionTypes">
@@ -285,5 +271,19 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="tSubscriptions">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
+        <MappingFragment StoreEntitySet="tSubscriptions">
+          <ScalarProperty Name="Expired" ColumnName="Expired" />
+          <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
+          <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+          <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
+          <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

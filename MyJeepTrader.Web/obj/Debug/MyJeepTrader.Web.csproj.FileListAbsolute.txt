@@ -124,6 +124,7 @@ C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrade
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.csprojResolveAssemblyReference.cache
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.dll
 C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.pdb
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.csprojResolveAssemblyReference.cache
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll.config
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.pdb
@@ -186,6 +187,5 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.W
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.Optimization.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.xml
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.csprojResolveAssemblyReference.cache
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\obj\Debug\MyJeepTrader.Web.pdb

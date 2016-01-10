@@ -149,9 +149,6 @@ namespace MyJeepTrader.Web.ViewModels
         [Display(Name = "Id")]
         public string Id { get; set; }
         
-        [Display(Name = "SubscriptionId")]
-        public int? SubscriptionId { get; set; }
-        
         [Display(Name = "AspNetUser")]
         public AspNetUser AspNetUser { get; set; }
         

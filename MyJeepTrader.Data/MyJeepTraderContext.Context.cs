@@ -44,11 +44,11 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tPostType> tPostTypes { get; set; }
         public virtual DbSet<tState> tStates { get; set; }
         public virtual DbSet<tSubModel> tSubModels { get; set; }
-        public virtual DbSet<tSubscription> tSubscriptions { get; set; }
         public virtual DbSet<tSubscriptionType> tSubscriptionTypes { get; set; }
         public virtual DbSet<tUserProfile> tUserProfiles { get; set; }
         public virtual DbSet<tVehicleProfileControl> tVehicleProfileControls { get; set; }
         public virtual DbSet<tVehicleProfile> tVehicleProfiles { get; set; }
         public virtual DbSet<tYear> tYears { get; set; }
+        public virtual DbSet<tSubscription> tSubscriptions { get; set; }
     }
 }

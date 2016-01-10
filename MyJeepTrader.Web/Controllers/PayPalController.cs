@@ -75,6 +75,7 @@ namespace MyJeepTrader.Web.Controllers
             var user = UserManager.FindByName(User.Identity.Name);
             var userInfo = service.GetProfileInfo(user.Id);
             var memberInfo = service.GetMembership(user.UserName);
+            var subscriptionInfo = service.GetSubscription(memberInfo.MembershipId);
             var radioButton = collection["radioButton"];
             string nonce = collection["payment_method_nonce"];
             DateTime startDate = DateTime.Now;
@@ -83,6 +84,8 @@ namespace MyJeepTrader.Web.Controllers
             // Use payment method nonce here
             if (radioButton == "Monthly")
             {
+                expireDate.AddMonths(1);
+
                 var subRequest = new SubscriptionRequest
                 {
                     PaymentMethodNonce = nonce,
@@ -94,6 +97,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
+                    service.InactivateSubscription(subscriptionInfo.SubscriptionId);
                     service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.monthlySubscription);
                 }
                 else
@@ -103,6 +107,8 @@ namespace MyJeepTrader.Web.Controllers
             }
             else if (radioButton == "Annually")
             {
+                expireDate.AddYears(1);
+
                 var subRequest = new SubscriptionRequest
                 {
                     PaymentMethodNonce = nonce,
@@ -115,6 +121,7 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
+                    service.InactivateSubscription(subscriptionInfo.SubscriptionId);
                     service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.annualSubscription);
                 }
                 else

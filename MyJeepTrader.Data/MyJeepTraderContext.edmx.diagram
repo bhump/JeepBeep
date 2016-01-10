@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.tPostType" Width="1.5" PointX="3.75" PointY="7.875" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tState" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tSubModel" Width="1.5" PointX="3.75" PointY="10.25" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tSubscription" Width="1.5" PointX="8.25" PointY="18.625" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tSubscriptionType" Width="1.5" PointX="6" PointY="29.375" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tUserProfile" Width="1.5" PointX="6" PointY="14.5" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tVehicleProfileControl" Width="1.5" PointX="9" PointY="14.25" />
@@ -40,7 +39,6 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tLocations" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModel_tMake" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tMake" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_tSubscriptions_tMemberships" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tMessageControl_tMessages" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModelControl_tModel" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tModelYearControl_tModelYearControl" />
@@ -50,9 +48,11 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tPostType" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tSubModel" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tYear" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" />
         <AssociationConnector Association="MyJeepTraderModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tSubscription" Width="1.5" PointX="9.25" PointY="23.5" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tSubscriptions_tMemberships" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -67,7 +67,7 @@ namespace MyJeepTrader.Web.Controllers
             var jeepInfo = service.GetPrimaryJeepInfo(user.UserName);
             var memberInfo = service.GetMembership(user.UserName);
             var subscriptionInfo = service.GetSubscription(memberInfo.MembershipId);
-            var subscriptionType = service.GetSubscriptionType(subscriptionInfo.SubscriptionId);
+            var subscriptionType = service.GetSubscriptionType(subscriptionInfo.SubscriptionTypeId);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 
