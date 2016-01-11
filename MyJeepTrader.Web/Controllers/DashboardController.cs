@@ -312,7 +312,6 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
-        [HttpPost]
         public ActionResult Cancel()
         {
             Service service = new Service();
@@ -324,15 +323,15 @@ namespace MyJeepTrader.Web.Controllers
             var subscriptionInfo = service.GetSubscription(memberInfo.MembershipId);
             DateTime startDate = DateTime.Now;
 
-            service.InactivateSubscription(subscriptionInfo.SubscriptionId);
-
             if (subscriptionInfo.PayPalSubscriptionId != null)
             {
                 payPalService.PayPalCancelSubscription(subscriptionInfo.PayPalSubscriptionId);
+                service.InactivateSubscription(subscriptionInfo.SubscriptionId);
                 service.CreateSubscription(memberInfo.MembershipId, startDate, startDate.AddYears(100), ConstantStrings.freeSubscription, null);
             }
 
-            return View();
+            return RedirectToAction("Index");
+
         }
 
         private void AddErrors(IdentityResult result)
