@@ -98,7 +98,7 @@ namespace MyJeepTrader.Web.Controllers
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
                     service.InactivateSubscription(subscriptionInfo.SubscriptionId);
-                    service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.monthlySubscription);
+                    service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.monthlySubscription, subResult.Subscription.Id);
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace MyJeepTrader.Web.Controllers
                     Subscription transaction = subResult.Target;
                     ViewData["TransactionId"] = transaction.Id;
                     service.InactivateSubscription(subscriptionInfo.SubscriptionId);
-                    service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.annualSubscription);
+                    service.CreateSubscription(memberInfo.MembershipId, startDate, expireDate, ConstantStrings.annualSubscription, subResult.Subscription.Id);
                 }
                 else
                 {

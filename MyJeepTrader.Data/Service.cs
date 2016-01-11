@@ -188,7 +188,7 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public void CreateSubscription(int membershipId, DateTime startDate, DateTime expireDate, string subType)
+        public void CreateSubscription(int membershipId, DateTime startDate, DateTime expireDate, string subType, string payPalSubscriptionId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
@@ -200,7 +200,8 @@ namespace MyJeepTrader.Data
                     Expired = false,
                     ExpireDate = expireDate,
                     StartDate = startDate,
-                    SubscriptionTypeId = context.tSubscriptionTypes.Where(s => s.SubscriptionType == subType).Select(s => s.SubscriptionTypeId).FirstOrDefault()
+                    SubscriptionTypeId = context.tSubscriptionTypes.Where(s => s.SubscriptionType == subType).Select(s => s.SubscriptionTypeId).FirstOrDefault(),
+                    PayPalSubscriptionId = payPalSubscriptionId
                 };
 
                 context.tSubscriptions.Add(subscription);

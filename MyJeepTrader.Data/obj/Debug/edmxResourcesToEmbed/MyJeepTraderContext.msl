@@ -274,6 +274,7 @@
     <EntitySetMapping Name="tSubscriptions">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
         <MappingFragment StoreEntitySet="tSubscriptions">
+          <ScalarProperty Name="PayPalSubscriptionId" ColumnName="PayPalSubscriptionId" />
           <ScalarProperty Name="Expired" ColumnName="Expired" />
           <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
           <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />

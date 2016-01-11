@@ -22,6 +22,7 @@ namespace MyJeepTrader.Data
             return gateway;
         }
 
+        //not currently used.
         public string PayPalSubscription(string planId, string clientToken, string name)
         {
             var request = new SubscriptionRequest
@@ -39,7 +40,7 @@ namespace MyJeepTrader.Data
             return result.Message;
         }
 
-        public void CreateCustomer(string email, string userId, string userName, DateTime startDate, DateTime expireDate)
+        public void PayPalCreateCustomer(string email, string userId, string userName, DateTime startDate, DateTime expireDate)
         {
             var request = new CustomerRequest
             {
@@ -56,9 +57,13 @@ namespace MyJeepTrader.Data
 
                 var memberInfo = service.GetMembership(userName);
 
-                service.CreateSubscription(memberInfo.MembershipId, startDate, startDate.AddYears(100), ConstantStrings.freeSubscription);
+                service.CreateSubscription(memberInfo.MembershipId, startDate, startDate.AddYears(100), ConstantStrings.freeSubscription, null);
             }
+        }
 
+        public void PayPalCancelSubscription(string subscriptionId)
+        {
+            var result = PayPalGateway().Subscription.Cancel(subscriptionId);
         }
     }
 }

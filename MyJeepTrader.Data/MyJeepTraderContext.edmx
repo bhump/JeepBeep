@@ -212,6 +212,7 @@
           <Property Name="ExpireDate" Type="datetime" />
           <Property Name="AutoRenew" Type="bit" />
           <Property Name="Expired" Type="bit" />
+          <Property Name="PayPalSubscriptionId" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tSubscriptionTypes">
           <Key>
@@ -1355,6 +1356,7 @@
           <Property Name="Expired" Type="Boolean" />
           <NavigationProperty Name="tMembership" Relationship="MyJeepTraderModel.FK_tSubscriptions_tMemberships" FromRole="tSubscription" ToRole="tMembership" />
           <NavigationProperty Name="tSubscriptionType" Relationship="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" FromRole="tSubscription" ToRole="tSubscriptionType" />
+          <Property Name="PayPalSubscriptionId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_tSubscriptions_tMemberships">
           <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="0..1" />
@@ -1659,6 +1661,7 @@
           <EntitySetMapping Name="tSubscriptions">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
               <MappingFragment StoreEntitySet="tSubscriptions">
+                <ScalarProperty Name="PayPalSubscriptionId" ColumnName="PayPalSubscriptionId" />
                 <ScalarProperty Name="Expired" ColumnName="Expired" />
                 <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
                 <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />

@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) @Html.ActionLink("Cancel", "Cancel", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) <input type="button" class = "btn btn-default" value="Cancel" onclick="loadCancel()"/>
                     </div>
                 </div>
             </div>
@@ -411,6 +411,27 @@
 
     </div>
 </div>
+<div id="cancelModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cancel Subscription</h4>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Are you sure you want to cancel your subscription?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        @Html.ActionLink("Confirm", "Cancel", "Dashboard", new { @class="btn btn-default" })
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <style>
     table#inbox {
         border-collapse: collapse;
@@ -466,5 +487,9 @@
     function loadSentModal(message) {
         $('#mySentMessage').modal('show'); //show bootsrap modal manually
         $('#sentMessage').html(message);
+    }
+
+    function loadCancel() {
+        $('#cancelModal').modal('show');
     }
 </script>

@@ -665,6 +665,7 @@
     <Property Name="Expired" Type="Boolean" />
     <NavigationProperty Name="tMembership" Relationship="MyJeepTraderModel.FK_tSubscriptions_tMemberships" FromRole="tSubscription" ToRole="tMembership" />
     <NavigationProperty Name="tSubscriptionType" Relationship="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" FromRole="tSubscription" ToRole="tSubscriptionType" />
+    <Property Name="PayPalSubscriptionId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_tSubscriptions_tMemberships">
     <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="0..1" />

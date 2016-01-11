@@ -207,6 +207,7 @@
     <Property Name="ExpireDate" Type="datetime" />
     <Property Name="AutoRenew" Type="bit" />
     <Property Name="Expired" Type="bit" />
+    <Property Name="PayPalSubscriptionId" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="tSubscriptionTypes">
     <Key>

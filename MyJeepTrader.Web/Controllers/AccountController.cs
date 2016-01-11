@@ -178,7 +178,7 @@ namespace MyJeepTrader.Web.Controllers
 
                         service.CreateMembership(user.Id);
                         //this creates the paypal customer-then on success creates the membership and the free subscription.
-                        ppService.CreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
+                        ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
                         
                         UserManager.AddToRole(user.Id, "Basic");
 

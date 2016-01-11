@@ -22,6 +22,7 @@ namespace MyJeepTrader.Data
         public Nullable<System.DateTime> ExpireDate { get; set; }
         public Nullable<bool> AutoRenew { get; set; }
         public Nullable<bool> Expired { get; set; }
+        public string PayPalSubscriptionId { get; set; }
     
         public virtual tMembership tMembership { get; set; }
         public virtual tSubscriptionType tSubscriptionType { get; set; }

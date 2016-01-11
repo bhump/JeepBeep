@@ -312,6 +312,29 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Cancel()
+        {
+            Service service = new Service();
+            PayPalService payPalService = new PayPalService();
+
+            var user = UserManager.FindByName(User.Identity.Name);
+            var userInfo = service.GetProfileInfo(user.Id);
+            var memberInfo = service.GetMembership(user.UserName);
+            var subscriptionInfo = service.GetSubscription(memberInfo.MembershipId);
+            DateTime startDate = DateTime.Now;
+
+            service.InactivateSubscription(subscriptionInfo.SubscriptionId);
+
+            if (subscriptionInfo.PayPalSubscriptionId != null)
+            {
+                payPalService.PayPalCancelSubscription(subscriptionInfo.PayPalSubscriptionId);
+                service.CreateSubscription(memberInfo.MembershipId, startDate, startDate.AddYears(100), ConstantStrings.freeSubscription, null);
+            }
+
+            return View();
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
