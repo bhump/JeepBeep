@@ -45,6 +45,11 @@ div.rightalign {
     padding-right: 2%;
 }
 
+div.CenterSubTitle{
+    text-align: left;
+    padding-left: 7%;
+}
+
 .column {
     width: 49.5%;
     margin-right: .5%;

@@ -4,20 +4,20 @@
     ViewBag.Title = "User Profile";
 }
 
-<div class="column" id="column1">
+<div class="col-lg-6" id="column1">
     <div class="form-group-sm">
         <h2>Profile</h2>
         <div class="form-horizontal">
             <div>
                 <div class="form-group">
-                    <div>
+                    <div class="col-md-8">
                         @if (Model.Avatar != null)
                         {
-                            <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserName = Request.QueryString["UserName"] } )" alt="Image Unavailable" width="10%" height="10%" class="col-md-3" />
+                            <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserName = Request.QueryString["UserName"] } )" alt="Image Unavailable" width="87" />
                         }
                         else
                         {
-                            <img src="~/Images/placeholder.jpg" height="10%" width="10%" class="col-md-3" />
+                            <img src="~/Images/placeholder.jpg" width="87" height="85" />
                         }
                     </div>
                 </div>
@@ -80,21 +80,23 @@
     </div>
 </div>
 
-<div class="column" id="column2">
+<div class="col-lg-6" id="column2">
     <div class="form-group-sm">
         <h2>Primary Jeep</h2>
         <div class="form-horizontal">
             <div>
                 <div class="form-group">
-                    @if (Model.Image != null)
-                    {
-                        <img src="@Url.Action("ShowJeepImage", "UserProfile", new { UserName = Request.QueryString["UserName"] })" alt="Image Unavailable" width="10%" height="10%" class="col-md-3" />
-                    }
-                    else
-                    {
-                        <img src="~/Images/placeholder.jpg" width="10%" height="10%" class="col-md-3" />
+                    <div class="col-md-8">
+                        @if (Model.Image != null)
+                        {
+                            <img src="@Url.Action("ShowJeepImage", "UserProfile", new { UserName = Request.QueryString["UserName"] })" alt="Image Unavailable" width="87" height="85" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/placeholder.jpg" width="87" height="85" />
 
-                    }
+                        }
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3">Make: </label>@Html.DisplayFor(m => m.Make)
@@ -109,7 +111,9 @@
                     <label class="col-sm-3">Description: </label>@Html.DisplayFor(m => m.JeepDescription)
                 </div>
                 <div class="form-group">
-                    @Html.ActionLink("View All", "AllJeepProfiles", "JeepProfile", new { UserName = Request.QueryString["UserName"] }, new { })
+                    <div class="col-md-8">
+                        @Html.ActionLink("View All", "AllJeepProfiles", "JeepProfile", new { UserName = Request.QueryString["UserName"] }, new { })
+                    </div>
                 </div>
             </div>
         </div>
