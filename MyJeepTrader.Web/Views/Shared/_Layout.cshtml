@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-simple navbar-fixed-top">
+    <div class="navbar navbar-simple navbar-static-top">
         <div class="container">
             <div class="navbar-inner">
                 <div class="navbar-header">
@@ -26,7 +26,9 @@
                         <li>@Html.ActionLink("Posts", "Index", "Post")</li>
                         <li>@Html.ActionLink("Users", "Index", "UserProfile")</li>
                     </ul>
-                    @Html.Partial("_LoginPartial")
+                    <div class="navbar-collapse">
+                        @Html.Partial("_LoginPartial")
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +37,7 @@
         @RenderBody()
         <hr />
         <footer>
-           @* @Html.Partial("_ChatPartial")*@
+            @* @Html.Partial("_ChatPartial")*@
             <p>&copy; @DateTime.Now.Year - 3eDesigns LLC</p>
         </footer>
     </div>

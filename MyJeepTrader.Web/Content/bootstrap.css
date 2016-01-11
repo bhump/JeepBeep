@@ -5557,6 +5557,19 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
             color: #bf3604;
         }
 
+.navbar-simple .navbar-toggle {
+    border-color: #ddd;
+}
+
+    .navbar-simple .navbar-toggle:hover,
+    .navbar-simple .navbar-toggle:focus {
+        background-color: #ddd;
+    }
+
+    .navbar-simple .navbar-toggle .icon-bar {
+        background-color: #888;
+    }
+
 /**Custome Harvest**/
 /*.navbar-harvest .navbar-inner {
     background: #f36c00;
