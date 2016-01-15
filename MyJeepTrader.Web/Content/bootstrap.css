@@ -6181,15 +6181,27 @@ a.badge:focus {
 }
 
 .jumbotron {
-    padding-top: 30px;
+    /*padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 30px;
     color: inherit;
     background-color: #eee;
     background-image: url("../Images/ice-snowy-rocks-mountains-hd-background-wallpapers-widescreen-high-resolutions-025.jpg");
     background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
     /*background-position: center top;*/
+
+    position: relative;
+    width: 100%;
+    min-height: auto;
+    text-align: center;
+    color: #fff;
+    background-image: url("../Images/ice-snowy-rocks-mountains-hd-background-wallpapers-widescreen-high-resolutions-025.jpg");
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
 }
 
     .jumbotron h1,

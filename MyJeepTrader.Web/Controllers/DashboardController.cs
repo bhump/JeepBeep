@@ -108,6 +108,19 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles="Admin")]
+        public ActionResult Admin()
+        {
+            Service service = new Service();
+            DashboardIndexViewModel model = new DashboardIndexViewModel
+            {
+                Users = service.GetAllUsers()
+            };
+
+            if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
+            return View(model);
+        }
+
         public ActionResult ShowAvatar(string UserName)
         {
             Service service = new Service();

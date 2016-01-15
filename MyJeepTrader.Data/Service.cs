@@ -654,6 +654,56 @@ namespace MyJeepTrader.Data
         }
         #endregion
 
+        #region Admin
+        public IEnumerable<AspNetUser> GetAllUsers()
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var users = (from u in context.AspNetUsers select u).ToList();
+
+                return users;
+            }
+        }
+
+        public AspNetUser SearchUsers(string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var user = context.AspNetUsers.Where(u => u.UserName == userName).FirstOrDefault();
+
+                return user;
+            }
+        }
+
+        public UserInformation GetUserInformation(string userId)
+        {
+            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var userInfo = (from p in context.tUserProfiles
+                                join m in context.tMemberships on p.Id equals m.Id
+                                join s in context.tSubscriptions on m.MembershipId equals s.MembershipId
+                                join st in context.tSubscriptionTypes on s.SubscriptionTypeId equals st.SubscriptionTypeId
+                                select new UserInformation
+                                {
+                                    FirstName = p.FirstName,
+                                    LastName = p.LastName,
+                                    BirthDate = p.BirthDate,
+                                    SubscriptionActive = s.Active,
+                                    StartDate = s.StartDate,
+                                    ExpireDate = s.ExpireDate,
+                                    Expired = s.Expired,
+                                    AutoRenew = s.AutoRenew,
+                                    SubscriptionType = st.SubscriptionType,
+                                    MemberSince = m.MemberSince,
+                                    PayPalCustomerId = m.PayPalCustomerId,
+                                    PayPalSubscriptionId = s.PayPalSubscriptionId
+                                }).OrderByDescending(i => i.StartDate).FirstOrDefault();
+
+                return userInfo;
+            }
+        }
+        #endregion
+
 
     }// public class service
 } // namespace

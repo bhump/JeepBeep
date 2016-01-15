@@ -156,5 +156,9 @@ namespace MyJeepTrader.Web.ViewModels
 
         public string SubscriptionType { get; set; }
         #endregion
+
+        #region Admin
+        public IEnumerable<AspNetUser> Users { get; set; }
+        #endregion
     }
 }

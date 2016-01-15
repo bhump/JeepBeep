@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Admin";
+}
+
+<title>Admin Area</title>
+
+<div class="col-lg-6" id="column1">
+    <div>
+        <div class="form-group-sm">
+            <h2>Find User</h2>
+            <div class="form-horizontal">
+                @using (Html.BeginForm("SearchUsers", "Dashboard", FormMethod.Post))
+                {
+                    <div class="form-group-sm">
+                        <div class="col-md-8 input-group">
+                            @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Who are you looking for?" })
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-group-sm btn-sm" type="button">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="form-horizontal">
+                <div class="col-md-8">
+                    @if (Model != null && Model.Users != null)
+                    {
+                        <table class="table">
+                            <tr>
+                                <th>UserName</th>
+                                <th>Email</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model.Users)
+                            {
+                                <tr id="@item.Id">
+                                    <td>@item.UserName</td>
+                                    <td>@item.Email</td>
+                                    <td>
+                                        <button type="button" class="btn-link" onclick="loadUserModal('@item.Id', '@item.UserName', '@item.Email' )">View</button>
+                                    </td>
+                                </tr>
+
+                            }
+
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-6" id="column2">
+    <div>
+        <div class="form-group-sm">
+            <h2>View Posts</h2>
+            <div class="form-horizontal">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divUserInfo" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><label id="lblUserName"></label>&nbsp;<label>Info</label></h4>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Email: </label><label id="lblEmail"></label>
+                </div>
+                <div class="form-group">
+                    <label>First Name: </label><label id="lblFirstName"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+<script type="text/javascript">
+    function loadUserModal(id, username, email) {
+        $('#divUserInfo').modal('show');
+        $('#lblUserName').html(username + "'s");
+        $('#lblEmail').html(email);
+
+        $.ajax({
+            url: '/WebServices/UserInformationWebService.asmx/GetUserInformation?userId=' + JSON.stringify(id),
+            method: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            success: function (result) {
+                alert("Success");
+            },
+            error: function (err) {
+                alert("Error");
+            }
+            
+        });
+    }
+</script>

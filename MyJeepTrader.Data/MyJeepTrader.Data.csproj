@@ -78,6 +78,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Models\JeepProfiles.cs" />
     <Compile Include="Models\MailMessages.cs" />
+    <Compile Include="Models\UserInformation.cs" />
     <Compile Include="Models\UserProfiles.cs" />
     <Compile Include="Models\UsersPosts.cs" />
     <Compile Include="MyJeepTraderContext.Context.cs">
