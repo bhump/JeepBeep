@@ -60,6 +60,7 @@ namespace MyJeepTrader.Data
         public int CreateNewPost(tPost post)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            post.DateCreated = DateTime.Now;
             context.tPosts.Add(post);
             context.SaveChanges();
 

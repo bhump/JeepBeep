@@ -48,6 +48,7 @@ namespace MyJeepTrader.Web.Controllers
         }
 
         // GET: Post/Create
+        [Authorize]
         public ActionResult Create()
         {
             Service service = new Service();
@@ -68,6 +69,8 @@ namespace MyJeepTrader.Web.Controllers
         {
             try
             {
+                var userId = User.Identity.GetUserId();
+
                 Service service = new Service();
                 //model.Post.MakeID = 
                 //model.Post.YearID = model.Years.Where(x => x.IsSelected)
@@ -76,8 +79,9 @@ namespace MyJeepTrader.Web.Controllers
                 model.Post.IsVehicle = model.IsJeep;
                 model.Post.Active = true;
                 model.Post.MakeId = 1; //this site is only for jeep right now
-                //var user = UserManager.FindBy
-                //model.Post.Id = user.Id;
+                
+                model.Post.Id = userId;
+
                 var newPostId = service.CreateNewPost(model.Post);
 
                 if (Request.Files[0].ContentLength > 0)
