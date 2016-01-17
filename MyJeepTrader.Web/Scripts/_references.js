@@ -18,3 +18,4 @@
 /// <reference path="bootstrap-filestyle.min.js" />
 /// <reference path="sweetalert-dev.js" />
 /// <reference path="sweetalert.min.js" />
+/// <reference path="jquery.bootstrap.wizard.js" />
