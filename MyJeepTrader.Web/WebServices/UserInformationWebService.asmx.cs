@@ -17,14 +17,13 @@ namespace MyJeepTrader.Web.WebServices
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]
+    [System.Web.Script.Services.ScriptService]
     public class UserInformationWebService : System.Web.Services.WebService
     {
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json, UseHttpGet = true)]
-        //[ScriptMethod(UseHttpGet= true)]
-        public string GetUserInformation(string userId)
+        public UserInformation GetUserInformation(string userId)
         {
             Service service = new Service();
 
@@ -32,7 +31,7 @@ namespace MyJeepTrader.Web.WebServices
 
             var userInfo = service.GetUserInformation(id);
 
-            return new JavaScriptSerializer().Serialize(userInfo);
+            return userInfo;
         }
     }
 }

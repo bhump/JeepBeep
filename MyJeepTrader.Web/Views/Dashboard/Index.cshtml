@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) <input type="button" class = "btn btn-default" value="Cancel" onclick="loadCancel()"/>
+                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) <input type="button" class="btn btn-default" value="Cancel" onclick="loadCancel()" />
                     </div>
                 </div>
             </div>
@@ -256,100 +256,109 @@
     </div>
     <div class="form-group">
         <h2>Your Mailbox</h2>
-        <ul class="nav nav-pills">
+        <ul class="nav nav-tabs nav-justified">
             <li class="active"><a data-toggle="pill" href="#Inbox">Inbox</a></li>
             <li><a data-toggle="pill" href="#CreateMessage">Create Message</a></li>
             <li><a data-toggle="pill" href="#SentMessages">Sent Messages</a></li>
         </ul>
+        <br />
         <div class="tab-content">
             <div id="Inbox" class="tab-pane fade in active">
-                @if (Model.Inbox != null)
-                {
-                    <table class="table" id="inbox">
-                        <tr>
-                            <th></th>
-                            <th>Date Sent</th>
-                            <th>From</th>
-                            <th>Subject</th>
-                        </tr>
+                <div>
 
-                        @foreach (var item in Model.Inbox)
-                        {
-                            <tr id="@item.MessageId">
-                                <td>
-                                    <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId', '@item.MessageId')">View</button>
-                                </td>
-                                @if (item.DateRead == null)
-                                {
-                                    <td style="font-weight:bold">@item.DateSent</td>
-                                    <td style="font-weight:bold">@item.From</td>
-                                    <td style="font-weight:bold">@item.Subject</td>
-                                }
-                                else
-                                {
-                                    <td>@item.DateSent</td>
-                                    <td>@item.From</td>
-                                    <td>@item.Subject</td>
-                                }
-
+                    @if (Model.Inbox != null)
+                    {
+                        <table class="table table-responsive" id="inbox">
+                            <tr>
+                                <th></th>
+                                <th>Date Sent</th>
+                                <th>From</th>
+                                <th>Subject</th>
                             </tr>
-                        }
 
-                    </table>
-                }
+                            @foreach (var item in Model.Inbox)
+                            {
+                                <tr id="@item.MessageId">
+                                    <td>
+                                        <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId', '@item.MessageId')">View</button>
+                                    </td>
+                                    @if (item.DateRead == null)
+                                    {
+                                        <td style="font-weight:bold">@item.DateSent</td>
+                                        <td style="font-weight:bold">@item.From</td>
+                                        <td style="font-weight:bold">@item.Subject</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.DateSent</td>
+                                        <td>@item.From</td>
+                                        <td>@item.Subject</td>
+                                    }
+
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                </div>
             </div>
             <div id="CreateMessage" class="tab-pane fade">
-                @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.To, new { @class = "col-sm-3 control-label" })
-                        <div class="col-md-8">
-                            @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
+                <div>
+                    @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.To, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Subject, new { @class = "col-sm-3 control-label" })
-                        <div class="col-md-8">
-                            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Subject, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Message, new { @class = "col-sm-3 control-label" })
-                        <div class="col-md-8">
-                            @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Message, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Send Message" class="btn btn-primary" />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Send Message" class="btn btn-primary" />
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
             <div id="SentMessages" class="tab-pane fade">
-                @if (Model.SentMessages != null)
-                {
-                    <table class="table">
-                        <tr>
-                            <th></th>
-                            <th>Date Sent</th>
-                            <th>To</th>
-                            <th>Subject</th>
-                        </tr>
+                <div>
 
-                        @foreach (var item in Model.SentMessages)
-                        {
+                    @if (Model.SentMessages != null)
+                    {
+                        <table class="table table-responsive">
                             <tr>
-                                <td>
-                                    <button type="button" class="btn-link" onclick="loadSentModal('@item.Message')">View</button>
-                                </td>
-                                <td>@item.DateSent</td>
-                                <td>@item.To</td>
-                                <td>@item.Subject</td>
+                                <th></th>
+                                <th>Date Sent</th>
+                                <th>To</th>
+                                <th>Subject</th>
                             </tr>
-                        }
-                    </table>
-                }
+
+                            @foreach (var item in Model.SentMessages)
+                            {
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn-link" onclick="loadSentModal('@item.Message')">View</button>
+                                    </td>
+                                    <td>@item.DateSent</td>
+                                    <td>@item.To</td>
+                                    <td>@item.Subject</td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -424,7 +433,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="form-group">
-                        @Html.ActionLink("Confirm", "Cancel", "Dashboard", new { @class="btn btn-default" })
+                        @Html.ActionLink("Confirm", "Cancel", "Dashboard", new { @class = "btn btn-default" })
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>

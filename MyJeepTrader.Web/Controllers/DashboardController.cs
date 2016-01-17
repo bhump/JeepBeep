@@ -108,7 +108,7 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Admin()
         {
             Service service = new Service();
@@ -180,6 +180,27 @@ namespace MyJeepTrader.Web.Controllers
             }
             AddErrors(result);
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ResetPassword(FormCollection collection)
+        {
+            var userId = collection["Id"] == "" ? null : collection["Id"].ToString();
+            var newPassword = collection["ResetPassword"] == "" ? null : collection["ResetPassword"].ToString();
+
+            string resetToken = await UserManager.GeneratePasswordResetTokenAsync(userId);
+
+            var result = await UserManager.ResetPasswordAsync(userId, resetToken, newPassword);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Admin", new { Message = ManageMessageId.SetPasswordSuccess });
+            }
+            else
+            {
+                AddErrors(result);
+            }
+
+            return RedirectToAction("Admin", new { Message = ManageMessageId.Error});
         }
 
         [HttpPost]
@@ -260,7 +281,7 @@ namespace MyJeepTrader.Web.Controllers
                 var make = collection["Make"] == "" ? null : collection["Make"].ToString();
                 var model = collection["Model"] == "" ? null : collection["Model"].ToString();
                 var year = collection["Year"] == " " ? null : collection["Year"];
-                var jeepImage = imageData.Length == 0  ? null : imageData;
+                var jeepImage = imageData.Length == 0 ? null : imageData;
                 var jeepDescription = collection["JeepDescription"].ToString();
                 //bool primaryJeep = Convert.ToBoolean(collection["PrimaryJeep"].Split(',')[0]);
 

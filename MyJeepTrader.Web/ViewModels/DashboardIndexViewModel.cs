@@ -131,7 +131,7 @@ namespace MyJeepTrader.Web.ViewModels
                ApplyFormatInEditMode = true)]
         [Display(Name = "Member Since")]
         public DateTime? MemberSince { get; set; }
-        
+
         [Display(Name = "Expired")]
         public bool? Expired { get; set; }
 
@@ -139,19 +139,19 @@ namespace MyJeepTrader.Web.ViewModels
                ApplyFormatInEditMode = true)]
         [Display(Name = "Expiration Date")]
         public DateTime? ExpirationDate { get; set; }
-        
+
         [Display(Name = "Auto Renew")]
         public bool? AutoRenew { get; set; }
-        
+
         [Display(Name = "Renewed")]
         public bool? Renewed { get; set; }
-        
+
         [Display(Name = "Id")]
         public string Id { get; set; }
-        
+
         [Display(Name = "AspNetUser")]
         public AspNetUser AspNetUser { get; set; }
-        
+
         public tSubscription tSubscription { get; set; }
 
         public string SubscriptionType { get; set; }
@@ -159,6 +159,9 @@ namespace MyJeepTrader.Web.ViewModels
 
         #region Admin
         public IEnumerable<AspNetUser> Users { get; set; }
+
+        [Display(Name = "New Password:")]
+        public string ResetPassword { get; set; }
         #endregion
     }
 }

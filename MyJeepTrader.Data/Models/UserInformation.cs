@@ -52,7 +52,7 @@ namespace MyJeepTrader.Data.Models
 
         public DateTime? MemberSince { get; set; }
 
-        public bool MembershiptActive { get; set; }
+        public bool? MembershipActive { get; set; }
 
         public string PayPalCustomerId { get; set; } 
     }

@@ -695,6 +695,8 @@ namespace MyJeepTrader.Data
                                     AutoRenew = s.AutoRenew,
                                     SubscriptionType = st.SubscriptionType,
                                     MemberSince = m.MemberSince,
+                                    MembershipId = m.MembershipId,
+                                    MembershipActive = m.Active,
                                     PayPalCustomerId = m.PayPalCustomerId,
                                     PayPalSubscriptionId = s.PayPalSubscriptionId
                                 }).OrderByDescending(i => i.StartDate).FirstOrDefault();
