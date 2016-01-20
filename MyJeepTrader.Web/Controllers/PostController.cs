@@ -57,7 +57,7 @@ namespace MyJeepTrader.Web.Controllers
                 Models = service.GetAllModels().ToModelWithSelected(),
                 Years = service.GetAllYears(),
                 PostTypes = service.GetAllPostTypes()
-                
+
             };
 
             return View(model);
@@ -65,7 +65,7 @@ namespace MyJeepTrader.Web.Controllers
 
         // POST: Post/Create
         [HttpPost]
-        public ActionResult Create(PostCreateViewModel model)
+        public ActionResult Create(PostCreateViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
             try
             {
@@ -79,28 +79,32 @@ namespace MyJeepTrader.Web.Controllers
                 model.Post.IsVehicle = model.IsJeep;
                 model.Post.Active = true;
                 model.Post.MakeId = 1; //this site is only for jeep right now
-                
+
                 model.Post.Id = userId;
 
                 var newPostId = service.CreateNewPost(model.Post);
 
-                if (Request.Files[0].ContentLength > 0)
-                {
-                    byte[] imageData = null;
-
-                    using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
-                    {
-                        imageData = binaryReader.ReadBytes(Request.Files[0].ContentLength);
-                    }
-
-                    service.AddImage(imageData, newPostId);    
-                }
-                
-                
-                //service.AddPostUserControl(newPostId, user.Id); 
                 foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
                 {
                     service.AddModelPost(selectedModel.TModel.ModelId, newPostId);
+                }
+
+                if (files.Count() != 0)
+                {
+                    foreach (var img in files)
+                    {
+                        if (img != null)
+                        {
+                            byte[] imageBytes = null;
+
+                            using (var binaryReader = new BinaryReader(img.InputStream))
+                            {
+                                imageBytes = binaryReader.ReadBytes(img.ContentLength);
+                            }
+
+                            service.AddImage(imageBytes, newPostId);
+                        }
+                    }
                 }
 
                 TempData["Message"] = "Post Created Successfully!";

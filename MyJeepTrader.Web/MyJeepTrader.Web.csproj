@@ -223,6 +223,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\jquery.MultiFile.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap_new.css" />
@@ -236,6 +237,7 @@
     <Content Include="Images\jeep-wrangler-offroad-wallpaper-04.JPG" />
     <Content Include="Images\placeholder.jpg" />
     <Content Include="Images\trintrail6.jpg" />
+    <Content Include="Images\wrong-01-512.png" />
     <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\jquery.bootstrap.wizard.js" />

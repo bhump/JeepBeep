@@ -19,3 +19,4 @@
 /// <reference path="sweetalert-dev.js" />
 /// <reference path="sweetalert.min.js" />
 /// <reference path="jquery.bootstrap.wizard.js" />
+/// <reference path="jquery.multifile.js" />

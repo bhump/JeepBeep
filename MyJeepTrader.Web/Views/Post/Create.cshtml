@@ -40,9 +40,10 @@
                     </div>
                 </div>
                 <div class="tab-pane col-sm-offset-3" id="tab2">
-                    <div>
-                        <div class="form-group">
-                            <h4>Choose a jeep model.</h4>
+                    <h2>Step 2</h2>
+                    <h4>Choose a jeep model.</h4>
+                    <div class="form-group">
+                        <div class="col-lg-4">
                             @for (var i = 0; i < Model.Models.Count(); i++)
                             {
                                 <div class="form-group-sm">
@@ -54,40 +55,53 @@
                             }
                         </div>
                     </div>
-                    <div>
-                        <div class="form-group">
-                            <h4>Choose a year.</h4>
+                    <div class="form-group">
+                        <div class="col-lg-4">
+                            <h4>Choose a model year.</h4>
                             @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "--Select Year--", new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane col-sm-offset-3" id="tab3">
+                    <h2>Step 3</h2>
+                    <h4>Create post title and description.</h4>
                     <div class="form-group">
                         <label class="col-sm-2">Title:</label>
-                        <div class="col-sm-10" id="jeepTypeDiv">
+                        <div class="col-sm-5" id="jeepTypeDiv">
                             @Html.TextBoxFor(model => model.Post.PostTitle, new { @class = "form-control no-max-width" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2">Description:</label>
-                        <div class="col-sm-10" id="jeepTypeDiv">
+                        <div class="col-sm-5" id="jeepTypeDiv">
                             @Html.TextAreaFor(model => model.Post.PostDescription, new { @class = "form-control no-max-width" })
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane col-sm-offset-3" id="tab4">
-                    <div class="form-group">
-                        <input type="file" name="Image" id="Image" value="Upload" multiple="multiple">
+                    <h2>Step 4</h2>
+                    <h4>Select Images</h4>
+                    <div class="form-field">
+                        <div class="upload-container">
+                            <div class="upload">
+                                <input type="file" name="files" id="file1" class="filestyle" multiple data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83" />
+                                @*<img src="@Url.Content("~/Images/delete.png")" alt="Remove picture." />*@
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane col-sm-offset-3" id="tab5">
+                    <h2>Step 5</h2>
+                    <h4>Review and Create</h4>
                     <div class="form-group">
-                        <h4>Review</h4>
                         <div>
                             <input type="submit" value="Create" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
+                <div class="placeholder"></div>
+                <br />
+                <br />
                 <div class="col-sm-offset-4">
                     <div class="form-group">
                         <div class="col-md-2">
@@ -103,153 +117,37 @@
     </div>
 </div>
 
-@*<div class="form-horizontal">
-
-        @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <div id="divStepOne">
-                <h2>Step 1</h2>
-                <h4>Select a type of post.</h4>
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        @foreach (tPostType item in Model.PostTypes)
-                        {
-                            @Html.RadioButtonFor(model => model.SelectedPostTypeId, item.PostTypeId, new { id = item.Type })
-                            <label for="@item.Type">@item.Type </label>
-                        }
-                    </div>
-                </div>
-                <div>
-                    <h4>What are you posting?</h4>
-                    <div class="form-group">
-                        <div class="col-sm-10">
-                            @Html.RadioButtonFor(model => model.IsJeep, true, new { id = "radioIsJeep" }) <label for="radioIsJeep">Jeep</label>
-                            @Html.RadioButtonFor(model => model.IsJeep, false, new { id = "radioIsNotJeep" }) <label for="radioIsNotJeep">Accessory</label>
-                        </div>
-                    </div>
-                </div>
-                <input id="btnStepOneNext" type="button" class="btn btn-default col-md-offset-2" value="Next" />
-            </div>
-            <div id="divStepTwo" class="hidden">
-                <h2>Step 2</h2>
-                <div class="form-group">
-                    <h4>Choose a jeep model.</h4>
-                    <div class="col-sm-10" id="jeepTypeDiv">
-                        @for (var i = 0; i < Model.Models.Count(); i++)
-                        {
-                            <div class="form-group-sm">
-                                @Html.HiddenFor(model => model.Models[i].TModel.ModelId)
-                                @Html.CheckBoxFor(model => model.Models[i].IsSelected)
-                                <label>@Model.Models[i].TModel.Model</label>
-                            </div>
-
-                        }
-                    </div>
-                </div>
-                <div class="form-group">
-                    <h4>Choose a year.</h4>
-                    <div class="col-sm-10" id="jeepTypeDiv">
-                        @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "--Select Year--", new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-md-offset-2">
-                    <input id="btnStepTwoBack" type="button" class="btn btn-default" value="Back" />
-                    <input id="btnStepTwoNext" type="button" class="btn btn-default" value="Next" />
-                </div>
-            </div>
-
-            <div id="divStepThree" class="hidden">
-                <h2>Step 3</h2>
-                <div class="form-group">
-                    <label class="col-sm-2">Select Year:</label>
-                    <div class="col-sm-10" id="jeepTypeDiv">
-                        @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "--Select Year--", new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-
-            <div id="divStepThree" class="hidden">
-                <h2>Step 5</h2>
-                <div class="form-group">
-                    <label class="col-sm-2">Title:</label>
-                    <div class="col-sm-10" id="jeepTypeDiv">
-                        @Html.TextBoxFor(model => model.Post.PostTitle, new { @class = "form-control no-max-width" })
-                    </div>
-                </div>
-            </div>
-
-            <div id="divStepSix" class="hidden">
-                <h2>Step 6</h2>
-                <div class="form-group">
-                    <label class="col-sm-2">Description:</label>
-                    <div class="col-sm-10" id="jeepTypeDiv">
-                        @Html.TextAreaFor(model => model.Post.PostDescription, new { @class = "form-control no-max-width" })
-                    </div>
-                </div>
-            </div>
-
-            <div id="divStepSeven" class="hidden">
-                <h2>Step 7</h2>
-                <div class="form-group">
-                    <input type="file" name="Image" id="Image" value="Upload" multiple="multiple">
-                </div>
-            </div>
-
-            <div id="divStepEight" class="hidden">
-                <h2>Review</h2>
-                <div class="form-group">
-                    <div>
-                        <input type="submit" value="Create" class="btn btn-default" />
-                    </div>
-                </div>
-            </div>
-
-        }
-
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    </div>*@
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-
+    <script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"> </script>
     <script type="text/javascript" src="~/Scripts/jquery.bootstrap.wizard.js"></script>
     <script type="text/javascript">
 
         $(function () {
             $('#rootwizard').bootstrapWizard({ 'nextSelector': '.button-next', 'previousSelector': '.button-previous' });
+
+            $("input[type='submit']").click(function () {
+                var $fileUpload = $("input[type='file']");
+                if (parseInt($fileUpload.get(0).files.length) > 2) {
+                    alert("You can only upload a maximum of 2 files");
+                }
+            });
         });
 
-        $("#btnStepOneNext").click(function () {
-            $("#divStepTwo").removeClass("hidden");
-            $("#divStepOne").addClass("hidden");
-        });
+        @*$(function () {
+            var currentImage = 1;
+            $("body").on("change", "input[name='files']", function () {
+                var pathToRemoveIcon = "@Url.Content("~/Images/delete.png")";
+                currentImage = currentImage + 1;
+                var htmlToAppend = '<div class="upload"><input type="file" name="files" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83" id="file' + currentImage + '" /><img src="' + pathToRemoveIcon + '" alt="Remove picture." /></div>';
+                $('.upload-container').append(htmlToAppend);
+            }).on("click", ".upload img", function () {
+                if ($(this).parent().siblings().length > 0) {
+                    $(this).parent().remove();
+                }
+            });
+        });*@
 
-        $("#btnStepTwoBack").click(function () {
-            $("#divStepOne").removeClass("hidden");
-            $("#divStepTwo").addClass("hidden");
-        });
-
-        $("#btnStepTwoNext").click(function () {
-            $("#divStepThree").removeClass("hidden");
-            $("#divStepTwo").addClass("hidden");
-        });
-
-        function jeepClick() {
-
-            $("#jeepTypeDiv").show();
-        }
-
-        function partClick() {
-            $("#jeepTypeDiv").show();
-        }
     </script>
 }
