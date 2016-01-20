@@ -8,7 +8,7 @@
 <h3>New Posting</h3>
 <div class="form-horizontal">
     <div id="rootwizard">
-        <div class="navbar col-sm-offset-3">
+        <div class="navbar col-sm-offset-4">
             <div class="navbar-inner">
                 <div class="container">
                     <ul>
@@ -24,7 +24,7 @@
         @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="tab-content">
-                <div class="tab-pane col-sm-offset-3" id="tab1">
+                <div class="tab-pane col-sm-offset-4" id="tab1">
                     <h2>Step 1</h2>
                     <h4>Select a type of post.</h4>
                     <div class="form-group">
@@ -39,11 +39,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane col-sm-offset-3" id="tab2">
+                <div class="tab-pane col-sm-offset-4" id="tab2">
                     <h2>Step 2</h2>
-                    <h4>Choose a jeep model.</h4>
                     <div class="form-group">
-                        <div class="col-lg-4">
+                        <div class="col-md-4">
+                            <h4>Choose a jeep model.</h4>
                             @for (var i = 0; i < Model.Models.Count(); i++)
                             {
                                 <div class="form-group-sm">
@@ -54,15 +54,13 @@
 
                             }
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-4">
+                        <div class="col-md-4">
                             <h4>Choose a model year.</h4>
                             @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "--Select Year--", new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane col-sm-offset-3" id="tab3">
+                <div class="tab-pane col-sm-offset-4" id="tab3">
                     <h2>Step 3</h2>
                     <h4>Create post title and description.</h4>
                     <div class="form-group">
@@ -78,19 +76,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane col-sm-offset-3" id="tab4">
+                <div class="tab-pane col-sm-offset-4" id="tab4">
                     <h2>Step 4</h2>
                     <h4>Select Images</h4>
-                    <div class="form-field">
+                    <div class="form-group">
                         <div class="upload-container">
                             <div class="upload">
                                 <input type="file" name="files" id="file1" class="filestyle" multiple data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83" />
-                                @*<img src="@Url.Content("~/Images/delete.png")" alt="Remove picture." />*@
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane col-sm-offset-3" id="tab5">
+                <div class="tab-pane col-sm-offset-4" id="tab5">
                     <h2>Step 5</h2>
                     <h4>Review and Create</h4>
                     <div class="form-group">
@@ -101,14 +98,13 @@
                 </div>
                 <div class="placeholder"></div>
                 <br />
-                <br />
-                <div class="col-sm-offset-4">
+                <div class="col-sm-offset-5">
                     <div class="form-group">
-                        <div class="col-md-2">
-                            <input type='button' class='btn button-previous' name='previous' value='Previous' />
+                        <div class="col-md-3">
+                            <input type='button' class='btn button-previous' name='previous' value='Previous' width="30"/>
                         </div>
-                        <div class="col-md-2">
-                            <input type='button' class='btn button-next' name='next' value='Next' />
+                        <div class="col-md-3">
+                            <input type='button' class='btn button-next' name='next' value='Next' width="30" />
                         </div>
                     </div>
                 </div>
