@@ -141,6 +141,39 @@ namespace MyJeepTrader.Data
 
         }
 
+        public List<tState> GetAllStates()
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
+            return (from s in context.tStates select s).ToList();
+        }
+
+        public List<tCity> GetCityByState(int stateId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
+            var cities = (from c in context.tCities where c.StateId == stateId select c).ToList();
+
+            return cities;
+        }
+
+        public string GetStateById(int stateId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
+            var state = (from s in context.tStates where s.StateId == stateId select s.State).First();
+
+            return state;
+        }
+
+        public string GetYearById(int yearId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
+            var year = (from y in context.tYears where y.YearId == yearId select y.Year).First();
+
+            return year;
+        }
 
         #endregion
 

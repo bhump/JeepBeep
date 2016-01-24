@@ -53,6 +53,8 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.tSubscription" Width="1.5" PointX="9.25" PointY="23.5" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tSubscriptions_tMemberships" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tCity" Width="1.5" PointX="10.75" PointY="4.75" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tCities_tStates" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -26,12 +26,23 @@ namespace MyJeepTrader.Web.ViewModels
         public int SelectedYearId { get; set; }
 
         public List<tPostType> PostTypes { get; set; }
+        
         public int SelectedPostTypeId { get; set; }
+        
         public bool IsJeep { get; set; }
+        
         public bool IsAccessory { get; set; }
         //public byte[] Image { get; set; }
 
         public HttpPostedFileBase Image { get; set; }
+
+        public int SelectedStateId { get; set; }
+
+        public List<tState> States { get; set; }
+
+        public int SelectedCityId { get; set; }
+
+        public List<tCity> Cities { get; set; }
     }
 
     public class tModelWithSelected

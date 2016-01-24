@@ -12,19 +12,13 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tState
+    public partial class tCity
     {
-        public tState()
-        {
-            this.tCities = new HashSet<tCity>();
-        }
+        public int CityId { get; set; }
+        public string City { get; set; }
+        public string ZIP { get; set; }
+        public Nullable<int> StateId { get; set; }
     
-        public int StateId { get; set; }
-        public string StateCode { get; set; }
-        public string State { get; set; }
-        public string Country { get; set; }
-        public string Type { get; set; }
-    
-        public virtual ICollection<tCity> tCities { get; set; }
+        public virtual tState tState { get; set; }
     }
 }

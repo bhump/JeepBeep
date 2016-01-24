@@ -56,11 +56,43 @@ namespace MyJeepTrader.Web.Controllers
             {
                 Models = service.GetAllModels().ToModelWithSelected(),
                 Years = service.GetAllYears(),
-                PostTypes = service.GetAllPostTypes()
-
+                PostTypes = service.GetAllPostTypes(),
+                States = service.GetAllStates()
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult GetCityByStateId(int StateId)
+        {
+            Service service = new Service();
+            var cities = service.GetCityByState(StateId);
+            var json = Json(cities);
+
+            return json;
+        }
+
+        [HttpPost]
+        public ActionResult GetStateNameById(int StateId)
+        {
+            Service service = new Service();
+            var state = service.GetStateById(StateId);
+
+            var json = Json(state);
+
+            return json;
+        }
+
+        [HttpPost]
+        public ActionResult GetYearById(int YearId)
+        {
+            Service service = new Service();
+            var year = service.GetYearById(YearId);
+
+            var json = Json(year);
+
+            return json;
         }
 
         // POST: Post/Create

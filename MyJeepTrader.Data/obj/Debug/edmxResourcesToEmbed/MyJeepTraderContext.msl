@@ -190,6 +190,8 @@
     <EntitySetMapping Name="tStates">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tState">
         <MappingFragment StoreEntitySet="tStates">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="StateCode" ColumnName="StateCode" />
           <ScalarProperty Name="StateId" ColumnName="StateId" />
@@ -283,6 +285,16 @@
           <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
           <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
           <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tCities">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tCity">
+        <MappingFragment StoreEntitySet="tCities">
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

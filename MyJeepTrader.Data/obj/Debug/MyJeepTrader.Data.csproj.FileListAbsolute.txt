@@ -39,4 +39,3 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqK
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.pdb
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\obj\Debug\MyJeepTrader.Data.csprojResolveAssemblyReference.cache

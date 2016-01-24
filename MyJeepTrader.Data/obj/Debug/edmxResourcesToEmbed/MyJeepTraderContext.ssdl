@@ -61,6 +61,15 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="tCities">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City" Type="varchar(max)" />
+    <Property Name="ZIP" Type="nvarchar" MaxLength="50" />
+    <Property Name="StateId" Type="int" />
+  </EntityType>
   <EntityType Name="tConnectedUsers">
     <Key>
       <PropertyRef Name="ChatConnectionId" />
@@ -183,9 +192,11 @@
     <Key>
       <PropertyRef Name="StateId" />
     </Key>
-    <Property Name="StateId" Type="int" Nullable="false" />
-    <Property Name="StateCode" Type="varchar" MaxLength="2" />
+    <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateCode" Type="varchar" MaxLength="10" />
     <Property Name="State" Type="varchar" MaxLength="50" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tSubModel">
     <Key>
@@ -315,6 +326,18 @@
       </Principal>
       <Dependent Role="AspNetUserRoles">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tCities_tStates">
+    <End Role="tStates" Type="Self.tStates" Multiplicity="0..1" />
+    <End Role="tCities" Type="Self.tCities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tStates">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="tCities">
+        <PropertyRef Name="StateId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -565,6 +588,7 @@
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tCities" EntityType="Self.tCities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tConnectedUsers" EntityType="Self.tConnectedUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tLocations" EntityType="Self.tLocations" Schema="dbo" store:Type="Tables" />
@@ -600,6 +624,10 @@
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tCities_tStates" Association="Self.FK_tCities_tStates">
+      <End Role="tStates" EntitySet="tStates" />
+      <End Role="tCities" EntitySet="tCities" />
     </AssociationSet>
     <AssociationSet Name="FK_tImages_tPosts" Association="Self.FK_tImages_tPosts">
       <End Role="tPosts" EntitySet="tPosts" />
