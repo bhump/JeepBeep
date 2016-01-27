@@ -39,7 +39,7 @@
                         </div>
                         <div class="col-md-4">
                             <h4>Select a state.</h4>
-                            @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "--Select State--", new { @class = "form-control", /*@onchange = "javascript:GetCity(this.value);"*/ })
+                            @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "--Select State--", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);" })
                             <h4>Select a city.</h4>
                             <select id="ddlCity" name="ddlCity" style="width: 200px" class="form-control"></select>
                         </div>
@@ -136,10 +136,13 @@
                     </div>
                     <div class="form-group">
                         <div>
-                            <label>Title: </label><span id="spanTitle"></span>
+                            <label class="col-sm-2">Title: </label><span id="spanTitle" class="col-sm-5"></span>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div>
-                            <label>Description: </label><span id="spanDescription">
+                            <label class="col-sm-2">Description: </label>
+                            <span id="spanDescription" class="col-sm-5"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -153,10 +156,10 @@
                 <div class="col-sm-offset-5">
                     <div class="form-group">
                         <div class="col-md-3">
-                            <input type='button' class='btn button-previous' name='previous' value='Previous' width="30" />
+                            <input type='button' class='btn btn-default button-previous' name='previous' value='Previous' width="30" />
                         </div>
                         <div class="col-md-3">
-                            <input type='button' class='btn button-next' name='next' value='Next' width="30" />
+                            <input type='button' class='btn btn-default button-next' name='next' value='Next' width="30" />
                         </div>
                     </div>
                 </div>
@@ -212,6 +215,12 @@
                 });
             });
 
+            $('#ddlCity').on("change", function () {
+                var ddlCity = document.getElementById("ddlCity");
+
+                $('#spanCity').html(ddlCity.options[ddlCity.selectedIndex].text);
+            });
+
             $('#SelectedYearId').on("change", function () {
                 var _yearId = $('#SelectedYearId').val();
                 var url = "/Post/GetYearById";
@@ -228,6 +237,14 @@
                         alert("error : " + JSON.stringify(reponse));
                     }
                 });
+            });
+
+            $('#Post_PostTitle').keyup(function () {
+                $('#spanTitle').html($(this).val());
+            });
+
+            $('#Post_PostDescription').keyup(function () {
+                $('#spanDescription').html($(this).val());
             });
 
             $("input[type='submit']").click(function () {
@@ -251,7 +268,7 @@
                 success: function (data) {
                     var markup = "<option value='0'>--Select City--</option>";
                     for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        markup += "<option value=" + data[x].CityId + ">" + data[x].City + "</option>";
                     }
                     $("#ddlCity").html(markup).show();
                 },

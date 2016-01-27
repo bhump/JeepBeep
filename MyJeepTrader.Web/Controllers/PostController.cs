@@ -67,7 +67,7 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult GetCityByStateId(int StateId)
         {
             Service service = new Service();
-            var cities = service.GetCityByState(StateId);
+            var cities = service.GetCityByStateId(StateId);
             var json = Json(cities);
 
             return json;

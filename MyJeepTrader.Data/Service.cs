@@ -148,11 +148,11 @@ namespace MyJeepTrader.Data
             return (from s in context.tStates select s).ToList();
         }
 
-        public List<tCity> GetCityByState(int stateId)
+        public List<CityDropDown> GetCityByStateId(int stateId)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
 
-            var cities = (from c in context.tCities where c.StateId == stateId select c).ToList();
+            var cities = context.tCities.Where(c => c.StateId == stateId).Select(c => new CityDropDown { CityId = c.CityId, City = c.City }).ToList();
 
             return cities;
         }
@@ -711,7 +711,7 @@ namespace MyJeepTrader.Data
 
         public UserInformation GetUserInformation(string userId)
         {
-            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var userInfo = (from p in context.tUserProfiles
                                 join m in context.tMemberships on p.Id equals m.Id
