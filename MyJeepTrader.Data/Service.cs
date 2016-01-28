@@ -152,7 +152,7 @@ namespace MyJeepTrader.Data
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
 
-            var cities = context.tCities.Where(c => c.StateId == stateId).Select(c => new CityDropDown { CityId = c.CityId, City = c.City }).ToList();
+            var cities = context.tCities.Where(c => c.StateId == stateId).Select(c => new CityDropDown { CityId = c.CityId, City = c.City }).OrderBy(c => c.City).ToList();
 
             return cities;
         }
