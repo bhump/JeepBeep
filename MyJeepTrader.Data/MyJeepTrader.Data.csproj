@@ -112,9 +112,6 @@
     <Compile Include="tImage.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="tLocation.cs">
-      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="tMake.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>

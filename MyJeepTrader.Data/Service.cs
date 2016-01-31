@@ -7,6 +7,7 @@ using LinqKit;
 using MyJeepTrader.Data.Models;
 using System.IO;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 
 namespace MyJeepTrader.Data
 {
@@ -173,6 +174,15 @@ namespace MyJeepTrader.Data
             var year = (from y in context.tYears where y.YearId == yearId select y.Year).First();
 
             return year;
+        }
+
+        public string GetModelById(int modelId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+
+            var model = (from m in context.tModels where m.ModelId == modelId select m.Model).First();
+
+            return model;
         }
 
         #endregion

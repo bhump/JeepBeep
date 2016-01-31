@@ -8,7 +8,6 @@
     <EntitySet Name="sysdiagrams" EntityType="MyJeepTraderModel.sysdiagram" />
     <EntitySet Name="tConnectedUsers" EntityType="MyJeepTraderModel.tConnectedUser" />
     <EntitySet Name="tImages" EntityType="MyJeepTraderModel.tImage" />
-    <EntitySet Name="tLocations" EntityType="MyJeepTraderModel.tLocation" />
     <EntitySet Name="tMakes" EntityType="MyJeepTraderModel.tMake" />
     <EntitySet Name="tMemberships" EntityType="MyJeepTraderModel.tMembership" />
     <EntitySet Name="tMessageControls" EntityType="MyJeepTraderModel.tMessageControl" />
@@ -16,7 +15,6 @@
     <EntitySet Name="tModels" EntityType="MyJeepTraderModel.tModel" />
     <EntitySet Name="tModelPostControls" EntityType="MyJeepTraderModel.tModelPostControl" />
     <EntitySet Name="tModelYearControls" EntityType="MyJeepTraderModel.tModelYearControl" />
-    <EntitySet Name="tPosts" EntityType="MyJeepTraderModel.tPost" />
     <EntitySet Name="tPostTypes" EntityType="MyJeepTraderModel.tPostType" />
     <EntitySet Name="tStates" EntityType="MyJeepTraderModel.tState" />
     <EntitySet Name="tSubModels" EntityType="MyJeepTraderModel.tSubModel" />
@@ -37,10 +35,6 @@
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="tMembership" EntitySet="tMemberships" />
     </AssociationSet>
-    <AssociationSet Name="FK_tPosts_AspNetUsers" Association="MyJeepTraderModel.FK_tPosts_AspNetUsers">
-      <End Role="AspNetUser" EntitySet="AspNetUsers" />
-      <End Role="tPost" EntitySet="tPosts" />
-    </AssociationSet>
     <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers">
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="tUserProfile" EntitySet="tUserProfiles" />
@@ -49,21 +43,9 @@
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
     </AssociationSet>
-    <AssociationSet Name="FK_tImages_tPosts" Association="MyJeepTraderModel.FK_tImages_tPosts">
-      <End Role="tPost" EntitySet="tPosts" />
-      <End Role="tImage" EntitySet="tImages" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPosts_tLocations" Association="MyJeepTraderModel.FK_tPosts_tLocations">
-      <End Role="tLocation" EntitySet="tLocations" />
-      <End Role="tPost" EntitySet="tPosts" />
-    </AssociationSet>
     <AssociationSet Name="FK_tModel_tMake" Association="MyJeepTraderModel.FK_tModel_tMake">
       <End Role="tMake" EntitySet="tMakes" />
       <End Role="tModel" EntitySet="tModels" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPosts_tMake" Association="MyJeepTraderModel.FK_tPosts_tMake">
-      <End Role="tMake" EntitySet="tMakes" />
-      <End Role="tPost" EntitySet="tPosts" />
     </AssociationSet>
     <AssociationSet Name="FK_tMessageControl_tMessages" Association="MyJeepTraderModel.FK_tMessageControl_tMessages">
       <End Role="tMessage" EntitySet="tMessages" />
@@ -81,25 +63,9 @@
       <End Role="tModel" EntitySet="tModels" />
       <End Role="tSubModel" EntitySet="tSubModels" />
     </AssociationSet>
-    <AssociationSet Name="FK_tModelControl_tPosts" Association="MyJeepTraderModel.FK_tModelControl_tPosts">
-      <End Role="tPost" EntitySet="tPosts" />
-      <End Role="tModelPostControl" EntitySet="tModelPostControls" />
-    </AssociationSet>
     <AssociationSet Name="FK_tModelYearControl_tYear" Association="MyJeepTraderModel.FK_tModelYearControl_tYear">
       <End Role="tYear" EntitySet="tYears" />
       <End Role="tModelYearControl" EntitySet="tModelYearControls" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPosts_tPostType" Association="MyJeepTraderModel.FK_tPosts_tPostType">
-      <End Role="tPostType" EntitySet="tPostTypes" />
-      <End Role="tPost" EntitySet="tPosts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPosts_tSubModel" Association="MyJeepTraderModel.FK_tPosts_tSubModel">
-      <End Role="tSubModel" EntitySet="tSubModels" />
-      <End Role="tPost" EntitySet="tPosts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tPosts_tYear" Association="MyJeepTraderModel.FK_tPosts_tYear">
-      <End Role="tYear" EntitySet="tYears" />
-      <End Role="tPost" EntitySet="tPosts" />
     </AssociationSet>
     <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles">
       <End Role="tVehicleProfile" EntitySet="tVehicleProfiles" />
@@ -122,6 +88,35 @@
     <AssociationSet Name="FK_tCities_tStates" Association="MyJeepTraderModel.FK_tCities_tStates">
       <End Role="tState" EntitySet="tStates" />
       <End Role="tCity" EntitySet="tCities" />
+    </AssociationSet>
+    <EntitySet Name="tPosts" EntityType="MyJeepTraderModel.tPost" />
+    <AssociationSet Name="FK_tPosts_AspNetUsers" Association="MyJeepTraderModel.FK_tPosts_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tImages_tPosts" Association="MyJeepTraderModel.FK_tImages_tPosts">
+      <End Role="tPost" EntitySet="tPosts" />
+      <End Role="tImage" EntitySet="tImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tMake" Association="MyJeepTraderModel.FK_tPosts_tMake">
+      <End Role="tMake" EntitySet="tMakes" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tModelControl_tPosts" Association="MyJeepTraderModel.FK_tModelControl_tPosts">
+      <End Role="tPost" EntitySet="tPosts" />
+      <End Role="tModelPostControl" EntitySet="tModelPostControls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tPostType" Association="MyJeepTraderModel.FK_tPosts_tPostType">
+      <End Role="tPostType" EntitySet="tPostTypes" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tSubModel" Association="MyJeepTraderModel.FK_tPosts_tSubModel">
+      <End Role="tSubModel" EntitySet="tSubModels" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tYear" Association="MyJeepTraderModel.FK_tPosts_tYear">
+      <End Role="tYear" EntitySet="tYears" />
+      <End Role="tPost" EntitySet="tPosts" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="AspNetRole">
@@ -172,10 +167,10 @@
     <NavigationProperty Name="AspNetUserClaims" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
     <NavigationProperty Name="AspNetUserLogins" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
     <NavigationProperty Name="tMemberships" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="AspNetUser" ToRole="tMembership" />
-    <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="AspNetUser" ToRole="tPost" />
     <NavigationProperty Name="tUserProfiles" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="AspNetUser" ToRole="tUserProfile" />
     <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="AspNetUser" ToRole="tVehicleProfileControl" />
     <NavigationProperty Name="AspNetRoles" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+    <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="AspNetUser" ToRole="tPost" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -203,19 +198,6 @@
     <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="PostId" Type="Int32" />
     <NavigationProperty Name="tPost" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tImage" ToRole="tPost" />
-  </EntityType>
-  <EntityType Name="tLocation">
-    <Key>
-      <PropertyRef Name="LocationId" />
-    </Key>
-    <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Line1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Line2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="StateId" Type="Int32" />
-    <Property Name="CountryId" Type="Int32" />
-    <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tLocation" ToRole="tPost" />
   </EntityType>
   <EntityType Name="tMake">
     <Key>
@@ -293,34 +275,6 @@
     <Property Name="ModelId" Type="Int32" />
     <NavigationProperty Name="tModel" Relationship="MyJeepTraderModel.FK_tModelYearControl_tModelYearControl" FromRole="tModelYearControl" ToRole="tModel" />
     <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tModelYearControl_tYear" FromRole="tModelYearControl" ToRole="tYear" />
-  </EntityType>
-  <EntityType Name="tPost">
-    <Key>
-      <PropertyRef Name="PostId" />
-    </Key>
-    <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="PostTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PostDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="PartType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PartBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="IsVehicle" Type="Boolean" />
-    <Property Name="MakeId" Type="Int32" />
-    <Property Name="SubModelId" Type="Int32" />
-    <Property Name="YearId" Type="Int32" />
-    <Property Name="Active" Type="Boolean" />
-    <Property Name="LocationId" Type="Int32" />
-    <Property Name="PostTypeId" Type="Int32" />
-    <Property Name="DateCreated" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="tPost" ToRole="AspNetUser" />
-    <NavigationProperty Name="tImages" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tPost" ToRole="tImage" />
-    <NavigationProperty Name="tLocation" Relationship="MyJeepTraderModel.FK_tPosts_tLocations" FromRole="tPost" ToRole="tLocation" />
-    <NavigationProperty Name="tMake" Relationship="MyJeepTraderModel.FK_tPosts_tMake" FromRole="tPost" ToRole="tMake" />
-    <NavigationProperty Name="tModelPostControls" Relationship="MyJeepTraderModel.FK_tModelControl_tPosts" FromRole="tPost" ToRole="tModelPostControl" />
-    <NavigationProperty Name="tPostType" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPost" ToRole="tPostType" />
-    <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
-    <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
   </EntityType>
   <EntityType Name="tPostType">
     <Key>
@@ -451,18 +405,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tPosts_AspNetUsers">
-    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUser">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="tPost">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tUserProfiles_AspNetUsers">
     <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
     <End Type="MyJeepTraderModel.tUserProfile" Role="tUserProfile" Multiplicity="*" />
@@ -487,30 +429,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tImages_tPosts">
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tImage" Role="tImage" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tPost">
-        <PropertyRef Name="PostId" />
-      </Principal>
-      <Dependent Role="tImage">
-        <PropertyRef Name="PostId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tPosts_tLocations">
-    <End Type="MyJeepTraderModel.tLocation" Role="tLocation" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tLocation">
-        <PropertyRef Name="LocationId" />
-      </Principal>
-      <Dependent Role="tPost">
-        <PropertyRef Name="LocationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tModel_tMake">
     <End Type="MyJeepTraderModel.tMake" Role="tMake" Multiplicity="0..1" />
     <End Type="MyJeepTraderModel.tModel" Role="tModel" Multiplicity="*" />
@@ -519,18 +437,6 @@
         <PropertyRef Name="MakeId" />
       </Principal>
       <Dependent Role="tModel">
-        <PropertyRef Name="MakeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tPosts_tMake">
-    <End Type="MyJeepTraderModel.tMake" Role="tMake" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tMake">
-        <PropertyRef Name="MakeId" />
-      </Principal>
-      <Dependent Role="tPost">
         <PropertyRef Name="MakeId" />
       </Dependent>
     </ReferentialConstraint>
@@ -583,18 +489,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tModelControl_tPosts">
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tModelPostControl" Role="tModelPostControl" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tPost">
-        <PropertyRef Name="PostId" />
-      </Principal>
-      <Dependent Role="tModelPostControl">
-        <PropertyRef Name="PostId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tModelYearControl_tYear">
     <End Type="MyJeepTraderModel.tYear" Role="tYear" Multiplicity="0..1" />
     <End Type="MyJeepTraderModel.tModelYearControl" Role="tModelYearControl" Multiplicity="*" />
@@ -603,42 +497,6 @@
         <PropertyRef Name="YearId" />
       </Principal>
       <Dependent Role="tModelYearControl">
-        <PropertyRef Name="YearId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tPosts_tPostType">
-    <End Type="MyJeepTraderModel.tPostType" Role="tPostType" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tPostType">
-        <PropertyRef Name="PostTypeId" />
-      </Principal>
-      <Dependent Role="tPost">
-        <PropertyRef Name="PostTypeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tPosts_tSubModel">
-    <End Type="MyJeepTraderModel.tSubModel" Role="tSubModel" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tSubModel">
-        <PropertyRef Name="SubModelId" />
-      </Principal>
-      <Dependent Role="tPost">
-        <PropertyRef Name="SubModelId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tPosts_tYear">
-    <End Type="MyJeepTraderModel.tYear" Role="tYear" Multiplicity="0..1" />
-    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tYear">
-        <PropertyRef Name="YearId" />
-      </Principal>
-      <Dependent Role="tPost">
         <PropertyRef Name="YearId" />
       </Dependent>
     </ReferentialConstraint>
@@ -718,6 +576,118 @@
       </Principal>
       <Dependent Role="tCity">
         <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tPost">
+    <Key>
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="PostTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PostDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PartType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PartBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsVehicle" Type="Boolean" />
+    <Property Name="MakeId" Type="Int32" />
+    <Property Name="SubModelId" Type="Int32" />
+    <Property Name="YearId" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="PostTypeId" Type="Int32" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="tPost" ToRole="AspNetUser" />
+    <NavigationProperty Name="tImages" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tPost" ToRole="tImage" />
+    <NavigationProperty Name="tMake" Relationship="MyJeepTraderModel.FK_tPosts_tMake" FromRole="tPost" ToRole="tMake" />
+    <NavigationProperty Name="tModelPostControls" Relationship="MyJeepTraderModel.FK_tModelControl_tPosts" FromRole="tPost" ToRole="tModelPostControl" />
+    <NavigationProperty Name="tPostType" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPost" ToRole="tPostType" />
+    <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
+    <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
+  </EntityType>
+  <Association Name="FK_tPosts_AspNetUsers">
+    <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tImages_tPosts">
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tImage" Role="tImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPost">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="tImage">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPosts_tMake">
+    <End Type="MyJeepTraderModel.tMake" Role="tMake" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tMake">
+        <PropertyRef Name="MakeId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="MakeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tModelControl_tPosts">
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tModelPostControl" Role="tModelPostControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPost">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="tModelPostControl">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPosts_tPostType">
+    <End Type="MyJeepTraderModel.tPostType" Role="tPostType" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tPostType">
+        <PropertyRef Name="PostTypeId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="PostTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPosts_tSubModel">
+    <End Type="MyJeepTraderModel.tSubModel" Role="tSubModel" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tSubModel">
+        <PropertyRef Name="SubModelId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="SubModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPosts_tYear">
+    <End Type="MyJeepTraderModel.tYear" Role="tYear" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tYear">
+        <PropertyRef Name="YearId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="YearId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

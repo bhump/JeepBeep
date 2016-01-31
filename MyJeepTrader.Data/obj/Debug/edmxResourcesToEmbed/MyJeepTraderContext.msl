@@ -75,19 +75,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tLocations">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tLocation">
-        <MappingFragment StoreEntitySet="tLocations">
-          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
-          <ScalarProperty Name="Zip" ColumnName="Zip" />
-          <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="Line2" ColumnName="Line2" />
-          <ScalarProperty Name="Line1" ColumnName="Line1" />
-          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tMakes">
       <EntityTypeMapping TypeName="MyJeepTraderModel.tMake">
         <MappingFragment StoreEntitySet="tMake">
@@ -155,27 +142,6 @@
           <ScalarProperty Name="ModelId" ColumnName="ModelId" />
           <ScalarProperty Name="YearId" ColumnName="YearId" />
           <ScalarProperty Name="ModelYearControlId" ColumnName="ModelYearControlId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tPosts">
-      <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
-        <MappingFragment StoreEntitySet="tPosts">
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
-          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="YearId" ColumnName="YearId" />
-          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
-          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
-          <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
-          <ScalarProperty Name="PartName" ColumnName="PartName" />
-          <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
-          <ScalarProperty Name="PartType" ColumnName="PartType" />
-          <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
-          <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="PostId" ColumnName="PostId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -295,6 +261,28 @@
           <ScalarProperty Name="ZIP" ColumnName="ZIP" />
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tPosts">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
+        <MappingFragment StoreEntitySet="tPosts">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="YearId" ColumnName="YearId" />
+          <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
+          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+          <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
+          <ScalarProperty Name="PartName" ColumnName="PartName" />
+          <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
+          <ScalarProperty Name="PartType" ColumnName="PartType" />
+          <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
+          <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

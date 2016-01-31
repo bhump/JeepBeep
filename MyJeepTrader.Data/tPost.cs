@@ -32,13 +32,13 @@ namespace MyJeepTrader.Data
         public Nullable<int> SubModelId { get; set; }
         public Nullable<int> YearId { get; set; }
         public Nullable<bool> Active { get; set; }
-        public Nullable<int> LocationId { get; set; }
+        public Nullable<int> StateId { get; set; }
+        public Nullable<int> CityId { get; set; }
         public Nullable<int> PostTypeId { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<tImage> tImages { get; set; }
-        public virtual tLocation tLocation { get; set; }
         public virtual tMake tMake { get; set; }
         public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
         public virtual tPostType tPostType { get; set; }

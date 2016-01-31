@@ -9,6 +9,7 @@ using MyJeepTrader.Web.Helpers;
 using MyJeepTrader.Web.Models;
 using MyJeepTrader.Web.ViewModels;
 using System.IO;
+using System.Data.Entity.Validation;
 
 //test comment.
 namespace MyJeepTrader.Web.Controllers
@@ -95,6 +96,22 @@ namespace MyJeepTrader.Web.Controllers
             return json;
         }
 
+        [HttpPost]
+        public ActionResult GetModelNameById(List<int> modelIds)
+        {
+            Service service = new Service();
+            
+            foreach(int id in modelIds)
+            {
+                var models = service.GetModelById(id);
+
+                var json = Json(models);
+
+                return json;
+            }
+
+            return null;
+        }
         // POST: Post/Create
         [HttpPost]
         public ActionResult Create(PostCreateViewModel model, IEnumerable<HttpPostedFileBase> files)
@@ -104,14 +121,13 @@ namespace MyJeepTrader.Web.Controllers
                 var userId = User.Identity.GetUserId();
 
                 Service service = new Service();
-                //model.Post.MakeID = 
-                //model.Post.YearID = model.Years.Where(x => x.IsSelected)
                 model.Post.PostTypeId = model.SelectedPostTypeId;
                 model.Post.YearId = model.SelectedYearId;
                 model.Post.IsVehicle = model.IsJeep;
                 model.Post.Active = true;
                 model.Post.MakeId = 1; //this site is only for jeep right now
-
+                model.Post.StateId = model.SelectedStateId;
+                model.Post.CityId = model.SelectedCityId;
                 model.Post.Id = userId;
 
                 var newPostId = service.CreateNewPost(model.Post);
@@ -142,8 +158,19 @@ namespace MyJeepTrader.Web.Controllers
                 TempData["Message"] = "Post Created Successfully!";
                 return RedirectToAction("Index");
             }
-            catch
+            catch (DbEntityValidationException e)
             {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+
                 return View();
             }
         }

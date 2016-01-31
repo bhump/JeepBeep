@@ -32,7 +32,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tConnectedUser> tConnectedUsers { get; set; }
         public virtual DbSet<tImage> tImages { get; set; }
-        public virtual DbSet<tLocation> tLocations { get; set; }
         public virtual DbSet<tMake> tMakes { get; set; }
         public virtual DbSet<tMembership> tMemberships { get; set; }
         public virtual DbSet<tMessageControl> tMessageControls { get; set; }
@@ -40,7 +39,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tModel> tModels { get; set; }
         public virtual DbSet<tModelPostControl> tModelPostControls { get; set; }
         public virtual DbSet<tModelYearControl> tModelYearControls { get; set; }
-        public virtual DbSet<tPost> tPosts { get; set; }
         public virtual DbSet<tPostType> tPostTypes { get; set; }
         public virtual DbSet<tState> tStates { get; set; }
         public virtual DbSet<tSubModel> tSubModels { get; set; }
@@ -51,5 +49,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tYear> tYears { get; set; }
         public virtual DbSet<tSubscription> tSubscriptions { get; set; }
         public virtual DbSet<tCity> tCities { get; set; }
+        public virtual DbSet<tPost> tPosts { get; set; }
     }
 }
