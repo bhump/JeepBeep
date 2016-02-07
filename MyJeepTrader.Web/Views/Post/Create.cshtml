@@ -41,7 +41,7 @@
                             <h4>Select a state.</h4>
                             @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "Select State", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);" })
                             <h4>Select a city.</h4>
-                            @Html.DropDownListFor(m => m.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()),  new { @class = "form-control", id = "ddlCity" })
+                            @Html.DropDownListFor(m => m.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", id = "ddlCity" })
                             @*<select id="ddlCity" name="ddlCity" class="form-control" ></select>*@
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             {
                                 <div class="form-group-sm">
                                     @Html.HiddenFor(model => model.Models[i].TModel.ModelId, new { id = "hdModelVal" })
-                                    @Html.CheckBoxFor(model => model.Models[i].IsSelected)
+                                    @Html.CheckBoxFor(model => model.Models[i].IsSelected, new { @class = "chk", id = @Model.Models[i].TModel.Model })
                                     <label>@Model.Models[i].TModel.Model</label>
                                 </div>
 
@@ -107,7 +107,8 @@
                             </div>
                             <div class="form-group">
                                 <div>
-                                    <label class="col-sm-2">Model:</label><span id="spanModel" class="col-sm-2"></span>
+                                    <label class="col-sm-2">Model:</label>
+                                    <span id="spanModel" class="col-sm-2"></span>
                                 </div>
                             </div>
                         </div>
@@ -227,6 +228,14 @@
                 });
             });
 
+            $('.button-next').click(function () {
+                getModelValues();
+            });
+
+            $('.tab-pane').click(function () {
+                getModelValues();
+            });
+
             $('#ddlCity').on("change", function () {
                 var ddlCity = document.getElementById("ddlCity");
 
@@ -244,6 +253,7 @@
                     type: "POST",
                     success: function (data) {
                         $('#spanYear').html(data);
+                        getModelValues();
                     },
                     error: function (reponse) {
                         alert("error : " + JSON.stringify(reponse));
@@ -289,6 +299,32 @@
                 }
             });
 
+        }
+
+        function getModelValues() {
+            /* declare an checkbox array */
+            var chkArray = [];
+
+            /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+            $(".chk:checked").each(function () {
+                /*sets the id's which in this case are the Jeep's Models.*/
+                chkArray.push($(this).attr("id"));
+            });
+
+            /* we join the array separated by the comma */
+            var selected;
+            selected = chkArray.join(',') + ",";
+
+            /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+            if (selected.length > 1) {
+                var lastChar = selected.slice(-1);
+                if (lastChar == ',') {
+                    selected = selected.slice(0, -1);
+                    $('#spanModel').html(selected);
+                }
+            } else {
+                alert("Please at least one of the checkbox");
+            }
         }
 
         @*$(function () {
