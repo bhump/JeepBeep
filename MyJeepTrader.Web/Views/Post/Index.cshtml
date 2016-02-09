@@ -8,7 +8,7 @@
 
 <h2>My Jeep Trader Posts</h2>
 
-@if (ViewBag.Message != null)
+@*@if (ViewBag.Message != null)
 {
     <div class="alert alert-info alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -16,7 +16,13 @@
         </button>
         @ViewBag.Message
     </div>
-}
+}*@
+
+@*<div class="row">
+    <div>
+
+    </div>
+</div>*@
 
 @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
 {
@@ -57,7 +63,7 @@
     </table>
 }
 
-@section scripts
+@*@section scripts
 {
     <script type="text/javascript">
         $(document).ready(function() {
@@ -72,5 +78,5 @@
 
     </script>
 
-}
+}*@
 

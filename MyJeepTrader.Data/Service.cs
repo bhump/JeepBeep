@@ -47,7 +47,12 @@ namespace MyJeepTrader.Data
                 string temp = keyword;
                 predicate = predicate.Or(p => p.PostTitle.Contains(temp));
                 predicate = predicate.Or(p => p.PostDescription.Contains(temp));
-                //TODO What else do we want to search for?
+                predicate = predicate.Or(p => p.PartBrand.Contains(temp));
+                predicate = predicate.Or(p => p.PartType.Contains(temp));
+                predicate = predicate.Or(p => p.AspNetUser.UserName.Contains(temp));
+                predicate = predicate.Or(p => p.tMake.Make.Contains(temp));
+                predicate = predicate.Or(p => p.tPostType.Type.Contains(temp));
+                predicate = predicate.Or(p => p.tYear.Year.Contains(temp));
             }
 
             return _context.tPosts.AsExpandable().Where(predicate);
