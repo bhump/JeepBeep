@@ -19,3 +19,6 @@
 /// <reference path="sweetalert-dev.js" />
 /// <reference path="sweetalert.min.js" />
 /// <reference path="jquery.bootstrap.wizard.js" />
+/// <reference path="jquery.slimscroll.min.js" />
+/// <reference path="jquery.tipsy.js" />
+/// <reference path="jquery.main.js" />

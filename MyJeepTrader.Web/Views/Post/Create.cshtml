@@ -42,7 +42,6 @@
                             @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "Select State", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);" })
                             <h4>Select a city.</h4>
                             @Html.DropDownListFor(m => m.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", id = "ddlCity" })
-                            @*<select id="ddlCity" name="ddlCity" class="form-control" ></select>*@
                         </div>
                     </div>
                 </div>
@@ -58,12 +57,38 @@
                                     @Html.CheckBoxFor(model => model.Models[i].IsSelected, new { @class = "chk", id = @Model.Models[i].TModel.Model })
                                     <label>@Model.Models[i].TModel.Model</label>
                                 </div>
-
                             }
                         </div>
                         <div class="col-md-4">
-                            <h4>Choose a model year.</h4>
-                            @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "Select Year", new { @class = "form-control" })
+                            <div>
+                                <h4>Choose a model year.</h4>
+                                @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "Select Year", new { @class = "form-control" })
+                            </div>
+                            <div>
+                                <h4>Jeep or Accessory?</h4>
+                                <div class="form-group-sm">
+                                    <div class="col-md-4">
+                                        @Html.RadioButtonFor(model => model.Post.IsVehicle, "True", new { Checked = "checked", @class = "rbJeep" })
+                                        <label id="lblJeepLabel" for="rbJeep">Jeep</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.RadioButtonFor(model => model.Post.IsVehicle, "False", new { @class = "rbPart" })
+                                        <label id="lblAccessoryLabel" for="rbAccessory">Part</label>
+                                    </div>
+                                </div>
+                                <div class="form-group-sm">
+                                    <div class="hidden partTypes">
+                                        <div class="col-sm-6">
+                                            <label>Part Type:</label>
+                                            @Html.TextBoxFor(model => model.Post.PartType, new { @class = "form-control no-max-width" })
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Part Brand:</label>
+                                            @Html.TextBoxFor(model => model.Post.PartBrand, new { @class = "form-control no-max-width" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -232,8 +257,16 @@
                 getModelValues();
             });
 
-            $('.tab-pane').click(function () {
+            $('#tab5').click(function () {
                 getModelValues();
+            });
+
+            $('.rbJeep').click(function () {
+                $('.partTypes').addClass('hidden');
+            });
+
+            $('.rbPart').click(function () {
+                $('.partTypes').removeClass('hidden');
             });
 
             $('#ddlCity').on("change", function () {

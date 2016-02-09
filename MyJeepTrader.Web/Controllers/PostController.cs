@@ -123,7 +123,7 @@ namespace MyJeepTrader.Web.Controllers
                 Service service = new Service();
                 model.Post.PostTypeId = model.SelectedPostTypeId;
                 model.Post.YearId = model.SelectedYearId;
-                model.Post.IsVehicle = model.IsJeep;
+                //model.Post.IsVehicle = model.IsJeep;
                 model.Post.Active = true;
                 model.Post.MakeId = 1; //this site is only for jeep right now
                 model.Post.StateId = model.SelectedStateId;
