@@ -22,7 +22,7 @@ namespace MyJeepTrader.Web.WebServices
     {
 
         [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json, UseHttpGet = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public UserInformation GetUserInformation(string userId)
         {
             Service service = new Service();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyJeepTrader.Data;
+using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Web.ViewModels
 {
@@ -12,7 +13,5 @@ namespace MyJeepTrader.Web.ViewModels
         public IEnumerable<tPost> Posts { get; set; }
 
         public IEnumerable<tPost> SearchedPosts { get; set; } 
-
-
     }
 }

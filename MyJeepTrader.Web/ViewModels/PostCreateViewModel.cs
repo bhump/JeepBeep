@@ -32,7 +32,6 @@ namespace MyJeepTrader.Web.ViewModels
         public bool IsJeep { get; set; }
         
         public bool IsAccessory { get; set; }
-        //public byte[] Image { get; set; }
 
         public HttpPostedFileBase Image { get; set; }
 
@@ -48,7 +47,7 @@ namespace MyJeepTrader.Web.ViewModels
     public class tModelWithSelected
     {
         public tModel TModel { get; set; }
-        public bool IsSelected { get; set; }
 
+        public bool IsSelected { get; set; }
     }
 }

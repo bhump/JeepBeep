@@ -8,7 +8,7 @@
 
 <h2>My Jeep Trader Posts</h2>
 
-@*@if (ViewBag.Message != null)
+@if (ViewBag.Message != null)
 {
     <div class="alert alert-info alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -16,13 +16,13 @@
         </button>
         @ViewBag.Message
     </div>
-}*@
+}
 
-@*<div class="row">
+<div class="row">
     <div>
 
     </div>
-</div>*@
+</div>
 
 @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
 {
@@ -46,16 +46,22 @@
 {
     <table class="table">
         <tr>
+            @*<th>User</th>*@
             <th>Post Title</th>
             <th>Post Description</th>
-            <th>Part Name</th>
+            <th>Jeep Model</th>
+            <th>Part Brand</th>
+            <th>Part Type</th>
         </tr>
         @foreach (var item in Model.SearchedPosts)
         {
             <tr>
+                @*<td>@item.AspNetUser.UserName</td>*@
                 <td>@item.PostTitle</td>
                 <td>@item.PostDescription</td>
-                <td>@item.PartName</td>
+                <td>@item.tModelPostControls</td>
+                <td>@item.PartBrand</td>
+                <td>@item.PartType</td>
             </tr>
             
         }
@@ -63,7 +69,7 @@
     </table>
 }
 
-@*@section scripts
+@section scripts
 {
     <script type="text/javascript">
         $(document).ready(function() {
@@ -78,5 +84,5 @@
 
     </script>
 
-}*@
+}
 

@@ -53,6 +53,7 @@ namespace MyJeepTrader.Data
                 predicate = predicate.Or(p => p.tMake.Make.Contains(temp));
                 predicate = predicate.Or(p => p.tPostType.Type.Contains(temp));
                 predicate = predicate.Or(p => p.tYear.Year.Contains(temp));
+                //predicate = predicate.Or(p => p.tModelPostControls.Contains(temp));
             }
 
             return _context.tPosts.AsExpandable().Where(predicate);
@@ -732,6 +733,7 @@ namespace MyJeepTrader.Data
                                 join m in context.tMemberships on p.Id equals m.Id
                                 join s in context.tSubscriptions on m.MembershipId equals s.MembershipId
                                 join st in context.tSubscriptionTypes on s.SubscriptionTypeId equals st.SubscriptionTypeId
+                                where p.AspNetUser.Id == userId
                                 select new UserInformation
                                 {
                                     FirstName = p.FirstName,
