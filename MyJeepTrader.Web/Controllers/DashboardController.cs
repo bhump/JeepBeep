@@ -228,7 +228,7 @@ namespace MyJeepTrader.Web.Controllers
                 var firstName = collection["FirstName"] == "" ? null : collection["FirstName"].ToString();
                 var lastName = collection["LastName"] == "" ? null : collection["LastName"].ToString();
                 var birthDate = collection["BirthDate"] == " " ? null : collection["BirthDate"].ToString();
-                var avatar = imageData == null ? null : imageData;
+                var avatar = imageData.Length ==  0 ? null : imageData;
                 var description = collection["Description"] == "" ? null : collection["Description"].ToString();
                 var facebook = collection["Facebook"] == "" ? null : collection["Facebook"].ToString();
                 var twitter = collection["Twitter"] == "" ? null : collection["Twitter"].ToString();
