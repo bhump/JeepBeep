@@ -23,8 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-div.transbox {
-    width: 50%;
+.transbox {
     height: 100%;
     margin: 30px;
     background-color: #000000;
@@ -34,18 +33,14 @@ div.transbox {
     filter: alpha(opacity=60); /* For IE8 and earlier */
 }
 
-    div.transbox p {
-        margin: 5%;
-        font-weight: bold;
-        color: white;
-    }
+}
 
 div.rightalign {
     text-align: right;
     padding-right: 2%;
 }
 
-div.CenterSubTitle{
+div.CenterSubTitle {
     text-align: left;
     padding-left: 7%;
 }
@@ -152,8 +147,7 @@ div.CenterSubTitle{
         padding-top: 100px;
     }
 
-.ulTitle{
+.ulTitle {
     list-style-type: none;
-    display:inline-block;
+    display: inline-block;
 }
-

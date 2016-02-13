@@ -4,30 +4,44 @@
 
 
 <div class="jumbotron">
-    <div class="container">
-        <div class="transbox">
-            <div class="CenterSubTitle">
-                <h2 style="color:white">My Jeep Trader</h2>
-            </div>
-            <div class="CenterSubTitle">
-                <p>Make it your own.</p>
-            </div>
-            <div class="rightalign">
-                <label style="color:white">Want more search options?</label>
-                <button type="button" class="btn-info-home" onclick="location.href='Post/Index'">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </div>
-            <div class="form-horizontal">
-                @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
-                {
-                    <div class="input-group">
-                        @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "What are you looking for?" })
-                        <span class="input-group-btn">
-                            <button class="btn btn-default btn-group-lg btn-lg" type="button">Search</button>
-                        </span>
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6 transbox">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2 style="color:white" class="text-left">My Jeep Trader</h2>
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <h3>Make it your own.</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-right">
+                                <label style="color:white">Want more search options?</label>
+                                <button type="button" class="btn-info-home" onclick="location.href='Post/Index'">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                }
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-horizontal">
+                            @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
+                            {
+                                <div class="input-group col-lg-12">
+                                    @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "What are you looking for?" })
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-group-lg btn-lg" type="button">Search</button>
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
