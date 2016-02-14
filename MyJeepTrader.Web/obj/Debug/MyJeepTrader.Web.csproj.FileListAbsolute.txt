@@ -147,7 +147,6 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Ow
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Twitter.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Data.dll
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Newtonsoft.Json.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Owin.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.Helpers.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.Mvc.dll
@@ -176,7 +175,6 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Ow
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Newtonsoft.Json.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.Helpers.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.Mvc.xml
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.Razor.xml

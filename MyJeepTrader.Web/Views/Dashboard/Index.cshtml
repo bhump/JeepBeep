@@ -6,435 +6,437 @@
 
 <title>My Dashboard</title>
 
-<div class="col-lg-6" id="column1">
-    <div>
-        <div class="form-group-sm">
-            <h2>Membership</h2>
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-md-8">
-                        <label class="col-md-8">Member Since: </label>
-                        @Html.DisplayFor(m => m.MemberSince, "{0:MM/dd/yyyy}")
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-8">
-                        <label class="col-md-8">Subscription: </label>
-                        @Html.DisplayFor(m => m.SubscriptionType)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-8">
-                        <label class="col-md-8">Expiration Date: </label>
-                        @Html.DisplayFor(m => m.ExpirationDate, "{0:MM/dd/yyyy}")
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) <input type="button" class="btn btn-default" value="Cancel" onclick="loadCancel()" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group-sm">
-            <h2>Change Email</h2>
-            @using (Html.BeginForm("ChangeEmail", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                <div>
-                    <div>
-                        @Html.ValidationSummary("", new { @class = "text-danger" })
+<div class="row">
+    <div class="col-lg-6" id="column1">
+        <div>
+            <div class="form-group-sm">
+                <h2>Membership</h2>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label class="col-md-8">Member Since: </label>
+                            @Html.DisplayFor(m => m.MemberSince, "{0:MM/dd/yyyy}")
+                        </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label" })
                         <div class="col-md-8">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            <label class="col-md-8">Subscription: </label>
+                            @Html.DisplayFor(m => m.SubscriptionType)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label class="col-md-8">Expiration Date: </label>
+                            @Html.DisplayFor(m => m.ExpirationDate, "{0:MM/dd/yyyy}")
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Change e-mail" class="btn btn-default" />
+                            @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) <input type="button" class="btn btn-default" value="Cancel" onclick="loadCancel()" />
                         </div>
                     </div>
                 </div>
-            }
-        </div>
-        <div class="form-group-sm">
-            <h2>Change Password</h2>
-            @using (Html.BeginForm("ChangePassword", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
+            </div>
+            <div class="form-group-sm">
+                <h2>Change Email</h2>
+                @using (Html.BeginForm("ChangeEmail", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div>
+                        <div>
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Change e-mail" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="form-group-sm">
+                <h2>Change Password</h2>
+                @using (Html.BeginForm("ChangePassword", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.OldPassword, new { @class = "col-sm-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OldPassword, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NewPassword, new { @class = "col-sm-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NewPassword, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-3 control-label" })
-                    <div class="col-md-8">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Change password" class="btn btn-default" />
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Change password" class="btn btn-default" />
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
+            <div class="form-group-sm">
+                <h2>Update Primary Jeep</h2>
+                @using (Html.BeginForm("CreateJeepProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Image, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @if (Model.Image != null)
+                            {
+                                <img src="@Url.Action("ShowJeepImage", "Dashboard", new { UserName = @User.Identity.Name })" alt="Image Unavailable" width="87" height="85" />
+                            }
+                            else
+                            {
+                                <img src="~/Images/placeholder.jpg" width="87" height="85" />
+                            }
+                            <input type="file" name="Image" id="Image" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Manufactuer, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Manufactuer, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Model, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Model, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Make, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Make, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Year, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @if (Model.Year != 0)
+                            {
+                                @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.Year, " ", new { @class = "form-control" })
+                            }
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(m => m.PrimaryJeep, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.CheckBoxFor(m => m.PrimaryJeep, new { @checked = "checked" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.JeepDescription, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.JeepDescription, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Update Jeep" class="btn btn-default" />
+                            @Html.ActionLink("Add Another Jeep", "Index", "JeepProfile", new { UserName = @User.Identity.Name }, new { })
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
+    </div>
+    <div class="col-lg-6" id="column2">
         <div class="form-group-sm">
-            <h2>Update Primary Jeep</h2>
-            @using (Html.BeginForm("CreateJeepProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+            <h2>Update Your Profile</h2>
+            @using (Html.BeginForm("CreateUserProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
             {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Image, new { @class = "col-sm-3 control-label" })
+                <div class="hidden">
+                    @Html.LabelFor(m => m.UserProfileId, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
-                        @if (Model.Image != null)
+                        @Html.TextBoxFor(m => m.UserProfileId, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Avatar, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @if (Model.Avatar != null)
                         {
-                            <img src="@Url.Action("ShowJeepImage", "Dashboard", new { UserName = @User.Identity.Name })" alt="Image Unavailable" width="87" height="85" />
+                            <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Dashboard", new { UserName = @User.Identity.Name })' width="87" height="85" />
                         }
                         else
                         {
                             <img src="~/Images/placeholder.jpg" width="87" height="85" />
                         }
-                        <input type="file" name="Image" id="Image" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
+                        <input type="file" name="Avatar" id="Avatar" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Manufactuer, new { @class = "col-sm-3 control-label" })
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(m => m.Manufactuer, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Model, new { @class = "col-sm-3 control-label" })
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(m => m.Model, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Make, new { @class = "col-sm-3 control-label" })
+                    @Html.LabelFor(m => m.BirthDate, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(m => m.Make, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Year, new { @class = "col-sm-3 control-label" })
-                    <div class="col-md-8">
-                        @if (Model.Year != 0)
+                        @if (Model.BirthDate != DateTime.MinValue)
                         {
-                            @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}", new { @class = "form-control" })
                         }
                         else
                         {
-                            @Html.TextBoxFor(m => m.Year, " ", new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.BirthDate, " ", new { @class = "form-control" })
                         }
                     </div>
                 </div>
-                @*<div class="form-group">
-                        @Html.LabelFor(m => m.PrimaryJeep, new { @class = "col-sm-3 control-label" })
-                        <div class="col-md-8">
-                            @Html.CheckBoxFor(m => m.PrimaryJeep, new { @checked = "checked" })
-                        </div>
-                    </div>*@
                 <div class="form-group">
-                    @Html.LabelFor(m => m.JeepDescription, new { @class = "col-sm-3 control-label" })
+                    @Html.LabelFor(m => m.Website, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(m => m.JeepDescription, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Facebook, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Facebook, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Twitter, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Twitter, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GooglePlus, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.GooglePlus, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Ello, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Ello, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Description, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Update Jeep" class="btn btn-default" />
-                        @Html.ActionLink("Add Another Jeep", "Index", "JeepProfile", new { UserName = @User.Identity.Name }, new { })
+                        <input type="submit" value="Update Profile" class="btn btn-default" />
+                        @Html.ActionLink("View Profile", "Details", "UserProfile", new { UserName = @User.Identity.Name }, new { })
                     </div>
                 </div>
             }
         </div>
-    </div>
-</div>
-<div class="col-lg-6" id="column2">
-    <div class="form-group-sm">
-        <h2>Update Your Profile</h2>
-        @using (Html.BeginForm("CreateUserProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
-        {
-            <div class="hidden">
-                @Html.LabelFor(m => m.UserProfileId, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.UserProfileId, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Avatar, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @if (Model.Avatar != null)
-                    {
-                        <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Dashboard", new { UserName = @User.Identity.Name })' width="87" height="85" />
-                    }
-                    else
-                    {
-                        <img src="~/Images/placeholder.jpg" width="87" height="85" />
-                    }
-                    <input type="file" name="Avatar" id="Avatar" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.LastName, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BirthDate, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @if (Model.BirthDate != DateTime.MinValue)
-                    {
-                        @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}", new { @class = "form-control" })
-                    }
-                    else
-                    {
-                        @Html.TextBoxFor(m => m.BirthDate, " ", new { @class = "form-control" })
-                    }
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Website, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Facebook, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.Facebook, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Twitter, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.Twitter, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.GooglePlus, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.GooglePlus, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Ello, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(m => m.Ello, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Description, new { @class = "col-sm-3 control-label" })
-                <div class="col-md-8">
-                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Update Profile" class="btn btn-default" />
-                    @Html.ActionLink("View Profile", "Details", "UserProfile", new { UserName = @User.Identity.Name }, new { })
-                </div>
-            </div>
-        }
-    </div>
-    <div class="form-group">
-        <h2>Your Mailbox</h2>
-        <ul class="nav nav-tabs nav-justified">
-            <li class="active"><a data-toggle="pill" href="#Inbox">Inbox</a></li>
-            <li><a data-toggle="pill" href="#CreateMessage">Create Message</a></li>
-            <li><a data-toggle="pill" href="#SentMessages">Sent Messages</a></li>
-        </ul>
-        <br />
-        <div class="tab-content">
-            <div id="Inbox" class="tab-pane fade in active">
-                <div>
+        <div class="form-group">
+            <h2>Your Mailbox</h2>
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a data-toggle="pill" href="#Inbox">Inbox</a></li>
+                <li><a data-toggle="pill" href="#CreateMessage">Create Message</a></li>
+                <li><a data-toggle="pill" href="#SentMessages">Sent Messages</a></li>
+            </ul>
+            <br />
+            <div class="tab-content">
+                <div id="Inbox" class="tab-pane fade in active">
+                    <div>
 
-                    @if (Model.Inbox != null)
-                    {
-                        <table class="table table-responsive" id="inbox">
-                            <tr>
-                                <th></th>
-                                <th>Date Sent</th>
-                                <th>From</th>
-                                <th>Subject</th>
-                            </tr>
-
-                            @foreach (var item in Model.Inbox)
-                            {
-                                <tr id="@item.MessageId">
-                                    <td>
-                                        <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId', '@item.MessageId')">View</button>
-                                    </td>
-                                    @if (item.DateRead == null)
-                                    {
-                                        <td style="font-weight:bold">@item.DateSent</td>
-                                        <td style="font-weight:bold">@item.From</td>
-                                        <td style="font-weight:bold">@item.Subject</td>
-                                    }
-                                    else
-                                    {
-                                        <td>@item.DateSent</td>
-                                        <td>@item.From</td>
-                                        <td>@item.Subject</td>
-                                    }
-
-                                </tr>
-                            }
-
-                        </table>
-                    }
-                </div>
-            </div>
-            <div id="CreateMessage" class="tab-pane fade">
-                <div>
-                    @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
-                    {
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.To, new { @class = "col-sm-3 control-label" })
-                            <div class="col-md-8">
-                                @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Subject, new { @class = "col-sm-3 control-label" })
-                            <div class="col-md-8">
-                                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Message, new { @class = "col-sm-3 control-label" })
-                            <div class="col-md-8">
-                                @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Send Message" class="btn btn-primary" />
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div id="SentMessages" class="tab-pane fade">
-                <div>
-
-                    @if (Model.SentMessages != null)
-                    {
-                        <table class="table table-responsive">
-                            <tr>
-                                <th></th>
-                                <th>Date Sent</th>
-                                <th>To</th>
-                                <th>Subject</th>
-                            </tr>
-
-                            @foreach (var item in Model.SentMessages)
-                            {
+                        @if (Model.Inbox != null)
+                        {
+                            <table class="table table-responsive" id="inbox">
                                 <tr>
-                                    <td>
-                                        <button type="button" class="btn-link" onclick="loadSentModal('@item.Message')">View</button>
-                                    </td>
-                                    <td>@item.DateSent</td>
-                                    <td>@item.To</td>
-                                    <td>@item.Subject</td>
+                                    <th></th>
+                                    <th>Date Sent</th>
+                                    <th>From</th>
+                                    <th>Subject</th>
                                 </tr>
-                            }
-                        </table>
-                    }
+
+                                @foreach (var item in Model.Inbox)
+                                {
+                                    <tr id="@item.MessageId">
+                                        <td>
+                                            <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId', '@item.MessageId')">View</button>
+                                        </td>
+                                        @if (item.DateRead == null)
+                                        {
+                                            <td style="font-weight:bold">@item.DateSent</td>
+                                            <td style="font-weight:bold">@item.From</td>
+                                            <td style="font-weight:bold">@item.Subject</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.DateSent</td>
+                                            <td>@item.From</td>
+                                            <td>@item.Subject</td>
+                                        }
+
+                                    </tr>
+                                }
+
+                            </table>
+                        }
+                    </div>
+                </div>
+                <div id="CreateMessage" class="tab-pane fade">
+                    <div>
+                        @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.To, new { @class = "col-sm-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Subject, new { @class = "col-sm-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Message, new { @class = "col-sm-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Send Message" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div id="SentMessages" class="tab-pane fade">
+                    <div>
+
+                        @if (Model.SentMessages != null)
+                        {
+                            <table class="table table-responsive">
+                                <tr>
+                                    <th></th>
+                                    <th>Date Sent</th>
+                                    <th>To</th>
+                                    <th>Subject</th>
+                                </tr>
+
+                                @foreach (var item in Model.SentMessages)
+                                {
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btn-link" onclick="loadSentModal('@item.Message')">View</button>
+                                        </td>
+                                        <td>@item.DateSent</td>
+                                        <td>@item.To</td>
+                                        <td>@item.Subject</td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="myMessage" class="modal fade" role="dialog">
-    @using (Ajax.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, HttpMethod = "POST" }))
-    {
+    <div id="myMessage" class="modal fade" role="dialog">
+        @using (Ajax.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, HttpMethod = "POST" }))
+        {
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Read Message</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="hidden">
+                                @Html.TextAreaFor(m => m.MessageId, new { @class = "form-control", ID = "messageId" })
+                                @Html.TextAreaFor(m => m.To, new { @class = "form-control readonly", ID = "from" })
+                                @Html.TextAreaFor(m => m.Subject, new { @class = "form-control readonly", ID = "subject" })
+                            </div>
+                            <label>Message: </label><p id="message"></p>
+                        </div>
+                        <div class="form-group">
+                            @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" data->Reply</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+    <div id="mySentMessage" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Read Message</h4>
+                    <h4 class="modal-title">Sent Message</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <div class="hidden">
-                            @Html.TextAreaFor(m => m.MessageId, new { @class = "form-control", ID = "messageId" })
-                            @Html.TextAreaFor(m => m.To, new { @class = "form-control readonly", ID = "from" })
-                            @Html.TextAreaFor(m => m.Subject, new { @class = "form-control readonly", ID = "subject" })
-                        </div>
-                        <label>Message: </label><p id="message"></p>
-                    </div>
-                    <div class="form-group">
-                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                        <label>Message: </label><p id="sentMessage"></p>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" data->Reply</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    }
-</div>
-<div id="mySentMessage" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Sent Message</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Message: </label><p id="sentMessage"></p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-<div id="cancelModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Cancel Subscription</h4>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Are you sure you want to cancel your subscription?</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="form-group">
-                        @Html.ActionLink("Confirm", "Cancel", "Dashboard", new { @class = "btn btn-default" })
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="cancelModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cancel Subscription</h4>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Are you sure you want to cancel your subscription?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            @Html.ActionLink("Confirm", "Cancel", "Dashboard", new { @class = "btn btn-default" })
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
