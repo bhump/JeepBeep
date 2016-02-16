@@ -55,6 +55,7 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="CodeId" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -221,6 +222,15 @@
           <Property Name="SubscriptionTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubscriptionType" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tTestingCodes">
+          <Key>
+            <PropertyRef Name="CodeId" />
+          </Key>
+          <Property Name="CodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Count" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="tUserProfiles">
           <Key>
             <PropertyRef Name="UserProfileId" />
@@ -267,6 +277,18 @@
           <Property Name="YearId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Year" Type="varchar" MaxLength="4" />
         </EntityType>
+        <Association Name="FK_AspNetUsers_tTestingCodes">
+          <End Role="tTestingCodes" Type="Self.tTestingCodes" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTestingCodes">
+              <PropertyRef Name="CodeId" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="CodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -586,10 +608,15 @@
           <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubscriptions" EntityType="Self.tSubscriptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubscriptionTypes" EntityType="Self.tSubscriptionTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tTestingCodes" EntityType="Self.tTestingCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tYear" EntityType="Self.tYear" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AspNetUsers_tTestingCodes" Association="Self.FK_AspNetUsers_tTestingCodes">
+            <End Role="tTestingCodes" EntitySet="tTestingCodes" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -809,6 +836,11 @@
             <End Role="tYear" EntitySet="tYears" />
             <End Role="tPost" EntitySet="tPosts" />
           </AssociationSet>
+          <EntitySet Name="tTestingCodes" EntityType="MyJeepTraderModel.tTestingCode" />
+          <AssociationSet Name="FK_AspNetUsers_tTestingCodes" Association="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes">
+            <End Role="tTestingCode" EntitySet="tTestingCodes" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -862,6 +894,8 @@
           <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="AspNetUser" ToRole="tVehicleProfileControl" />
           <NavigationProperty Name="AspNetRoles" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
           <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="AspNetUser" ToRole="tPost" />
+          <Property Name="CodeId" Type="Int32" />
+          <NavigationProperty Name="tTestingCode" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="AspNetUser" ToRole="tTestingCode" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1382,6 +1416,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tTestingCode">
+          <Key>
+            <PropertyRef Name="CodeId" />
+          </Key>
+          <Property Name="CodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="tTestingCode" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_AspNetUsers_tTestingCodes">
+          <End Type="MyJeepTraderModel.tTestingCode" Role="tTestingCode" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTestingCode">
+              <PropertyRef Name="CodeId" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="CodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1418,6 +1474,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="CodeId" ColumnName="CodeId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
@@ -1670,6 +1727,16 @@
                 <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tTestingCodes">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tTestingCode">
+              <MappingFragment StoreEntitySet="tTestingCodes">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CodeId" ColumnName="CodeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

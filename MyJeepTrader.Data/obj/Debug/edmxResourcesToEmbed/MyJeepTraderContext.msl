@@ -31,6 +31,7 @@
     <EntitySetMapping Name="AspNetUsers">
       <EntityTypeMapping TypeName="MyJeepTraderModel.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="CodeId" ColumnName="CodeId" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
           <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
@@ -283,6 +284,16 @@
           <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PostId" ColumnName="PostId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tTestingCodes">
+      <EntityTypeMapping TypeName="MyJeepTraderModel.tTestingCode">
+        <MappingFragment StoreEntitySet="tTestingCodes">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="CodeId" ColumnName="CodeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

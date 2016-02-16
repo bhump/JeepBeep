@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyJeepTrader.Web.ViewModels
 {
     public class PostCreateViewModel
     {
         public tPost Post { get; set; }
+
+        [Required(ErrorMessage = "Please enter in a title.")]
+        public string Title { get; set; }
 
         public List<tModelWithSelected> Models { get; set; }
 

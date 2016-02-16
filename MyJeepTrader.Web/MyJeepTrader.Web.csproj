@@ -202,6 +202,15 @@
     </Compile>
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Migrations\201510132239477_InitialCreate.cs" />
+    <Compile Include="Migrations\201510132239477_InitialCreate.Designer.cs">
+      <DependentUpon>201510132239477_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602160324022_CodeId.cs" />
+    <Compile Include="Migrations\201602160324022_CodeId.Designer.cs">
+      <DependentUpon>201602160324022_CodeId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Chat\MessageDetail.cs" />
     <Compile Include="Models\Chat\UserDetail.cs" />
@@ -238,6 +247,9 @@
     <Content Include="Images\trintrail6.jpg" />
     <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />
+    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery.bootstrap.wizard.js" />
     <Content Include="Scripts\jquery.bootstrap.wizard.min.js" />
     <Content Include="Scripts\jquery.main.js" />
@@ -307,6 +319,7 @@
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery-2.1.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
@@ -377,10 +390,10 @@
     <Content Include="Views\JeepProfile\Index.cshtml" />
     <Content Include="Views\JeepProfile\AllJeepProfiles.cshtml" />
     <Content Include="Views\Dashboard\Admin.cshtml" />
+    <Content Include="Views\Home\AlphaTesting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -394,6 +407,14 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510132239477_InitialCreate.resx">
+      <DependentUpon>201510132239477_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602160324022_CodeId.resx">
+      <DependentUpon>201602160324022_CodeId.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

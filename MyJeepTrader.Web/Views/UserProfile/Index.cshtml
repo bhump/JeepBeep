@@ -6,37 +6,39 @@
 
 <h2>Users</h2>
 <div class="row">
-    <table class="userTable col-sm-12">
-        @foreach (var item in Model.UserProfiles)
-        {
-            <tr>
-                <td class="td">
-                    <div>
-                        @if (item.Avatar != null)
-                        {
-                            <a href='@Url.RouteUrl("Details", new { UserName = item.UserName })'>
-                                <img src='@Url.Action("ShowAvatar", "UserProfile", new { UserName = item.UserName })' width="43" height="43" />
-                            </a>
-                        }
-                        else
-                        {
-                            <img src="~/Images/placeholder.jpg" width="43" height="43" />
-                        }
-                    </div>
-                    <div>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <table class="userTable">
+            @foreach (var item in Model.UserProfiles)
+            {
+                <tr>
+                    <td class="td">
                         <div>
-                            @Html.DisplayFor(modelItem => item.UserName)
+                            @if (item.Avatar != null)
+                            {
+                                <a href='@Url.RouteUrl("Details", new { UserName = item.UserName })'>
+                                    <img src='@Url.Action("ShowAvatar", "UserProfile", new { UserName = item.UserName })' width="43" height="43" />
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="~/Images/placeholder.jpg" width="43" height="43" />
+                            }
                         </div>
-
                         <div>
-                            @Html.DisplayFor(modelItem => item.Website)
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        }
+                            <div>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </div>
 
-    </table>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.Website)
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
 </div>
 <script src="~/Scripts/jquery-2.1.4.js"></script>
 <script src="~/Scripts/jquery-2.1.4.min.js"></script>

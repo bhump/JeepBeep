@@ -22,3 +22,4 @@
 /// <reference path="jquery.slimscroll.min.js" />
 /// <reference path="jquery.tipsy.js" />
 /// <reference path="jquery.main.js" />
+/// <reference path="jquery-2.2.0.js" />

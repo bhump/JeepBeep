@@ -50,6 +50,7 @@
     <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="CodeId" Type="int" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -216,6 +217,15 @@
     <Property Name="SubscriptionTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SubscriptionType" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="tTestingCodes">
+    <Key>
+      <PropertyRef Name="CodeId" />
+    </Key>
+    <Property Name="CodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="50" />
+    <Property Name="Count" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
   <EntityType Name="tUserProfiles">
     <Key>
       <PropertyRef Name="UserProfileId" />
@@ -262,6 +272,18 @@
     <Property Name="YearId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Year" Type="varchar" MaxLength="4" />
   </EntityType>
+  <Association Name="FK_AspNetUsers_tTestingCodes">
+    <End Role="tTestingCodes" Type="Self.tTestingCodes" Multiplicity="0..1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tTestingCodes">
+        <PropertyRef Name="CodeId" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="CodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -581,10 +603,15 @@
     <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tSubscriptions" EntityType="Self.tSubscriptions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tSubscriptionTypes" EntityType="Self.tSubscriptionTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tTestingCodes" EntityType="Self.tTestingCodes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfiles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tYear" EntityType="Self.tYear" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AspNetUsers_tTestingCodes" Association="Self.FK_AspNetUsers_tTestingCodes">
+      <End Role="tTestingCodes" EntitySet="tTestingCodes" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />

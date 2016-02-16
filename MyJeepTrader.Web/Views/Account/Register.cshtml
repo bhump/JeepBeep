@@ -1,4 +1,4 @@
-﻿@model MyJeepTrader.Web.Models.RegisterViewModel
+﻿@model MyJeepTrader.Web.Models.AlphaTestingViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -33,6 +33,15 @@
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    /**
+     * This is just for Alpha testing!!!
+     **/
+    <div class="form-group">
+        @Html.LabelFor(m => m.AlphaCode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.AlphaCode, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

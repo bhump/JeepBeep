@@ -757,6 +757,37 @@ namespace MyJeepTrader.Data
         }
         #endregion
 
+        #region Alpha Testing
+        public List<int?> GetCurrentAlphaTesters(string code)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var count = (from u in context.AspNetUsers where u.tTestingCode.Code == code select u.CodeId).ToList();
+
+                return count;
+            }
+        }
+
+        public int? GetCodeCount(string code)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var count = (from tc in context.tTestingCodes where tc.Code == code select tc.Count).First();
+
+                return count; 
+            }
+        }
+
+        public int GetCodeId(string code)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var codeId = (from tc in context.tTestingCodes where tc.Code == code select tc.CodeId).First();
+
+                return codeId;
+            }
+        }
+        #endregion
 
     }// public class service
 } // namespace

@@ -32,5 +32,10 @@ namespace MyJeepTrader.Web.Controllers
 
             return View();
         }
+
+        public ActionResult AlphaTesting()
+        {
+            return View();
+        }
     }
 }

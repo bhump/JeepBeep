@@ -147,50 +147,112 @@ namespace MyJeepTrader.Web.Controllers
 
         //
         // POST: /Account/Register
+        //Commented out for aplha testing!!!!
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(RegisterViewModel model)
+        //{
+        //    using (var context = new ApplicationDbContext())
+        //    {
+
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+        //            var result = await UserManager.CreateAsync(user, model.Password);
+        //            var roleStore = new RoleStore<IdentityRole>(context);
+        //            var roleManager = new RoleManager<IdentityRole>(roleStore);
+        //            var startDate = DateTime.Now;
+
+        //            Service service = new Service();
+        //            PayPalService ppService = new PayPalService();
+
+        //            if (result.Succeeded)
+        //            {
+        //                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+        //                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+        //                // Send an email with this link
+        //                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+        //                await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+        //                service.CreateMembership(user.Id);
+        //                //this creates the paypal customer-then on success creates the membership and the free subscription.
+        //                ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
+
+        //                UserManager.AddToRole(user.Id, "Basic");
+
+        //                return RedirectToAction("Index", "Home");
+        //            }
+        //            AddErrors(result);
+        //        }
+
+        //        // If we got this far, something failed, redisplay form
+        //        return View(model);
+        //    }
+        //}
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(AlphaTestingViewModel model)
         {
             using (var context = new ApplicationDbContext())
             {
 
                 if (ModelState.IsValid)
                 {
-                    var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    var roleStore = new RoleStore<IdentityRole>(context);
-                    var roleManager = new RoleManager<IdentityRole>(roleStore);
-                    var startDate = DateTime.Now;
-
                     Service service = new Service();
                     PayPalService ppService = new PayPalService();
 
-                    if (result.Succeeded)
+                    var currentTesters = service.GetCurrentAlphaTesters(model.AlphaCode);
+                    var codeCount = service.GetCodeCount(model.AlphaCode);
+                    var codeId = service.GetCodeId(model.AlphaCode);
+
+                    if (currentTesters.Count == codeCount)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                        service.CreateMembership(user.Id);
-                        //this creates the paypal customer-then on success creates the membership and the free subscription.
-                        ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
-                        
-                        UserManager.AddToRole(user.Id, "Basic");
-
-                        return RedirectToAction("Index", "Home");
+                        ModelState.AddModelError("", "Invite Code is either invalid or has been used the maximum allowed times.");
                     }
-                    AddErrors(result);
+                    else
+                    {
+                        model.CodeId = codeId;
+                        var user = new ApplicationUser { UserName = model.Username, Email = model.Email, CodeId = model.CodeId};
+                        var result = await UserManager.CreateAsync(user, model.Password);
+                        var roleStore = new RoleStore<IdentityRole>(context);
+                        var roleManager = new RoleManager<IdentityRole>(roleStore);
+                        var startDate = DateTime.Now;
+
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                            // Send an email with this link
+                            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                            service.CreateMembership(user.Id);
+                            //this creates the paypal customer-then on success creates the membership and the free subscription.
+                            ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
+
+                            UserManager.AddToRole(user.Id, "Basic");
+
+                            return RedirectToAction("Index", "Home");
+                        }
+
+                        AddErrors(result);
+                    }
+
                 }
+
 
                 // If we got this far, something failed, redisplay form
                 return View(model);
             }
         }
+
 
         //
         // GET: /Account/ConfirmEmail

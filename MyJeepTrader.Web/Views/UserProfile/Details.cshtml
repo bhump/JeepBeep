@@ -4,75 +4,170 @@
     ViewBag.Title = "User Profile";
 }
 
-<div class="col-lg-6" id="column1">
-    <div class="form-group-sm">
-        <h2>Profile</h2>
-        <div class="form-horizontal">
-            <div>
-                <div class="form-group">
-                    <div class="col-md-8">
-                        @if (Model.Avatar != null)
-                        {
-                            <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserName = Request.QueryString["UserName"] } )" alt="Image Unavailable" width="87" />
-                        }
-                        else
-                        {
-                            <img src="~/Images/placeholder.jpg" width="87" height="85" />
-                        }
+<div class="row">
+    <div class="col-lg-6" id="column1">
+        <div class="form-group-sm">
+            <h2>Profile</h2>
+            <div class="form-horizontal">
+                <div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            @if (Model.Avatar != null)
+                            {
+                                <img src="@Url.Action( "ShowAvatar", "UserProfile", new { UserName = Request.QueryString["UserName"] } )" alt="Image Unavailable" width="87" />
+                            }
+                            else
+                            {
+                                <img src="~/Images/placeholder.jpg" width="87" height="85" />
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Profile Views: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.ViewCount)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Name: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.FirstName) @Html.DisplayFor(m => m.LastName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Birthday: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.BirthDate, "{0:MM/dd/yyyy}")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">About You: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.Description)
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Profile Views: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.ViewCount)
+            </div>
+            <div style="margin-bottom: 10%"></div>
+            <div class="form-group-sm">
+                <h2>Social Networks</h2>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3">Facebook: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.Facebook)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Google +: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.GooglePlus)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Ello: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.Ello)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">My Website: </label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(m => m.Website)
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Name: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.FirstName) @Html.DisplayFor(m => m.LastName)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6" id="column2">
+        <div class="form-group-sm">
+            <h2>Primary Jeep</h2>
+            <div class="form-horizontal">
+                <div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            @if (Model.Image != null)
+                            {
+                                <img src="@Url.Action("ShowJeepImage", "UserProfile", new { UserName = Request.QueryString["UserName"] })" alt="Image Unavailable" width="87" height="85" />
+                            }
+                            else
+                            {
+                                <img src="~/Images/placeholder.jpg" width="87" height="85" />
+
+                            }
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Birthday: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.BirthDate, "{0:MM/dd/yyyy}")
+                    <div class="form-group">
+                        <label class="col-sm-3">Make: </label>@Html.DisplayFor(m => m.Make)
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">About You: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.Description)
+                    <div class="form-group">
+                        <label class="col-sm-3">Model: </label>@Html.DisplayFor(m => m.Model)
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Year: </label>@Html.DisplayFor(m => m.Year)
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Description: </label>@Html.DisplayFor(m => m.JeepDescription)
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            @Html.ActionLink("View All", "AllJeepProfiles", "JeepProfile", new { UserName = Request.QueryString["UserName"] }, new { })
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div style="margin-bottom: 10%"></div>
         <div class="form-group-sm">
-            <h2>Social Networks</h2>
+            <h2>Recent Post</h2>
             <div class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-3">Facebook: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.Facebook)
+                <div>
+                    <div class="hidden">
+                        @Html.TextAreaFor(m => m.RecentPost.PostId)
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Title: </label>@Html.DisplayFor(m => m.RecentPost.PostTitle)
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Type: </label> @Html.DisplayFor(m => m.RecentPost.PostType)
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Description: </label> @Html.DisplayFor(m => m.RecentPost.PostDescription)
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Google +: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.GooglePlus)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Ello: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.Ello)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">My Website: </label>
-                    <div class="col-md-8">
-                        @Html.DisplayFor(m => m.Website)
+            </div>
+        </div>
+        <div style="margin-bottom: 10%"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group-sm">
+                <h2>All Posts</h2>
+                <div class="form-horizontal">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th></th>
+                                <th>Date</th>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            @foreach (var item in Model.UserPosts)
+                            {
+                                <tr id="@item.PostId">
+                                    <td>
+                                        <button type="button" class="btn-link">View</button>
+                                    </td>
+                                    <td>@item.DateCreated.Value.ToShortDateString()</td>
+                                    <td>@item.PostTitle</td>
+                                    <td>@item.PostType</td>
+                                    <td>@item.PostDescription</td>
+                                </tr>
+                            }
+                        </table>
                     </div>
                 </div>
             </div>
@@ -80,92 +175,4 @@
     </div>
 </div>
 
-<div class="col-lg-6" id="column2">
-    <div class="form-group-sm">
-        <h2>Primary Jeep</h2>
-        <div class="form-horizontal">
-            <div>
-                <div class="form-group">
-                    <div class="col-md-8">
-                        @if (Model.Image != null)
-                        {
-                            <img src="@Url.Action("ShowJeepImage", "UserProfile", new { UserName = Request.QueryString["UserName"] })" alt="Image Unavailable" width="87" height="85" />
-                        }
-                        else
-                        {
-                            <img src="~/Images/placeholder.jpg" width="87" height="85" />
-
-                        }
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Make: </label>@Html.DisplayFor(m => m.Make)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Model: </label>@Html.DisplayFor(m => m.Model)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Year: </label>@Html.DisplayFor(m => m.Year)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Description: </label>@Html.DisplayFor(m => m.JeepDescription)
-                </div>
-                <div class="form-group">
-                    <div class="col-md-8">
-                        @Html.ActionLink("View All", "AllJeepProfiles", "JeepProfile", new { UserName = Request.QueryString["UserName"] }, new { })
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-bottom: 10%"></div>
-    <div class="form-group-sm">
-        <h2>Recent Post</h2>
-        <div class="form-horizontal">
-            <div>
-                <div class="hidden">
-                    @Html.TextAreaFor(m => m.RecentPost.PostId)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Title: </label>@Html.DisplayFor(m => m.RecentPost.PostTitle)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Type: </label> @Html.DisplayFor(m => m.RecentPost.PostType)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3">Description: </label> @Html.DisplayFor(m => m.RecentPost.PostDescription)
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-bottom: 10%"></div>
-    <div class="form-group-sm">
-        <h2>All Posts</h2>
-        <div class="form-horizontal">
-            <div>
-                <table class="table">
-                    <tr>
-                        <th></th>
-                        <th>Date</th>
-                        <th>Title</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                    @foreach (var item in Model.UserPosts)
-                    {
-                        <tr id="@item.PostId">
-                            <td>
-                                <button type="button" class="btn-link">View</button>
-                            </td>
-                            <td>@item.DateCreated.Value.ToShortDateString()</td>
-                            <td>@item.PostTitle</td>
-                            <td>@item.PostType</td>
-                            <td>@item.PostDescription</td>
-                        </tr>
-                    }
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
