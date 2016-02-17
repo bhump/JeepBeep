@@ -24,6 +24,15 @@
     </div>
 </div>
 
+@if (User.Identity.IsAuthenticated)
+{
+    <div>
+        <i class="glyphicon glyphicon-plus"></i>&nbsp;@Html.ActionLink("Create New Posting", "Create")
+    </div>
+}
+
+<br />
+
 @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
 {
     <div class="input-group">
@@ -34,19 +43,13 @@
     </div>
 }
 
-<br/>
-
-<div>
-    <i class="glyphicon glyphicon-plus"></i>&nbsp;@Html.ActionLink("Create New Posting", "Create")
-</div>
-
-<br/>
+<br />
 
 @if (Model != null && Model.SearchedPosts != null)
 {
     <table class="table">
         <tr>
-            @*<th>User</th>*@
+            <th></th>
             <th>Post Title</th>
             <th>Post Description</th>
             <th>Jeep Model</th>
@@ -56,16 +59,16 @@
         @foreach (var item in Model.SearchedPosts)
         {
             <tr>
-                @*<td>@item.AspNetUser.UserName</td>*@
+                <td>@Html.ActionLink("View", "Details", "Post", new { PostId = @item.PostId }, new { })</td>
                 <td>@item.PostTitle</td>
                 <td>@item.PostDescription</td>
                 <td>@item.tModelPostControls</td>
                 <td>@item.PartBrand</td>
                 <td>@item.PartType</td>
             </tr>
-            
+
         }
-        
+
     </table>
 }
 

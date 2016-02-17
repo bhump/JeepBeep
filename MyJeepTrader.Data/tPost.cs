@@ -44,5 +44,7 @@ namespace MyJeepTrader.Data
         public virtual tPostType tPostType { get; set; }
         public virtual tSubModel tSubModel { get; set; }
         public virtual tYear tYear { get; set; }
+        public virtual tCity tCity { get; set; }
+        public virtual tState tState { get; set; }
     }
 }

@@ -14,11 +14,17 @@ namespace MyJeepTrader.Data
     
     public partial class tCity
     {
+        public tCity()
+        {
+            this.tPosts = new HashSet<tPost>();
+        }
+    
         public int CityId { get; set; }
         public string City { get; set; }
         public string ZIP { get; set; }
         public Nullable<int> StateId { get; set; }
     
         public virtual tState tState { get; set; }
+        public virtual ICollection<tPost> tPosts { get; set; }
     }
 }

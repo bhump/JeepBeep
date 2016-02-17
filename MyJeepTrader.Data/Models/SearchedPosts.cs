@@ -29,11 +29,13 @@ namespace MyJeepTrader.Data.Models
 
         public string SubModel { get; set; }
 
-        public DateTime Year { get; set; }
+        public string Year { get; set; }
 
         public Boolean? Active { get; set; }
 
-        public string Location { get; set; }
+        public string State { get; set; }
+
+        public string City { get; set; }
 
         public string PostType { get; set; }
 

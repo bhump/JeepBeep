@@ -43,9 +43,12 @@ namespace MyJeepTrader.Web.Controllers
 
 
         // GET: Post/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int postId)
         {
-            return View();
+            Service service = new Service();
+            var post = service.GetPostByPostId(postId);
+
+            return View(post);
         }
 
         // GET: Post/Create

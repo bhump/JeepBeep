@@ -123,6 +123,14 @@
       <End Role="tTestingCode" EntitySet="tTestingCodes" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tCities" Association="MyJeepTraderModel.FK_tPosts_tCities">
+      <End Role="tCity" EntitySet="tCities" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tStates" Association="MyJeepTraderModel.FK_tPosts_tStates">
+      <End Role="tState" EntitySet="tStates" />
+      <End Role="tPost" EntitySet="tPosts" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="AspNetRole">
     <Key>
@@ -301,6 +309,7 @@
     <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="tCities" Relationship="MyJeepTraderModel.FK_tCities_tStates" FromRole="tState" ToRole="tCity" />
+    <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tStates" FromRole="tState" ToRole="tPost" />
   </EntityType>
   <EntityType Name="tSubModel">
     <Key>
@@ -573,6 +582,7 @@
     <Property Name="ZIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StateId" Type="Int32" />
     <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tCities_tStates" FromRole="tCity" ToRole="tState" />
+    <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tCities" FromRole="tCity" ToRole="tPost" />
   </EntityType>
   <Association Name="FK_tCities_tStates">
     <End Type="MyJeepTraderModel.tState" Role="tState" Multiplicity="0..1" />
@@ -613,6 +623,8 @@
     <NavigationProperty Name="tPostType" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPost" ToRole="tPostType" />
     <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
     <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
+    <NavigationProperty Name="tCity" Relationship="MyJeepTraderModel.FK_tPosts_tCities" FromRole="tPost" ToRole="tCity" />
+    <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tPosts_tStates" FromRole="tPost" ToRole="tState" />
   </EntityType>
   <Association Name="FK_tPosts_AspNetUsers">
     <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -717,6 +729,30 @@
       </Principal>
       <Dependent Role="AspNetUser">
         <PropertyRef Name="CodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPosts_tCities">
+    <End Type="MyJeepTraderModel.tCity" Role="tCity" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tCity">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPosts_tStates">
+    <End Type="MyJeepTraderModel.tState" Role="tState" Multiplicity="0..1" />
+    <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tState">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="tPost">
+        <PropertyRef Name="StateId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -460,6 +460,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tPosts_tCities">
+    <End Role="tCities" Type="Self.tCities" Multiplicity="0..1" />
+    <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tCities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="tPosts">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tPosts_tMake">
     <End Role="tMake" Type="Self.tMake" Multiplicity="0..1" />
     <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
@@ -481,6 +493,18 @@
       </Principal>
       <Dependent Role="tPosts">
         <PropertyRef Name="PostTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tPosts_tStates">
+    <End Role="tStates" Type="Self.tStates" Multiplicity="0..1" />
+    <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tStates">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="tPosts">
+        <PropertyRef Name="StateId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -668,12 +692,20 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="tPosts" EntitySet="tPosts" />
     </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tCities" Association="Self.FK_tPosts_tCities">
+      <End Role="tCities" EntitySet="tCities" />
+      <End Role="tPosts" EntitySet="tPosts" />
+    </AssociationSet>
     <AssociationSet Name="FK_tPosts_tMake" Association="Self.FK_tPosts_tMake">
       <End Role="tMake" EntitySet="tMake" />
       <End Role="tPosts" EntitySet="tPosts" />
     </AssociationSet>
     <AssociationSet Name="FK_tPosts_tPostType" Association="Self.FK_tPosts_tPostType">
       <End Role="tPostType" EntitySet="tPostType" />
+      <End Role="tPosts" EntitySet="tPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tPosts_tStates" Association="Self.FK_tPosts_tStates">
+      <End Role="tStates" EntitySet="tStates" />
       <End Role="tPosts" EntitySet="tPosts" />
     </AssociationSet>
     <AssociationSet Name="FK_tPosts_tSubModel" Association="Self.FK_tPosts_tSubModel">

@@ -59,6 +59,31 @@ namespace MyJeepTrader.Data
             return _context.tPosts.AsExpandable().Where(predicate);
         }
 
+        public SearchedPosts GetPostByPostId(int postId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var post = (from p in context.tPosts where p.PostId == postId select new SearchedPosts 
+                {
+                    PostTitle = p.PostTitle,
+                    PostDescription = p.PostDescription,
+                    PartBrand = p.PartBrand,
+                    PartType = p.PartType,
+                    PartName = p.PartName,
+                    Active = p.Active,
+                    UserName = p.AspNetUser.UserName,
+                    Year = p.tYear.Year,
+                    DateCreated = p.DateCreated,
+                    PostType = p.tPostType.Type,
+                    State = p.tState.StateCode,
+                    City = p.tCity.City,
+                    Make = p.tMake.Make
+                }).First();
+
+                return post;
+            }
+        }
+
         /// <summary>
         /// Creates the new post.
         /// </summary>
@@ -774,7 +799,7 @@ namespace MyJeepTrader.Data
             {
                 var count = (from tc in context.tTestingCodes where tc.Code == code select tc.Count).First();
 
-                return count; 
+                return count;
             }
         }
 

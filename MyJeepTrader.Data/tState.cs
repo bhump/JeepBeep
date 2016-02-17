@@ -17,6 +17,7 @@ namespace MyJeepTrader.Data
         public tState()
         {
             this.tCities = new HashSet<tCity>();
+            this.tPosts = new HashSet<tPost>();
         }
     
         public int StateId { get; set; }
@@ -26,5 +27,6 @@ namespace MyJeepTrader.Data
         public string Type { get; set; }
     
         public virtual ICollection<tCity> tCities { get; set; }
+        public virtual ICollection<tPost> tPosts { get; set; }
     }
 }

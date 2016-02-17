@@ -202,15 +202,6 @@
     </Compile>
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
-    <Compile Include="Migrations\201510132239477_InitialCreate.cs" />
-    <Compile Include="Migrations\201510132239477_InitialCreate.Designer.cs">
-      <DependentUpon>201510132239477_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602160324022_CodeId.cs" />
-    <Compile Include="Migrations\201602160324022_CodeId.Designer.cs">
-      <DependentUpon>201602160324022_CodeId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Chat\MessageDetail.cs" />
     <Compile Include="Models\Chat\UserDetail.cs" />
@@ -407,14 +398,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510132239477_InitialCreate.resx">
-      <DependentUpon>201510132239477_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602160324022_CodeId.resx">
-      <DependentUpon>201602160324022_CodeId.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

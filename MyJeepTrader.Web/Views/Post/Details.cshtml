@@ -1,4 +1,4 @@
-﻿@model MyJeepTrader.Data.tPost
+﻿@model MyJeepTrader.Data.Models.SearchedPosts
 
 @{
     ViewBag.Title = "Details";
@@ -26,21 +26,13 @@
             @Html.DisplayFor(model => model.PostDescription)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Part)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Part)
-        </dd>
-
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.PartType)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.PartType)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.PartBrand)
@@ -58,13 +50,13 @@
             @Html.DisplayFor(model => model.PartName)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Vehicle)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Vehicle)
-        </dd>
+        </dd>*@
 
         @*<dt>
             @Html.DisplayNameFor(model => model.VehicleMake)
@@ -100,7 +92,7 @@
 
     </dl>
 </div>
-<p>
+@*<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PostId }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
