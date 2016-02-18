@@ -22,22 +22,11 @@ namespace MyJeepTrader.Data
         }
 
         #region Posts
-        /// <summary>
-        /// Gets all the posts.
-        /// </summary>
-        /// <returns>List of posts.</returns>
         public IEnumerable<tPost> GetAllPosts()
         {
             return (from p in _context.tPosts select p).ToList();
         }
 
-        /// <summary>
-        /// Searches all posts. Making use of predicate builder and linqkit, this method searches for whatever fields
-        /// you want to include and combines the results.
-        /// http://www.albahari.com/nutshell/predicatebuilder.aspx
-        /// </summary>
-        /// <param name="keywords">The keywords.</param>
-        /// <returns></returns>
         public IEnumerable<tPost> SearchAllPosts(params string[] keywords)
         {
             var predicate = PredicateBuilder.False<tPost>();
@@ -84,11 +73,16 @@ namespace MyJeepTrader.Data
             }
         }
 
-        /// <summary>
-        /// Creates the new post.
-        /// </summary>
-        /// <param name="post">The post.</param>
-        /// <returns></returns>
+        public List<byte[]> GetPostImages(int postId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var images = (from i in context.tImages where i.PostId == postId select i.Image).ToList();
+
+                return images;
+            }
+        }
+
         public int CreateNewPost(tPost post)
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();

@@ -43,5 +43,7 @@ namespace MyJeepTrader.Data.Models
 
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime? DateCreated { get; set; }
+
+        public List<byte[]> Images { get; set; }
     }
 }

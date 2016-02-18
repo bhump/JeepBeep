@@ -41,17 +41,31 @@ namespace MyJeepTrader.Web.Controllers
             return View("Index", model);
         }
 
+        public ActionResult GetPostImages(int postId)
+        {
+            Service service = new Service();
 
-        // GET: Post/Details/5
+            var images = service.GetPostImages(postId);
+
+            foreach(var image in images)
+            {
+                var stream = new MemoryStream(image.ToArray());
+
+                return File(stream, "image/jpg");
+            }
+
+            return null;
+        }
+
         public ActionResult Details(int postId)
         {
             Service service = new Service();
             var post = service.GetPostByPostId(postId);
+            post.Images = service.GetPostImages(postId);
 
             return View(post);
         }
 
-        // GET: Post/Create
         [Authorize]
         public ActionResult Create()
         {
@@ -115,6 +129,7 @@ namespace MyJeepTrader.Web.Controllers
 
             return null;
         }
+
         // POST: Post/Create
         [HttpPost]
         public ActionResult Create(PostCreateViewModel model, IEnumerable<HttpPostedFileBase> files)
