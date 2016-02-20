@@ -4,7 +4,7 @@
     ViewBag.Title = "User Profile";
 }
 
-<div class="row">
+<div class="row col-lg-offset-1">
     <div class="col-lg-6" id="column1">
         <div class="form-group-sm">
             <h2>Profile</h2>
@@ -142,7 +142,7 @@
         <div style="margin-bottom: 10%"></div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="form-group-sm">
                 <h2>All Posts</h2>
                 <div class="form-horizontal">
@@ -164,7 +164,7 @@
                                     <td>@item.DateCreated.Value.ToShortDateString()</td>
                                     <td>@item.PostTitle</td>
                                     <td>@item.PostType</td>
-                                    <td>@item.PostDescription</td>
+                                    <td width="45%">@item.PostDescription</td>
                                 </tr>
                             }
                         </table>
@@ -174,5 +174,3 @@
         </div>
     </div>
 </div>
-
-
