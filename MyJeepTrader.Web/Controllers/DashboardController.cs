@@ -212,7 +212,6 @@ namespace MyJeepTrader.Web.Controllers
 
             try
             {
-
                 if (!ModelState.IsValid)
                 {
                     return View();

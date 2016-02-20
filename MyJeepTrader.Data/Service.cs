@@ -250,6 +250,7 @@ namespace MyJeepTrader.Data
                 tMembership membership = new tMembership
                     {
                         Id = userId,
+                        Active = true,
                         MemberSince = DateTime.Now.Date
                     };
                 context.tMemberships.Add(membership);
@@ -776,7 +777,7 @@ namespace MyJeepTrader.Data
         }
         #endregion
 
-        #region Alpha Testing
+        #region Alpha and Beta Testing
         public List<int?> GetCurrentAlphaTesters(string code)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
@@ -804,6 +805,23 @@ namespace MyJeepTrader.Data
                 var codeId = (from tc in context.tTestingCodes where tc.Code == code select tc.CodeId).First();
 
                 return codeId;
+            }
+        }
+
+        public void CreateFeedback(int scale, int overall, string description, string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                tFeedback feedback = new tFeedback
+                {
+                    Scale = scale,
+                    Overall = overall,
+                    Description = description,
+                    Id = userId
+                };
+
+                context.tFeedbacks.Add(feedback);
+                context.SaveChanges();
             }
         }
         #endregion

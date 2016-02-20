@@ -84,6 +84,16 @@
           <Property Name="ConnectionId" Type="nvarchar" MaxLength="128" />
           <Property Name="ConnectionUserName" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tFeedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="Scale" Type="int" />
+          <Property Name="Overall" Type="int" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="tImages">
           <Key>
             <PropertyRef Name="Imageid" />
@@ -357,6 +367,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tFeedback_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="tFeedback" Type="Self.tFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tFeedback">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tImages_tPosts">
           <End Role="tPosts" Type="Self.tPosts" Multiplicity="0..1" />
           <End Role="tImages" Type="Self.tImages" Multiplicity="*" />
@@ -618,6 +640,7 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tCities" EntityType="Self.tCities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tConnectedUsers" EntityType="Self.tConnectedUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tFeedback" EntityType="Self.tFeedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMake" EntityType="Self.tMake" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMemberships" EntityType="Self.tMemberships" Schema="dbo" store:Type="Tables" />
@@ -660,6 +683,10 @@
           <AssociationSet Name="FK_tCities_tStates" Association="Self.FK_tCities_tStates">
             <End Role="tStates" EntitySet="tStates" />
             <End Role="tCities" EntitySet="tCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tFeedback_AspNetUsers" Association="Self.FK_tFeedback_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="tFeedback" EntitySet="tFeedback" />
           </AssociationSet>
           <AssociationSet Name="FK_tImages_tPosts" Association="Self.FK_tImages_tPosts">
             <End Role="tPosts" EntitySet="tPosts" />
@@ -881,6 +908,11 @@
             <End Role="tState" EntitySet="tStates" />
             <End Role="tPost" EntitySet="tPosts" />
           </AssociationSet>
+          <EntitySet Name="tFeedbacks" EntityType="MyJeepTraderModel.tFeedback" />
+          <AssociationSet Name="FK_tFeedback_AspNetUsers" Association="MyJeepTraderModel.FK_tFeedback_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tFeedback" EntitySet="tFeedbacks" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -936,6 +968,7 @@
           <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="AspNetUser" ToRole="tPost" />
           <Property Name="CodeId" Type="Int32" />
           <NavigationProperty Name="tTestingCode" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="AspNetUser" ToRole="tTestingCode" />
+          <NavigationProperty Name="tFeedbacks" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="AspNetUser" ToRole="tFeedback" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1506,6 +1539,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tFeedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Scale" Type="Int32" />
+          <Property Name="Overall" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="tFeedback" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_tFeedback_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tFeedback" Role="tFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tFeedback">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1805,6 +1861,17 @@
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="CodeId" ColumnName="CodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tFeedbacks">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tFeedback">
+              <MappingFragment StoreEntitySet="tFeedback">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Overall" ColumnName="Overall" />
+                <ScalarProperty Name="Scale" ColumnName="Scale" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -191,6 +191,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JeepProfileController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PayPalIndexViewModel.cs" />
+    <Compile Include="ViewModels\FeedbackViewModel.cs" />
     <Compile Include="ViewModels\JeepProfileAllJeepProfilesViewModel.cs" />
     <Compile Include="ViewModels\JeepProfileIndexViewModel.cs" />
     <Compile Include="ViewModels\PostCreateViewModel.cs" />
@@ -398,6 +400,7 @@
     <Content Include="Views\JeepProfile\AllJeepProfiles.cshtml" />
     <Content Include="Views\Dashboard\Admin.cshtml" />
     <Content Include="Views\Home\AlphaTesting.cshtml" />
+    <Content Include="Views\Feedback\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

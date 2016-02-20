@@ -23,6 +23,7 @@ namespace MyJeepTrader.Data
             this.tVehicleProfileControls = new HashSet<tVehicleProfileControl>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.tPosts = new HashSet<tPost>();
+            this.tFeedbacks = new HashSet<tFeedback>();
         }
     
         public string Id { get; set; }
@@ -47,5 +48,6 @@ namespace MyJeepTrader.Data
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         public virtual ICollection<tPost> tPosts { get; set; }
         public virtual tTestingCode tTestingCode { get; set; }
+        public virtual ICollection<tFeedback> tFeedbacks { get; set; }
     }
 }

@@ -27,6 +27,10 @@
                         <li>@Html.ActionLink("Posts", "Index", "Post")</li>
                         <li>@Html.ActionLink("Users", "Index", "UserProfile")</li>
                         <li>@Html.ActionLink("Alpha Testing", "AlphaTesting", "Home")</li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Feedback", "Index", "Feedback")</li>
+                        }
                     </ul>
                     <div class="navbar-collapse">
                         @Html.Partial("_LoginPartial")

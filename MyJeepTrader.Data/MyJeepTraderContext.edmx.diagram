@@ -57,6 +57,8 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tCities" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tStates" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tFeedback" Width="1.5" PointX="6" PointY="32.375" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tFeedback_AspNetUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
