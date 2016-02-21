@@ -47,7 +47,7 @@ namespace MyJeepTrader.Web.Controllers
 
             var images = service.GetPostImages(postId);
 
-            foreach(var image in images)
+            foreach (var image in images)
             {
                 var stream = new MemoryStream(image.ToArray());
 
@@ -117,8 +117,8 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult GetModelNameById(List<int> modelIds)
         {
             Service service = new Service();
-            
-            foreach(int id in modelIds)
+
+            foreach (int id in modelIds)
             {
                 var models = service.GetModelById(id);
 
@@ -149,33 +149,71 @@ namespace MyJeepTrader.Web.Controllers
                 model.Post.CityId = model.SelectedCityId;
                 model.Post.Id = userId;
 
-                var newPostId = service.CreateNewPost(model.Post);
-
-                foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
+                if (model.SelectedPostTypeId == 0)
                 {
-                    service.AddModelPost(selectedModel.TModel.ModelId, newPostId);
+                    ModelState.AddModelError("", "Please select a post type. ");
                 }
-
-                if (files.Count() != 0)
+                else if (model.SelectedStateId == 0)
                 {
-                    foreach (var img in files)
+                    ModelState.AddModelError("", "Please select a model/accessory year. ");
+                }
+                else if (model.Title == null)
+                {
+                    ModelState.AddModelError("", "Please add a post title. ");
+                }
+                else if (model.SelectedStateId == 0)
+                {
+                    ModelState.AddModelError("", "Please select a state. ");
+                }
+                else if (model.SelectedCityId == 0)
+                {
+                    ModelState.AddModelError("", "Please select a city. ");
+                }
+                else if (model.Post.PostDescription == null)
+                {
+                    ModelState.AddModelError("", "Please add a description.");
+                }
+                else if (userId == null)
+                {
+                    ModelState.AddModelError("", "Please log in.");
+                }
+                else
+                {
+                    var newPostId = service.CreateNewPost(model.Post);
+
+                    foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
                     {
-                        if (img != null)
+                        service.AddModelPost(selectedModel.TModel.ModelId, newPostId);
+                    }
+
+                    if (files.Count() != 0)
+                    {
+                        foreach (var img in files)
                         {
-                            byte[] imageBytes = null;
-
-                            using (var binaryReader = new BinaryReader(img.InputStream))
+                            if (img != null)
                             {
-                                imageBytes = binaryReader.ReadBytes(img.ContentLength);
-                            }
+                                byte[] imageBytes = null;
 
-                            service.AddImage(imageBytes, newPostId);
+                                using (var binaryReader = new BinaryReader(img.InputStream))
+                                {
+                                    imageBytes = binaryReader.ReadBytes(img.ContentLength);
+                                }
+
+                                service.AddImage(imageBytes, newPostId);
+                            }
                         }
                     }
+
                 }
 
-                TempData["Message"] = "Post Created Successfully!";
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    TempData["Message"] = "Post Created Successfully!";
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(model);
             }
             catch (DbEntityValidationException e)
             {

@@ -29,3 +29,4 @@
 /// <reference path="jquery.fancybox-buttons.js" />
 /// <reference path="jquery.fancybox-media.js" />
 /// <reference path="jquery.fancybox-thumbs.js" />
+/// <reference path="jquery.submissionok.js" />

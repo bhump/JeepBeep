@@ -4,9 +4,12 @@
 @{
     ViewBag.Title = "Create";
 }
-
 <h3>New Posting</h3>
 <div class="form-horizontal">
+    <div id="alertRequiredFields" class="alert alert-danger fade">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong>Error!</strong> There are one or more required fields missing! Please check each step!
+    </div>
     <div id="rootwizard">
         <div class="navbar col-sm-offset-4">
             <div class="navbar-inner">
@@ -21,7 +24,7 @@
                 </div>
             </div>
         </div>
-        @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data", @id = "CreatePost" }))
+        @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data", @id = "CreatePost", @class = "create-post" }))
         {
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="tab-content col-sm-offset-3">
@@ -33,16 +36,16 @@
                             @foreach (tPostType item in Model.PostTypes)
                             {
                                 <div class="form-group-sm">
-                                    @Html.RadioButtonFor(model => model.SelectedPostTypeId, item.PostTypeId, new { id = item.Type })
+                                    @Html.RadioButtonFor(model => model.SelectedPostTypeId, item.PostTypeId, new { id = item.Type, req = item.Type })
                                     <label id="lblPostType" for="@item.Type">@item.Type </label>
                                 </div>
                             }
                         </div>
                         <div class="col-md-4">
                             <h4>Select a state.</h4>
-                            @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "Select State", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);" })
+                            @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "Select State", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);", id = "ddlState", req = "ddlState" })
                             <h4>Select a city.</h4>
-                            @Html.DropDownListFor(m => m.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", id = "ddlCity" })
+                            @Html.DropDownListFor(m => m.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", id = "ddlCity", req = "ddlCity" })
                         </div>
                     </div>
                 </div>
@@ -63,7 +66,7 @@
                         <div class="col-md-4">
                             <div>
                                 <h4>Choose a model year.</h4>
-                                @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "Select Year", new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "Select Year", new { @class = "form-control", id = "ddlYear", req = "ddlYear" })
                             </div>
                             <div>
                                 <h4>Jeep or Accessory?</h4>
@@ -81,11 +84,11 @@
                                     <div class="hidden partTypes">
                                         <div class="col-sm-6">
                                             <label>Part Type:</label>
-                                            @Html.TextBoxFor(model => model.Post.PartType, new { @class = "form-control no-max-width" })
+                                            @Html.TextBoxFor(model => model.Post.PartType, new { @class = "form-control no-max-width", id = "tbPartType" })
                                         </div>
                                         <div class="col-sm-6">
                                             <label>Part Brand:</label>
-                                            @Html.TextBoxFor(model => model.Post.PartBrand, new { @class = "form-control no-max-width" })
+                                            @Html.TextBoxFor(model => model.Post.PartBrand, new { @class = "form-control no-max-width", id = "tbPartBrand" })
                                         </div>
                                     </div>
                                 </div>
@@ -110,13 +113,13 @@
                     <div class="form-group">
                         <label class="col-sm-2">Title:</label>
                         <div class="col-sm-5" id="jeepTypeDiv">
-                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control no-max-width" })
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control no-max-width", id = "tbTitle", req = "tbTitle" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2">Description:</label>
                         <div class="col-sm-5" id="jeepTypeDiv">
-                            @Html.TextAreaFor(model => model.Post.PostDescription, new { @class = "form-control no-max-width" })
+                            @Html.TextAreaFor(model => model.Post.PostDescription, new { @class = "form-control no-max-width", id = "tbDescription", req = "tbDescription" })
                         </div>
                     </div>
                 </div>
@@ -184,7 +187,8 @@
                             </div>
                             <div class="form-group">
                                 <div>
-                                    <input type="submit" value="Create" class="btn btn-default" />
+                                    <a href="#" id="aCreate" class="btn btn-default">Create</a>
+                                    <input id="btnCreate" type="submit" value="Create" class="invisible" />
                                 </div>
                             </div>
                         </div>
@@ -206,6 +210,32 @@
         }
     </div>
 </div>
+
+<!-- Modal content-->
+<div id="RequiredFieldsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">One or more required fields missing!</h4>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>
+                            Please check each step to see if all fields are filled out!
+                            Required fields will be in red!
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -236,8 +266,8 @@
                 }
             });
 
-            $('#SelectedStateId').on("change", function () {
-                var _stateId = $('#SelectedStateId').val();
+            $('#ddlState').on("change", function () {
+                var _stateId = $('#ddlState').val();
                 var url = "/Post/GetStateNameById";
 
                 $.ajax({
@@ -276,8 +306,8 @@
                 $('#spanCity').html(ddlCity.options[ddlCity.selectedIndex].text);
             });
 
-            $('#SelectedYearId').on("change", function () {
-                var _yearId = $('#SelectedYearId').val();
+            $('#ddlYear').on("change", function () {
+                var _yearId = $('#ddlYear').val();
                 var url = "/Post/GetYearById";
 
                 $.ajax({
@@ -295,11 +325,11 @@
                 });
             });
 
-            $('#Post_PostTitle').keyup(function () {
+            $('#tbTitle').keyup(function () {
                 $('#spanTitle').html($(this).val());
             });
 
-            $('#Post_PostDescription').keyup(function () {
+            $('#tbDescription').keyup(function () {
                 $('#spanDescription').html($(this).val());
             });
 
@@ -322,7 +352,7 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option value='0'>Select City</option>";
+                    var markup = "<option value=''>Select City</option>";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].CityId + ">" + data[x].City + "</option>";
                     }
@@ -361,6 +391,32 @@
                 //alert("Please at least one of the checkbox");
             }
         }
+
+        jQuery('#aCreate').click(function () {
+            jQuery('.create-post [req]').submissionOK({
+                displayOnForm: false,
+                highlight: true,
+                submissionOKName: 'Create-Post',
+                submitButtonId: 'btnCreate'
+            });
+            return false;
+        });
+
+        jQuery('body').bind('ErrorOccurred', function () {
+            $('#alertRequiredFields').addClass('in');
+        });
+
+        $('.close').click(function () {
+            $(this).parent().removeClass('in');
+        });
+
+        jQuery.fn.submissionOK.formSubmission = function (o) {
+            switch (o.submissionOKName) {
+                case 'Create-Post':
+                    jQuery('#' + o.submitButtonId).click();
+                    break;
+            }
+        };
 
         @*$(function () {
             var currentImage = 1;

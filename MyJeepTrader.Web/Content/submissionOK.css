@@ -1,0 +1,54 @@
+.sok_errorAlert {
+    color: #e51b24;
+}
+.sok_errorBorder {
+    border: 1px solid #e51b24 !important;
+}
+.sok_noBorder {	
+}
+.sok_labelNoBorder {
+	color: #e51b24 !important;
+}
+.sok_labelNoBorder::-webkit-input-placeholder, .sok_errorAlert::-webkit-input-placeholder {
+    color: #e51b24;
+}
+.sok_labelNoBorder:-moz-placeholder, .sok_errorAlert:-moz-placeholder {
+	color: #e51b24;
+	opacity: 1;
+}
+.sok_labelNoBorder::-moz-placeholder, .sok_errorAlert::-moz-placeholder {
+	color: #e51b24;
+	opacity: 1;
+}
+.sok_labelNoBorder:-ms-input-placeholder, .sok_errorAlert:-ms-input-placeholder {
+   	color: #e51b24;
+}
+.sok_labelNoBorder td label, .sok_labelNoBorder li label, .sok_errorAlert td label, .sok_errorAlert li label{
+	color: #e51b24;
+}
+.sok_errorLabel, .sok_showErrors {
+    color: #e51b24;
+    font-style: italic;
+    font-size: 11px;
+}
+.sok_displayErrors {
+    display: none;
+}
+#sok_errorMessages {
+}
+#sok_errorMessages h3 {
+    font-weight: bold;
+    font-size: 12px;
+}
+#sok_errorMessages ul {
+    color: #e51b24;
+}
+#sok_errorMessages li {
+    list-style-type: decimal;
+}
+.sok_defaultValue {
+    color: #ccc;
+}
+.sok_required {
+    color: #e51b24;
+}

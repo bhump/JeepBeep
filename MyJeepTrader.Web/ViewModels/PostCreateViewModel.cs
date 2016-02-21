@@ -21,20 +21,15 @@ namespace MyJeepTrader.Web.ViewModels
 
         public List<tYear> Years { get; set; }
 
-        /// <summary>
-        /// Gets or sets the selected year. This is a single year object that will be selected from the dropdownlist of years.
-        /// </summary>
-        /// <value>
-        /// The selected year.
-        /// </value>
+        [Required(ErrorMessage = "Select a model/accessory year.")]
         public int SelectedYearId { get; set; }
 
         public List<tPostType> PostTypes { get; set; }
-        
+
         public int SelectedPostTypeId { get; set; }
-        
+
         public bool IsJeep { get; set; }
-        
+
         public bool IsAccessory { get; set; }
 
         public HttpPostedFileBase Image { get; set; }
