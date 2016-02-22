@@ -42,7 +42,7 @@ namespace MyJeepTrader.Data
                 predicate = predicate.Or(p => p.tMake.Make.Contains(temp));
                 predicate = predicate.Or(p => p.tPostType.Type.Contains(temp));
                 predicate = predicate.Or(p => p.tYear.Year.Contains(temp));
-                //predicate = predicate.Or(p => p.tModelPostControls.Where(m => m.tModel.Model.Contains(temp)).ToList();
+                predicate = predicate.Or(p => p.tModelPostControls.Any(m => m.tModel.Model == temp));
             }
 
             return _context.tPosts.AsExpandable().Where(predicate);

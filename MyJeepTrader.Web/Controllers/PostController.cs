@@ -3,20 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using MyJeepTrader.Data;
 using MyJeepTrader.Web.Helpers;
 using MyJeepTrader.Web.Models;
 using MyJeepTrader.Web.ViewModels;
 using System.IO;
 using System.Data.Entity.Validation;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 //test comment.
 namespace MyJeepTrader.Web.Controllers
 {
     public class PostController : Controller
     {
-        // GET: Post
+        private ApplicationUserManager _userManager;
+
+        public PostController()
+        {
+
+        }
+
+        public PostController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         public ActionResult Index()
         {
             Service service = new Service();
@@ -130,7 +155,6 @@ namespace MyJeepTrader.Web.Controllers
             return null;
         }
 
-        // POST: Post/Create
         [HttpPost]
         public ActionResult Create(PostCreateViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
@@ -232,13 +256,36 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
-        // GET: Post/Edit/5
+        [HttpPost]
+        public ActionResult CreateMessage(FormCollection collection)
+        {
+            var user = UserManager.FindByName(User.Identity.Name);
+
+            try
+            {
+                Service service = new Service();
+
+                var postId = collection["PostId"].ToString();
+                var to = collection["UserName"].ToString();
+                var subject = collection["PostTitle"].ToString();
+                var message = collection["Message"].ToString();
+                var isIm = false;
+
+                service.CreateMessage(to, user.UserName, subject, message, isIm);
+
+                return RedirectToAction("Details", new { PostId = postId });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Post/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -254,13 +301,11 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
-        // GET: Post/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Post/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

@@ -6,71 +6,73 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>My Jeep Trader Posts</h2>
-
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        @ViewBag.Message
-    </div>
-}
-
 <div class="row">
-    <div>
+    <div class="col-lg-12">
+        <h2>My Jeep Trader Posts</h2>
 
-    </div>
-</div>
-
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-        <i class="glyphicon glyphicon-plus"></i>&nbsp;@Html.ActionLink("Create New Posting", "Create")
-    </div>
-}
-
-<br />
-
-@using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
-{
-    <div class="input-group">
-        @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search Posts" })
-        <span class="input-group-btn">
-            <button class="btn btn-default btn-group-lg btn-lg" type="button">Go!</button>
-        </span>
-    </div>
-}
-
-<br />
-
-@if (Model != null && Model.SearchedPosts != null)
-{
-    <table class="table">
-        <tr>
-            <th></th>
-            <th>Post Title</th>
-            <th>Post Description</th>
-            <th>Jeep Model</th>
-            <th>Part Brand</th>
-            <th>Part Type</th>
-        </tr>
-        @foreach (var item in Model.SearchedPosts)
+        @if (ViewBag.Message != null)
         {
-            <tr>
-                <td>@Html.ActionLink("View", "Details", "Post", new { PostId = @item.PostId }, new { })</td>
-                <td>@item.PostTitle</td>
-                <td>@item.PostDescription</td>
-                <td>@item.tModelPostControls</td>
-                <td>@item.PartBrand</td>
-                <td>@item.PartType</td>
-            </tr>
-
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @ViewBag.Message
+            </div>
         }
 
-    </table>
-}
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>
+                <i class="glyphicon glyphicon-plus"></i>&nbsp;@Html.ActionLink("Create New Posting", "Create")
+            </div>
+        }
+
+        <br />
+
+        @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
+        {
+            <div class="input-group">
+                @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search Posts" })
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-group-lg btn-lg" type="button">Go!</button>
+                </span>
+            </div>
+        }
+
+        <br />
+
+        @if (Model != null && Model.SearchedPosts != null)
+        {
+            <table class="table table-responsive">
+                <tr>
+                    <th></th>
+                    <th>Post Title</th>
+                    <th>Post Description</th>
+                    <th>Jeep Model</th>
+                    <th>Part Brand</th>
+                    <th>Part Type</th>
+                </tr>
+                @foreach (var item in Model.SearchedPosts)
+                {
+                    <tr>
+                        <td>@Html.ActionLink("View", "Details", "Post", new { PostId = @item.PostId }, new { })</td>
+                        <td>@item.PostTitle</td>
+                        <td width="40%">@item.PostDescription</td>
+                        <td width="20%">
+                            @Html.Raw(string.Join(", ", item.tModelPostControls.Select(m => string.Format("<span>{0}</span>", m.tModel.Model))))
+                        </td>
+                        <td>@item.PartBrand</td>
+                        <td>@item.PartType</td>
+                    </tr>
+
+                }
+
+            </table>
+        }
+    </div>
+</div>
 
 @section scripts
 {

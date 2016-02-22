@@ -239,7 +239,7 @@ namespace MyJeepTrader.Web.Controllers
 
                             UserManager.AddToRole(user.Id, "Basic");
 
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("AlphaTesting", "Home");
                         }
 
                         AddErrors(result);

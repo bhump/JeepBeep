@@ -45,5 +45,11 @@ namespace MyJeepTrader.Data.Models
         public DateTime? DateCreated { get; set; }
 
         public List<byte[]> Images { get; set; }
+
+        public string Message { get; set; }
+
+        public int To { get; set; }
+
+        public int From { get; set; } 
     }
 }
