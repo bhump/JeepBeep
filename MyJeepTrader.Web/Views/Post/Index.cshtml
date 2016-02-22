@@ -33,12 +33,13 @@
 
         @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
         {
-            <div class="input-group">
-                @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search Posts" })
-                <span class="input-group-btn">
-                    <button class="btn btn-default btn-group-lg btn-lg" type="button">Go!</button>
-                </span>
-            </div>
+                <div class="input-group">
+                    @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search Posts" })
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-group-lg btn-lg" type="submit">Go!</button>
+                    </span>
+                </div>
+
         }
 
         <br />
