@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MyJeepTrader.Data;
+using MyJeepTrader.Web.ViewModels;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -36,6 +38,18 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult AlphaTesting()
         {
             return View();
+        }
+
+        public ActionResult LiveStream()
+        {
+            Service service = new Service();
+            LiveStreamViewModel model = new LiveStreamViewModel
+            {
+                LiveStreams = service.GetLivePosts()
+            };
+            if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
+
+            return View(model);
         }
     }
 }

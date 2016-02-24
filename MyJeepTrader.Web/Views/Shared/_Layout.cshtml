@@ -24,13 +24,19 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
                         <li>@Html.ActionLink("Posts", "Index", "Post")</li>
                         <li>@Html.ActionLink("Users", "Index", "UserProfile")</li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li>@Html.ActionLink("Alpha Testing", "AlphaTesting", "Home")</li>
                             <li>@Html.ActionLink("Feedback", "Index", "Feedback")</li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Stream", "LiveStream", "Home")</li>
                         }
                     </ul>
                     <div class="navbar-collapse">

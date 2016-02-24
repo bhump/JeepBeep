@@ -1,0 +1,72 @@
+﻿@model MyJeepTrader.Web.ViewModels.LiveStreamViewModel
+@{
+    ViewBag.Title = "LiveStream";
+}
+
+<h2>LiveStream</h2>
+<div class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="placeholder">
+                <label>Mini Dashboard</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-offset-1">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            @Html.TextBox("PostStatus", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Post a Status" })
+                            <a href="#" class="glyphicon glyphicon-camera glyphicon-camera-input"></a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            @Html.TextBox("PostStatus", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Search your feed" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-right col-md-12">
+                            <div>
+                                <a href="#" class="glyphicon glyphicon-plus-sign"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            @foreach (var item in Model.LiveStreams)
+            {
+                <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="ui-icon-image">
+                                <img src="~/Images/placeholder.jpg" width="100%" />
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="text-left row">
+                                <div class="col-md-12">
+                                    Username
+                                </div>
+                                <div class="col-md-12">
+                                    @item.Status
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-3">
+            <div class="placeholder">
+                <label>Hot Posts and Such</label>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts
+{
+}
+
