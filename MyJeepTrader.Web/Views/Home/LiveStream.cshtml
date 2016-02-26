@@ -13,16 +13,34 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <div class="col-sm-offset-1">
+                <div>
+                    @if (ViewBag.Message != null)
+                    {
+                        if (ViewBag.Message.Contains("wrong"))
+                        {
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                @ViewBag.Message
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                @ViewBag.Message
+                            </div>
+                        }
+                    }
                     <div class="col-md-6">
-                        <div class="input-group">
-                            @Html.TextBox("PostStatus", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Post a Status" })
-                            <a href="#" class="glyphicon glyphicon-camera glyphicon-camera-input"></a>
-                        </div>
+                        @Html.Action("StatusPostSearchPartial", "Status")
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
-                            @Html.TextBox("PostStatus", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Search your feed" })
+                            @Html.TextBox("SearchFeed", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Search your feed" })
                         </div>
                     </div>
                     <div class="row">
@@ -35,9 +53,9 @@
                 </div>
             </div>
             <br />
-            @foreach (var item in Model.LiveStreams)
+            @foreach (var stream in Model.LiveStreams)
             {
-                <div class="well well-sm">
+                <div id="divLiveStream" class="well-livestream well-sm">
                     <div class="row">
                         <div class="col-md-2">
                             <div class="ui-icon-image">
@@ -47,10 +65,32 @@
                         <div class="col-md-10">
                             <div class="text-left row">
                                 <div class="col-md-12">
-                                    Username
+                                    @stream.UserName
                                 </div>
                                 <div class="col-md-12">
-                                    @item.Status
+                                    @stream.Status
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @foreach (var post in Model.LivePosts)
+            {
+                <div id="divLivePost" class="well-liveposts well-sm">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="ui-icon-image">
+                                <img src="~/Images/placeholder.jpg" width="100%" />
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="text-left row">
+                                <div class="col-md-12">
+                                    @post.AspNetUser.UserName
+                                </div>
+                                <div class="col-md-12">
+                                    @post.PostDescription
                                 </div>
                             </div>
                         </div>
@@ -64,9 +104,52 @@
             </div>
         </div>
     </div>
-
 </div>
 @section scripts
 {
-}
+    <script>
+        $(document).ready(function () {
 
+            //var livePosts = [$('.well-liveposts')];
+            //var i;
+
+            //for (i = 0; i < livePosts.length; i++)
+            //{
+            //    livePosts[i].insertAfter('.well-livestream:eq(1)');
+            //}
+
+            $('#aImageInput').click(function () {
+                $('#imageInput').click();
+            });
+
+            $('#aSubmitStatus').mousedown(function () {
+                jQuery('.create-status [req]').submissionOK({
+                    displayOnForm: false,
+                    highlight: true,
+                    submissionOKName: 'Create-Status',
+                    submitButtonId: 'btnSubmitStatus'
+                });
+                return false;
+            });
+
+            $.fn.submissionOK.formSubmission = function (o) {
+                switch (o.submissionOKName) {
+                    case 'Create-Status':
+                        jQuery('#' + o.submitButtonId).click();
+                        break;
+                }
+            };
+
+            $('#tbStatus').focus(function () {
+                $('#divStatusInputs').fadeIn(1000).removeClass('hidden');
+                $(this).attr('rows', '4');
+            });
+
+            $('#divStatus').focusout(function () {
+                $('#divStatusInputs').fadeOut(1000).addClass('hidden');
+                $('#tbStatus').attr('rows', '1');
+            });
+
+        });
+    </script>
+}

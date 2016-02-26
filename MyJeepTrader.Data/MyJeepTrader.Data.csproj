@@ -114,6 +114,9 @@
     <Compile Include="tFeedback.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tFriendsList.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tImage.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
@@ -145,6 +148,12 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tState.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tStatusMedia.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tStatusUpdate.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tSubModel.cs">

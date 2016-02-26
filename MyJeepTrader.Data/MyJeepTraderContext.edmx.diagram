@@ -59,7 +59,13 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tStates" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tFeedback" Width="1.5" PointX="6" PointY="32.375" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tFeedback_AspNetUsers" />
-      </Diagram>
+        <EntityTypeShape EntityType="MyJeepTraderModel.tStatusMedia" Width="1.5" PointX="8.25" PointY="35.625" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tStatusUpdate" Width="1.5" PointX="6" PointY="35.375" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tStatus_AspNetUsers" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tStatusMedia_tStatus" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tFriendsList" Width="1.5" PointX="6" PointY="11.75" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

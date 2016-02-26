@@ -94,6 +94,14 @@
           <Property Name="Overall" Type="int" />
           <Property Name="Description" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="tFriendsList">
+          <Key>
+            <PropertyRef Name="FriendListId" />
+          </Key>
+          <Property Name="FriendListId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="FriendId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="tImages">
           <Key>
             <PropertyRef Name="Imageid" />
@@ -202,6 +210,26 @@
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="Country" Type="varchar" MaxLength="50" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tStatusMedia">
+          <Key>
+            <PropertyRef Name="MediaId" />
+          </Key>
+          <Property Name="MediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="MediaLink" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="image" />
+        </EntityType>
+        <EntityType Name="tStatusUpdates">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="Status" Type="varchar" MaxLength="400" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Private" Type="bit" />
+          <Property Name="LikeCount" Type="bigint" />
         </EntityType>
         <EntityType Name="tSubModel">
           <Key>
@@ -375,6 +403,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="tFeedback">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tFriendsList_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="tFriendsList" Type="Self.tFriendsList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tFriendsList">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -559,6 +599,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tStatus_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="tStatusUpdates" Type="Self.tStatusUpdates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tStatusUpdates">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tStatusMedia_tStatus">
+          <End Role="tStatusUpdates" Type="Self.tStatusUpdates" Multiplicity="0..1" />
+          <End Role="tStatusMedia" Type="Self.tStatusMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tStatusUpdates">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="tStatusMedia">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tSubModel_tModel">
           <End Role="tModel" Type="Self.tModel" Multiplicity="0..1" />
           <End Role="tSubModel" Type="Self.tSubModel" Multiplicity="*" />
@@ -641,6 +705,7 @@
           <EntitySet Name="tCities" EntityType="Self.tCities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tConnectedUsers" EntityType="Self.tConnectedUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tFeedback" EntityType="Self.tFeedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tFriendsList" EntityType="Self.tFriendsList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMake" EntityType="Self.tMake" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMemberships" EntityType="Self.tMemberships" Schema="dbo" store:Type="Tables" />
@@ -652,6 +717,8 @@
           <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStates" EntityType="Self.tStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tStatusMedia" EntityType="Self.tStatusMedia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tStatusUpdates" EntityType="Self.tStatusUpdates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubscriptions" EntityType="Self.tSubscriptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubscriptionTypes" EntityType="Self.tSubscriptionTypes" Schema="dbo" store:Type="Tables" />
@@ -687,6 +754,10 @@
           <AssociationSet Name="FK_tFeedback_AspNetUsers" Association="Self.FK_tFeedback_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tFeedback" EntitySet="tFeedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tFriendsList_AspNetUsers" Association="Self.FK_tFriendsList_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="tFriendsList" EntitySet="tFriendsList" />
           </AssociationSet>
           <AssociationSet Name="FK_tImages_tPosts" Association="Self.FK_tImages_tPosts">
             <End Role="tPosts" EntitySet="tPosts" />
@@ -747,6 +818,14 @@
           <AssociationSet Name="FK_tPosts_tYear" Association="Self.FK_tPosts_tYear">
             <End Role="tYear" EntitySet="tYear" />
             <End Role="tPosts" EntitySet="tPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tStatus_AspNetUsers" Association="Self.FK_tStatus_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tStatusMedia_tStatus" Association="Self.FK_tStatusMedia_tStatus">
+            <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
+            <End Role="tStatusMedia" EntitySet="tStatusMedia" />
           </AssociationSet>
           <AssociationSet Name="FK_tSubModel_tModel" Association="Self.FK_tSubModel_tModel">
             <End Role="tModel" EntitySet="tModel" />
@@ -913,6 +992,21 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="tFeedback" EntitySet="tFeedbacks" />
           </AssociationSet>
+          <EntitySet Name="tStatusMedias" EntityType="MyJeepTraderModel.tStatusMedia" />
+          <EntitySet Name="tStatusUpdates" EntityType="MyJeepTraderModel.tStatusUpdate" />
+          <AssociationSet Name="FK_tStatus_AspNetUsers" Association="MyJeepTraderModel.FK_tStatus_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tStatusUpdate" EntitySet="tStatusUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tStatusMedia_tStatus" Association="MyJeepTraderModel.FK_tStatusMedia_tStatus">
+            <End Role="tStatusUpdate" EntitySet="tStatusUpdates" />
+            <End Role="tStatusMedia" EntitySet="tStatusMedias" />
+          </AssociationSet>
+          <EntitySet Name="tFriendsLists" EntityType="MyJeepTraderModel.tFriendsList" />
+          <AssociationSet Name="FK_tFriendsList_AspNetUsers" Association="MyJeepTraderModel.FK_tFriendsList_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tFriendsList" EntitySet="tFriendsLists" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -969,6 +1063,8 @@
           <Property Name="CodeId" Type="Int32" />
           <NavigationProperty Name="tTestingCode" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="AspNetUser" ToRole="tTestingCode" />
           <NavigationProperty Name="tFeedbacks" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="AspNetUser" ToRole="tFeedback" />
+          <NavigationProperty Name="tStatusUpdates" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="AspNetUser" ToRole="tStatusUpdate" />
+          <NavigationProperty Name="tFriendsLists" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="AspNetUser" ToRole="tFriendsList" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1562,6 +1658,74 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tStatusMedia">
+          <Key>
+            <PropertyRef Name="MediaId" />
+          </Key>
+          <Property Name="MediaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="MediaLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="tStatusUpdate" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusMedia" ToRole="tStatusUpdate" />
+        </EntityType>
+        <EntityType Name="tStatusUpdate">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Private" Type="Boolean" />
+          <Property Name="LikeCount" Type="Int64" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="tStatusUpdate" ToRole="AspNetUser" />
+          <NavigationProperty Name="tStatusMedias" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusUpdate" ToRole="tStatusMedia" />
+        </EntityType>
+        <Association Name="FK_tStatus_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tStatusUpdate" Role="tStatusUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tStatusUpdate">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tStatusMedia_tStatus">
+          <End Type="MyJeepTraderModel.tStatusUpdate" Role="tStatusUpdate" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tStatusMedia" Role="tStatusMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tStatusUpdate">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="tStatusMedia">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tFriendsList">
+          <Key>
+            <PropertyRef Name="FriendListId" />
+          </Key>
+          <Property Name="FriendListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FriendId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="tFriendsList" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_tFriendsList_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tFriendsList" Role="tFriendsList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tFriendsList">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1872,6 +2036,37 @@
                 <ScalarProperty Name="Scale" ColumnName="Scale" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tStatusMedias">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusMedia">
+              <MappingFragment StoreEntitySet="tStatusMedia">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="MediaLink" ColumnName="MediaLink" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="MediaId" ColumnName="MediaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tStatusUpdates">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusUpdate">
+              <MappingFragment StoreEntitySet="tStatusUpdates">
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+                <ScalarProperty Name="Private" ColumnName="Private" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tFriendsLists">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tFriendsList">
+              <MappingFragment StoreEntitySet="tFriendsList">
+                <ScalarProperty Name="FriendId" ColumnName="FriendId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FriendListId" ColumnName="FriendListId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

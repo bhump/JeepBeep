@@ -193,7 +193,9 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InstantChatController.cs" />
     <Compile Include="Controllers\JeepProfileController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -218,6 +220,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DashboardIndexViewModel.cs" />
     <Compile Include="ViewModels\PostIndexViewModel.cs" />
+    <Compile Include="ViewModels\StatusCreateViewModel.cs" />
     <Compile Include="ViewModels\UserProfileDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserProfileIndexViewModel.cs" />
     <Compile Include="WebServices\UserInformationWebService.asmx.cs">
@@ -405,9 +408,12 @@
     <Content Include="Views\Home\AlphaTesting.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Home\LiveStream.cshtml" />
+    <Content Include="Views\Shared\_StatusPostSearchPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\InstantChat\" />
+    <Folder Include="Views\LiveStream\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

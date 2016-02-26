@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
 using MyJeepTrader.Web.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -45,7 +48,8 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             LiveStreamViewModel model = new LiveStreamViewModel
             {
-                LiveStreams = service.GetLivePosts()
+                LiveStreams = service.GetLiveStream(),
+                LivePosts = service.GetLivePosts()
             };
             if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
 

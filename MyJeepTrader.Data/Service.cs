@@ -52,22 +52,24 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var post = (from p in context.tPosts where p.PostId == postId select new SearchedPosts 
-                {
-                    PostTitle = p.PostTitle,
-                    PostDescription = p.PostDescription,
-                    PartBrand = p.PartBrand,
-                    PartType = p.PartType,
-                    PartName = p.PartName,
-                    Active = p.Active,
-                    UserName = p.AspNetUser.UserName,
-                    Year = p.tYear.Year,
-                    DateCreated = p.DateCreated,
-                    PostType = p.tPostType.Type,
-                    State = p.tState.StateCode,
-                    City = p.tCity.City,
-                    Make = p.tMake.Make
-                }).First();
+                var post = (from p in context.tPosts
+                            where p.PostId == postId
+                            select new SearchedPosts
+                                {
+                                    PostTitle = p.PostTitle,
+                                    PostDescription = p.PostDescription,
+                                    PartBrand = p.PartBrand,
+                                    PartType = p.PartType,
+                                    PartName = p.PartName,
+                                    Active = p.Active,
+                                    UserName = p.AspNetUser.UserName,
+                                    Year = p.tYear.Year,
+                                    DateCreated = p.DateCreated,
+                                    PostType = p.tPostType.Type,
+                                    State = p.tState.StateCode,
+                                    City = p.tCity.City,
+                                    Make = p.tMake.Make
+                                }).First();
 
                 return post;
             }
@@ -212,18 +214,57 @@ namespace MyJeepTrader.Data
 
         #endregion
 
-        #region
-        public IEnumerable<LiveStream> GetLivePosts()
+        #region Status
+        public IEnumerable<LiveStream> GetLiveStream()
         {
             //testing
-            LiveStream ls = new LiveStream();
-            ls.Status = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            List<LiveStream> liveStreams = new List<LiveStream>();
-            liveStreams.Add(ls);
-            liveStreams.Add(ls);
-            liveStreams.Add(ls);
+            //LiveStream ls = new LiveStream();
+            //ls.Status = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            //List<LiveStream> liveStreams = new List<LiveStream>();
+            //liveStreams.Add(ls);
+            //liveStreams.Add(ls);
+            //liveStreams.Add(ls);
 
-            return liveStreams;
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                return (from s in context.tStatusUpdates select new LiveStream 
+                { 
+                    Status = s.Status,
+                    UserName = s.AspNetUser.UserName
+                }).ToList();
+            }
+
+        }
+
+        public IEnumerable<tPost> GetLivePosts()
+        {
+            return (from p in _context.tPosts select p).ToList();
+        }
+
+        public async Task<int> CreateStatusAsync(string userId, string status)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                tStatusUpdate statusUpdate = new tStatusUpdate
+                {
+                   DateCreated = DateTime.Now,
+                   LikeCount = 0,
+                   Private = false,
+                   Status = status,
+                   Id = userId
+                };
+                context.tStatusUpdates.Add(statusUpdate);
+                context.SaveChanges();
+
+                Task<int> t = new Task<int>(() =>
+                {
+                    return statusUpdate.StatusId;
+
+                });
+
+                t.Start();
+                return await t;
+            }
         }
         #endregion
 
@@ -394,6 +435,7 @@ namespace MyJeepTrader.Data
                 Console.WriteLine(ex.ToString());
             }
         }
+
         public void UpdateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
@@ -413,6 +455,7 @@ namespace MyJeepTrader.Data
                 context.SaveChanges();
             }
         }
+        
         public bool CheckForProfile(string userId)
         {
             using (_context)
