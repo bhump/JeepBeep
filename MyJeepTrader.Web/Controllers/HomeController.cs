@@ -46,11 +46,19 @@ namespace MyJeepTrader.Web.Controllers
         public ActionResult LiveStream()
         {
             Service service = new Service();
-            LiveStreamViewModel model = new LiveStreamViewModel
-            {
-                LiveStreams = service.GetLiveStream(),
-                LivePosts = service.GetLivePosts()
-            };
+
+            ICollection<MyJeepTrader.Data.Models.LivePost> livePosts = service.GetLivePosts();
+            ICollection<MyJeepTrader.Data.Models.LiveStream> liveStreams = service.GetLiveStream();
+
+
+            AlternateFeedViewModel model = new AlternateFeedViewModel(livePosts, liveStreams);
+
+            //LiveStreamViewModel model = new LiveStreamViewModel
+            //{
+            //    LiveStreams = service.GetLiveStream(),
+            //    LivePosts = service.GetLivePosts()
+            //};
+
             if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
 
             return View(model);

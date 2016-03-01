@@ -215,30 +215,33 @@ namespace MyJeepTrader.Data
         #endregion
 
         #region Status
-        public IEnumerable<LiveStream> GetLiveStream()
+        public ICollection<LiveStream> GetLiveStream()
         {
-            //testing
-            //LiveStream ls = new LiveStream();
-            //ls.Status = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            //List<LiveStream> liveStreams = new List<LiveStream>();
-            //liveStreams.Add(ls);
-            //liveStreams.Add(ls);
-            //liveStreams.Add(ls);
-
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                return (from s in context.tStatusUpdates select new LiveStream 
-                { 
-                    Status = s.Status,
-                    UserName = s.AspNetUser.UserName
-                }).ToList();
+                return (from s in context.tStatusUpdates
+                        select new LiveStream
+                            {
+                                Status = s.Status,
+                                UserName = s.AspNetUser.UserName,
+                                IsPost = false
+                            }).ToList();
             }
 
         }
 
-        public IEnumerable<tPost> GetLivePosts()
+        public ICollection<LivePost> GetLivePosts()
         {
-            return (from p in _context.tPosts select p).ToList();
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                return (from p in _context.tPosts
+                        select new LivePost
+                            {
+                                UserName = p.AspNetUser.UserName,
+                                PostDescription = p.PostDescription,
+                                IsPost = true
+                            }).ToList();
+            }
         }
 
         public async Task<int> CreateStatusAsync(string userId, string status)
@@ -247,11 +250,11 @@ namespace MyJeepTrader.Data
             {
                 tStatusUpdate statusUpdate = new tStatusUpdate
                 {
-                   DateCreated = DateTime.Now,
-                   LikeCount = 0,
-                   Private = false,
-                   Status = status,
-                   Id = userId
+                    DateCreated = DateTime.Now,
+                    LikeCount = 0,
+                    Private = false,
+                    Status = status,
+                    Id = userId
                 };
                 context.tStatusUpdates.Add(statusUpdate);
                 context.SaveChanges();
@@ -455,7 +458,7 @@ namespace MyJeepTrader.Data
                 context.SaveChanges();
             }
         }
-        
+
         public bool CheckForProfile(string userId)
         {
             using (_context)

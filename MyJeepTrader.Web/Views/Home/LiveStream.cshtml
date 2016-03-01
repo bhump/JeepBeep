@@ -1,4 +1,4 @@
-﻿@model MyJeepTrader.Web.ViewModels.LiveStreamViewModel
+﻿@model MyJeepTrader.Web.ViewModels.AlternateFeedViewModel
 @{
     ViewBag.Title = "LiveStream";
 }
@@ -7,8 +7,13 @@
 <div class="content">
     <div class="row">
         <div class="col-md-3">
-            <div class="placeholder">
-                <label>Mini Dashboard</label>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Mini Dashboard</h4>
+                    <div>
+                        @Html.Action("MiniDashboardPartial", "MiniDashboard")
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">
@@ -53,50 +58,106 @@
                 </div>
             </div>
             <br />
-            @foreach (var stream in Model.LiveStreams)
+            @foreach (var stream in Model.LiveFeeds)
             {
-                <div id="divLiveStream" class="well-livestream well-sm">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="ui-icon-image">
-                                <img src="~/Images/placeholder.jpg" width="100%" />
-                            </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="text-left row">
-                                <div class="col-md-12">
-                                    @stream.UserName
+                if (stream.IsFeedPost == true)
+                {
+                    <div id="divLiveStream" class="well-liveposts well-sm">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="ui-icon-image">
+                                    <img src="~/Images/placeholder.jpg" width="100%" />
                                 </div>
-                                <div class="col-md-12">
-                                    @stream.Status
+                            </div>
+                            <div class="col-md-10">
+                                <div class="text-left row">
+                                    <div class="col-md-12">
+                                        @stream.FeedUserName
+                                    </div>
+                                    <div class="col-md-12">
+                                        @stream.FeedDescription
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-            @foreach (var post in Model.LivePosts)
-            {
-                <div id="divLivePost" class="well-liveposts well-sm">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="ui-icon-image">
-                                <img src="~/Images/placeholder.jpg" width="100%" />
-                            </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="text-left row">
-                                <div class="col-md-12">
-                                    @post.AspNetUser.UserName
+                }
+                else
+                {
+                    <div id="divLiveStream" class="well-livestream well-sm">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="ui-icon-image">
+                                    <img src="~/Images/placeholder.jpg" width="100%" />
                                 </div>
-                                <div class="col-md-12">
-                                    @post.PostDescription
+                            </div>
+                            <div class="col-md-10">
+                                <div class="text-left row">
+                                    <div class="col-md-12">
+                                        @stream.FeedUserName
+                                    </div>
+                                    <div class="col-md-12">
+                                        @stream.FeedDescription
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
+            @*@{
+                    var streamIndex = 0;
+                    var postIndex = 0;
+                }
+                @while (streamIndex <= Model.LiveStreams.Count() || postIndex <= Model.LivePosts.Count())
+                {
+                    foreach (var stream in Model.LiveStreams.Skip(streamIndex).Take(2))
+                    {
+                        <div id="divLiveStream" class="well-livestream well-sm">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="ui-icon-image">
+                                        <img src="~/Images/placeholder.jpg" width="100%" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="text-left row">
+                                        <div class="col-md-12">
+                                            @stream.UserName
+                                        </div>
+                                        <div class="col-md-12">
+                                            @stream.Status
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        streamIndex += 2;
+                    }
+                    foreach (var post in Model.LivePosts.Skip(postIndex).Take(2))
+                    {
+                        <div id="divLivePosts" class="well-liveposts well-sm">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="ui-icon-image">
+                                        <img src="~/Images/placeholder.jpg" width="100%" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="text-left row">
+                                        <div class="col-md-12">
+                                            @post.AspNetUser.UserName
+                                        </div>
+                                        <div class="col-md-12">
+                                            @post.PostDescription
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        postIndex += 2;
+                    }
+                }*@
         </div>
         <div class="col-md-3">
             <div class="placeholder">
@@ -105,51 +166,3 @@
         </div>
     </div>
 </div>
-@section scripts
-{
-    <script>
-        $(document).ready(function () {
-
-            //var livePosts = [$('.well-liveposts')];
-            //var i;
-
-            //for (i = 0; i < livePosts.length; i++)
-            //{
-            //    livePosts[i].insertAfter('.well-livestream:eq(1)');
-            //}
-
-            $('#aImageInput').click(function () {
-                $('#imageInput').click();
-            });
-
-            $('#aSubmitStatus').mousedown(function () {
-                jQuery('.create-status [req]').submissionOK({
-                    displayOnForm: false,
-                    highlight: true,
-                    submissionOKName: 'Create-Status',
-                    submitButtonId: 'btnSubmitStatus'
-                });
-                return false;
-            });
-
-            $.fn.submissionOK.formSubmission = function (o) {
-                switch (o.submissionOKName) {
-                    case 'Create-Status':
-                        jQuery('#' + o.submitButtonId).click();
-                        break;
-                }
-            };
-
-            $('#tbStatus').focus(function () {
-                $('#divStatusInputs').fadeIn(1000).removeClass('hidden');
-                $(this).attr('rows', '4');
-            });
-
-            $('#divStatus').focusout(function () {
-                $('#divStatusInputs').fadeOut(1000).addClass('hidden');
-                $('#tbStatus').attr('rows', '1');
-            });
-
-        });
-    </script>
-}

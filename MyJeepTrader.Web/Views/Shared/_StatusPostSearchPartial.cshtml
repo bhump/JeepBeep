@@ -7,7 +7,7 @@
     {
         <div class="row">
             <div class="col-sm-12">
-                @Html.TextAreaFor(model => model.status, new {cols = "1", rows = "1", @class = "form-control no-max-width input-sm", id = "tbStatus", placeholder = "Update Status", req = "tbStatus" })
+                @Html.TextAreaFor(model => model.status, new { cols = "1", rows = "1", @class = "form-control no-max-width input-sm", id = "tbStatus", placeholder = "Update Status", req = "tbStatus" })
             </div>
         </div>
         @*<a href="#" class="glyphicon glyphicon-camera glyphicon-camera-input"></a>*@
@@ -27,9 +27,52 @@
             <div class="col-sm-6 text-right">
                 <div class="text-right">
                     <a id="aSubmitStatus" class="btn btn-default">Submit</a>
-                    <input id="btnSubmitStatus" type="submit" class="btn btn-default hidden"/>
+                    <input id="btnSubmitStatus" type="submit" class="btn btn-default hidden" />
                 </div>
             </div>
         </div>
     }
 </div>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/jquery.submissionOK.js"></script>
+<script>
+    //var livePosts = [$('.well-liveposts')];
+    //var i;
+
+    //for (i = 0; i < livePosts.length; i++)
+    //{
+    //    livePosts[i].insertAfter('.well-livestream:eq(1)');
+    //}
+
+    $('#aImageInput').click(function () {
+        $('#imageInput').click();
+    });
+
+    $('#aSubmitStatus').mousedown(function () {
+        jQuery('.create-status [req]').submissionOK({
+            displayOnForm: false,
+            highlight: true,
+            submissionOKName: 'Create-Status',
+            submitButtonId: 'btnSubmitStatus'
+        });
+        return false;
+    });
+
+    $.fn.submissionOK.formSubmission = function (o) {
+        switch (o.submissionOKName) {
+            case 'Create-Status':
+                jQuery('#' + o.submitButtonId).click();
+                break;
+        }
+    };
+
+    $('#tbStatus').focus(function () {
+        $('#divStatusInputs').fadeIn(1000).removeClass('hidden');
+        $(this).attr('rows', '4');
+    });
+
+    $('#divStatus').focusout(function () {
+        $('#divStatusInputs').fadeOut(1000).addClass('hidden');
+        $('#tbStatus').attr('rows', '1');
+    });
+</script>

@@ -1,0 +1,80 @@
+﻿@using MyJeepTrader.Data
+@model MyJeepTrader.Web.ViewModels.PostCreateViewModel
+@{
+    Layout = "";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <h5>Quick Post</h5>
+            </div>
+        </div>
+        @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data", @id = "CreatePost", @class = "create-class" }))
+        {
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.DropDownListFor(model => model.SelectedPostTypeId, new SelectList(Model.PostTypes, "PostTypeId", "Type"), "Select Post Type", new { @class = "form-control", id = "ddlPostType" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "State", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);", id = "ddlState", req = "ddlState" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.DropDownListFor(m => m.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()), "City", new { @class = "form-control", id = "ddlCity", req = "ddlCity" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    @*@Html.DropDownListFor(m => m.Models, new SelectList(Model.Models[0].TModel.Model, "ModelId", "Model"), "Model", new { @class = "form-control", id = "ddlModel", req = "ddlModel" })*@
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script>
+    $('#ddlState').on("change", function () {
+        var _stateId = $('#ddlState').val();
+        var url = "/Post/GetStateNameById";
+
+        $.ajax({
+            url: url,
+            data: { StateId: _stateId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                $('#spanState').html(data);
+            },
+            error: function (reponse) {
+                alert("error : " + JSON.stringify(reponse));
+            }
+        });
+    });
+
+    function GetCity(_stateId) {
+        var procemessage = "<option value='0'>City</option>";
+        $("#ddlCity").html(procemessage).show();
+        var url = "/Post/GetCityByStateId";
+
+        $.ajax({
+            url: url,
+            data: { stateid: _stateId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value=''>City</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].CityId + ">" + data[x].City + "</option>";
+                }
+                $("#ddlCity").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + JSON.stringify(reponse));
+            }
+        });
+    }
+</script>

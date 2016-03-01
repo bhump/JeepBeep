@@ -195,6 +195,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstantChatController.cs" />
     <Compile Include="Controllers\JeepProfileController.cs" />
+    <Compile Include="Controllers\MiniDashboardController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
@@ -409,11 +410,13 @@
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Home\LiveStream.cshtml" />
     <Content Include="Views\Shared\_StatusPostSearchPartial.cshtml" />
+    <Content Include="Views\Shared\_MiniDashboardPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\InstantChat\" />
     <Folder Include="Views\LiveStream\" />
+    <Folder Include="Views\MiniDashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
