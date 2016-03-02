@@ -18,7 +18,7 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             PostCreateViewModel model = new PostCreateViewModel
             {
-                Models = service.GetAllModels().ToModelWithSelected(),
+                MiniDashModel = service.GetAllModels(),
                 Years = service.GetAllYears(),
                 PostTypes = service.GetAllPostTypes(),
                 States = service.GetAllStates()

@@ -44,7 +44,7 @@
                         @Html.Action("StatusPostSearchPartial", "Status")
                     </div>
                     <div class="col-md-6">
-                        <div class="input-group">
+                        <div class="input-group well well-sm">
                             @Html.TextBox("SearchFeed", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Search your feed" })
                         </div>
                     </div>
@@ -64,6 +64,7 @@
                 {
                     <div id="divLiveStream" class="well-liveposts well-sm">
                         <div class="row">
+                            <label class="hidden">@stream.FeedId</label>
                             <div class="col-md-2">
                                 <div class="ui-icon-image">
                                     <img src="~/Images/placeholder.jpg" width="100%" />
@@ -80,12 +81,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a id="aFullPost" href="#" class="navbar-link pull-right">Full Post</a>
+                            </div>
+                        </div>
                     </div>
                 }
                 else
                 {
                     <div id="divLiveStream" class="well-livestream well-sm">
                         <div class="row">
+                            <label class="hidden">@stream.FeedId</label>
                             <div class="col-md-2">
                                 <div class="ui-icon-image">
                                     <img src="~/Images/placeholder.jpg" width="100%" />
@@ -105,59 +112,6 @@
                     </div>
                 }
             }
-            @*@{
-                    var streamIndex = 0;
-                    var postIndex = 0;
-                }
-                @while (streamIndex <= Model.LiveStreams.Count() || postIndex <= Model.LivePosts.Count())
-                {
-                    foreach (var stream in Model.LiveStreams.Skip(streamIndex).Take(2))
-                    {
-                        <div id="divLiveStream" class="well-livestream well-sm">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="ui-icon-image">
-                                        <img src="~/Images/placeholder.jpg" width="100%" />
-                                    </div>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="text-left row">
-                                        <div class="col-md-12">
-                                            @stream.UserName
-                                        </div>
-                                        <div class="col-md-12">
-                                            @stream.Status
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        streamIndex += 2;
-                    }
-                    foreach (var post in Model.LivePosts.Skip(postIndex).Take(2))
-                    {
-                        <div id="divLivePosts" class="well-liveposts well-sm">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="ui-icon-image">
-                                        <img src="~/Images/placeholder.jpg" width="100%" />
-                                    </div>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="text-left row">
-                                        <div class="col-md-12">
-                                            @post.AspNetUser.UserName
-                                        </div>
-                                        <div class="col-md-12">
-                                            @post.PostDescription
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        postIndex += 2;
-                    }
-                }*@
         </div>
         <div class="col-md-3">
             <div class="placeholder">

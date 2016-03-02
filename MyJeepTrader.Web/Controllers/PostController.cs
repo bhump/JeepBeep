@@ -204,9 +204,17 @@ namespace MyJeepTrader.Web.Controllers
                 {
                     var newPostId = service.CreateNewPost(model.Post);
 
-                    foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
+                    if (model.Models == null)
                     {
-                        service.AddModelPost(selectedModel.TModel.ModelId, newPostId);
+                        service.AddModelPost(model.SelectedModelId, newPostId);
+                    }
+                    else
+                    {
+
+                        foreach (var selectedModel in model.Models.Where(x => x.IsSelected))
+                        {
+                            service.AddModelPost(selectedModel.TModel.ModelId, newPostId);
+                        }
                     }
 
                     if (files.Count() != 0)

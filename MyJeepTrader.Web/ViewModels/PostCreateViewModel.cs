@@ -41,6 +41,10 @@ namespace MyJeepTrader.Web.ViewModels
         public int SelectedCityId { get; set; }
 
         public List<tCity> Cities { get; set; }
+
+        public List<tModel> MiniDashModel { get; set; }
+
+        public int SelectedModelId { get; set; }
     }
 
     public class tModelWithSelected

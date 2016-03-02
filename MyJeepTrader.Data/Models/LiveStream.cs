@@ -6,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace MyJeepTrader.Data.Models
 {
-    //public class LiveStream
-    //{
-        //public byte[] Avatar { get; set; }
-
-        //public string Status { get; set; }
-
-        //public string UserName { get; set; }
-    //}
 
     public abstract class LiveFeed
     {
@@ -22,6 +14,8 @@ namespace MyJeepTrader.Data.Models
         public abstract string FeedDescription { get; }
 
         public abstract bool IsFeedPost { get; }
+
+        public abstract int FeedId { get; }
     }
 
     public class LivePost : LiveFeed
@@ -31,6 +25,8 @@ namespace MyJeepTrader.Data.Models
         public string PostDescription { get; set; }
 
         public bool IsPost { get; set; }
+
+        public int PostId { get; set; }
 
         public override string FeedUserName
         {
@@ -46,6 +42,11 @@ namespace MyJeepTrader.Data.Models
         {
             get { return this.IsPost; }
         }
+
+        public override int FeedId
+        {
+            get { return this.PostId; }
+        }
     }
 
     public class LiveStream : LiveFeed
@@ -55,6 +56,8 @@ namespace MyJeepTrader.Data.Models
         public string Status { get; set; }
 
         public bool IsPost { get; set; }
+
+        public int StatusId { get; set; }
 
         public override string FeedUserName
         {
@@ -69,6 +72,11 @@ namespace MyJeepTrader.Data.Models
         public override bool IsFeedPost
         {
             get { return this.IsPost; }
+        }
+
+        public override int FeedId
+        {
+            get { return this.StatusId; }
         }
     }
 }

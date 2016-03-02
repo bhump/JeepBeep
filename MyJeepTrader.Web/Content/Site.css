@@ -221,3 +221,8 @@ div.CenterSubTitle {
 
     .ribbon-green:after {
         right: 0;
+    }
+
+.miniDash {
+    padding-top: 5px;
+}

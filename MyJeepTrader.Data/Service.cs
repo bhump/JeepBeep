@@ -87,12 +87,30 @@ namespace MyJeepTrader.Data
 
         public int CreateNewPost(tPost post)
         {
-            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
-            post.DateCreated = DateTime.Now;
-            context.tPosts.Add(post);
-            context.SaveChanges();
+            try
+            {
+                dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+                post.DateCreated = DateTime.Now;
+                context.tPosts.Add(post);
+                context.SaveChanges();
 
-            return post.PostId;
+                return post.PostId;
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+
+                return 0;
+            }
         }
 
         public void AddImage(byte[] imageData, int newPostId)
@@ -224,7 +242,8 @@ namespace MyJeepTrader.Data
                             {
                                 Status = s.Status,
                                 UserName = s.AspNetUser.UserName,
-                                IsPost = false
+                                IsPost = false,
+                                StatusId = s.StatusId
                             }).ToList();
             }
 
@@ -239,7 +258,8 @@ namespace MyJeepTrader.Data
                             {
                                 UserName = p.AspNetUser.UserName,
                                 PostDescription = p.PostDescription,
-                                IsPost = true
+                                IsPost = true,
+                                PostId = p.PostId
                             }).ToList();
             }
         }

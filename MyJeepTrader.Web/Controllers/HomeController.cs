@@ -43,6 +43,7 @@ namespace MyJeepTrader.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult LiveStream()
         {
             Service service = new Service();
@@ -50,14 +51,7 @@ namespace MyJeepTrader.Web.Controllers
             ICollection<MyJeepTrader.Data.Models.LivePost> livePosts = service.GetLivePosts();
             ICollection<MyJeepTrader.Data.Models.LiveStream> liveStreams = service.GetLiveStream();
 
-
             AlternateFeedViewModel model = new AlternateFeedViewModel(livePosts, liveStreams);
-
-            //LiveStreamViewModel model = new LiveStreamViewModel
-            //{
-            //    LiveStreams = service.GetLiveStream(),
-            //    LivePosts = service.GetLivePosts()
-            //};
 
             if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
 
