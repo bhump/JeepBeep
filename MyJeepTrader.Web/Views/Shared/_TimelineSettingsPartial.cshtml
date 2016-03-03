@@ -1,0 +1,81 @@
+﻿@model MyJeepTrader.Web.ViewModels.LiveStreamViewModel
+@{
+    Layout = "";
+}
+@Styles.Render("~/Content/css")
+
+<div class="row">
+    <div class="col-lg-12 well well-sm">
+        <h5>
+            Timeline Settings
+            <a href="#" id="aSettingsShowHide" class="btn btn-xs pull-right">
+                <span class="glyphicon glyphicon-collapse-down"></span>
+            </a>
+        </h5>
+        <div id="divTimelineSettings" class="collapse">
+            <div class="row">
+                <div class="col-lg-6">
+                    <span>Posts Only:</span>
+                    @Html.CheckBoxFor(model => model.Settings.Posts, new { id = "cbPosts"})
+                </div>
+                <div class="col-lg-6">
+                    <span>Status Only:</span>
+                    @Html.CheckBoxFor(model => model.Settings.Status, new { id = "cbStatus"})
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.submissionOK.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $('#aSettingsShowHide').click(function () {
+
+        $('#divTimelineSettings').collapse("toggle");
+
+        $("#divTimelineSettings").on("hide.bs.collapse", function () {
+            $("#aSettingsShowHide").html('<span class="glyphicon glyphicon-collapse-down"></span>');
+        });
+
+        $("#divTimelineSettings").on("show.bs.collapse", function () {
+            $("#aSettingsShowHide").html('<span class="glyphicon glyphicon-collapse-up"></span>');
+        });
+    });
+
+    $('#cbPosts').click(function () {
+        var cbPosts = $('#cbPosts:checkbox:checked').length > 0;
+        var cbStatus = $('#cbStatus:checkbox:checked').length > 0;
+
+        UpdateSettings(cbPosts, cbStatus);
+    });
+
+    $('#cbStatus').click(function () {
+        var cbPosts = $('#cbPosts:checkbox:checked').length > 0;
+        var cbStatus = $('#cbStatus:checkbox:checked').length > 0;
+
+        UpdateSettings(cbPosts, cbStatus);
+    });
+
+    function UpdateSettings(post, status) {
+
+        var data = {
+            posts: post,
+            status: status
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/MiniDashboard/UpdateSettings',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                $('#divSuccess').show();
+                $('#spanSuccessMessage').html("Settings Saved Successfully!");
+            }
+        });
+    }
+
+</script>

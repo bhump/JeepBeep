@@ -8,6 +8,7 @@ using MyJeepTrader.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -48,10 +49,14 @@ namespace MyJeepTrader.Web.Controllers
         {
             Service service = new Service();
 
-            ICollection<MyJeepTrader.Data.Models.LivePost> livePosts = service.GetLivePosts();
-            ICollection<MyJeepTrader.Data.Models.LiveStream> liveStreams = service.GetLiveStream();
+            var userId = User.Identity.GetUserId();
 
-            AlternateFeedViewModel model = new AlternateFeedViewModel(livePosts, liveStreams);
+            ICollection<LivePost> livePosts = service.GetLivePosts();
+            ICollection<LiveStream> liveStreams = service.GetLiveStream();
+            var settings = service.GetSettings(userId);
+
+            LiveStreamViewModel model = new LiveStreamViewModel(livePosts, liveStreams);
+            model.Settings = settings;
 
             if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
 

@@ -289,6 +289,28 @@ namespace MyJeepTrader.Data
                 return await t;
             }
         }
+
+        public tTimelineSetting GetSettings(string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var settings = context.tTimelineSettings.Where(s => s.Id == userId).First();
+
+                return settings;
+            }
+        }
+
+        public void UpdateSettings(string userId, bool postOnly, bool statusOnly)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var settings = context.tTimelineSettings.Where(s => s.Id == userId).FirstOrDefault();
+                settings.Posts = postOnly;
+                settings.Status = statusOnly;
+
+                context.SaveChanges();
+            }
+        }
         #endregion
 
         #region Membership

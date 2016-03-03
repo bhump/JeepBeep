@@ -26,6 +26,7 @@ namespace MyJeepTrader.Data
             this.tFeedbacks = new HashSet<tFeedback>();
             this.tStatusUpdates = new HashSet<tStatusUpdate>();
             this.tFriendsLists = new HashSet<tFriendsList>();
+            this.tTimelineSettings = new HashSet<tTimelineSetting>();
         }
     
         public string Id { get; set; }
@@ -53,5 +54,6 @@ namespace MyJeepTrader.Data
         public virtual ICollection<tFeedback> tFeedbacks { get; set; }
         public virtual ICollection<tStatusUpdate> tStatusUpdates { get; set; }
         public virtual ICollection<tFriendsList> tFriendsLists { get; set; }
+        public virtual ICollection<tTimelineSetting> tTimelineSettings { get; set; }
     }
 }

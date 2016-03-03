@@ -7,16 +7,16 @@ using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Web.ViewModels
 {
-    public class LiveStreamViewModel
+    public class TimelineSettingsViewModel
     {
-        //blah
+        public tTimelineSetting Settings { get; set; }
     }
 
-    public class AlternateFeedViewModel
+    public class LiveStreamViewModel
     {
         public ICollection<LiveFeed> LiveFeeds { get; private set; }
 
-        public AlternateFeedViewModel(ICollection<LivePost> lp, ICollection<LiveStream> ls)
+        public LiveStreamViewModel(ICollection<LivePost> lp, ICollection<LiveStream> ls)
         {
             this.LiveFeeds = new List<LiveFeed>();
             /* this is a "one by one" with no error checking if the counts are different */
@@ -47,6 +47,13 @@ namespace MyJeepTrader.Web.ViewModels
                     }
                 }
             }
+        }
+
+        public tTimelineSetting Settings { get; set; }
+
+        public LiveStreamViewModel()
+        {
+            this.Settings = new tTimelineSetting();
         }
     }
 }

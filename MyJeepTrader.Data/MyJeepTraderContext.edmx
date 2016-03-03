@@ -269,6 +269,15 @@
           <Property Name="Count" Type="int" />
           <Property Name="Active" Type="bit" />
         </EntityType>
+        <EntityType Name="tTimelineSettings">
+          <Key>
+            <PropertyRef Name="SettingsId" />
+          </Key>
+          <Property Name="SettingsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Posts" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="tUserProfiles">
           <Key>
             <PropertyRef Name="UserProfileId" />
@@ -659,6 +668,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tTimelineSettings_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="tTimelineSettings" Type="Self.tTimelineSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tTimelineSettings">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tUserProfiles_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="tUserProfiles" Type="Self.tUserProfiles" Multiplicity="*" />
@@ -723,6 +744,7 @@
           <EntitySet Name="tSubscriptions" EntityType="Self.tSubscriptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubscriptionTypes" EntityType="Self.tSubscriptionTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tTestingCodes" EntityType="Self.tTestingCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tTimelineSettings" EntityType="Self.tTimelineSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tUserProfiles" EntityType="Self.tUserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVehicleProfileControl" EntityType="Self.tVehicleProfileControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tVehicleProfiles" EntityType="Self.tVehicleProfiles" Schema="dbo" store:Type="Tables" />
@@ -838,6 +860,10 @@
           <AssociationSet Name="FK_tSubscriptions_tSubscriptionTypes" Association="Self.FK_tSubscriptions_tSubscriptionTypes">
             <End Role="tSubscriptionTypes" EntitySet="tSubscriptionTypes" />
             <End Role="tSubscriptions" EntitySet="tSubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tTimelineSettings_AspNetUsers" Association="Self.FK_tTimelineSettings_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="tTimelineSettings" EntitySet="tTimelineSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="Self.FK_tUserProfiles_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1007,6 +1033,11 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="tFriendsList" EntitySet="tFriendsLists" />
           </AssociationSet>
+          <EntitySet Name="tTimelineSettings" EntityType="MyJeepTraderModel.tTimelineSetting" />
+          <AssociationSet Name="FK_tTimelineSettings_AspNetUsers" Association="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tTimelineSetting" EntitySet="tTimelineSettings" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1065,6 +1096,7 @@
           <NavigationProperty Name="tFeedbacks" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="AspNetUser" ToRole="tFeedback" />
           <NavigationProperty Name="tStatusUpdates" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="AspNetUser" ToRole="tStatusUpdate" />
           <NavigationProperty Name="tFriendsLists" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="AspNetUser" ToRole="tFriendsList" />
+          <NavigationProperty Name="tTimelineSettings" Relationship="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers" FromRole="AspNetUser" ToRole="tTimelineSetting" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1726,6 +1758,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tTimelineSetting">
+          <Key>
+            <PropertyRef Name="SettingsId" />
+          </Key>
+          <Property Name="SettingsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Posts" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers" FromRole="tTimelineSetting" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_tTimelineSettings_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tTimelineSetting" Role="tTimelineSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tTimelineSetting">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2067,6 +2121,16 @@
                 <ScalarProperty Name="FriendId" ColumnName="FriendId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FriendListId" ColumnName="FriendListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tTimelineSettings">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tTimelineSetting">
+              <MappingFragment StoreEntitySet="tTimelineSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Posts" ColumnName="Posts" />
+                <ScalarProperty Name="SettingsId" ColumnName="SettingsId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -411,6 +411,7 @@
     <Content Include="Views\Home\LiveStream.cshtml" />
     <Content Include="Views\Shared\_StatusPostSearchPartial.cshtml" />
     <Content Include="Views\Shared\_MiniDashboardPartial.cshtml" />
+    <Content Include="Views\Shared\_TimelineSettingsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
