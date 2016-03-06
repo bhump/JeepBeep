@@ -68,6 +68,7 @@ namespace MyJeepTrader.Web.Controllers
             var memberInfo = service.GetMembership(user.UserName);
             var subscriptionInfo = service.GetSubscription(memberInfo.MembershipId);
             var subscriptionType = service.GetSubscriptionType(subscriptionInfo.SubscriptionTypeId);
+            var settings = service.GetSettings(user.Id);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 
@@ -86,6 +87,7 @@ namespace MyJeepTrader.Web.Controllers
             model.SubscriptionType = subscriptionType == null ? null : subscriptionType;
             model.ExpirationDate = subscriptionInfo == null ? null : subscriptionInfo.ExpireDate;
             model.MemberSince = memberInfo == null ? null : memberInfo.MemberSince;
+            model.PrivateStatusUpdates = settings.PrivateStatus;
 
             if (jeepInfo != null)
             {
@@ -343,6 +345,34 @@ namespace MyJeepTrader.Web.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateSettings(string privateOnly)
+        {
+            try
+            {
+                Service service = new Service();
+
+                var userId = User.Identity.GetUserId();
+
+                service.UpdateSettings(userId, Convert.ToBoolean(privateOnly));
+
+                if (ModelState.IsValid)
+                {
+                    TempData["Message"] = "Settings Saved Successfully!";
+
+                    return View();
+                }
+            }
+            catch
+            {
+                TempData["Message"] = "Something went wrong! Unable to save settings! ";
+                return View();
+            }
+
+            TempData["Message"] = "Something went wrong! Unable to save settings! ";
+            return View();
         }
 
         public ActionResult Cancel()

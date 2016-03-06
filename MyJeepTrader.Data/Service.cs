@@ -232,28 +232,56 @@ namespace MyJeepTrader.Data
 
         #endregion
 
-        #region Status
-        public ICollection<LiveStream> GetLiveStream()
+        #region Timeline
+        public ICollection<LiveStream> GetLiveStream(string userId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                return (from s in context.tStatusUpdates
-                        select new LiveStream
-                            {
-                                Status = s.Status,
-                                UserName = s.AspNetUser.UserName,
-                                IsPost = false,
-                                StatusId = s.StatusId
-                            }).ToList();
-            }
+                var privateSettings = GetSettings(userId);
+                var statusList = new List<LiveStream>();
 
+                statusList = (from fl in context.tFriendsLists
+                              join su in context.tStatusUpdates on fl.FriendId equals su.Id
+                              where fl.Id == userId
+                              select new LiveStream
+                                  {
+                                      Status = su.Status,
+                                      UserName = su.AspNetUser.UserName,
+                                      IsPost = false,
+                                      StatusId = su.StatusId
+                                  }).ToList();
+
+                return statusList;
+
+            }
+        }
+
+        public ICollection<LiveStream> GetPublicStream()
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+
+                var publicStatus = (from su in context.tStatusUpdates
+                                    join s in context.tSettings on su.Id equals s.Id
+                                    where s.PrivateStatus == false
+                                    select new LiveStream
+                                    {
+                                        Status = su.Status,
+                                        UserName = su.AspNetUser.UserName,
+                                        IsPost = false,
+                                        StatusId = su.StatusId
+                                    }).ToList();
+
+                return publicStatus;
+
+            }
         }
 
         public ICollection<LivePost> GetLivePosts()
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                return (from p in _context.tPosts
+                return (from p in context.tPosts
                         select new LivePost
                             {
                                 UserName = p.AspNetUser.UserName,
@@ -272,7 +300,6 @@ namespace MyJeepTrader.Data
                 {
                     DateCreated = DateTime.Now,
                     LikeCount = 0,
-                    Private = false,
                     Status = status,
                     Id = userId
                 };
@@ -287,28 +314,6 @@ namespace MyJeepTrader.Data
 
                 t.Start();
                 return await t;
-            }
-        }
-
-        public tTimelineSetting GetSettings(string userId)
-        {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var settings = context.tTimelineSettings.Where(s => s.Id == userId).First();
-
-                return settings;
-            }
-        }
-
-        public void UpdateSettings(string userId, bool postOnly, bool statusOnly)
-        {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var settings = context.tTimelineSettings.Where(s => s.Id == userId).FirstOrDefault();
-                settings.Posts = postOnly;
-                settings.Status = statusOnly;
-
-                context.SaveChanges();
             }
         }
         #endregion
@@ -827,6 +832,60 @@ namespace MyJeepTrader.Data
         }
         #endregion
 
+        #region Friends/Follw
+        public string AddFriend(string userId, string friendId)
+        {
+            try
+            {
+                using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+                {
+                    tFriendsList friend = new tFriendsList
+                    {
+                        Id = userId,
+                        FriendId = friendId
+                    };
+                    context.tFriendsLists.Add(friend);
+                    context.SaveChanges();
+
+                    return "Friend Added Succesfully!";
+                }
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+
+                return "Error";
+            }
+        }
+
+        public List<string> GetFriends(string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                List<string> friendsList = new List<string>();
+
+                var friendsId = context.tFriendsLists.Where(f => f.Id == userId).Select(f => f.FriendId).ToList();
+
+                foreach (var friend in friendsId)
+                {
+                    var name = context.AspNetUsers.Where(f => f.Id == friend).Select(f => f.UserName).First();
+                    friendsList.Add(name);
+                }
+
+                return friendsList;
+            }
+        }
+        #endregion
+
         #region Admin
         public IEnumerable<AspNetUser> GetAllUsers()
         {
@@ -924,6 +983,41 @@ namespace MyJeepTrader.Data
                 };
 
                 context.tFeedbacks.Add(feedback);
+                context.SaveChanges();
+            }
+        }
+        #endregion
+
+        #region Privacy Settings
+        public tSetting GetSettings(string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var settings = context.tSettings.Where(s => s.Id == userId).First();
+
+                return settings;
+            }
+        }
+
+        public void UpdateSettings(string userId, bool postOnly, bool statusOnly)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var settings = context.tSettings.Where(s => s.Id == userId).FirstOrDefault();
+                settings.Posts = postOnly;
+                settings.Status = statusOnly;
+
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateSettings(string userId, bool privateOnly)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var settings = context.tSettings.Where(s => s.Id == userId).FirstOrDefault();
+                settings.PrivateStatus = privateOnly;
+
                 context.SaveChanges();
             }
         }

@@ -33,9 +33,6 @@
                         {
                             <li>@Html.ActionLink("Alpha Testing", "AlphaTesting", "Home")</li>
                             <li>@Html.ActionLink("Feedback", "Index", "Feedback")</li>
-                        }
-                        @if (User.IsInRole("Admin"))
-                        {
                             <li>@Html.ActionLink("Stream", "LiveStream", "Home")</li>
                         }
                     </ul>

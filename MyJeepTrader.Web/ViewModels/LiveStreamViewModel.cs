@@ -7,11 +7,6 @@ using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Web.ViewModels
 {
-    public class TimelineSettingsViewModel
-    {
-        public tTimelineSetting Settings { get; set; }
-    }
-
     public class LiveStreamViewModel
     {
         public ICollection<LiveFeed> LiveFeeds { get; private set; }
@@ -49,11 +44,27 @@ namespace MyJeepTrader.Web.ViewModels
             }
         }
 
-        public tTimelineSetting Settings { get; set; }
+        public ICollection<LiveFeed> PublicFeed { get; private set; }
+
+        public tSetting Settings { get; set; }
+
+        public List<string> FriendsList { get; set; }
+
+        public LiveStreamViewModel(ICollection<LiveStream> ls)
+        {
+            IEnumerator<LiveFeed> liveStreamEnum = null == ls ? null : ls.GetEnumerator();
+
+            if (null != liveStreamEnum)
+            {
+                liveStreamEnum.MoveNext();
+            }
+        }
 
         public LiveStreamViewModel()
         {
-            this.Settings = new tTimelineSetting();
+            this.Settings = new tSetting();
+
+            this.FriendsList = new List<string>();
         }
     }
 }

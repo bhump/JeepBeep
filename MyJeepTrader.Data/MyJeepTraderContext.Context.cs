@@ -50,11 +50,11 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tSubscription> tSubscriptions { get; set; }
         public virtual DbSet<tCity> tCities { get; set; }
         public virtual DbSet<tPost> tPosts { get; set; }
-        public virtual DbSet<tTestingCode> tTestingCodes { get; set; }
         public virtual DbSet<tFeedback> tFeedbacks { get; set; }
         public virtual DbSet<tStatusMedia> tStatusMedias { get; set; }
         public virtual DbSet<tStatusUpdate> tStatusUpdates { get; set; }
         public virtual DbSet<tFriendsList> tFriendsLists { get; set; }
-        public virtual DbSet<tTimelineSetting> tTimelineSettings { get; set; }
+        public virtual DbSet<tTestingCode> tTestingCodes { get; set; }
+        public virtual DbSet<tSetting> tSettings { get; set; }
     }
 }

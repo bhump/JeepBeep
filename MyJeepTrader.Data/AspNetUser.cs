@@ -26,7 +26,7 @@ namespace MyJeepTrader.Data
             this.tFeedbacks = new HashSet<tFeedback>();
             this.tStatusUpdates = new HashSet<tStatusUpdate>();
             this.tFriendsLists = new HashSet<tFriendsList>();
-            this.tTimelineSettings = new HashSet<tTimelineSetting>();
+            this.tSettings = new HashSet<tSetting>();
         }
     
         public string Id { get; set; }
@@ -50,10 +50,10 @@ namespace MyJeepTrader.Data
         public virtual ICollection<tVehicleProfileControl> tVehicleProfileControls { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         public virtual ICollection<tPost> tPosts { get; set; }
-        public virtual tTestingCode tTestingCode { get; set; }
         public virtual ICollection<tFeedback> tFeedbacks { get; set; }
         public virtual ICollection<tStatusUpdate> tStatusUpdates { get; set; }
         public virtual ICollection<tFriendsList> tFriendsLists { get; set; }
-        public virtual ICollection<tTimelineSetting> tTimelineSettings { get; set; }
+        public virtual tTestingCode tTestingCode { get; set; }
+        public virtual ICollection<tSetting> tSettings { get; set; }
     }
 }

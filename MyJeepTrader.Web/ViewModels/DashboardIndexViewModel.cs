@@ -157,11 +157,15 @@ namespace MyJeepTrader.Web.ViewModels
         public string SubscriptionType { get; set; }
         #endregion
 
-        #region Admin
+        #region admin
         public IEnumerable<AspNetUser> Users { get; set; }
 
         [Display(Name = "New Password:")]
         public string ResetPassword { get; set; }
+        #endregion
+
+        #region privacy settings
+        public bool PrivateStatusUpdates { get; set; }
         #endregion
     }
 }

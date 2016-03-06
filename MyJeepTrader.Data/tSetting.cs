@@ -12,12 +12,15 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class tTimelineSetting
+    public partial class tSetting
     {
         public int SettingsId { get; set; }
         public bool Posts { get; set; }
         public bool Status { get; set; }
+        public bool Discover { get; set; }
+        public bool Friends { get; set; }
         public string Id { get; set; }
+        public bool PrivateStatus { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

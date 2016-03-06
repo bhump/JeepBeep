@@ -53,68 +53,88 @@
                     </div>
                 </div>
             </div>
-
-
-            @foreach (var stream in Model.LiveFeeds)
-            {
-                if (stream.IsFeedPost == true)
+            <div>
+                @foreach (var stream in Model.LiveFeeds)
                 {
-                    if (Model.Settings.Posts == true)
+                    if (stream.IsFeedPost == true)
                     {
-                        <div id="divLiveStream" class="well-liveposts well-sm">
-                            <div class="row">
-                                <label class="hidden">@stream.FeedId</label>
-                                <div class="col-md-2">
-                                    <div class="ui-icon-image">
-                                        <img src="~/Images/placeholder.jpg" width="100%" />
+                        if (Model.Settings.Posts == true)
+                        {
+                            <div id="divLiveStream" class="well-liveposts well-sm">
+                                <div class="row">
+                                    <label class="hidden">@stream.FeedId</label>
+                                    <div class="col-md-2">
+                                        <div class="ui-icon-image">
+                                            <img src="~/Images/placeholder.jpg" width="100%" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="text-left row">
+                                            <div class="col-md-12">
+                                                <label id="lblUserName">@stream.FeedUserName</label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                @stream.FeedDescription
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-10">
-                                    <div class="text-left row">
-                                        <div class="col-md-12">
-                                            @stream.FeedUserName
-                                        </div>
-                                        <div class="col-md-12">
-                                            @stream.FeedDescription
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <a id="aFullPost" href="#" class="navbar-link pull-right">Full Post</a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm dropdown-toggle glyphicon glyphicon-bell" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a id="aComment"><span class="glyphicon glyphicon-comment">&nbsp;<label>Comment</label></span></a></li>
+                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <a id="aFullPost" href="#" class="navbar-link pull-right">Full Post</a>
+                        }
+                    }
+                    else
+                    {
+                        if (Model.Settings.Status == true)
+                        {
+                            <div id="divLiveStream" class="well-livestream well-sm">
+                                <div class="row">
+                                    <label class="hidden">@stream.FeedId</label>
+                                    <div class="col-md-2">
+                                        <div class="ui-icon-image">
+                                            <img src="~/Images/placeholder.jpg" width="100%" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="text-left row">
+                                            <div class="col-md-12">
+                                                @stream.FeedUserName
+                                            </div>
+                                            <div class="col-md-12">
+                                                @stream.FeedDescription
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm dropdown-toggle glyphicon glyphicon-bell" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a id="aComment"><span class="glyphicon glyphicon-comment">&nbsp;<label>Comment</label></span></a></li>
+                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 }
-                else
-                {
-                    if (Model.Settings.Status == true)
-                    {
-                        <div id="divLiveStream" class="well-livestream well-sm">
-                            <div class="row">
-                                <label class="hidden">@stream.FeedId</label>
-                                <div class="col-md-2">
-                                    <div class="ui-icon-image">
-                                        <img src="~/Images/placeholder.jpg" width="100%" />
-                                    </div>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="text-left row">
-                                        <div class="col-md-12">
-                                            @stream.FeedUserName
-                                        </div>
-                                        <div class="col-md-12">
-                                            @stream.FeedDescription
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-            }
+            </div>
         </div>
         <div class="col-md-3">
             <div class="placeholder">
@@ -123,3 +143,29 @@
         </div>
     </div>
 </div>
+<script>
+
+    //$('#aAddFriend').click(function () {
+    //    var friendName = $('#aFriendName').val();
+
+    //    AddFriend(friendName);
+    //});
+
+    function AddFriend(friendName) {
+
+        var data = {
+            friendName: friendName
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/Home/AddFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                $('#divSuccess').show();
+                $('#spanSuccessMessage').html("Settings Saved Successfully!");
+            }
+        });
+    }
+</script>

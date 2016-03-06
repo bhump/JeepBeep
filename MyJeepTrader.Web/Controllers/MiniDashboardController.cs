@@ -43,11 +43,6 @@ namespace MyJeepTrader.Web.Controllers
                 Settings = service.GetSettings(userId)
             };
 
-            //TimelineSettingsViewModel model = new TimelineSettingsViewModel
-            //{
-            //    Settings = service.GetSettings(userId)
-            //};
-
             return View("~/Views/Shared/_TimelineSettingsPartial.cshtml", model);
         }
 

@@ -32,7 +32,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-default" }) <input type="button" class="btn btn-default" value="Cancel" onclick="loadCancel()" />
+                            @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-primary" }) 
+                            <input type="button" class="btn btn-default" value="Cancel" onclick="loadCancel()" />
                         </div>
                     </div>
                 </div>
@@ -53,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Change e-mail" class="btn btn-default" />
+                                <input type="submit" value="Change e-mail" class="btn btn-primary" />
                             </div>
                         </div>
                     </div>
@@ -85,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Change password" class="btn btn-default" />
+                            <input type="submit" value="Change password" class="btn btn-primary" />
                         </div>
                     </div>
                 }
@@ -148,12 +149,12 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.JeepDescription, new { @class = "col-sm-3 control-label" })
                         <div class="col-md-8">
-                            @Html.TextBoxFor(m => m.JeepDescription, new { @class = "form-control" })
+                            @Html.TextAreaFor(m => m.JeepDescription, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Update Jeep" class="btn btn-default" />
+                            <input type="submit" value="Update Jeep" class="btn btn-primary" />
                             @Html.ActionLink("Add Another Jeep", "Index", "JeepProfile", new { UserName = @User.Identity.Name }, new { })
                         </div>
                     </div>
@@ -249,7 +250,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Update Profile" class="btn btn-default" />
+                        <input type="submit" value="Update Profile" class="btn btn-primary" />
                         @Html.ActionLink("View Profile", "Details", "UserProfile", new { UserName = @User.Identity.Name }, new { })
                     </div>
                 </div>
@@ -335,7 +336,6 @@
                 </div>
                 <div id="SentMessages" class="tab-pane fade">
                     <div>
-
                         @if (Model.SentMessages != null)
                         {
                             <table class="table table-responsive">
@@ -359,6 +359,20 @@
                                 }
                             </table>
                         }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="well well-sm form-group-sm">
+            <h2>Privacy Settings</h2>
+            <div class="row">
+                <div class="col-mg-6">
+                    <div class="form-horizontal">
+                        <div class="col-md-8">
+                            <h4>Status Privacy</h4>
+                            <p>Show Status to Public?</p>
+                            @Html.CheckBoxFor(model => model.PrivateStatusUpdates, new { id = "cbPrivateStatus" })
+                        </div>
                     </div>
                 </div>
             </div>
@@ -391,7 +405,7 @@
                     <div class="modal-footer">
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" data->Reply</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -501,5 +515,28 @@
 
     function loadCancel() {
         $('#cancelModal').modal('show');
+    }
+
+    $('#cbPrivateStatus').click(function () {
+        var cbPricateStatus = $('#cbPrivateStatus:checkbox:checked').length > 0;
+        UpdateSettings(cbPricateStatus);
+    });
+
+    function UpdateSettings(privateOnly) {
+
+        var data = {
+            privateOnly: privateOnly,
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/Dashboard/UpdateSettings',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                $('#divSuccess').show();
+                $('#spanSuccessMessage').html("Settings Saved Successfully!");
+            }
+        });
     }
 </script>

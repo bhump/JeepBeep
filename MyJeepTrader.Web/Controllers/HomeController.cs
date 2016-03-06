@@ -12,8 +12,23 @@ using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Web.Controllers
 {
+
     public class HomeController : Controller
     {
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         [RequireHttps]
         public ActionResult Index()
         {
@@ -52,7 +67,7 @@ namespace MyJeepTrader.Web.Controllers
             var userId = User.Identity.GetUserId();
 
             ICollection<LivePost> livePosts = service.GetLivePosts();
-            ICollection<LiveStream> liveStreams = service.GetLiveStream();
+            ICollection<LiveStream> liveStreams = service.GetLiveStream(userId);
             var settings = service.GetSettings(userId);
 
             LiveStreamViewModel model = new LiveStreamViewModel(livePosts, liveStreams);
@@ -61,6 +76,31 @@ namespace MyJeepTrader.Web.Controllers
             if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
 
             return View(model);
+        }
+
+        [Authorize]
+        public ActionResult Discover()
+        {
+            Service service = new Service();
+
+            ICollection<LiveStream> publicStream = service.GetPublicStream();
+
+            LiveStreamViewModel model = new LiveStreamViewModel(publicStream);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddFriend(string friendName)
+        {
+            Service service = new Service();
+
+            var friendId = UserManager.FindByName(friendName);
+            var userId = User.Identity.GetUserId();
+
+            service.AddFriend(userId, friendId.Id);
+
+            return View();
         }
     }
 }

@@ -237,6 +237,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ChatStyle.css" />
+    <Content Include="Content\fonts\ionicons.svg" />
+    <Content Include="Content\ionicons.css" />
+    <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -256,6 +259,13 @@
     <Content Include="Images\trintrail6.jpg" />
     <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap-filestyle.min.js" />
+    <Content Include="Content\ionicons\ionicons.less" />
+    <Content Include="Content\ionicons\_ionicons-variables.less" />
+    <Content Include="Content\ionicons\_ionicons-icons.less" />
+    <Content Include="Content\ionicons\_ionicons-font.less" />
+    <Content Include="Content\fonts\ionicons.woff" />
+    <Content Include="Content\fonts\ionicons.ttf" />
+    <Content Include="Content\fonts\ionicons.eot" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
@@ -412,12 +422,12 @@
     <Content Include="Views\Shared\_StatusPostSearchPartial.cshtml" />
     <Content Include="Views\Shared\_MiniDashboardPartial.cshtml" />
     <Content Include="Views\Shared\_TimelineSettingsPartial.cshtml" />
+    <Content Include="Views\Shared\_DiscoverPartial.cshtml" />
+    <Content Include="Views\Home\Discover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\InstantChat\" />
-    <Folder Include="Views\LiveStream\" />
-    <Folder Include="Views\MiniDashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

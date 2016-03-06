@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetUserLogin" Width="1.5" PointX="6" PointY="9.25" />
         <EntityTypeShape EntityType="MyJeepTraderModel.AspNetUser" Width="1.5" PointX="3.75" PointY="12.875" />
         <EntityTypeShape EntityType="MyJeepTraderModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tConnectedUser" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tConnectedUser" Width="1.5" PointX="7.875" PointY="9.5" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tImage" Width="1.5" PointX="8.25" PointY="7.125" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tMake" Width="1.5" PointX="1.5" PointY="7.375" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tMembership" Width="1.5" PointX="6" PointY="19" />
@@ -53,8 +53,6 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tPostType" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tSubModel" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tYear" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tTestingCode" Width="1.5" PointX="11.375" PointY="7.875" />
-        <AssociationConnector Association="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tCities" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tPosts_tStates" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tFeedback" Width="1.5" PointX="6" PointY="32.375" />
@@ -65,7 +63,9 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tStatusMedia_tStatus" />
         <EntityTypeShape EntityType="MyJeepTraderModel.tFriendsList" Width="1.5" PointX="6" PointY="11.75" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" />
-        <EntityTypeShape EntityType="MyJeepTraderModel.tTimelineSetting" Width="1.5" PointX="6" PointY="38.75" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tTestingCode" Width="1.5" PointX="0.75" PointY="10.75" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tSetting" Width="1.5" PointX="6" PointY="38.625" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers" />
         </Diagram>
     </edmx:Diagrams>

@@ -147,6 +147,9 @@
     <Compile Include="tPostType.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tSetting.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tState.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
@@ -166,9 +169,6 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tTestingCode.cs">
-      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tTimelineSetting.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tUserProfile.cs">
