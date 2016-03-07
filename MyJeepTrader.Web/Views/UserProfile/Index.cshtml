@@ -16,7 +16,7 @@
                             @if (item.Avatar != null)
                             {
                                 <a href='@Url.RouteUrl("Details", new { UserName = item.UserName })'>
-                                    <img src='@Url.Action("ShowAvatar", "UserProfile", new { UserName = item.UserName })' width="43" height="43" />
+                                    <img src='@Url.Action("ShowAvatar", "UserProfile", new { UserName = item.UserName })' width="43" height="43" class="img-circle"/>
                                 </a>
                             }
                             else

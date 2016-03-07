@@ -53,19 +53,19 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="well well-sm">
                 @foreach (var stream in Model.LiveFeeds)
                 {
                     if (stream.IsFeedPost == true)
                     {
                         if (Model.Settings.Posts == true)
                         {
-                            <div id="divLiveStream" class="well-liveposts well-sm">
+                            <div id="divLiveStream" class="Posts">
                                 <div class="row">
                                     <label class="hidden">@stream.FeedId</label>
                                     <div class="col-md-2">
                                         <div class="ui-icon-image">
-                                            <img src="~/Images/placeholder.jpg" width="100%" />
+                                            <img src="~/Images/placeholder.jpg" class="img-circle streamImage" />
                                         </div>
                                     </div>
                                     <div class="col-md-10">
@@ -99,18 +99,18 @@
                     {
                         if (Model.Settings.Status == true)
                         {
-                            <div id="divLiveStream" class="well-livestream well-sm">
+                            <div id="divLiveStream" class="Status">
                                 <div class="row">
                                     <label class="hidden">@stream.FeedId</label>
                                     <div class="col-md-2">
                                         <div class="ui-icon-image">
-                                            <img src="~/Images/placeholder.jpg" width="100%" />
+                                            <img src="~/Images/placeholder.jpg" class="img-circle streamImage" />
                                         </div>
                                     </div>
                                     <div class="col-md-10">
                                         <div class="text-left row">
                                             <div class="col-md-12">
-                                                @stream.FeedUserName
+                                                <label>@stream.FeedUserName</label>
                                             </div>
                                             <div class="col-md-12">
                                                 @stream.FeedDescription

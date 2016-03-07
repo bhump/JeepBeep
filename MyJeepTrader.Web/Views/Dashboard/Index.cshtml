@@ -7,9 +7,9 @@
 <title>My Dashboard</title>
 
 <div class="row">
-    <div class="col-lg-6" id="column1">
+    <div class="col-lg-6 well well-small" id="column1">
         <div>
-            <div class="well well-sm form-group-sm">
+            <div class="form-group-sm">
                 <h2>Membership</h2>
                 <div class="form-horizontal">
                     <div class="form-group">
@@ -32,13 +32,14 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-primary" }) 
+                            @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-primary" })
                             <input type="button" class="btn btn-default" value="Cancel" onclick="loadCancel()" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="well well-sm form-group-sm">
+            <hr />
+            <div class="form-group-sm">
                 <h2>Change Email</h2>
                 @using (Html.BeginForm("ChangeEmail", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
@@ -60,7 +61,8 @@
                     </div>
                 }
             </div>
-            <div class="well well-sm form-group-sm">
+            <hr />
+            <div class=" form-group-sm">
                 <h2>Change Password</h2>
                 @using (Html.BeginForm("ChangePassword", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
@@ -91,7 +93,8 @@
                     </div>
                 }
             </div>
-            <div class="well well-sm form-group-sm">
+            <hr />
+            <div class=" form-group-sm">
                 <h2>Update Primary Jeep</h2>
                 @using (Html.BeginForm("CreateJeepProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
                 {
@@ -100,11 +103,11 @@
                         <div class="col-md-8">
                             @if (Model.Image != null)
                             {
-                                <img src="@Url.Action("ShowJeepImage", "Dashboard", new { UserName = @User.Identity.Name })" alt="Image Unavailable" width="87" height="85" />
+                                <img src="@Url.Action("ShowJeepImage", "Dashboard", new { UserName = @User.Identity.Name })" alt="Image Unavailable" width="87" height="85" class="img-circle" />
                             }
                             else
                             {
-                                <img src="~/Images/placeholder.jpg" width="87" height="85" />
+                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle" />
                             }
                             <input type="file" name="Image" id="Image" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
                         </div>
@@ -162,8 +165,8 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6" id="column2">
-        <div class="well well-sm form-group-sm">
+    <div class="col-lg-6 well well-sm" id="column2">
+        <div class=" form-group-sm">
             <h2>Update Your Profile</h2>
             @using (Html.BeginForm("CreateUserProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
             {
@@ -178,11 +181,11 @@
                     <div class="col-md-8">
                         @if (Model.Avatar != null)
                         {
-                            <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Dashboard", new { UserName = @User.Identity.Name })' width="87" height="85" />
+                            <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Dashboard", new { UserName = @User.Identity.Name })' width="87" height="85" class="img-circle" />
                         }
                         else
                         {
-                            <img src="~/Images/placeholder.jpg" width="87" height="85" />
+                            <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle"/>
                         }
                         <input type="file" name="Avatar" id="Avatar" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
                     </div>
@@ -256,7 +259,8 @@
                 </div>
             }
         </div>
-        <div class="well well-sm form-group">
+        <hr />
+        <div class=" form-group">
             <h2>Your Mailbox</h2>
             <ul class="nav nav-tabs nav-justified">
                 <li class="active"><a data-toggle="pill" href="#Inbox">Inbox</a></li>
@@ -363,7 +367,8 @@
                 </div>
             </div>
         </div>
-        <div class="well well-sm form-group-sm">
+        <hr />
+        <div class=" form-group-sm">
             <h2>Privacy Settings</h2>
             <div class="row">
                 <div class="col-mg-6">
