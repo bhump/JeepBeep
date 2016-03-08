@@ -164,6 +164,14 @@ namespace MyJeepTrader.Web.ViewModels
         public string ResetPassword { get; set; }
         #endregion
 
+        #region friends
+        public List<FriendsList> Following { get; set; }
+
+        public List<FriendsList> Pending { get; set; }
+
+        public List<FriendsList> Followers { get; set; }
+        #endregion
+
         #region privacy settings
         public bool PrivateStatusUpdates { get; set; }
         #endregion

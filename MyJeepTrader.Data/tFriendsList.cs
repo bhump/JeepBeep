@@ -17,6 +17,8 @@ namespace MyJeepTrader.Data
         public int FriendListId { get; set; }
         public string Id { get; set; }
         public string FriendId { get; set; }
+        public bool Pending { get; set; }
+        public bool Accepted { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

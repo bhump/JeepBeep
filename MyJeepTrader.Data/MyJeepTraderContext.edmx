@@ -101,6 +101,8 @@
           <Property Name="FriendListId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
           <Property Name="FriendId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Pending" Type="bit" Nullable="false" />
+          <Property Name="Accepted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tImages">
           <Key>
@@ -192,7 +194,7 @@
           <Property Name="StateId" Type="int" />
           <Property Name="CityId" Type="int" />
           <Property Name="PostTypeId" Type="int" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tPostType">
           <Key>
@@ -239,7 +241,7 @@
           <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
           <Property Name="Status" Type="varchar" MaxLength="400" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="LikeCount" Type="bigint" />
         </EntityType>
         <EntityType Name="tSubModel">
@@ -1528,7 +1530,7 @@
           <Property Name="StateId" Type="Int32" />
           <Property Name="CityId" Type="Int32" />
           <Property Name="PostTypeId" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="tPost" ToRole="AspNetUser" />
           <NavigationProperty Name="tImages" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tPost" ToRole="tImage" />
           <NavigationProperty Name="tMake" Relationship="MyJeepTraderModel.FK_tPosts_tMake" FromRole="tPost" ToRole="tMake" />
@@ -1687,7 +1689,7 @@
           <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="LikeCount" Type="Int64" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="tStatusUpdate" ToRole="AspNetUser" />
           <NavigationProperty Name="tStatusMedias" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusUpdate" ToRole="tStatusMedia" />
@@ -1724,6 +1726,8 @@
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="FriendId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="tFriendsList" ToRole="AspNetUser" />
+          <Property Name="Pending" Type="Boolean" Nullable="false" />
+          <Property Name="Accepted" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_tFriendsList_AspNetUsers">
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -2111,6 +2115,8 @@
           <EntitySetMapping Name="tFriendsLists">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tFriendsList">
               <MappingFragment StoreEntitySet="tFriendsList">
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
+                <ScalarProperty Name="Pending" ColumnName="Pending" />
                 <ScalarProperty Name="FriendId" ColumnName="FriendId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FriendListId" ColumnName="FriendListId" />

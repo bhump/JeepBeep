@@ -69,6 +69,9 @@ namespace MyJeepTrader.Web.Controllers
             var subscriptionInfo = service.GetSubscription(memberInfo.MembershipId);
             var subscriptionType = service.GetSubscriptionType(subscriptionInfo.SubscriptionTypeId);
             var settings = service.GetSettings(user.Id);
+            var following = service.GetFriends(user.Id);
+            var pending = service.GetPendingFriends(user.Id);
+            var followers = service.GetFollowerFriends(user.Id);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 
@@ -106,6 +109,10 @@ namespace MyJeepTrader.Web.Controllers
 
             model.SentMessages = service.GetSentMessages(user.Id);
             model.Inbox = service.GetInboxMessages(user.Id);
+
+            model.Followers = followers;
+            model.Following = following;
+            model.Pending = pending;
 
             return View(model);
         }

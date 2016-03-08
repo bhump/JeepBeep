@@ -16,6 +16,10 @@ namespace MyJeepTrader.Data.Models
         public abstract bool IsFeedPost { get; }
 
         public abstract int FeedId { get; }
+
+        public abstract byte[] FeedAvatar { get; }
+
+        public abstract DateTime FeedDateCreated { get; }
     }
 
     public class LivePost : LiveFeed
@@ -27,6 +31,10 @@ namespace MyJeepTrader.Data.Models
         public bool IsPost { get; set; }
 
         public int PostId { get; set; }
+
+        public byte[] Avatar { get; set; }
+
+        public DateTime DateCreated { get; set; }
 
         public override string FeedUserName
         {
@@ -47,6 +55,16 @@ namespace MyJeepTrader.Data.Models
         {
             get { return this.PostId; }
         }
+
+        public override byte[] FeedAvatar
+        {
+            get { return this.Avatar; }
+        }
+
+        public override DateTime FeedDateCreated
+        {
+            get { return this.DateCreated; }
+        }
     }
 
     public class LiveStream : LiveFeed
@@ -58,6 +76,10 @@ namespace MyJeepTrader.Data.Models
         public bool IsPost { get; set; }
 
         public int StatusId { get; set; }
+
+        public byte[] Avatar { get; set; }
+
+        public DateTime DateCreated { get; set; }
 
         public override string FeedUserName
         {
@@ -77,6 +99,16 @@ namespace MyJeepTrader.Data.Models
         public override int FeedId
         {
             get { return this.StatusId; }
+        }
+
+        public override byte[] FeedAvatar
+        {
+            get { return this.Avatar; }
+        }
+
+        public override DateTime FeedDateCreated
+        {
+            get { return this.DateCreated; }
         }
     }
 }

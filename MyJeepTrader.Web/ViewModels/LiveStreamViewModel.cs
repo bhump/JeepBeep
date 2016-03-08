@@ -11,6 +11,14 @@ namespace MyJeepTrader.Web.ViewModels
     {
         public ICollection<LiveFeed> LiveFeeds { get; private set; }
 
+        public ICollection<LiveFeed> PublicFeed { get; private set; }
+
+        public tSetting Settings { get; set; }
+
+        public List<string> FriendsList { get; set; }
+
+        public List<JeepModels> Models { get; set; }
+
         public LiveStreamViewModel(ICollection<LivePost> lp, ICollection<LiveStream> ls)
         {
             this.LiveFeeds = new List<LiveFeed>();
@@ -44,12 +52,6 @@ namespace MyJeepTrader.Web.ViewModels
             }
         }
 
-        public ICollection<LiveFeed> PublicFeed { get; private set; }
-
-        public tSetting Settings { get; set; }
-
-        public List<string> FriendsList { get; set; }
-
         public LiveStreamViewModel(ICollection<LiveStream> ls)
         {
             IEnumerator<LiveFeed> liveStreamEnum = null == ls ? null : ls.GetEnumerator();
@@ -65,6 +67,8 @@ namespace MyJeepTrader.Web.ViewModels
             this.Settings = new tSetting();
 
             this.FriendsList = new List<string>();
+
+            this.Models = new List<JeepModels>();
         }
     }
 }

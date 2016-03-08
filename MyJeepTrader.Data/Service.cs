@@ -242,14 +242,17 @@ namespace MyJeepTrader.Data
 
                 statusList = (from fl in context.tFriendsLists
                               join su in context.tStatusUpdates on fl.FriendId equals su.Id
-                              where fl.Id == userId
+                              join up in context.tUserProfiles on su.Id equals up.Id
+                              where fl.Id == userId && fl.Accepted == true
                               select new LiveStream
                                   {
                                       Status = su.Status,
                                       UserName = su.AspNetUser.UserName,
                                       IsPost = false,
-                                      StatusId = su.StatusId
-                                  }).ToList();
+                                      StatusId = su.StatusId,
+                                      Avatar = up.Avatar,
+                                      DateCreated = su.DateCreated
+                                  }).OrderByDescending(su => su.DateCreated).ToList();
 
                 return statusList;
 
@@ -263,14 +266,17 @@ namespace MyJeepTrader.Data
 
                 var publicStatus = (from su in context.tStatusUpdates
                                     join s in context.tSettings on su.Id equals s.Id
+                                    join up in context.tUserProfiles on su.Id equals up.Id
                                     where s.PrivateStatus == false
                                     select new LiveStream
                                     {
                                         Status = su.Status,
                                         UserName = su.AspNetUser.UserName,
                                         IsPost = false,
-                                        StatusId = su.StatusId
-                                    }).ToList();
+                                        StatusId = su.StatusId,
+                                        Avatar = up.Avatar,
+                                        DateCreated = su.DateCreated
+                                    }).OrderByDescending(su => su.DateCreated).ToList();
 
                 return publicStatus;
 
@@ -281,14 +287,19 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                return (from p in context.tPosts
-                        select new LivePost
-                            {
-                                UserName = p.AspNetUser.UserName,
-                                PostDescription = p.PostDescription,
-                                IsPost = true,
-                                PostId = p.PostId
-                            }).ToList();
+                var posts = (from p in context.tPosts
+                             join up in context.tUserProfiles on p.Id equals up.Id
+                             select new LivePost
+                                 {
+                                     UserName = p.AspNetUser.UserName,
+                                     PostDescription = p.PostDescription,
+                                     IsPost = true,
+                                     PostId = p.PostId,
+                                     Avatar = up.Avatar,
+                                     DateCreated = p.DateCreated
+                                 }).OrderByDescending(p => p.DateCreated).ToList();
+
+                return posts;
             }
         }
 
@@ -711,6 +722,22 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public List<JeepModels> GetAllJeepModels()
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var models = (from m in context.tModels
+                              select new JeepModels
+                                  {
+                                      Model = m.Model,
+                                      ModelId = m.ModelId,
+                                      Selected = true
+                                  }).ToList();
+
+                return models;
+            }
+        }
+
         public List<tYear> GetAllYears()
         {
             dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
@@ -842,7 +869,9 @@ namespace MyJeepTrader.Data
                     tFriendsList friend = new tFriendsList
                     {
                         Id = userId,
-                        FriendId = friendId
+                        FriendId = friendId,
+                        Pending = true,
+                        Accepted = false
                     };
                     context.tFriendsLists.Add(friend);
                     context.SaveChanges();
@@ -867,21 +896,75 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public List<string> GetFriends(string userId)
+        public List<FriendsList> GetFriends(string userId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                List<string> friendsList = new List<string>();
+                var friends = (from f in context.tFriendsLists
+                               join up in context.tUserProfiles on f.Id equals up.Id
+                               join u in context.AspNetUsers on f.Id equals u.Id
+                               where f.Id == userId && f.Accepted == true
+                               select new FriendsList
+                               {
+                                   UserId = u.Id,
+                                   UserProfileId = up.UserProfileId,
+                                   UserName = u.UserName,
+                                   FirstName = up.FirstName,
+                                   LastName = up.LastName,
+                                   Email = u.Email,
+                                   Pending = f.Pending,
+                                   Accepted = f.Accepted
+                               }).ToList();
 
-                var friendsId = context.tFriendsLists.Where(f => f.Id == userId).Select(f => f.FriendId).ToList();
+                return friends;
+            }
+        }
 
-                foreach (var friend in friendsId)
-                {
-                    var name = context.AspNetUsers.Where(f => f.Id == friend).Select(f => f.UserName).First();
-                    friendsList.Add(name);
-                }
+        public List<FriendsList> GetPendingFriends(string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var friends = (from f in context.tFriendsLists
+                               join up in context.tUserProfiles on f.FriendId equals up.Id
+                               join u in context.AspNetUsers on f.FriendId equals u.Id
+                               where f.Id == userId && f.Pending == true
+                               select new FriendsList
+                               {
+                                   UserId = f.FriendId,
+                                   UserProfileId = up.UserProfileId,
+                                   UserName = u.UserName,
+                                   FirstName = up.FirstName,
+                                   LastName = up.LastName,
+                                   Email = u.Email,
+                                   Pending = f.Pending,
+                                   Accepted = f.Accepted
+                               }).ToList();
 
-                return friendsList;
+                return friends;
+            }
+        }
+
+        public List<FriendsList> GetFollowerFriends(string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var friends = (from f in context.tFriendsLists
+                               join up in context.tUserProfiles on f.Id equals up.Id
+                               join u in context.AspNetUsers on f.Id equals u.Id
+                               where f.FriendId == userId && f.Pending == true
+                               select new FriendsList
+                               {
+                                   UserId = u.Id,
+                                   UserProfileId = up.UserProfileId,
+                                   UserName = u.UserName,
+                                   FirstName = up.FirstName,
+                                   LastName = up.LastName,
+                                   Email = u.Email,
+                                   Pending = f.Pending,
+                                   Accepted = f.Accepted
+                               }).ToList();
+
+                return friends;
             }
         }
         #endregion
@@ -989,6 +1072,25 @@ namespace MyJeepTrader.Data
         #endregion
 
         #region Privacy Settings
+        public void CreateSettings(string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var settings = new tSetting
+                {
+                    Id = userId,
+                    Discover = true,
+                    Status = true,
+                    PrivateStatus = true,
+                    Friends = true,
+                    Posts = true
+                };
+                context.tSettings.Add(settings);
+                context.SaveChanges();
+            }
+        }
+
+
         public tSetting GetSettings(string userId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())

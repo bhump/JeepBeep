@@ -234,6 +234,9 @@ namespace MyJeepTrader.Web.Controllers
                             await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                             service.CreateMembership(user.Id);
+
+                            service.CreateSettings(user.Id);
+
                             //this creates the paypal customer-then on success creates the membership and the free subscription.
                             ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
 

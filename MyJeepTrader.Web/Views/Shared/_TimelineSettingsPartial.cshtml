@@ -16,15 +16,25 @@
             <div class="row">
                 <div class="col-lg-6">
                     <span>Show Posts: </span>
-                    @Html.CheckBoxFor(model => model.Settings.Posts, new { id = "cbPosts"})
+                    @Html.CheckBoxFor(model => model.Settings.Posts, new { id = "cbPosts" })
                 </div>
                 <div class="col-lg-6">
                     <span>Show Status: </span>
-                    @Html.CheckBoxFor(model => model.Settings.Status, new { id = "cbStatus"})
+                    @Html.CheckBoxFor(model => model.Settings.Status, new { id = "cbStatus" })
                 </div>
             </div>
+            <hr />
             <div class="row">
                 <div class="col-lg-6">
+                    <span>View Posts: </span>
+                    @for (var i = 0; i < Model.Models.Count(); i++)
+                    {
+                        <div class="form-group-sm">
+                            @Html.HiddenFor(model => model.Models[i].ModelId, new { id = "hdModelVal" })
+                            @Html.CheckBoxFor(model => model.Models[i].Selected, new { @class = "chk", id = @Model.Models[i].Model })
+                            <span>@Model.Models[i].Model</span>
+                        </div>
+                    }
                 </div>
                 <div class="col-lg-6">
                 </div>

@@ -40,7 +40,8 @@ namespace MyJeepTrader.Web.Controllers
 
             LiveStreamViewModel model = new LiveStreamViewModel
             {
-                Settings = service.GetSettings(userId)
+                Settings = service.GetSettings(userId),
+                Models = service.GetAllJeepModels()
             };
 
             return View("~/Views/Shared/_TimelineSettingsPartial.cshtml", model);

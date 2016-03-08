@@ -65,7 +65,14 @@
                                     <label class="hidden">@stream.FeedId</label>
                                     <div class="col-md-2">
                                         <div class="ui-icon-image">
-                                            <img src="~/Images/placeholder.jpg" class="img-circle streamImage" />
+                                            @if (stream.FeedAvatar != null)
+                                            {
+                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                            }
                                         </div>
                                     </div>
                                     <div class="col-md-10">
@@ -104,7 +111,14 @@
                                     <label class="hidden">@stream.FeedId</label>
                                     <div class="col-md-2">
                                         <div class="ui-icon-image">
-                                            <img src="~/Images/placeholder.jpg" class="img-circle streamImage" />
+                                            @if (stream.FeedAvatar != null)
+                                            {
+                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName })" alt="Image Unavailable" class="img-circle streamImage" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                            }
                                         </div>
                                     </div>
                                     <div class="col-md-10">

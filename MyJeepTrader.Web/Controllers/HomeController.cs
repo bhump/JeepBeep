@@ -4,7 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyJeepTrader.Data;
+using MyJeepTrader.Web.Helpers;
+using MyJeepTrader.Web.Models;
 using MyJeepTrader.Web.ViewModels;
+using System.IO;
+using System.Data.Entity.Validation;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -69,13 +73,27 @@ namespace MyJeepTrader.Web.Controllers
             ICollection<LivePost> livePosts = service.GetLivePosts();
             ICollection<LiveStream> liveStreams = service.GetLiveStream(userId);
             var settings = service.GetSettings(userId);
+            var jeepModels = service.GetAllJeepModels();
 
-            LiveStreamViewModel model = new LiveStreamViewModel(livePosts, liveStreams);
-            model.Settings = settings;
+            LiveStreamViewModel model = new LiveStreamViewModel(livePosts, liveStreams)
+            {
+                Settings = settings,
+                Models = jeepModels
+            };
 
             if (TempData["Message"] != null) ViewBag.Message = TempData["Message"]; ViewBag.Header = "Success!";
 
             return View(model);
+        }
+
+        public ActionResult ShowAvatar(string UserName)
+        {
+            Service service = new Service();
+            var getAvatar = service.GetAvatarImage(UserName);
+
+            var stream = new MemoryStream(getAvatar.ToArray());
+
+            return new FileStreamResult(stream, "image/jpg");
         }
 
         [Authorize]

@@ -22,7 +22,7 @@ namespace MyJeepTrader.Data
         public int StatusId { get; set; }
         public string Id { get; set; }
         public string Status { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<long> LikeCount { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

@@ -77,6 +77,8 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Models\CityDropDown.cs" />
+    <Compile Include="Models\FriendsList.cs" />
+    <Compile Include="Models\JeepModels.cs" />
     <Compile Include="Models\JeepProfiles.cs" />
     <Compile Include="Models\LiveStream.cs" />
     <Compile Include="Models\MailMessages.cs" />
