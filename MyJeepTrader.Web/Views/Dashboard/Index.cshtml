@@ -380,10 +380,51 @@
                     Following
                 </div>
                 <div id="Pending" class="tab-pane fade">
-                    @foreach(var pending in Model.Pending)
+                    @foreach (var pending in Model.Pending)
                     {
-                        <div>
-                            <span>@pending.UserName</span>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span>User</span>
+                                            </th>
+                                            <th>
+                                                <span>First Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Last Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Email</span>
+                                            </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span>@pending.UserName</span>
+                                            </td>
+                                            <td>
+                                                <span>@pending.FirstName</span>
+                                            </td>
+                                            <td>
+                                                <span>@pending.LastName</span>
+                                            </td>
+                                            <td>
+                                                <span>@pending.Email</span>
+                                            </td>
+                                            <td width="20%">
+                                                <button href="#" id="aAcceptFriend" class="btn btn-sm btn-primary" value="@pending.FriendsListId">Accept</button>
+                                                <button href="#" id="aRejectFriend" class="btn btn-sm btn-default" value="@pending.FriendsListId">Reject</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     }
                 </div>
@@ -552,6 +593,11 @@
         UpdateSettings(cbPricateStatus);
     });
 
+    $('#aAcceptFriend').click(function () {
+        var friendsListId = $('#aAcceptFriend').val();
+        AcceptFriend(friendsListId);
+    });
+
     function UpdateSettings(privateOnly) {
 
         var data = {
@@ -561,6 +607,24 @@
         $.ajax({
             type: 'POST',
             url: '/Dashboard/UpdateSettings',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                $('#divSuccess').show();
+                $('#spanSuccessMessage').html("Settings Saved Successfully!");
+            }
+        });
+    }
+
+    function AcceptFriend(friendsListId) {
+
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Dashboard/AcceptFriend',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             success: function (result) {

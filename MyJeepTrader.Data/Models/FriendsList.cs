@@ -8,6 +8,8 @@ namespace MyJeepTrader.Data.Models
 {
     public class FriendsList
     {
+        public int FriendsListId { get; set; }
+
         public string UserId {get; set;}
 
         public int UserProfileId {get; set;}

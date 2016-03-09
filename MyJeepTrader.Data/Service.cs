@@ -924,23 +924,34 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var friends = (from f in context.tFriendsLists
-                               join up in context.tUserProfiles on f.FriendId equals up.Id
-                               join u in context.AspNetUsers on f.FriendId equals u.Id
-                               where f.Id == userId && f.Pending == true
-                               select new FriendsList
-                               {
-                                   UserId = f.FriendId,
-                                   UserProfileId = up.UserProfileId,
-                                   UserName = u.UserName,
-                                   FirstName = up.FirstName,
-                                   LastName = up.LastName,
-                                   Email = u.Email,
-                                   Pending = f.Pending,
-                                   Accepted = f.Accepted
-                               }).ToList();
+                var pendingFriends = new List<FriendsList>();
 
-                return friends;
+                var friends = (from f in context.tFriendsLists
+                               join u in context.AspNetUsers on f.Id equals u.Id
+                               where f.FriendId == userId && f.Pending == true
+                               select new { u, f }).ToList();
+
+                foreach (var friend in friends)
+                {
+                    var friendsList = new FriendsList();
+
+                    var pending = (from up in context.tUserProfiles
+                                   where up.Id == friend.u.Id
+                                   select
+                                       up).First();
+
+                    friendsList.Email = friend.u.Email;
+                    friendsList.UserName = friend.u.UserName;
+                    friendsList.FirstName = pending.FirstName;
+                    friendsList.LastName = pending.LastName;
+                    friendsList.FriendsListId = friend.f.FriendListId;
+
+                    pendingFriends.Add(friendsList);
+                }
+
+
+
+                return pendingFriends;
             }
         }
 
@@ -951,7 +962,7 @@ namespace MyJeepTrader.Data
                 var friends = (from f in context.tFriendsLists
                                join up in context.tUserProfiles on f.Id equals up.Id
                                join u in context.AspNetUsers on f.Id equals u.Id
-                               where f.FriendId == userId && f.Pending == true
+                               where f.FriendId == userId && f.Accepted == true
                                select new FriendsList
                                {
                                    UserId = u.Id,
@@ -966,6 +977,21 @@ namespace MyJeepTrader.Data
 
                 return friends;
             }
+        }
+
+        public string AcceptFriend(int friendsListId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == friendsListId select f).First();
+
+                acceptFriend.Pending = false;
+                acceptFriend.Accepted = true;
+                context.SaveChanges();
+
+                return "Friend Accepted!";
+            }
+
         }
         #endregion
 

@@ -382,6 +382,25 @@ namespace MyJeepTrader.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AcceptFriend(string friendsListId)
+        {
+            var id = Convert.ToInt32(friendsListId);
+
+            Service service = new Service();
+            service.AcceptFriend(id);
+
+            if (ModelState.IsValid)
+            {
+                TempData["Message"] = "Friend Accepted!";
+
+                return View();
+            }
+
+            TempData["Message"] = "Something went wrong! Unable to accept friend! ";
+            return View();
+        }
+
         public ActionResult Cancel()
         {
             Service service = new Service();
