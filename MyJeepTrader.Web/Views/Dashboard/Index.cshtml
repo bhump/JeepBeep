@@ -418,8 +418,8 @@
                                                 <span>@pending.Email</span>
                                             </td>
                                             <td width="20%">
-                                                <button href="#" id="aAcceptFriend" class="btn btn-sm btn-primary" value="@pending.FriendsListId">Accept</button>
-                                                <button href="#" id="aRejectFriend" class="btn btn-sm btn-default" value="@pending.FriendsListId">Reject</button>
+                                                <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary" value="@pending.FriendsListId">Accept</button>
+                                                <button href="#" id="btnRejectFriend" class="btn btn-sm btn-default" value="@pending.FriendsListId">Reject</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -593,9 +593,14 @@
         UpdateSettings(cbPricateStatus);
     });
 
-    $('#aAcceptFriend').click(function () {
-        var friendsListId = $('#aAcceptFriend').val();
+    $('#btnAcceptFriend').click(function () {
+        var friendsListId = $('#btnAcceptFriend').val();
         AcceptFriend(friendsListId);
+    });
+
+    $('#btnRejectFriend').click(function () {
+        var friendsListId = $('#btnRejectFriend').val();
+        RejectFriend(friendsListId);
     });
 
     function UpdateSettings(privateOnly) {
@@ -629,7 +634,25 @@
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 $('#divSuccess').show();
-                $('#spanSuccessMessage').html("Settings Saved Successfully!");
+                $('#spanSuccessMessage').html("Friend Accepted!");
+            }
+        });
+    }
+
+    function RejectFriend(friendsListId)
+    {
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Dashboard/RejectFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                $('#divSuccess').show();
+                $('#spanSuccessMessage').html("Friend Rejected!");
             }
         });
     }

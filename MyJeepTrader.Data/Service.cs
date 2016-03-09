@@ -993,6 +993,20 @@ namespace MyJeepTrader.Data
             }
 
         }
+
+        public string RejectFriend(int friendsListId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == friendsListId select f).First();
+
+                acceptFriend.Pending = false;
+                acceptFriend.Accepted = false;
+                context.SaveChanges();
+
+                return "Friend Rejected!";
+            }
+        }
         #endregion
 
         #region Admin
