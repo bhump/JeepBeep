@@ -14,6 +14,8 @@ namespace MyJeepTrader.Data.Models
 
         public int UserProfileId {get; set;}
 
+        public byte[] Avatar { get; set; }
+
         public string UserName { get; set; }
 
         public string FirstName { get; set; }

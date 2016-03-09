@@ -523,3 +523,28 @@ a {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+table#inbox {
+    border-collapse: collapse;
+}
+
+#inbox tr {
+    background-color: #eee;
+    border-top: 1px solid #fff;
+}
+
+    #inbox tr:hover {
+        background-color: #ccc;
+    }
+
+#inbox th {
+    background-color: #fff;
+}
+
+#inbox th, #inbox td {
+    padding: 3px 5px;
+}
+
+    #inbox td:hover {
+        cursor: pointer;
+    }

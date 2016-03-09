@@ -369,6 +369,12 @@
         </div>
         <hr />
         <div class="form-group">
+            <div id="divFriendsSuccess" class="alert alert-success alert-dismissible fade" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span id="spanSuccessMessage"></span>
+            </div>
             <h2>Manage Friends</h2>
             <ul class="nav nav-tabs nav-justified">
                 <li class="active"><a data-toggle="pill" href="#Following">Following</a></li>
@@ -377,59 +383,173 @@
             </ul>
             <div class="tab-content">
                 <div id="Following" class="tab-pane fade in active">
-                    Following
+                    <table id="tableFriends" class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                </th>
+                                <th>
+                                    <span>User</span>
+                                </th>
+                                <th>
+                                    <span>First Name</span>
+                                </th>
+                                <th>
+                                    <span>Last Name</span>
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var friends in Model.Following)
+                            {
+                                <tr id="@friends.FriendsListId">
+                                    <td>
+                                        @if (friends.Avatar != null)
+                                        {
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @friends.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <span>@friends.UserName</span>
+                                    </td>
+                                    <td>
+                                        <span>@friends.FirstName</span>
+                                    </td>
+                                    <td>
+                                        <span>@friends.LastName</span>
+                                    </td>
+                                    <td width="20%">
+                                        <button href="#" id="btnBlockFriend" class="btn btn-sm btn-primary blockFriend" value="@friends.FriendsListId">Block</button>
+                                        <button href="#" id="btnDeleteFriend" class="btn btn-sm btn-default deleteFriend" value="@friends.FriendsListId">Remove</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
                 <div id="Pending" class="tab-pane fade">
-                    @foreach (var pending in Model.Pending)
-                    {
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <span>User</span>
-                                            </th>
-                                            <th>
-                                                <span>First Name</span>
-                                            </th>
-                                            <th>
-                                                <span>Last Name</span>
-                                            </th>
-                                            <th>
-                                                <span>Email</span>
-                                            </th>
-                                            <th>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <span>@pending.UserName</span>
-                                            </td>
-                                            <td>
-                                                <span>@pending.FirstName</span>
-                                            </td>
-                                            <td>
-                                                <span>@pending.LastName</span>
-                                            </td>
-                                            <td>
-                                                <span>@pending.Email</span>
-                                            </td>
-                                            <td width="20%">
-                                                <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary" value="@pending.FriendsListId">Accept</button>
-                                                <button href="#" id="btnRejectFriend" class="btn btn-sm btn-default" value="@pending.FriendsListId">Reject</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    }
+                    <table id="tablePendingFriends" class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                </th>
+                                <th>
+                                    <span>User</span>
+                                </th>
+                                <th>
+                                    <span>First Name</span>
+                                </th>
+                                <th>
+                                    <span>Last Name</span>
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pending in Model.Pending)
+                            {
+                                <tr id="@pending.FriendsListId">
+                                    <td>
+                                        @if (pending.Avatar != null)
+                                        {
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @pending.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <span>@pending.UserName</span>
+                                    </td>
+                                    <td>
+                                        <span>@pending.FirstName</span>
+                                    </td>
+                                    <td>
+                                        <span>@pending.LastName</span>
+                                    </td>
+                                    <td width="20%">
+                                        <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary acceptFriend" value="@pending.FriendsListId">Accept</button>
+                                        <button href="#" id="btnRejectFriend" class="btn btn-sm btn-default rejectFriend" value="@pending.FriendsListId">Reject</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
                 <div id="Followers" class="tab-pane fade">
-                    Followers
+                    <table id="tableFollowers" class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                </th>
+                                <th>
+                                    <span>User</span>
+                                </th>
+                                <th>
+                                    <span>First Name</span>
+                                </th>
+                                <th>
+                                    <span>Last Name</span>
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var followers in Model.Followers)
+                            {
+                                <tr id="@followers.FriendsListId">
+                                    <td>
+                                        @if (followers.Avatar != null)
+                                        {
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @followers.UserName })" alt="Image Unavailable" class="img-circle streamImage" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <span>@followers.UserName</span>
+                                    </td>
+                                    <td>
+                                        <span>@followers.FirstName</span>
+                                    </td>
+                                    <td>
+                                        <span>@followers.LastName</span>
+                                    </td>
+                                    <td width="20%">
+                                       @foreach (var following in Model.Following)
+                                       {
+                                           if (following.UserName == followers.UserName)
+                                           {
+                                            <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary unfollow" value="@followers.FriendsListId">Unfollow</button>
+                                           }
+                                           else
+                                           {
+                                            <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary acceptFriend" value="@followers.FriendsListId">Follow</button>
+                                           }
+                                       }
+                                        <button href="#" id="btnRejectFriend" class="btn btn-sm btn-default rejectFriend" value="@followers.FriendsListId">Block</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -527,32 +647,6 @@
         </div>
     </div>
 </div>
-<style>
-    table#inbox {
-        border-collapse: collapse;
-    }
-
-    #inbox tr {
-        background-color: #eee;
-        border-top: 1px solid #fff;
-    }
-
-        #inbox tr:hover {
-            background-color: #ccc;
-        }
-
-    #inbox th {
-        background-color: #fff;
-    }
-
-    #inbox th, #inbox td {
-        padding: 3px 5px;
-    }
-
-        #inbox td:hover {
-            cursor: pointer;
-        }
-</style>
 <script src="~/Scripts/jquery-2.1.4.min.js"></script>
 @*<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>*@
 <script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"> </script>
@@ -593,14 +687,16 @@
         UpdateSettings(cbPricateStatus);
     });
 
-    $('#btnAcceptFriend').click(function () {
+    $('.acceptFriend').click(function () {
         var friendsListId = $('#btnAcceptFriend').val();
-        AcceptFriend(friendsListId);
+        var row = $(this).closest('tr');
+        AcceptFriend(friendsListId, row);
     });
 
-    $('#btnRejectFriend').click(function () {
+    $('.rejectFriend').click(function () {
         var friendsListId = $('#btnRejectFriend').val();
-        RejectFriend(friendsListId);
+        var row = $(this).closest('tr');
+        RejectFriend(friendsListId, row);
     });
 
     function UpdateSettings(privateOnly) {
@@ -615,13 +711,14 @@
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
-                $('#divSuccess').show();
+                $('#divSettingsSuccess').removeClass("in");
+                $('#divSettingsSuccess').delay(200).addClass("in").fadeOut(2000);
                 $('#spanSuccessMessage').html("Settings Saved Successfully!");
             }
         });
     }
 
-    function AcceptFriend(friendsListId) {
+    function AcceptFriend(friendsListId, row) {
 
         var data = {
             friendsListId: friendsListId
@@ -629,30 +726,46 @@
 
         $.ajax({
             type: 'POST',
-            url: '/Dashboard/AcceptFriend',
+            url: '/Webservices/FriendManagementWebService.asmx/AcceptFriend',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
             success: function (result) {
-                $('#divSuccess').show();
-                $('#spanSuccessMessage').html("Friend Accepted!");
+                //$('#spanSuccessMessage').html("Friend Accepted!");
+                //$('#divFriendsSuccess').removeClass("in");
+                //$('#divFriendsSuccess').delay(100).addClass("in").fadeOut(2000);
+
+                row.find('td').fadeOut(500, function () {
+                    row.remove();
+                });
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
             }
         });
     }
 
-    function RejectFriend(friendsListId)
-    {
+    function RejectFriend(friendsListId, row) {
         var data = {
             friendsListId: friendsListId
         }
 
         $.ajax({
             type: 'POST',
-            url: '/Dashboard/RejectFriend',
+            url: '/Webservices/FriendManagementWebService.asmx/RejectFriend',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
             success: function (result) {
-                $('#divSuccess').show();
-                $('#spanSuccessMessage').html("Friend Rejected!");
+                //$('#divFriendsSuccess').removeClass("hidden alert-success").addClass("alert-info");
+                //$('#spanSuccessMessage').html("Friend Rejected!");
+
+                row.find('td').fadeOut(500, function () {
+                    row.remove();
+                });
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
             }
         });
     }

@@ -900,23 +900,33 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var friends = (from f in context.tFriendsLists
-                               join up in context.tUserProfiles on f.Id equals up.Id
-                               join u in context.AspNetUsers on f.Id equals u.Id
-                               where f.Id == userId && f.Accepted == true
-                               select new FriendsList
-                               {
-                                   UserId = u.Id,
-                                   UserProfileId = up.UserProfileId,
-                                   UserName = u.UserName,
-                                   FirstName = up.FirstName,
-                                   LastName = up.LastName,
-                                   Email = u.Email,
-                                   Pending = f.Pending,
-                                   Accepted = f.Accepted
-                               }).ToList();
+                var following = new List<FriendsList>();
 
-                return friends;
+                var friends = (from f in context.tFriendsLists
+                               join u in context.AspNetUsers on f.FriendId equals u.Id
+                               where f.Id == userId && f.Pending == false && f.Accepted == true
+                               select new { u, f }).ToList();
+
+                foreach (var friend in friends)
+                {
+                    var friendsList = new FriendsList();
+
+                    var pending = (from up in context.tUserProfiles
+                                   where up.Id == friend.u.Id
+                                   select
+                                       up).First();
+
+                    friendsList.Email = friend.u.Email;
+                    friendsList.UserName = friend.u.UserName;
+                    friendsList.FirstName = pending.FirstName;
+                    friendsList.LastName = pending.LastName;
+                    friendsList.FriendsListId = friend.f.FriendListId;
+                    friendsList.Avatar = pending.Avatar;
+
+                    following.Add(friendsList);
+                }
+
+                return following;
             }
         }
 
@@ -945,11 +955,10 @@ namespace MyJeepTrader.Data
                     friendsList.FirstName = pending.FirstName;
                     friendsList.LastName = pending.LastName;
                     friendsList.FriendsListId = friend.f.FriendListId;
+                    friendsList.Avatar = pending.Avatar;
 
                     pendingFriends.Add(friendsList);
                 }
-
-
 
                 return pendingFriends;
             }
@@ -959,23 +968,33 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var friends = (from f in context.tFriendsLists
-                               join up in context.tUserProfiles on f.Id equals up.Id
-                               join u in context.AspNetUsers on f.Id equals u.Id
-                               where f.FriendId == userId && f.Accepted == true
-                               select new FriendsList
-                               {
-                                   UserId = u.Id,
-                                   UserProfileId = up.UserProfileId,
-                                   UserName = u.UserName,
-                                   FirstName = up.FirstName,
-                                   LastName = up.LastName,
-                                   Email = u.Email,
-                                   Pending = f.Pending,
-                                   Accepted = f.Accepted
-                               }).ToList();
+                var followers = new List<FriendsList>();
 
-                return friends;
+                var friends = (from f in context.tFriendsLists
+                               join u in context.AspNetUsers on f.Id equals u.Id
+                               where f.FriendId == userId && f.Pending == false && f.Accepted == true
+                               select new { u, f }).ToList();
+
+                foreach (var friend in friends)
+                {
+                    var friendsList = new FriendsList();
+
+                    var pending = (from up in context.tUserProfiles
+                                   where up.Id == friend.u.Id
+                                   select
+                                       up).First();
+
+                    friendsList.Email = friend.u.Email;
+                    friendsList.UserName = friend.u.UserName;
+                    friendsList.FirstName = pending.FirstName;
+                    friendsList.LastName = pending.LastName;
+                    friendsList.FriendsListId = friend.f.FriendListId;
+                    friendsList.Avatar = pending.Avatar;
+
+                    followers.Add(friendsList);
+                }
+
+                return followers;
             }
         }
 
