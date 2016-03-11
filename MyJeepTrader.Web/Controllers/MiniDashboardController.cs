@@ -46,33 +46,5 @@ namespace MyJeepTrader.Web.Controllers
 
             return View("~/Views/Shared/_TimelineSettingsPartial.cshtml", model);
         }
-
-        [HttpPost]
-        public ActionResult UpdateSettings(string posts, string status)
-        {
-            try
-            {
-                Service service = new Service();
-
-                var userId = User.Identity.GetUserId();
-
-                service.UpdateSettings(userId, Convert.ToBoolean(posts),Convert.ToBoolean(status));
-
-                if (ModelState.IsValid)
-                {
-                    TempData["Message"] = "Settings Saved Successfully!";
-
-                    return RedirectToAction("LiveStream", "Home");
-                }
-            }
-            catch
-            {
-                TempData["Message"] = "Something went wrong! Unable to save settings! ";
-                return RedirectToAction("LiveStream", "Home");
-            }
-
-            TempData["Message"] = "Something went wrong! Unable to save settings! ";
-            return RedirectToAction("LiveStream", "Home");
-        }
     }
 }

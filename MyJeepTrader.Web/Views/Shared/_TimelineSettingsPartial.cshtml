@@ -84,12 +84,11 @@
 
         $.ajax({
             type: 'POST',
-            url: '/MiniDashboard/UpdateSettings',
+            url: '/Webservices/SettingsWebService.asmx/UpdateSettings',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
-                $('#divSuccess').show();
-                $('#spanSuccessMessage').html("Settings Saved Successfully!");
+                location.reload();
             }
         });
     }

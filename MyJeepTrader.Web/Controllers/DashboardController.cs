@@ -354,34 +354,6 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult UpdateSettings(string privateOnly)
-        {
-            try
-            {
-                Service service = new Service();
-
-                var userId = User.Identity.GetUserId();
-
-                service.UpdateSettings(userId, Convert.ToBoolean(privateOnly));
-
-                if (ModelState.IsValid)
-                {
-                    TempData["Message"] = "Settings Saved Successfully!";
-
-                    return View();
-                }
-            }
-            catch
-            {
-                TempData["Message"] = "Something went wrong! Unable to save settings! ";
-                return View();
-            }
-
-            TempData["Message"] = "Something went wrong! Unable to save settings! ";
-            return View();
-        }
-
         public ActionResult Cancel()
         {
             Service service = new Service();

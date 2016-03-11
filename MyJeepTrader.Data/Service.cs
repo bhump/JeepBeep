@@ -1149,7 +1149,6 @@ namespace MyJeepTrader.Data
             }
         }
 
-
         public tSetting GetSettings(string userId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
@@ -1160,26 +1159,51 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public void UpdateSettings(string userId, bool postOnly, bool statusOnly)
+        public string UpdateSettings(string userId, string postOnly, string statusOnly)
         {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            try
             {
-                var settings = context.tSettings.Where(s => s.Id == userId).FirstOrDefault();
-                settings.Posts = postOnly;
-                settings.Status = statusOnly;
+                using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+                {
+                    var post = Convert.ToBoolean(postOnly);
+                    var status = Convert.ToBoolean(statusOnly);
 
-                context.SaveChanges();
+                    var settings = context.tSettings.Where(s => s.Id == userId).FirstOrDefault();
+                    settings.Posts = post;
+                    settings.Status = status;
+
+                    context.SaveChanges();
+
+                    return "Settings Saved!";
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return "Settings Could Not Be Saved!";
             }
         }
 
-        public void UpdateSettings(string userId, bool privateOnly)
+        public string UpdateSettings(string userId, string privateOnly)
         {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            try
             {
-                var settings = context.tSettings.Where(s => s.Id == userId).FirstOrDefault();
-                settings.PrivateStatus = privateOnly;
+                using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+                {
+                    var privateStatus = Convert.ToBoolean(privateOnly);
 
-                context.SaveChanges();
+                    var settings = context.tSettings.Where(s => s.Id == userId).FirstOrDefault();
+                    settings.PrivateStatus = privateStatus;
+
+                    context.SaveChanges();
+
+                    return "Settings Saved!";
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return "Settings Could Not Be Saved!";
             }
         }
         #endregion

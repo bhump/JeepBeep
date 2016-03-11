@@ -533,17 +533,17 @@
                                         <span>@followers.LastName</span>
                                     </td>
                                     <td width="20%">
-                                       @foreach (var following in Model.Following)
-                                       {
-                                           if (following.UserName == followers.UserName)
-                                           {
-                                            <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary unfollow" value="@followers.FriendsListId">Unfollow</button>
-                                           }
-                                           else
-                                           {
-                                            <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary acceptFriend" value="@followers.FriendsListId">Follow</button>
-                                           }
-                                       }
+                                        @foreach (var following in Model.Following)
+                                        {
+                                            if (following.UserName == followers.UserName)
+                                            {
+                                                <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary unfollow" value="@followers.FriendsListId">Unfollow</button>
+                                            }
+                                            else
+                                            {
+                                                <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary acceptFriend" value="@followers.FriendsListId">Follow</button>
+                                            }
+                                        }
                                         <button href="#" id="btnRejectFriend" class="btn btn-sm btn-default rejectFriend" value="@followers.FriendsListId">Block</button>
                                     </td>
                                 </tr>
@@ -647,8 +647,7 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-2.1.4.min.js"></script>
-@*<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>*@
+<script src="~/Scripts/jquery-2.2.1.min.js"></script>
 <script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"> </script>
 <script type="text/javascript">
     function loadModal(from, message, subject, fromUserId, messageId) {
@@ -707,13 +706,17 @@
 
         $.ajax({
             type: 'POST',
-            url: '/Dashboard/UpdateSettings',
+            url: '/Webservices/SettingsWebService.asmx/UpdatePrivacy',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
+                alert(JSON.stringify(result));
                 $('#divSettingsSuccess').removeClass("in");
                 $('#divSettingsSuccess').delay(200).addClass("in").fadeOut(2000);
                 $('#spanSuccessMessage').html("Settings Saved Successfully!");
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
             }
         });
     }

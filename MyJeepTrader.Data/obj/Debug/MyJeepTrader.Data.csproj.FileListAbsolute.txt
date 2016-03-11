@@ -29,7 +29,7 @@ C:\Users\mcdonoje\Documents\Visual Studio 2013\Projects\MyJeepTrader\MyJeepTrade
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll.config
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\MyJeepTrader.Data.pdb
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.52.0.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\Braintree-2.55.0.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Data\bin\Debug\LinqKit.dll
