@@ -243,7 +243,7 @@ namespace MyJeepTrader.Data
                 statusList = (from fl in context.tFriendsLists
                               join su in context.tStatusUpdates on fl.FriendId equals su.Id
                               join up in context.tUserProfiles on su.Id equals up.Id
-                              where fl.Id == userId && fl.Accepted == true
+                              where fl.Id == userId && fl.Accepted == true && fl.Block == false
                               select new LiveStream
                                   {
                                       Status = su.Status,
@@ -922,6 +922,7 @@ namespace MyJeepTrader.Data
                     friendsList.LastName = pending.LastName;
                     friendsList.FriendsListId = friend.f.FriendListId;
                     friendsList.Avatar = pending.Avatar;
+                    friendsList.Blocked = friend.f.Block;
 
                     following.Add(friendsList);
                 }
@@ -956,6 +957,7 @@ namespace MyJeepTrader.Data
                     friendsList.LastName = pending.LastName;
                     friendsList.FriendsListId = friend.f.FriendListId;
                     friendsList.Avatar = pending.Avatar;
+                    friendsList.Blocked = friend.f.Block;
 
                     pendingFriends.Add(friendsList);
                 }
@@ -990,6 +992,7 @@ namespace MyJeepTrader.Data
                     friendsList.LastName = pending.LastName;
                     friendsList.FriendsListId = friend.f.FriendListId;
                     friendsList.Avatar = pending.Avatar;
+                    friendsList.Blocked = friend.f.Block;
 
                     followers.Add(friendsList);
                 }
@@ -998,11 +1001,13 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public string AcceptFriend(int friendsListId)
+        public string AcceptFriend(string friendsListId)
         {
+            var id = Convert.ToInt32(friendsListId);
+
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == friendsListId select f).First();
+                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
 
                 acceptFriend.Pending = false;
                 acceptFriend.Accepted = true;
@@ -1013,17 +1018,41 @@ namespace MyJeepTrader.Data
 
         }
 
-        public string RejectFriend(int friendsListId)
+        public string RejectFriend(string friendsListId)
         {
+            var id = Convert.ToInt32(friendsListId);
+
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == friendsListId select f).First();
+                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
 
                 acceptFriend.Pending = false;
                 acceptFriend.Accepted = false;
                 context.SaveChanges();
 
                 return "Friend Rejected!";
+            }
+        }
+
+        public string BlockFriend(string friendsListId, string blockFriend)
+        {
+            var id = Convert.ToInt32(friendsListId);
+            var block = Convert.ToBoolean(blockFriend);
+
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var blocked = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
+                blocked.Block = block;
+                context.SaveChanges();
+
+                if (block == true)
+                {
+                    return "Friend Blocked!";
+                }
+                else
+                {
+                    return "Friend Unblocked!";
+                }
             }
         }
         #endregion
@@ -1177,7 +1206,7 @@ namespace MyJeepTrader.Data
                     return "Settings Saved!";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 return "Settings Could Not Be Saved!";
@@ -1200,7 +1229,7 @@ namespace MyJeepTrader.Data
                     return "Settings Saved!";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 return "Settings Could Not Be Saved!";

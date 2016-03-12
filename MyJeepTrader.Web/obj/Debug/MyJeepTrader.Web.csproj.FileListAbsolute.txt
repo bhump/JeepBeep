@@ -1,9 +1,9 @@
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll.config
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.55.0.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.dll
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll.config
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Data.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.xml

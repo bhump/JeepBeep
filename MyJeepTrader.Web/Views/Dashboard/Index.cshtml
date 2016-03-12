@@ -426,9 +426,26 @@
                                     <td>
                                         <span>@friends.LastName</span>
                                     </td>
-                                    <td width="20%">
-                                        <button href="#" id="btnBlockFriend" class="btn btn-sm btn-primary blockFriend" value="@friends.FriendsListId">Block</button>
-                                        <button href="#" id="btnDeleteFriend" class="btn btn-sm btn-default deleteFriend" value="@friends.FriendsListId">Remove</button>
+                                    <td width="30%">
+                                        @foreach (var following in Model.Following)
+                                        {
+                                            if (following.UserName == friends.UserName)
+                                            {
+                                                <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@friends.FriendsListId">Unfollow</button>
+                                            }
+                                            else
+                                            {
+                                                <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@friends.FriendsListId">Follow</button>
+                                            }
+                                            if (friends.Blocked == true)
+                                            {
+                                                <button href="#" id="btnUnblockFriend" class="btn btn-link friend unblockFriend" value="@friends.FriendsListId">Unblock</button>
+                                            }
+                                            else
+                                            {
+                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@friends.FriendsListId">Block</button>
+                                            }
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -479,9 +496,10 @@
                                     <td>
                                         <span>@pending.LastName</span>
                                     </td>
-                                    <td width="20%">
-                                        <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary acceptFriend" value="@pending.FriendsListId">Accept</button>
-                                        <button href="#" id="btnRejectFriend" class="btn btn-sm btn-default rejectFriend" value="@pending.FriendsListId">Reject</button>
+                                    <td width="30%">
+                                        <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@pending.FriendsListId">Accept</button>
+                                        <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@pending.FriendsListId">Reject</button>
+                                        <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@pending.FriendsListId">Block</button>
                                     </td>
                                 </tr>
                             }
@@ -532,19 +550,26 @@
                                     <td>
                                         <span>@followers.LastName</span>
                                     </td>
-                                    <td width="20%">
+                                    <td width="30%">
                                         @foreach (var following in Model.Following)
                                         {
                                             if (following.UserName == followers.UserName)
                                             {
-                                                <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary unfollow" value="@followers.FriendsListId">Unfollow</button>
+                                                <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@followers.FriendsListId">Unfollow</button>
                                             }
                                             else
                                             {
-                                                <button href="#" id="btnAcceptFriend" class="btn btn-sm btn-primary acceptFriend" value="@followers.FriendsListId">Follow</button>
+                                                <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@followers.FriendsListId">Follow</button>
+                                            }
+                                            if (following.Blocked == true)
+                                            {
+                                                <button href="#" id="btnUnBlockFriend" class="btn btn-link friend unblockFriend" value="@followers.FriendsListId">Unblock</button>
+                                            }
+                                            else
+                                            {
+                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@followers.FriendsListId">Block</button>
                                             }
                                         }
-                                        <button href="#" id="btnRejectFriend" class="btn btn-sm btn-default rejectFriend" value="@followers.FriendsListId">Block</button>
                                     </td>
                                 </tr>
                             }
@@ -687,15 +712,29 @@
     });
 
     $('.acceptFriend').click(function () {
-        var friendsListId = $('#btnAcceptFriend').val();
+        var friendsListId = $(this).val();
         var row = $(this).closest('tr');
         AcceptFriend(friendsListId, row);
     });
 
     $('.rejectFriend').click(function () {
-        var friendsListId = $('#btnRejectFriend').val();
+        var friendsListId = $(this).val();
         var row = $(this).closest('tr');
         RejectFriend(friendsListId, row);
+    });
+
+    $('.blockFriend').click(function () {
+        var friendsListId = $('#btnBlockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = true;
+        BlockFriend(friendsListId, blocked, row);
+    });
+
+    $('.unblockFriend').click(function () {
+        var friendsListId = $('#btnUnblockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = false;
+        BlockFriend(friendsListId, blocked, row);
     });
 
     function UpdateSettings(privateOnly) {
@@ -763,9 +802,30 @@
                 //$('#divFriendsSuccess').removeClass("hidden alert-success").addClass("alert-info");
                 //$('#spanSuccessMessage').html("Friend Rejected!");
 
-                row.find('td').fadeOut(500, function () {
-                    row.remove();
-                });
+                //row.find('td').fadeOut(500, function () {
+                //    row.remove();
+                //});
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function BlockFriend(friendsListId, block, row) {
+        var data = {
+            friendsListId: friendsListId,
+            blocked: block
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/BlockFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //row.find('.blockFriend').text("Unblock");
             },
             error: function (errorThrown) {
                 console.log(errorThrown);

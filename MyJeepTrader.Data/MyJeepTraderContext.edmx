@@ -103,6 +103,7 @@
           <Property Name="FriendId" Type="nvarchar" MaxLength="128" />
           <Property Name="Pending" Type="bit" Nullable="false" />
           <Property Name="Accepted" Type="bit" Nullable="false" />
+          <Property Name="Block" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tImages">
           <Key>
@@ -1728,6 +1729,7 @@
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="tFriendsList" ToRole="AspNetUser" />
           <Property Name="Pending" Type="Boolean" Nullable="false" />
           <Property Name="Accepted" Type="Boolean" Nullable="false" />
+          <Property Name="Block" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_tFriendsList_AspNetUsers">
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -2115,6 +2117,7 @@
           <EntitySetMapping Name="tFriendsLists">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tFriendsList">
               <MappingFragment StoreEntitySet="tFriendsList">
+                <ScalarProperty Name="Block" ColumnName="Block" />
                 <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="Pending" ColumnName="Pending" />
                 <ScalarProperty Name="FriendId" ColumnName="FriendId" />

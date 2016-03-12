@@ -21,7 +21,7 @@
                             }
                             else
                             {
-                                <img src="~/Images/placeholder.jpg" width="43" height="43" />
+                                <img src="~/Images/placeholder.jpg" width="43" height="43" class="img-circle" />
                             }
                         </div>
                         <div>
@@ -40,8 +40,7 @@
         </table>
     </div>
 </div>
-<script src="~/Scripts/jquery-2.1.4.js"></script>
-<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(function () {
         $("table").each(function () {

@@ -27,5 +27,7 @@ namespace MyJeepTrader.Data.Models
         public bool Pending { get; set; }
 
         public bool Accepted { get; set; }
+
+        public bool Blocked { get; set; }
     }
 }

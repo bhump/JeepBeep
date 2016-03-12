@@ -21,20 +21,12 @@ namespace MyJeepTrader.Web.WebServices
     {
 
         [WebMethod]
-        public string HelloWorld()
-        {
-            return "Hello World";
-        }
-
-        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string AcceptFriend(string friendsListId)
         {
-            var id = Convert.ToInt32(friendsListId);
-
             Service service = new Service();
 
-            var acceptFriend = service.AcceptFriend(id);
+            var acceptFriend = service.AcceptFriend(friendsListId);
 
             return acceptFriend;
         }
@@ -43,13 +35,22 @@ namespace MyJeepTrader.Web.WebServices
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string RejectFriend(string friendsListId)
         {
-            var id = Convert.ToInt32(friendsListId);
-
             Service service = new Service();
 
-            var rejectFriend = service.RejectFriend(id);
+            var rejectFriend = service.RejectFriend(friendsListId);
 
             return rejectFriend;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string BlockFriend(string friendsListId, string blocked)
+        {
+            Service service = new Service();
+
+            var blockFriend = service.BlockFriend(friendsListId, blocked);
+
+            return blockFriend;
         }
     }
 }

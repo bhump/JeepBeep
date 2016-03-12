@@ -372,12 +372,36 @@ div.Status {
         border-color: #f05f40;
     }
 
+.btn-link {
+    font-weight: normal;
+    color: #f05f40;
+    border-radius: 0;
+}
+
+    .btn-link:hover,
+    .btn-link:focus {
+        color: darkgrey;
+        text-decoration: underline;
+        background-color: transparent;
+    }
+
 a {
     color: lightgrey;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
 }
+
+    a.friend {
+        color: #f05f40;
+        -webkit-transition: all .35s;
+        -moz-transition: all .35s;
+        transition: all .35s;
+    }
+
+        a.friend:hover {
+            color: lightgrey;
+        }
 
     a.icon {
         color: #f05f40;
