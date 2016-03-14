@@ -45,6 +45,9 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Username")]
         public string UserName { get; set; }
+
+        [Display(Name = "Instagram")]
+        public string Instagram { get; set; }
         #endregion
 
         #region primary jeep profile
@@ -79,6 +82,10 @@ namespace MyJeepTrader.Web.ViewModels
         public List<UsersPosts> UserPosts { get; set; }
 
         public UsersPosts RecentPost { get; set; }
+        #endregion
+
+        #region status
+        public List<UserStatus> UsersStatus { get; set; }
         #endregion
     }
 }

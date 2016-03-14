@@ -18,15 +18,15 @@ namespace MyJeepTrader.Data
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            this.tFeedbacks = new HashSet<tFeedback>();
+            this.tFriendsLists = new HashSet<tFriendsList>();
             this.tMemberships = new HashSet<tMembership>();
+            this.tPosts = new HashSet<tPost>();
+            this.tStatusUpdates = new HashSet<tStatusUpdate>();
+            this.tSettings = new HashSet<tSetting>();
             this.tUserProfiles = new HashSet<tUserProfile>();
             this.tVehicleProfileControls = new HashSet<tVehicleProfileControl>();
             this.AspNetRoles = new HashSet<AspNetRole>();
-            this.tPosts = new HashSet<tPost>();
-            this.tFeedbacks = new HashSet<tFeedback>();
-            this.tStatusUpdates = new HashSet<tStatusUpdate>();
-            this.tFriendsLists = new HashSet<tFriendsList>();
-            this.tSettings = new HashSet<tSetting>();
         }
     
         public string Id { get; set; }
@@ -45,15 +45,15 @@ namespace MyJeepTrader.Data
     
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual tTestingCode tTestingCode { get; set; }
+        public virtual ICollection<tFeedback> tFeedbacks { get; set; }
+        public virtual ICollection<tFriendsList> tFriendsLists { get; set; }
         public virtual ICollection<tMembership> tMemberships { get; set; }
+        public virtual ICollection<tPost> tPosts { get; set; }
+        public virtual ICollection<tStatusUpdate> tStatusUpdates { get; set; }
+        public virtual ICollection<tSetting> tSettings { get; set; }
         public virtual ICollection<tUserProfile> tUserProfiles { get; set; }
         public virtual ICollection<tVehicleProfileControl> tVehicleProfileControls { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
-        public virtual ICollection<tPost> tPosts { get; set; }
-        public virtual ICollection<tFeedback> tFeedbacks { get; set; }
-        public virtual ICollection<tStatusUpdate> tStatusUpdates { get; set; }
-        public virtual ICollection<tFriendsList> tFriendsLists { get; set; }
-        public virtual tTestingCode tTestingCode { get; set; }
-        public virtual ICollection<tSetting> tSettings { get; set; }
     }
 }

@@ -60,7 +60,7 @@
                     {
                         if (Model.Settings.Posts == true)
                         {
-                            <div id="divLiveStream" class="Posts">
+                            <div id="divLivePost" class="Posts" data-post="@stream.FeedId">
                                 <div class="row">
                                     <label class="hidden">@stream.FeedId</label>
                                     <div class="col-md-2">
@@ -88,12 +88,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <a id="aFullPost" href="#" class="navbar-link pull-right">Full Post</a>
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm dropdown-toggle glyphicon glyphicon-bell" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                                        <div class="dropdown pull-right">
+                                            <a class="btn-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a id="aComment"><span class="glyphicon glyphicon-comment">&nbsp;<label>Comment</label></span></a></li>
-                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aFullPost" onclick="RedirectToPost('@stream.FeedId')" class="fullPost"><span class="glyphicon glyphicon-eye-open">&nbsp;<label>View</label></span></a></li>
+                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')" class="addFriend"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
                                                 <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
                                             </ul>
                                         </div>
@@ -133,12 +132,28 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm dropdown-toggle glyphicon glyphicon-bell" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                                    <div class="col-lg-6">
+                                        @if (stream.FeedLikeCount == 0)
+                                        {
+                                            <a class="likeCount" onclick="UpdateLikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-heart-empty"></span></a>
+                                        }
+                                        else
+                                        {
+                                            <a class="likeCount" onclick="UpdateLikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-heart"></span></a>
+                                        }
+                                        &nbsp;
+                                        <a onclick="UpdateLikeCount('@stream.FeedId')"><span><label id="lblLikeCount">@stream.FeedLikeCount</label></span></a>
+                                        &nbsp;
+                                        <a onclick="UpdateDislikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+                                        &nbsp;
+                                        <a onclick="UpdateDislikeCount('@stream.FeedId')"><span><label id="lblDislikeCount">@stream.FeedDislikeCount</label></span></a>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dropdown pull-right">
+                                            <a class="btn-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                 <li><a id="aComment"><span class="glyphicon glyphicon-comment">&nbsp;<label>Comment</label></span></a></li>
-                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')" class="addFriend"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
                                                 <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
                                             </ul>
                                         </div>
@@ -157,13 +172,12 @@
         </div>
     </div>
 </div>
+@Scripts.Render("~/bundles/jquery")
 <script>
-
-    //$('#aAddFriend').click(function () {
-    //    var friendName = $('#aFriendName').val();
-
-    //    AddFriend(friendName);
-    //});
+    $('.Posts').dblclick(function () {
+        var postId = $(this).data("post");
+        RedirectToPost(postId);
+    });
 
     function AddFriend(friendName) {
 
@@ -179,6 +193,51 @@
             success: function (result) {
                 $('#divSuccess').show();
                 $('#spanSuccessMessage').html("Settings Saved Successfully!");
+            }
+        });
+    }
+
+    function RedirectToPost(postId) {
+        window.location.href = '/Post/Details?PostId=' + postId;
+    }
+
+    function UpdateLikeCount(statusId) {
+
+        var data = {
+            statusId: statusId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/UpdateLikeCount',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('#lblLikeCount').text(result.d);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function UpdateDislikeCount(statusId) {
+        var data = {
+            statusId: statusId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/UpdateDislikeCount',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('#lblDislikeCount').text(result.d);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
             }
         });
     }

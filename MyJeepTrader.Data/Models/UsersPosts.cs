@@ -19,6 +19,10 @@ namespace MyJeepTrader.Data.Models
 
         public string PartBrand { get; set; }
 
+        public string UserName { get; set; }
+
+        public byte[] Avatar { get; set; }
+
         public string PartName { get; set; }
 
         public Boolean ?IsVehicle { get; set; }

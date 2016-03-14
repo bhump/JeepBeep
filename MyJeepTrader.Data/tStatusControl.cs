@@ -12,12 +12,13 @@ namespace MyJeepTrader.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class tStatusControl
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int StatusControlId { get; set; }
+        public string LikedBy { get; set; }
+        public string DisLikedBy { get; set; }
+        public int StatusId { get; set; }
+    
+        public virtual tStatusUpdate tStatusUpdate { get; set; }
     }
 }

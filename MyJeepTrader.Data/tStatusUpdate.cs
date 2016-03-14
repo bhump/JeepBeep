@@ -16,6 +16,7 @@ namespace MyJeepTrader.Data
     {
         public tStatusUpdate()
         {
+            this.tStatusControls = new HashSet<tStatusControl>();
             this.tStatusMedias = new HashSet<tStatusMedia>();
         }
     
@@ -23,9 +24,11 @@ namespace MyJeepTrader.Data
         public string Id { get; set; }
         public string Status { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public Nullable<long> LikeCount { get; set; }
+        public long LikeCount { get; set; }
+        public long DislikeCount { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ICollection<tStatusControl> tStatusControls { get; set; }
         public virtual ICollection<tStatusMedia> tStatusMedias { get; set; }
     }
 }

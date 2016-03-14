@@ -54,7 +54,7 @@ namespace MyJeepTrader.Web.Controllers
 
             model.UserPosts = service.GetAllPostsForUser(UserName);
             model.RecentPost = service.GetUsersMostRecentPost(UserName);
-
+            model.UsersStatus = service.GetStatusForUser(UserName);
 
             if (jeepProfile != null)
             {

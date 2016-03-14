@@ -38,13 +38,13 @@ namespace MyJeepTrader.Data
         public System.DateTime DateCreated { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual tCity tCity { get; set; }
         public virtual ICollection<tImage> tImages { get; set; }
         public virtual tMake tMake { get; set; }
         public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
         public virtual tPostType tPostType { get; set; }
+        public virtual tState tState { get; set; }
         public virtual tSubModel tSubModel { get; set; }
         public virtual tYear tYear { get; set; }
-        public virtual tCity tCity { get; set; }
-        public virtual tState tState { get; set; }
     }
 }

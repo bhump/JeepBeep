@@ -33,5 +33,7 @@ namespace MyJeepTrader.Data.Models
         public string Website { get; set; }
 
         public string UserName { get; set; }
+
+        public string Instagram { get; set; }
     }
 }

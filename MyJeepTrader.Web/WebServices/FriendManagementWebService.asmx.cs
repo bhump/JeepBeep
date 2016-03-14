@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MyJeepTrader.Web.WebServices
 {
@@ -51,6 +54,32 @@ namespace MyJeepTrader.Web.WebServices
             var blockFriend = service.BlockFriend(friendsListId, blocked);
 
             return blockFriend;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public long? UpdateLikeCount(int statusId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            Service service = new Service();
+
+            var updateCount = service.UpdateLikeCount(statusId, userId);
+
+            return updateCount;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public long UpdateDislikeCount(int statusId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            Service service = new Service();
+
+            var updateCount = service.UpdateDislikeCount(statusId, userId);
+
+            return updateCount;
         }
     }
 }

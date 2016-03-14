@@ -57,16 +57,6 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="CodeId" Type="int" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="tCities">
           <Key>
             <PropertyRef Name="CityId" />
@@ -226,6 +216,15 @@
           <Property Name="Country" Type="varchar" MaxLength="50" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tStatusControl">
+          <Key>
+            <PropertyRef Name="StatusControlId" />
+          </Key>
+          <Property Name="StatusControlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LikedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="DisLikedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="tStatusMedia">
           <Key>
             <PropertyRef Name="MediaId" />
@@ -243,7 +242,8 @@
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
           <Property Name="Status" Type="varchar" MaxLength="400" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="LikeCount" Type="bigint" />
+          <Property Name="LikeCount" Type="bigint" Nullable="false" />
+          <Property Name="DislikeCount" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="tSubModel">
           <Key>
@@ -299,6 +299,7 @@
           <Property Name="GooglePlus" Type="varchar(max)" />
           <Property Name="Twitter" Type="varchar(max)" />
           <Property Name="Ello" Type="varchar(max)" />
+          <Property Name="Instagram" Type="varchar(max)" />
           <Property Name="ViewCount" Type="bigint" />
         </EntityType>
         <EntityType Name="tVehicleProfileControl">
@@ -625,6 +626,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tStatusControl_tStatusUpdates">
+          <End Role="tStatusUpdates" Type="Self.tStatusUpdates" Multiplicity="1" />
+          <End Role="tStatusControl" Type="Self.tStatusControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tStatusUpdates">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="tStatusControl">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tStatusMedia_tStatus">
           <End Role="tStatusUpdates" Type="Self.tStatusUpdates" Multiplicity="0..1" />
           <End Role="tStatusMedia" Type="Self.tStatusMedia" Multiplicity="*" />
@@ -727,7 +740,6 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tCities" EntityType="Self.tCities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tConnectedUsers" EntityType="Self.tConnectedUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tFeedback" EntityType="Self.tFeedback" Schema="dbo" store:Type="Tables" />
@@ -744,6 +756,7 @@
           <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSettings" EntityType="Self.tSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStates" EntityType="Self.tStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tStatusControl" EntityType="Self.tStatusControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStatusMedia" EntityType="Self.tStatusMedia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStatusUpdates" EntityType="Self.tStatusUpdates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSubModel" EntityType="Self.tSubModel" Schema="dbo" store:Type="Tables" />
@@ -850,6 +863,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
           </AssociationSet>
+          <AssociationSet Name="FK_tStatusControl_tStatusUpdates" Association="Self.FK_tStatusControl_tStatusUpdates">
+            <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
+            <End Role="tStatusControl" EntitySet="tStatusControl" />
+          </AssociationSet>
           <AssociationSet Name="FK_tStatusMedia_tStatus" Association="Self.FK_tStatusMedia_tStatus">
             <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
             <End Role="tStatusMedia" EntitySet="tStatusMedia" />
@@ -892,8 +909,10 @@
           <EntitySet Name="AspNetUserClaims" EntityType="MyJeepTraderModel.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="MyJeepTraderModel.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="MyJeepTraderModel.AspNetUser" />
-          <EntitySet Name="sysdiagrams" EntityType="MyJeepTraderModel.sysdiagram" />
+          <EntitySet Name="tCities" EntityType="MyJeepTraderModel.tCity" />
           <EntitySet Name="tConnectedUsers" EntityType="MyJeepTraderModel.tConnectedUser" />
+          <EntitySet Name="tFeedbacks" EntityType="MyJeepTraderModel.tFeedback" />
+          <EntitySet Name="tFriendsLists" EntityType="MyJeepTraderModel.tFriendsList" />
           <EntitySet Name="tImages" EntityType="MyJeepTraderModel.tImage" />
           <EntitySet Name="tMakes" EntityType="MyJeepTraderModel.tMake" />
           <EntitySet Name="tMemberships" EntityType="MyJeepTraderModel.tMembership" />
@@ -902,10 +921,17 @@
           <EntitySet Name="tModels" EntityType="MyJeepTraderModel.tModel" />
           <EntitySet Name="tModelPostControls" EntityType="MyJeepTraderModel.tModelPostControl" />
           <EntitySet Name="tModelYearControls" EntityType="MyJeepTraderModel.tModelYearControl" />
+          <EntitySet Name="tPosts" EntityType="MyJeepTraderModel.tPost" />
           <EntitySet Name="tPostTypes" EntityType="MyJeepTraderModel.tPostType" />
+          <EntitySet Name="tSettings" EntityType="MyJeepTraderModel.tSetting" />
           <EntitySet Name="tStates" EntityType="MyJeepTraderModel.tState" />
+          <EntitySet Name="tStatusControls" EntityType="MyJeepTraderModel.tStatusControl" />
+          <EntitySet Name="tStatusMedias" EntityType="MyJeepTraderModel.tStatusMedia" />
+          <EntitySet Name="tStatusUpdates" EntityType="MyJeepTraderModel.tStatusUpdate" />
           <EntitySet Name="tSubModels" EntityType="MyJeepTraderModel.tSubModel" />
+          <EntitySet Name="tSubscriptions" EntityType="MyJeepTraderModel.tSubscription" />
           <EntitySet Name="tSubscriptionTypes" EntityType="MyJeepTraderModel.tSubscriptionType" />
+          <EntitySet Name="tTestingCodes" EntityType="MyJeepTraderModel.tTestingCode" />
           <EntitySet Name="tUserProfiles" EntityType="MyJeepTraderModel.tUserProfile" />
           <EntitySet Name="tVehicleProfileControls" EntityType="MyJeepTraderModel.tVehicleProfileControl" />
           <EntitySet Name="tVehicleProfiles" EntityType="MyJeepTraderModel.tVehicleProfile" />
@@ -918,9 +944,33 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_tTestingCodes" Association="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes">
+            <End Role="tTestingCode" EntitySet="tTestingCodes" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tFeedback_AspNetUsers" Association="MyJeepTraderModel.FK_tFeedback_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tFeedback" EntitySet="tFeedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tFriendsList_AspNetUsers" Association="MyJeepTraderModel.FK_tFriendsList_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tFriendsList" EntitySet="tFriendsLists" />
+          </AssociationSet>
           <AssociationSet Name="FK_tMemberships_AspNetUsers" Association="MyJeepTraderModel.FK_tMemberships_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="tMembership" EntitySet="tMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPosts_AspNetUsers" Association="MyJeepTraderModel.FK_tPosts_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tPost" EntitySet="tPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tStatus_AspNetUsers" Association="MyJeepTraderModel.FK_tStatus_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tStatusUpdate" EntitySet="tStatusUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tTimelineSettings_AspNetUsers" Association="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tSetting" EntitySet="tSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -930,9 +980,29 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
           </AssociationSet>
+          <AssociationSet Name="FK_tCities_tStates" Association="MyJeepTraderModel.FK_tCities_tStates">
+            <End Role="tState" EntitySet="tStates" />
+            <End Role="tCity" EntitySet="tCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPosts_tCities" Association="MyJeepTraderModel.FK_tPosts_tCities">
+            <End Role="tCity" EntitySet="tCities" />
+            <End Role="tPost" EntitySet="tPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tImages_tPosts" Association="MyJeepTraderModel.FK_tImages_tPosts">
+            <End Role="tPost" EntitySet="tPosts" />
+            <End Role="tImage" EntitySet="tImages" />
+          </AssociationSet>
           <AssociationSet Name="FK_tModel_tMake" Association="MyJeepTraderModel.FK_tModel_tMake">
             <End Role="tMake" EntitySet="tMakes" />
             <End Role="tModel" EntitySet="tModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPosts_tMake" Association="MyJeepTraderModel.FK_tPosts_tMake">
+            <End Role="tMake" EntitySet="tMakes" />
+            <End Role="tPost" EntitySet="tPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tSubscriptions_tMemberships" Association="MyJeepTraderModel.FK_tSubscriptions_tMemberships">
+            <End Role="tMembership" EntitySet="tMemberships" />
+            <End Role="tSubscription" EntitySet="tSubscriptions" />
           </AssociationSet>
           <AssociationSet Name="FK_tMessageControl_tMessages" Association="MyJeepTraderModel.FK_tMessageControl_tMessages">
             <End Role="tMessage" EntitySet="tMessages" />
@@ -950,51 +1020,20 @@
             <End Role="tModel" EntitySet="tModels" />
             <End Role="tSubModel" EntitySet="tSubModels" />
           </AssociationSet>
-          <AssociationSet Name="FK_tModelYearControl_tYear" Association="MyJeepTraderModel.FK_tModelYearControl_tYear">
-            <End Role="tYear" EntitySet="tYears" />
-            <End Role="tModelYearControl" EntitySet="tModelYearControls" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles">
-            <End Role="tVehicleProfile" EntitySet="tVehicleProfiles" />
-            <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <EntitySet Name="tSubscriptions" EntityType="MyJeepTraderModel.tSubscription" />
-          <AssociationSet Name="FK_tSubscriptions_tMemberships" Association="MyJeepTraderModel.FK_tSubscriptions_tMemberships">
-            <End Role="tMembership" EntitySet="tMemberships" />
-            <End Role="tSubscription" EntitySet="tSubscriptions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tSubscriptions_tSubscriptionTypes" Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes">
-            <End Role="tSubscriptionType" EntitySet="tSubscriptionTypes" />
-            <End Role="tSubscription" EntitySet="tSubscriptions" />
-          </AssociationSet>
-          <EntitySet Name="tCities" EntityType="MyJeepTraderModel.tCity" />
-          <AssociationSet Name="FK_tCities_tStates" Association="MyJeepTraderModel.FK_tCities_tStates">
-            <End Role="tState" EntitySet="tStates" />
-            <End Role="tCity" EntitySet="tCities" />
-          </AssociationSet>
-          <EntitySet Name="tPosts" EntityType="MyJeepTraderModel.tPost" />
-          <AssociationSet Name="FK_tPosts_AspNetUsers" Association="MyJeepTraderModel.FK_tPosts_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="tPost" EntitySet="tPosts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tImages_tPosts" Association="MyJeepTraderModel.FK_tImages_tPosts">
-            <End Role="tPost" EntitySet="tPosts" />
-            <End Role="tImage" EntitySet="tImages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tPosts_tMake" Association="MyJeepTraderModel.FK_tPosts_tMake">
-            <End Role="tMake" EntitySet="tMakes" />
-            <End Role="tPost" EntitySet="tPosts" />
-          </AssociationSet>
           <AssociationSet Name="FK_tModelControl_tPosts" Association="MyJeepTraderModel.FK_tModelControl_tPosts">
             <End Role="tPost" EntitySet="tPosts" />
             <End Role="tModelPostControl" EntitySet="tModelPostControls" />
           </AssociationSet>
+          <AssociationSet Name="FK_tModelYearControl_tYear" Association="MyJeepTraderModel.FK_tModelYearControl_tYear">
+            <End Role="tYear" EntitySet="tYears" />
+            <End Role="tModelYearControl" EntitySet="tModelYearControls" />
+          </AssociationSet>
           <AssociationSet Name="FK_tPosts_tPostType" Association="MyJeepTraderModel.FK_tPosts_tPostType">
             <End Role="tPostType" EntitySet="tPostTypes" />
+            <End Role="tPost" EntitySet="tPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPosts_tStates" Association="MyJeepTraderModel.FK_tPosts_tStates">
+            <End Role="tState" EntitySet="tStates" />
             <End Role="tPost" EntitySet="tPosts" />
           </AssociationSet>
           <AssociationSet Name="FK_tPosts_tSubModel" Association="MyJeepTraderModel.FK_tPosts_tSubModel">
@@ -1005,43 +1044,25 @@
             <End Role="tYear" EntitySet="tYears" />
             <End Role="tPost" EntitySet="tPosts" />
           </AssociationSet>
-          <AssociationSet Name="FK_tPosts_tCities" Association="MyJeepTraderModel.FK_tPosts_tCities">
-            <End Role="tCity" EntitySet="tCities" />
-            <End Role="tPost" EntitySet="tPosts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tPosts_tStates" Association="MyJeepTraderModel.FK_tPosts_tStates">
-            <End Role="tState" EntitySet="tStates" />
-            <End Role="tPost" EntitySet="tPosts" />
-          </AssociationSet>
-          <EntitySet Name="tFeedbacks" EntityType="MyJeepTraderModel.tFeedback" />
-          <AssociationSet Name="FK_tFeedback_AspNetUsers" Association="MyJeepTraderModel.FK_tFeedback_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="tFeedback" EntitySet="tFeedbacks" />
-          </AssociationSet>
-          <EntitySet Name="tStatusMedias" EntityType="MyJeepTraderModel.tStatusMedia" />
-          <EntitySet Name="tStatusUpdates" EntityType="MyJeepTraderModel.tStatusUpdate" />
-          <AssociationSet Name="FK_tStatus_AspNetUsers" Association="MyJeepTraderModel.FK_tStatus_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          <AssociationSet Name="FK_tStatusControl_tStatusUpdates" Association="MyJeepTraderModel.FK_tStatusControl_tStatusUpdates">
             <End Role="tStatusUpdate" EntitySet="tStatusUpdates" />
+            <End Role="tStatusControl" EntitySet="tStatusControls" />
           </AssociationSet>
           <AssociationSet Name="FK_tStatusMedia_tStatus" Association="MyJeepTraderModel.FK_tStatusMedia_tStatus">
             <End Role="tStatusUpdate" EntitySet="tStatusUpdates" />
             <End Role="tStatusMedia" EntitySet="tStatusMedias" />
           </AssociationSet>
-          <EntitySet Name="tFriendsLists" EntityType="MyJeepTraderModel.tFriendsList" />
-          <AssociationSet Name="FK_tFriendsList_AspNetUsers" Association="MyJeepTraderModel.FK_tFriendsList_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="tFriendsList" EntitySet="tFriendsLists" />
+          <AssociationSet Name="FK_tSubscriptions_tSubscriptionTypes" Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes">
+            <End Role="tSubscriptionType" EntitySet="tSubscriptionTypes" />
+            <End Role="tSubscription" EntitySet="tSubscriptions" />
           </AssociationSet>
-          <EntitySet Name="tTestingCodes" EntityType="MyJeepTraderModel.tTestingCode" />
-          <AssociationSet Name="FK_AspNetUsers_tTestingCodes" Association="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes">
-            <End Role="tTestingCode" EntitySet="tTestingCodes" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          <AssociationSet Name="FK_tVehicleProfileControl_tVehicleProfiles" Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles">
+            <End Role="tVehicleProfile" EntitySet="tVehicleProfiles" />
+            <End Role="tVehicleProfileControl" EntitySet="tVehicleProfileControls" />
           </AssociationSet>
-          <EntitySet Name="tSettings" EntityType="MyJeepTraderModel.tSetting" />
-          <AssociationSet Name="FK_tTimelineSettings_AspNetUsers" Association="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers">
+          <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="tSetting" EntitySet="tSettings" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1089,29 +1110,30 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CodeId" Type="Int32" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="MyJeepTraderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="tTestingCode" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="AspNetUser" ToRole="tTestingCode" />
+          <NavigationProperty Name="tFeedbacks" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="AspNetUser" ToRole="tFeedback" />
+          <NavigationProperty Name="tFriendsLists" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="AspNetUser" ToRole="tFriendsList" />
           <NavigationProperty Name="tMemberships" Relationship="MyJeepTraderModel.FK_tMemberships_AspNetUsers" FromRole="AspNetUser" ToRole="tMembership" />
+          <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="AspNetUser" ToRole="tPost" />
+          <NavigationProperty Name="tStatusUpdates" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="AspNetUser" ToRole="tStatusUpdate" />
+          <NavigationProperty Name="tSettings" Relationship="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers" FromRole="AspNetUser" ToRole="tSetting" />
           <NavigationProperty Name="tUserProfiles" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="AspNetUser" ToRole="tUserProfile" />
           <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="AspNetUser" ToRole="tVehicleProfileControl" />
           <NavigationProperty Name="AspNetRoles" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
-          <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="AspNetUser" ToRole="tPost" />
-          <Property Name="CodeId" Type="Int32" />
-          <NavigationProperty Name="tFeedbacks" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="AspNetUser" ToRole="tFeedback" />
-          <NavigationProperty Name="tStatusUpdates" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="AspNetUser" ToRole="tStatusUpdate" />
-          <NavigationProperty Name="tFriendsLists" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="AspNetUser" ToRole="tFriendsList" />
-          <NavigationProperty Name="tTestingCode" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="AspNetUser" ToRole="tTestingCode" />
-          <NavigationProperty Name="tSettings" Relationship="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers" FromRole="AspNetUser" ToRole="tSetting" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="tCity">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="CityId" />
           </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tCities_tStates" FromRole="tCity" ToRole="tState" />
+          <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tCities" FromRole="tCity" ToRole="tPost" />
         </EntityType>
         <EntityType Name="tConnectedUser">
           <Key>
@@ -1120,6 +1142,29 @@
           <Property Name="ChatConnectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ConnectionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ConnectionUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tFeedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Scale" Type="Int32" />
+          <Property Name="Overall" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="tFeedback" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="tFriendsList">
+          <Key>
+            <PropertyRef Name="FriendListId" />
+          </Key>
+          <Property Name="FriendListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FriendId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Pending" Type="Boolean" Nullable="false" />
+          <Property Name="Accepted" Type="Boolean" Nullable="false" />
+          <Property Name="Block" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="tFriendsList" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="tImage">
           <Key>
@@ -1207,6 +1252,36 @@
           <NavigationProperty Name="tModel" Relationship="MyJeepTraderModel.FK_tModelYearControl_tModelYearControl" FromRole="tModelYearControl" ToRole="tModel" />
           <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tModelYearControl_tYear" FromRole="tModelYearControl" ToRole="tYear" />
         </EntityType>
+        <EntityType Name="tPost">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PostTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PartType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PartBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsVehicle" Type="Boolean" />
+          <Property Name="MakeId" Type="Int32" />
+          <Property Name="SubModelId" Type="Int32" />
+          <Property Name="YearId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="PostTypeId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="tPost" ToRole="AspNetUser" />
+          <NavigationProperty Name="tCity" Relationship="MyJeepTraderModel.FK_tPosts_tCities" FromRole="tPost" ToRole="tCity" />
+          <NavigationProperty Name="tImages" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tPost" ToRole="tImage" />
+          <NavigationProperty Name="tMake" Relationship="MyJeepTraderModel.FK_tPosts_tMake" FromRole="tPost" ToRole="tMake" />
+          <NavigationProperty Name="tModelPostControls" Relationship="MyJeepTraderModel.FK_tModelControl_tPosts" FromRole="tPost" ToRole="tModelPostControl" />
+          <NavigationProperty Name="tPostType" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPost" ToRole="tPostType" />
+          <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tPosts_tStates" FromRole="tPost" ToRole="tState" />
+          <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
+          <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
+        </EntityType>
         <EntityType Name="tPostType">
           <Key>
             <PropertyRef Name="PostTypeId" />
@@ -1215,17 +1290,64 @@
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPostType" ToRole="tPost" />
         </EntityType>
+        <EntityType Name="tSetting">
+          <Key>
+            <PropertyRef Name="SettingsId" />
+          </Key>
+          <Property Name="SettingsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Posts" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Friends" Type="Boolean" Nullable="false" />
+          <Property Name="Discover" Type="Boolean" Nullable="false" />
+          <Property Name="PrivateStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers" FromRole="tSetting" ToRole="AspNetUser" />
+        </EntityType>
         <EntityType Name="tState">
           <Key>
             <PropertyRef Name="StateId" />
           </Key>
-          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StateCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tCities" Relationship="MyJeepTraderModel.FK_tCities_tStates" FromRole="tState" ToRole="tCity" />
           <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tStates" FromRole="tState" ToRole="tPost" />
+        </EntityType>
+        <EntityType Name="tStatusControl">
+          <Key>
+            <PropertyRef Name="StatusControlId" />
+          </Key>
+          <Property Name="StatusControlId" Type="Int32" Nullable="false" />
+          <Property Name="LikedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DisLikedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tStatusUpdate" Relationship="MyJeepTraderModel.FK_tStatusControl_tStatusUpdates" FromRole="tStatusControl" ToRole="tStatusUpdate" />
+        </EntityType>
+        <EntityType Name="tStatusMedia">
+          <Key>
+            <PropertyRef Name="MediaId" />
+          </Key>
+          <Property Name="MediaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="MediaLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="tStatusUpdate" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusMedia" ToRole="tStatusUpdate" />
+        </EntityType>
+        <EntityType Name="tStatusUpdate">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LikeCount" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="tStatusUpdate" ToRole="AspNetUser" />
+          <NavigationProperty Name="tStatusControls" Relationship="MyJeepTraderModel.FK_tStatusControl_tStatusUpdates" FromRole="tStatusUpdate" ToRole="tStatusControl" />
+          <NavigationProperty Name="tStatusMedias" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusUpdate" ToRole="tStatusMedia" />
+          <Property Name="DislikeCount" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="tSubModel">
           <Key>
@@ -1237,6 +1359,22 @@
           <NavigationProperty Name="tModel" Relationship="MyJeepTraderModel.FK_tSubModel_tModel" FromRole="tSubModel" ToRole="tModel" />
           <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tSubModel" ToRole="tPost" />
         </EntityType>
+        <EntityType Name="tSubscription">
+          <Key>
+            <PropertyRef Name="SubscriptionId" />
+          </Key>
+          <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriptionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="MembershipId" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="AutoRenew" Type="Boolean" />
+          <Property Name="Expired" Type="Boolean" />
+          <Property Name="PayPalSubscriptionId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tMembership" Relationship="MyJeepTraderModel.FK_tSubscriptions_tMemberships" FromRole="tSubscription" ToRole="tMembership" />
+          <NavigationProperty Name="tSubscriptionType" Relationship="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" FromRole="tSubscription" ToRole="tSubscriptionType" />
+        </EntityType>
         <EntityType Name="tSubscriptionType">
           <Key>
             <PropertyRef Name="SubscriptionTypeId" />
@@ -1244,6 +1382,16 @@
           <Property Name="SubscriptionTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubscriptionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tSubscriptions" Relationship="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" FromRole="tSubscriptionType" ToRole="tSubscription" />
+        </EntityType>
+        <EntityType Name="tTestingCode">
+          <Key>
+            <PropertyRef Name="CodeId" />
+          </Key>
+          <Property Name="CodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="tTestingCode" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="tUserProfile">
           <Key>
@@ -1261,6 +1409,7 @@
           <Property Name="GooglePlus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Twitter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Ello" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Instagram" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ViewCount" Type="Int64" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="tUserProfile" ToRole="AspNetUser" />
         </EntityType>
@@ -1325,6 +1474,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetUsers_tTestingCodes">
+          <End Type="MyJeepTraderModel.tTestingCode" Role="tTestingCode" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTestingCode">
+              <PropertyRef Name="CodeId" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="CodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tFeedback_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tFeedback" Role="tFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tFeedback">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tFriendsList_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tFriendsList" Role="tFriendsList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tFriendsList">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tMemberships_AspNetUsers">
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
           <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="*" />
@@ -1333,6 +1518,42 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="tMembership">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPosts_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tPost">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tStatus_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tStatusUpdate" Role="tStatusUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tStatusUpdate">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tTimelineSettings_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tSetting" Role="tSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tSetting">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1361,6 +1582,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tCities_tStates">
+          <End Type="MyJeepTraderModel.tState" Role="tState" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tCity" Role="tCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tCity">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPosts_tCities">
+          <End Type="MyJeepTraderModel.tCity" Role="tCity" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tCity">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="tPost">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tImages_tPosts">
+          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tImage" Role="tImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tPost">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="tImage">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tModel_tMake">
           <End Type="MyJeepTraderModel.tMake" Role="tMake" Multiplicity="0..1" />
           <End Type="MyJeepTraderModel.tModel" Role="tModel" Multiplicity="*" />
@@ -1370,6 +1627,30 @@
             </Principal>
             <Dependent Role="tModel">
               <PropertyRef Name="MakeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPosts_tMake">
+          <End Type="MyJeepTraderModel.tMake" Role="tMake" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMake">
+              <PropertyRef Name="MakeId" />
+            </Principal>
+            <Dependent Role="tPost">
+              <PropertyRef Name="MakeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tSubscriptions_tMemberships">
+          <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="MembershipId" />
+            </Principal>
+            <Dependent Role="tSubscription">
+              <PropertyRef Name="MembershipId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1421,163 +1702,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tModelYearControl_tYear">
-          <End Type="MyJeepTraderModel.tYear" Role="tYear" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tModelYearControl" Role="tModelYearControl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tYear">
-              <PropertyRef Name="YearId" />
-            </Principal>
-            <Dependent Role="tModelYearControl">
-              <PropertyRef Name="YearId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tVehicleProfileControl_tVehicleProfiles">
-          <End Type="MyJeepTraderModel.tVehicleProfile" Role="tVehicleProfile" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tVehicleProfileControl" Role="tVehicleProfileControl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tVehicleProfile">
-              <PropertyRef Name="VehicleProfileId" />
-            </Principal>
-            <Dependent Role="tVehicleProfileControl">
-              <PropertyRef Name="VehicleProfileId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-        </Association>
-        <EntityType Name="tSubscription">
-          <Key>
-            <PropertyRef Name="SubscriptionId" />
-          </Key>
-          <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubscriptionTypeId" Type="Int32" Nullable="false" />
-          <Property Name="MembershipId" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
-          <Property Name="AutoRenew" Type="Boolean" />
-          <Property Name="Expired" Type="Boolean" />
-          <NavigationProperty Name="tMembership" Relationship="MyJeepTraderModel.FK_tSubscriptions_tMemberships" FromRole="tSubscription" ToRole="tMembership" />
-          <NavigationProperty Name="tSubscriptionType" Relationship="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" FromRole="tSubscription" ToRole="tSubscriptionType" />
-          <Property Name="PayPalSubscriptionId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_tSubscriptions_tMemberships">
-          <End Type="MyJeepTraderModel.tMembership" Role="tMembership" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tMembership">
-              <PropertyRef Name="MembershipId" />
-            </Principal>
-            <Dependent Role="tSubscription">
-              <PropertyRef Name="MembershipId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tSubscriptions_tSubscriptionTypes">
-          <End Type="MyJeepTraderModel.tSubscriptionType" Role="tSubscriptionType" Multiplicity="1" />
-          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tSubscriptionType">
-              <PropertyRef Name="SubscriptionTypeId" />
-            </Principal>
-            <Dependent Role="tSubscription">
-              <PropertyRef Name="SubscriptionTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tCity">
-          <Key>
-            <PropertyRef Name="CityId" />
-          </Key>
-          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ZIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StateId" Type="Int32" />
-          <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tCities_tStates" FromRole="tCity" ToRole="tState" />
-          <NavigationProperty Name="tPosts" Relationship="MyJeepTraderModel.FK_tPosts_tCities" FromRole="tCity" ToRole="tPost" />
-        </EntityType>
-        <Association Name="FK_tCities_tStates">
-          <End Type="MyJeepTraderModel.tState" Role="tState" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tCity" Role="tCity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tState">
-              <PropertyRef Name="StateId" />
-            </Principal>
-            <Dependent Role="tCity">
-              <PropertyRef Name="StateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tPost">
-          <Key>
-            <PropertyRef Name="PostId" />
-          </Key>
-          <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PostTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PostDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PartType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PartBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsVehicle" Type="Boolean" />
-          <Property Name="MakeId" Type="Int32" />
-          <Property Name="SubModelId" Type="Int32" />
-          <Property Name="YearId" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="StateId" Type="Int32" />
-          <Property Name="CityId" Type="Int32" />
-          <Property Name="PostTypeId" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tPosts_AspNetUsers" FromRole="tPost" ToRole="AspNetUser" />
-          <NavigationProperty Name="tImages" Relationship="MyJeepTraderModel.FK_tImages_tPosts" FromRole="tPost" ToRole="tImage" />
-          <NavigationProperty Name="tMake" Relationship="MyJeepTraderModel.FK_tPosts_tMake" FromRole="tPost" ToRole="tMake" />
-          <NavigationProperty Name="tModelPostControls" Relationship="MyJeepTraderModel.FK_tModelControl_tPosts" FromRole="tPost" ToRole="tModelPostControl" />
-          <NavigationProperty Name="tPostType" Relationship="MyJeepTraderModel.FK_tPosts_tPostType" FromRole="tPost" ToRole="tPostType" />
-          <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
-          <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
-          <NavigationProperty Name="tCity" Relationship="MyJeepTraderModel.FK_tPosts_tCities" FromRole="tPost" ToRole="tCity" />
-          <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tPosts_tStates" FromRole="tPost" ToRole="tState" />
-        </EntityType>
-        <Association Name="FK_tPosts_AspNetUsers">
-          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tPost">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tImages_tPosts">
-          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tImage" Role="tImage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tPost">
-              <PropertyRef Name="PostId" />
-            </Principal>
-            <Dependent Role="tImage">
-              <PropertyRef Name="PostId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tPosts_tMake">
-          <End Type="MyJeepTraderModel.tMake" Role="tMake" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tMake">
-              <PropertyRef Name="MakeId" />
-            </Principal>
-            <Dependent Role="tPost">
-              <PropertyRef Name="MakeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tModelControl_tPosts">
           <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="0..1" />
           <End Type="MyJeepTraderModel.tModelPostControl" Role="tModelPostControl" Multiplicity="*" />
@@ -1590,6 +1714,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tModelYearControl_tYear">
+          <End Type="MyJeepTraderModel.tYear" Role="tYear" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tModelYearControl" Role="tModelYearControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tYear">
+              <PropertyRef Name="YearId" />
+            </Principal>
+            <Dependent Role="tModelYearControl">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tPosts_tPostType">
           <End Type="MyJeepTraderModel.tPostType" Role="tPostType" Multiplicity="0..1" />
           <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
@@ -1599,6 +1735,18 @@
             </Principal>
             <Dependent Role="tPost">
               <PropertyRef Name="PostTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPosts_tStates">
+          <End Type="MyJeepTraderModel.tState" Role="tState" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tState">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tPost">
+              <PropertyRef Name="StateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1626,84 +1774,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tPosts_tCities">
-          <End Type="MyJeepTraderModel.tCity" Role="tCity" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
+        <Association Name="FK_tStatusControl_tStatusUpdates">
+          <End Type="MyJeepTraderModel.tStatusUpdate" Role="tStatusUpdate" Multiplicity="1" />
+          <End Type="MyJeepTraderModel.tStatusControl" Role="tStatusControl" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tCity">
-              <PropertyRef Name="CityId" />
+            <Principal Role="tStatusUpdate">
+              <PropertyRef Name="StatusId" />
             </Principal>
-            <Dependent Role="tPost">
-              <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tPosts_tStates">
-          <End Type="MyJeepTraderModel.tState" Role="tState" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tPost" Role="tPost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tState">
-              <PropertyRef Name="StateId" />
-            </Principal>
-            <Dependent Role="tPost">
-              <PropertyRef Name="StateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tFeedback">
-          <Key>
-            <PropertyRef Name="FeedbackId" />
-          </Key>
-          <Property Name="FeedbackId" Type="Int32" Nullable="false" />
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Scale" Type="Int32" />
-          <Property Name="Overall" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFeedback_AspNetUsers" FromRole="tFeedback" ToRole="AspNetUser" />
-        </EntityType>
-        <Association Name="FK_tFeedback_AspNetUsers">
-          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tFeedback" Role="tFeedback" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tFeedback">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tStatusMedia">
-          <Key>
-            <PropertyRef Name="MediaId" />
-          </Key>
-          <Property Name="MediaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusId" Type="Int32" />
-          <Property Name="MediaLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="tStatusUpdate" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusMedia" ToRole="tStatusUpdate" />
-        </EntityType>
-        <EntityType Name="tStatusUpdate">
-          <Key>
-            <PropertyRef Name="StatusId" />
-          </Key>
-          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="LikeCount" Type="Int64" />
-          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tStatus_AspNetUsers" FromRole="tStatusUpdate" ToRole="AspNetUser" />
-          <NavigationProperty Name="tStatusMedias" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusUpdate" ToRole="tStatusMedia" />
-        </EntityType>
-        <Association Name="FK_tStatus_AspNetUsers">
-          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tStatusUpdate" Role="tStatusUpdate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tStatusUpdate">
-              <PropertyRef Name="Id" />
+            <Dependent Role="tStatusControl">
+              <PropertyRef Name="StatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1719,76 +1798,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tFriendsList">
-          <Key>
-            <PropertyRef Name="FriendListId" />
-          </Key>
-          <Property Name="FriendListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FriendId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tFriendsList_AspNetUsers" FromRole="tFriendsList" ToRole="AspNetUser" />
-          <Property Name="Pending" Type="Boolean" Nullable="false" />
-          <Property Name="Accepted" Type="Boolean" Nullable="false" />
-          <Property Name="Block" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_tFriendsList_AspNetUsers">
-          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tFriendsList" Role="tFriendsList" Multiplicity="*" />
+        <Association Name="FK_tSubscriptions_tSubscriptionTypes">
+          <End Type="MyJeepTraderModel.tSubscriptionType" Role="tSubscriptionType" Multiplicity="1" />
+          <End Type="MyJeepTraderModel.tSubscription" Role="tSubscription" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
+            <Principal Role="tSubscriptionType">
+              <PropertyRef Name="SubscriptionTypeId" />
             </Principal>
-            <Dependent Role="tFriendsList">
-              <PropertyRef Name="Id" />
+            <Dependent Role="tSubscription">
+              <PropertyRef Name="SubscriptionTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tTestingCode">
-          <Key>
-            <PropertyRef Name="CodeId" />
-          </Key>
-          <Property Name="CodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="AspNetUsers" Relationship="MyJeepTraderModel.FK_AspNetUsers_tTestingCodes" FromRole="tTestingCode" ToRole="AspNetUser" />
-        </EntityType>
-        <Association Name="FK_AspNetUsers_tTestingCodes">
-          <End Type="MyJeepTraderModel.tTestingCode" Role="tTestingCode" Multiplicity="0..1" />
+        <Association Name="FK_tVehicleProfileControl_tVehicleProfiles">
+          <End Type="MyJeepTraderModel.tVehicleProfile" Role="tVehicleProfile" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tVehicleProfileControl" Role="tVehicleProfileControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tVehicleProfile">
+              <PropertyRef Name="VehicleProfileId" />
+            </Principal>
+            <Dependent Role="tVehicleProfileControl">
+              <PropertyRef Name="VehicleProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tTestingCode">
-              <PropertyRef Name="CodeId" />
-            </Principal>
-            <Dependent Role="AspNetUser">
-              <PropertyRef Name="CodeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tSetting">
-          <Key>
-            <PropertyRef Name="SettingsId" />
-          </Key>
-          <Property Name="SettingsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Posts" Type="Boolean" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="Discover" Type="Boolean" Nullable="false" />
-          <Property Name="Friends" Type="Boolean" Nullable="false" />
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tTimelineSettings_AspNetUsers" FromRole="tSetting" ToRole="AspNetUser" />
-          <Property Name="PrivateStatus" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_tTimelineSettings_AspNetUsers">
-          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="MyJeepTraderModel.tSetting" Role="tSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tSetting">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1842,14 +1878,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="tCities">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tCity">
+              <MappingFragment StoreEntitySet="tCities">
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1859,6 +1894,29 @@
                 <ScalarProperty Name="ConnectionUserName" ColumnName="ConnectionUserName" />
                 <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
                 <ScalarProperty Name="ChatConnectionId" ColumnName="ChatConnectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tFeedbacks">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tFeedback">
+              <MappingFragment StoreEntitySet="tFeedback">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Overall" ColumnName="Overall" />
+                <ScalarProperty Name="Scale" ColumnName="Scale" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tFriendsLists">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tFriendsList">
+              <MappingFragment StoreEntitySet="tFriendsList">
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
+                <ScalarProperty Name="Pending" ColumnName="Pending" />
+                <ScalarProperty Name="FriendId" ColumnName="FriendId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FriendListId" ColumnName="FriendListId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1941,11 +1999,46 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tPosts">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
+              <MappingFragment StoreEntitySet="tPosts">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
+                <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
+                <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+                <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
+                <ScalarProperty Name="PartType" ColumnName="PartType" />
+                <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
+                <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tPostTypes">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tPostType">
               <MappingFragment StoreEntitySet="tPostType">
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tSettings">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tSetting">
+              <MappingFragment StoreEntitySet="tSettings">
+                <ScalarProperty Name="PrivateStatus" ColumnName="PrivateStatus" />
+                <ScalarProperty Name="Discover" ColumnName="Discover" />
+                <ScalarProperty Name="Friends" ColumnName="Friends" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Posts" ColumnName="Posts" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SettingsId" ColumnName="SettingsId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1960,12 +2053,59 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tStatusControls">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusControl">
+              <MappingFragment StoreEntitySet="tStatusControl">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="DisLikedBy" ColumnName="DisLikedBy" />
+                <ScalarProperty Name="LikedBy" ColumnName="LikedBy" />
+                <ScalarProperty Name="StatusControlId" ColumnName="StatusControlId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tStatusMedias">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusMedia">
+              <MappingFragment StoreEntitySet="tStatusMedia">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="MediaLink" ColumnName="MediaLink" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="MediaId" ColumnName="MediaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tStatusUpdates">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusUpdate">
+              <MappingFragment StoreEntitySet="tStatusUpdates">
+                <ScalarProperty Name="DislikeCount" ColumnName="DislikeCount" />
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tSubModels">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tSubModel">
               <MappingFragment StoreEntitySet="tSubModel">
                 <ScalarProperty Name="ModelId" ColumnName="ModelId" />
                 <ScalarProperty Name="SubModel" ColumnName="SubModel" />
                 <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tSubscriptions">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
+              <MappingFragment StoreEntitySet="tSubscriptions">
+                <ScalarProperty Name="PayPalSubscriptionId" ColumnName="PayPalSubscriptionId" />
+                <ScalarProperty Name="Expired" ColumnName="Expired" />
+                <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
+                <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
+                <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1977,10 +2117,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tTestingCodes">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tTestingCode">
+              <MappingFragment StoreEntitySet="tTestingCodes">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CodeId" ColumnName="CodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tUserProfiles">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tUserProfile">
               <MappingFragment StoreEntitySet="tUserProfiles">
                 <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="Instagram" ColumnName="Instagram" />
                 <ScalarProperty Name="Ello" ColumnName="Ello" />
                 <ScalarProperty Name="Twitter" ColumnName="Twitter" />
                 <ScalarProperty Name="GooglePlus" ColumnName="GooglePlus" />
@@ -2035,120 +2186,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="tSubscriptions">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tSubscription">
-              <MappingFragment StoreEntitySet="tSubscriptions">
-                <ScalarProperty Name="PayPalSubscriptionId" ColumnName="PayPalSubscriptionId" />
-                <ScalarProperty Name="Expired" ColumnName="Expired" />
-                <ScalarProperty Name="AutoRenew" ColumnName="AutoRenew" />
-                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="MembershipId" ColumnName="MembershipId" />
-                <ScalarProperty Name="SubscriptionTypeId" ColumnName="SubscriptionTypeId" />
-                <ScalarProperty Name="SubscriptionId" ColumnName="SubscriptionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tCities">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tCity">
-              <MappingFragment StoreEntitySet="tCities">
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="ZIP" ColumnName="ZIP" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tPosts">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
-              <MappingFragment StoreEntitySet="tPosts">
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="YearId" ColumnName="YearId" />
-                <ScalarProperty Name="SubModelId" ColumnName="SubModelId" />
-                <ScalarProperty Name="MakeId" ColumnName="MakeId" />
-                <ScalarProperty Name="IsVehicle" ColumnName="IsVehicle" />
-                <ScalarProperty Name="PartName" ColumnName="PartName" />
-                <ScalarProperty Name="PartBrand" ColumnName="PartBrand" />
-                <ScalarProperty Name="PartType" ColumnName="PartType" />
-                <ScalarProperty Name="PostDescription" ColumnName="PostDescription" />
-                <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PostId" ColumnName="PostId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tFeedbacks">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tFeedback">
-              <MappingFragment StoreEntitySet="tFeedback">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Overall" ColumnName="Overall" />
-                <ScalarProperty Name="Scale" ColumnName="Scale" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tStatusMedias">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusMedia">
-              <MappingFragment StoreEntitySet="tStatusMedia">
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="MediaLink" ColumnName="MediaLink" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="MediaId" ColumnName="MediaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tStatusUpdates">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusUpdate">
-              <MappingFragment StoreEntitySet="tStatusUpdates">
-                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tFriendsLists">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tFriendsList">
-              <MappingFragment StoreEntitySet="tFriendsList">
-                <ScalarProperty Name="Block" ColumnName="Block" />
-                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
-                <ScalarProperty Name="Pending" ColumnName="Pending" />
-                <ScalarProperty Name="FriendId" ColumnName="FriendId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FriendListId" ColumnName="FriendListId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tTestingCodes">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tTestingCode">
-              <MappingFragment StoreEntitySet="tTestingCodes">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="CodeId" ColumnName="CodeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tSettings">
-            <EntityTypeMapping TypeName="MyJeepTraderModel.tSetting">
-              <MappingFragment StoreEntitySet="tSettings">
-                <ScalarProperty Name="PrivateStatus" ColumnName="PrivateStatus" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Friends" ColumnName="Friends" />
-                <ScalarProperty Name="Discover" ColumnName="Discover" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Posts" ColumnName="Posts" />
-                <ScalarProperty Name="SettingsId" ColumnName="SettingsId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -20,6 +20,10 @@ namespace MyJeepTrader.Data.Models
         public abstract byte[] FeedAvatar { get; }
 
         public abstract DateTime FeedDateCreated { get; }
+
+        public abstract long FeedLikeCount { get; }
+
+        public abstract long FeedDislikeCount { get; }
     }
 
     public class LivePost : LiveFeed
@@ -35,6 +39,10 @@ namespace MyJeepTrader.Data.Models
         public byte[] Avatar { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public long LikeCount { get; set; }
+
+        public long DislikeCount { get; set; }
 
         public override string FeedUserName
         {
@@ -65,6 +73,16 @@ namespace MyJeepTrader.Data.Models
         {
             get { return this.DateCreated; }
         }
+
+        public override long FeedLikeCount
+        {
+            get { return this.LikeCount; }
+        }
+
+        public override long FeedDislikeCount
+        {
+            get { return this.DislikeCount; }
+        }
     }
 
     public class LiveStream : LiveFeed
@@ -80,6 +98,10 @@ namespace MyJeepTrader.Data.Models
         public byte[] Avatar { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public long LikeCount { get; set; }
+
+        public long DislikeCount { get; set; }
 
         public override string FeedUserName
         {
@@ -109,6 +131,16 @@ namespace MyJeepTrader.Data.Models
         public override DateTime FeedDateCreated
         {
             get { return this.DateCreated; }
+        }
+
+        public override long FeedLikeCount
+        {
+            get { return this.LikeCount; }
+        }
+
+        public override long FeedDislikeCount
+        {
+            get { return this.DislikeCount; }
         }
     }
 }

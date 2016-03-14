@@ -243,16 +243,17 @@ namespace MyJeepTrader.Web.Controllers
                 var ello = collection["Ello"] == "" ? null : collection["Ello"].ToString();
                 var googlePlus = collection["GooglePlus"] == "" ? null : collection["GooglePlus"].ToString();
                 var website = collection["Website"] == "" ? null : collection["Website"].ToString();
+                var instagram = collection["Instagram"] == "" ? null : collection["Instagram"].ToString();
 
                 var convertBirthDate = birthDate == null ? DateTime.MinValue : Convert.ToDateTime(birthDate);
 
                 if (service.CheckForProfile(user.Id) == false)
                 {
-                    service.CreateProfile(user.Id, firstName, lastName, convertBirthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
+                    service.CreateProfile(user.Id, firstName, lastName, convertBirthDate, avatar, description, facebook, twitter, ello, googlePlus, website, instagram);
                 }
                 else
                 {
-                    service.UpdateProfile(user.Id, firstName, lastName, convertBirthDate, avatar, description, facebook, twitter, ello, googlePlus, website);
+                    service.UpdateProfile(user.Id, firstName, lastName, convertBirthDate, avatar, description, facebook, twitter, ello, googlePlus, website, instagram);
                 }
 
                 return RedirectToAction("Index");

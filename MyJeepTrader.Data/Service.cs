@@ -129,6 +129,7 @@ namespace MyJeepTrader.Data
             {
                 var result = (from p in context.tPosts
                               join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              join u in context.tUserProfiles on p.Id equals u.Id
                               where p.AspNetUser.UserName == userName
                               select new UsersPosts
                               {
@@ -138,7 +139,9 @@ namespace MyJeepTrader.Data
                                   IsVehicle = p.IsVehicle,
                                   PostTitle = p.PostTitle,
                                   PostType = pt.Type,
-                                  DateCreated = p.DateCreated
+                                  DateCreated = p.DateCreated,
+                                  UserName = p.AspNetUser.UserName,
+                                  Avatar = u.Avatar
                               }).ToList();
 
                 return result;
@@ -251,7 +254,8 @@ namespace MyJeepTrader.Data
                                       IsPost = false,
                                       StatusId = su.StatusId,
                                       Avatar = up.Avatar,
-                                      DateCreated = su.DateCreated
+                                      DateCreated = su.DateCreated,
+                                      LikeCount = su.LikeCount
                                   }).OrderByDescending(su => su.DateCreated).ToList();
 
                 return statusList;
@@ -275,7 +279,8 @@ namespace MyJeepTrader.Data
                                         IsPost = false,
                                         StatusId = su.StatusId,
                                         Avatar = up.Avatar,
-                                        DateCreated = su.DateCreated
+                                        DateCreated = su.DateCreated,
+                                        LikeCount = su.LikeCount
                                     }).OrderByDescending(su => su.DateCreated).ToList();
 
                 return publicStatus;
@@ -296,7 +301,8 @@ namespace MyJeepTrader.Data
                                      IsPost = true,
                                      PostId = p.PostId,
                                      Avatar = up.Avatar,
-                                     DateCreated = p.DateCreated
+                                     DateCreated = p.DateCreated,
+                                     LikeCount = 0
                                  }).OrderByDescending(p => p.DateCreated).ToList();
 
                 return posts;
@@ -311,6 +317,7 @@ namespace MyJeepTrader.Data
                 {
                     DateCreated = DateTime.Now,
                     LikeCount = 0,
+                    DislikeCount = 0,
                     Status = status,
                     Id = userId
                 };
@@ -325,6 +332,85 @@ namespace MyJeepTrader.Data
 
                 t.Start();
                 return await t;
+            }
+        }
+
+        public List<UserStatus> GetStatusForUser(string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var status = (from s in context.tStatusUpdates
+                              join u in context.tUserProfiles on s.Id equals u.Id
+                              where s.AspNetUser.UserName == userName
+                              select new UserStatus
+                              {
+                                  Status = s.Status,
+                                  StatusId = s.StatusId,
+                                  DateCreated = s.DateCreated,
+                                  LikeCount = s.LikeCount,
+                                  UserName = s.AspNetUser.UserName,
+                                  Avatar = u.Avatar
+                              }).ToList();
+
+                return status;
+            }
+        }
+
+        public long? UpdateLikeCount(int statusId, string userId)
+        {
+            try
+            {
+                using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+                {
+                    var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                    status.LikeCount = status.LikeCount + 1;
+
+                    tStatusControl statusControl = new tStatusControl
+                    {
+                        StatusId = statusId,
+                        LikedBy = userId
+                    };
+
+                    context.tStatusControls.Add(statusControl);
+                    context.SaveChanges();
+
+                    return status.LikeCount;
+                }
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+
+                return 0;
+            }
+        }
+
+        public long UpdateDislikeCount(int statusId, string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                status.DislikeCount = status.DislikeCount + 1;
+               
+                tStatusControl statusControl = new tStatusControl
+                {
+                    StatusId = statusId,
+                    DisLikedBy = userId
+                };
+
+                context.tStatusControls.Add(statusControl);
+                context.SaveChanges();
+
+                return status.DislikeCount;
             }
         }
         #endregion
@@ -448,6 +534,7 @@ namespace MyJeepTrader.Data
                                   GooglePlus = up.GooglePlus,
                                   Website = up.Website,
                                   UserName = up.AspNetUser.UserName,
+                                  Instagram = up.Instagram
                               }).ToList();
 
                 return result;
@@ -466,7 +553,7 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public void CreateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website)
+        public void CreateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website, string instagram)
         {
             try
             {
@@ -485,7 +572,8 @@ namespace MyJeepTrader.Data
                         Twitter = twitter,
                         Ello = ello,
                         GooglePlus = google,
-                        Website = website
+                        Website = website,
+                        Instagram = instagram
                     };
                     context.tUserProfiles.Add(userProfile);
                     context.SaveChanges();
@@ -497,7 +585,7 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public void UpdateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website)
+        public void UpdateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website, string instagram)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
@@ -512,6 +600,7 @@ namespace MyJeepTrader.Data
                 updateProfile.GooglePlus = google;
                 updateProfile.Website = website;
                 updateProfile.Avatar = avatar;
+                updateProfile.Instagram = instagram;
 
                 context.SaveChanges();
             }
