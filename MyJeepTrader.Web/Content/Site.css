@@ -572,3 +572,10 @@ table#inbox {
     #inbox td:hover {
         cursor: pointer;
     }
+
+.center-block {
+    display: block;
+    margin-right: 25%;
+    margin-left: 25%;
+    float:none;
+}

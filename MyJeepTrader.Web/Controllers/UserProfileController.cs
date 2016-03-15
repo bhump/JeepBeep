@@ -47,6 +47,7 @@ namespace MyJeepTrader.Web.Controllers
             model.GooglePlus = userProfile.GooglePlus;
             model.Ello = userProfile.Ello;
             model.Website = userProfile.Website;
+            model.Instagram = userProfile.Instagram;
             model.Description = userProfile.Description;
             model.ViewCount = userProfile.ViewCount == null ? 0 : userProfile.ViewCount;
             model.Avatar = userProfile.Avatar;
@@ -54,6 +55,9 @@ namespace MyJeepTrader.Web.Controllers
 
             model.UserPosts = service.GetAllPostsForUser(UserName);
             model.RecentPost = service.GetUsersMostRecentPost(UserName);
+            model.BlockedUsers = service.BlockedUsers(UserName);
+            model.AllowedUsers = service.AllowedUsers(UserName);
+            model.Settings = service.GetSettingsByUserName(UserName);
             model.UsersStatus = service.GetStatusForUser(UserName);
 
             if (jeepProfile != null)

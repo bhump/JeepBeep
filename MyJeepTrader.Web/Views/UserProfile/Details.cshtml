@@ -196,51 +196,59 @@
         <hr />
         <div class="col-sm-12 col-md-12 col-lg-12">
             <h2>Status</h2>
-            <div class="form-horizontal">
-                @foreach (var stream in Model.UsersStatus)
-                {
-                    <div id="divLiveStream" class="Status">
-                        <div class="row">
-                            <label class="hidden">@stream.StatusId</label>
-                            <div class="col-md-2">
-                                <div class="ui-icon-image">
-                                    @if (stream.Avatar != null)
-                                    {
-                                        <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
-                                    }
+            @if (Model.BlockedUsers.Contains(User.Identity.Name) || Model.Settings.PrivateStatus == true && !Model.AllowedUsers.Contains(User.Identity.Name))
+            {
+                <div class="form-group">
+                    <label>This User's Status' are Currenlty Set to Private.</label>
+                </div>
+            }
+            else if(Model.AllowedUsers.Contains(User.Identity.Name) || Model.Settings.PrivateStatus == false)
+            {
+                <div class="form-horizontal">
+                    @foreach (var stream in Model.UsersStatus)
+                    {
+                        <div id="divLiveStream" class="Status">
+                            <div class="row">
+                                <label class="hidden">@stream.StatusId</label>
+                                <div class="col-md-2">
+                                    <div class="ui-icon-image">
+                                        @if (stream.Avatar != null)
+                                        {
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="text-left row">
+                                        <div class="col-md-12">
+                                            <label id="lblUserName">@stream.UserName</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @stream.Status
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-10">
-                                <div class="text-left row">
-                                    <div class="col-md-12">
-                                        <label id="lblUserName">@stream.UserName</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        @stream.Status
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="dropdown">
+                                        <a class="btn-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a id="aComment"><span class="glyphicon glyphicon-comment">&nbsp;<label>Comment</label></span></a></li>
+                                            <li><a id="aAddFriend" onclick="AddFriend('@stream.UserName')"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                            <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="dropdown">
-                                    <a class="btn-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a id="aComment"><span class="glyphicon glyphicon-comment">&nbsp;<label>Comment</label></span></a></li>
-                                        <li><a id="aAddFriend" onclick="AddFriend('@stream.UserName')"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
-                                        <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>
-

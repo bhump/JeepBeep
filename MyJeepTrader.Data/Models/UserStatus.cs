@@ -18,6 +18,8 @@ namespace MyJeepTrader.Data.Models
 
         public long? LikeCount { get; set; }
 
+        public long DislikeCount { get; set; }
+
         public string MediaLink { get; set; }
 
         public string UserName { get; set; }

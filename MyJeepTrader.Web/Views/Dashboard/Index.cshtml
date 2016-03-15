@@ -246,6 +246,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    @Html.LabelFor(m => m.Instagram, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Instagram, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
                     @Html.LabelFor(m => m.Description, new { @class = "col-sm-3 control-label" })
                     <div class="col-md-8">
                         @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })

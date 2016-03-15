@@ -1,10 +1,6 @@
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll.config
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Antlr3.Runtime.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Braintree-2.55.0.dll
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.dll
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.SqlServer.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\LinqKit.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.AspNet.Identity.EntityFramework.dll
@@ -20,7 +16,6 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Ow
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.OAuth.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Data.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Newtonsoft.Json.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Owin.dll
@@ -32,6 +27,11 @@ C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.W
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.WebPages.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\System.Web.WebPages.Razor.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\WebGrease.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.SqlServer.dll
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.dll.config
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Web.pdb
+C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\MyJeepTrader.Data.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\Antlr3.Runtime.pdb
 C:\Users\bhump\Documents\Projects\MyJeepTrader\MyJeepTrader.Web\bin\EntityFramework.xml

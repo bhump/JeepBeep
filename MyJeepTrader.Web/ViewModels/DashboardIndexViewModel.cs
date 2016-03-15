@@ -69,6 +69,9 @@ namespace MyJeepTrader.Web.ViewModels
 
         [Display(Name = "Username")]
         public string UserName { get; set; }
+        
+        [Display(Name = "Instagram")]
+        public string Instagram { get; set; }
         #endregion
 
         #region jeep profile

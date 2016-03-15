@@ -4,6 +4,7 @@ using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using MyJeepTrader.Data.Models;
 using System.Web;
+using MyJeepTrader.Data;
 
 namespace MyJeepTrader.Web.ViewModels
 {
@@ -86,6 +87,14 @@ namespace MyJeepTrader.Web.ViewModels
 
         #region status
         public List<UserStatus> UsersStatus { get; set; }
+        #endregion
+
+        #region blocked/allowed users
+        public List<string> BlockedUsers { get; set; }
+
+        public List<string> AllowedUsers { get; set; }
+
+        public tSetting Settings { get; set; }
         #endregion
     }
 }

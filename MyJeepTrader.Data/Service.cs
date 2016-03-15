@@ -255,7 +255,8 @@ namespace MyJeepTrader.Data
                                       StatusId = su.StatusId,
                                       Avatar = up.Avatar,
                                       DateCreated = su.DateCreated,
-                                      LikeCount = su.LikeCount
+                                      LikeCount = su.LikeCount,
+                                      DislikeCount = su.DislikeCount
                                   }).OrderByDescending(su => su.DateCreated).ToList();
 
                 return statusList;
@@ -280,7 +281,8 @@ namespace MyJeepTrader.Data
                                         StatusId = su.StatusId,
                                         Avatar = up.Avatar,
                                         DateCreated = su.DateCreated,
-                                        LikeCount = su.LikeCount
+                                        LikeCount = su.LikeCount,
+                                        DislikeCount = su.DislikeCount
                                     }).OrderByDescending(su => su.DateCreated).ToList();
 
                 return publicStatus;
@@ -302,7 +304,8 @@ namespace MyJeepTrader.Data
                                      PostId = p.PostId,
                                      Avatar = up.Avatar,
                                      DateCreated = p.DateCreated,
-                                     LikeCount = 0
+                                     LikeCount = 0,
+                                     DislikeCount = 0
                                  }).OrderByDescending(p => p.DateCreated).ToList();
 
                 return posts;
@@ -348,6 +351,7 @@ namespace MyJeepTrader.Data
                                   StatusId = s.StatusId,
                                   DateCreated = s.DateCreated,
                                   LikeCount = s.LikeCount,
+                                  DislikeCount = s.DislikeCount,
                                   UserName = s.AspNetUser.UserName,
                                   Avatar = u.Avatar
                               }).ToList();
@@ -356,25 +360,74 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public long? UpdateLikeCount(int statusId, string userId)
+        public List<string> BlockedUsers(string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var friendId = (from u in context.AspNetUsers where u.UserName == userName select u.Id).First();
+
+                var blockedUsers = (from fl in context.tFriendsLists
+                                    join s in context.tSettings on fl.AspNetUser.UserName equals s.AspNetUser.UserName
+                                    where fl.FriendId == friendId && fl.Block == true
+                                    select fl.AspNetUser.UserName).ToList();
+
+                return blockedUsers;
+            }
+        }
+
+        public List<string> AllowedUsers(string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var friendId = (from u in context.AspNetUsers where u.UserName == userName select u.Id).First();
+
+                var allowedUsers = (from fl in context.tFriendsLists
+                                    join s in context.tSettings on fl.AspNetUser.UserName equals s.AspNetUser.UserName
+                                    where fl.FriendId == friendId && fl.Accepted == true
+                                    select fl.AspNetUser.UserName).ToList();
+
+                return allowedUsers;
+            }
+        }
+
+        public long UpdateLikeCount(int statusId, string userId)
         {
             try
             {
                 using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
                 {
-                    var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
-                    status.LikeCount = status.LikeCount + 1;
+                    var getLikedBy = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId select sc).Count();
 
-                    tStatusControl statusControl = new tStatusControl
+                    if (getLikedBy == 0)
                     {
-                        StatusId = statusId,
-                        LikedBy = userId
-                    };
+                        var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                        status.LikeCount = status.LikeCount + 1;
 
-                    context.tStatusControls.Add(statusControl);
-                    context.SaveChanges();
+                        tStatusControl statusControl = new tStatusControl
+                        {
+                            StatusId = statusId,
+                            LikedBy = userId
+                        };
 
-                    return status.LikeCount;
+                        context.tStatusControls.Add(statusControl);
+                        context.SaveChanges();
+
+                        return status.LikeCount;
+                    }
+                    else
+                    {
+                        var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                        status.LikeCount = status.LikeCount - 1;
+
+                        var toDelete = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId select sc).First();
+
+                        tStatusControl statusControl = toDelete;
+
+                        context.tStatusControls.Remove(statusControl);
+                        context.SaveChanges();
+
+                        return status.LikeCount;
+                    }
                 }
             }
             catch (DbEntityValidationException e)
@@ -398,19 +451,38 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
-                status.DislikeCount = status.DislikeCount + 1;
-               
-                tStatusControl statusControl = new tStatusControl
+                var getDislikedBy = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId select sc).Count();
+
+                if (getDislikedBy == 0)
                 {
-                    StatusId = statusId,
-                    DisLikedBy = userId
-                };
+                    var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                    status.DislikeCount = status.DislikeCount + 1;
 
-                context.tStatusControls.Add(statusControl);
-                context.SaveChanges();
+                    tStatusControl statusControl = new tStatusControl
+                    {
+                        StatusId = statusId,
+                        DisLikedBy = userId
+                    };
 
-                return status.DislikeCount;
+                    context.tStatusControls.Add(statusControl);
+                    context.SaveChanges();
+
+                    return status.DislikeCount;
+                }
+                else
+                {
+                    var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                    status.DislikeCount = status.DislikeCount - 1;
+
+                    var toDelete = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId select sc).First();
+
+                    tStatusControl statusControl = toDelete;
+
+                    context.tStatusControls.Remove(statusControl);
+                    context.SaveChanges();
+
+                    return status.DislikeCount;
+                }
             }
         }
         #endregion
@@ -1132,6 +1204,9 @@ namespace MyJeepTrader.Data
             {
                 var blocked = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
                 blocked.Block = block;
+                blocked.Pending = false;
+                blocked.Accepted = false;
+
                 context.SaveChanges();
 
                 if (block == true)
@@ -1272,6 +1347,16 @@ namespace MyJeepTrader.Data
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var settings = context.tSettings.Where(s => s.Id == userId).First();
+
+                return settings;
+            }
+        }
+
+        public tSetting GetSettingsByUserName(string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var settings = context.tSettings.Where(s => s.AspNetUser.UserName == userName).First();
 
                 return settings;
             }
