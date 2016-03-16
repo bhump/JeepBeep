@@ -51,7 +51,7 @@ namespace MyJeepTrader.Web.Controllers
             model.Description = userProfile.Description;
             model.ViewCount = userProfile.ViewCount == null ? 0 : userProfile.ViewCount;
             model.Avatar = userProfile.Avatar;
-            //model.UserName = userProfile.AspNetUser.UserName;
+            model.UserName = UserName;
 
             model.UserPosts = service.GetAllPostsForUser(UserName);
             model.RecentPost = service.GetUsersMostRecentPost(UserName);

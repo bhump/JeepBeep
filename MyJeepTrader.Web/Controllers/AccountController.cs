@@ -11,6 +11,9 @@ using Microsoft.Owin.Security;
 using MyJeepTrader.Web.Models;
 using MyJeepTrader.Data;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -52,6 +55,16 @@ namespace MyJeepTrader.Web.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        public ActionResult ShowAvatar(string UserName)
+        {
+            Service service = new Service();
+            var getAvatar = service.GetAvatarImage(UserName);
+
+            var stream = new MemoryStream(getAvatar.ToArray());
+
+            return new FileStreamResult(stream, "image/jpg");
         }
 
         //
@@ -217,7 +230,7 @@ namespace MyJeepTrader.Web.Controllers
                     else
                     {
                         model.CodeId = codeId;
-                        var user = new ApplicationUser { UserName = model.Username, Email = model.Email, CodeId = model.CodeId};
+                        var user = new ApplicationUser { UserName = model.Username, Email = model.Email, CodeId = model.CodeId };
                         var result = await UserManager.CreateAsync(user, model.Password);
                         var roleStore = new RoleStore<IdentityRole>(context);
                         var roleManager = new RoleManager<IdentityRole>(roleStore);
@@ -236,6 +249,15 @@ namespace MyJeepTrader.Web.Controllers
                             service.CreateMembership(user.Id);
 
                             service.CreateSettings(user.Id);
+
+                            var defaultImage = Image.FromFile(Server.MapPath("~/Images/JeepStar.jpg"));
+                            var stream = new MemoryStream();
+                            defaultImage.Save(stream, ImageFormat.Jpeg);
+
+
+                            var imageData = ConvertToBytes(stream);
+
+                            service.CreateProfile(user.Id, imageData);
 
                             //this creates the paypal customer-then on success creates the membership and the free subscription.
                             ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
@@ -256,6 +278,15 @@ namespace MyJeepTrader.Web.Controllers
             }
         }
 
+        public static byte[] ConvertToBytes(Stream input)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                input.Position = 0;
+                input.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
 
         //
         // GET: /Account/ConfirmEmail

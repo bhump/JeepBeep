@@ -577,5 +577,15 @@ table#inbox {
     display: block;
     margin-right: 25%;
     margin-left: 25%;
-    float:none;
+    float: none;
+}
+
+.userLogo {
+    float: left;
+    height: 50px;
+    width: 50px;
+    /*padding: 15px 5px 15px 25px;*/
+    font-size: 18px;
+    line-height: 20px;
+    color: gray;
 }

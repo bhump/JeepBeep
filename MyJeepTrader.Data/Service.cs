@@ -235,6 +235,10 @@ namespace MyJeepTrader.Data
 
         #endregion
 
+        #region Comments
+
+        #endregion
+
         #region Timeline
         public ICollection<LiveStream> GetLiveStream(string userId)
         {
@@ -657,6 +661,27 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public void CreateProfile(string userId, byte[] avatar)
+        {
+            try
+            {
+                using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+                {
+                    tUserProfile userProfile = new tUserProfile
+                    {
+                        Id = userId,
+                        Avatar = avatar,
+                    };
+                    context.tUserProfiles.Add(userProfile);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
         public void UpdateProfile(string userId, string firstName, string lastName, DateTime birthDate, byte[] avatar, string description, string facebook, string twitter, string ello, string google, string website, string instagram)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
@@ -1020,7 +1045,7 @@ namespace MyJeepTrader.Data
         }
         #endregion
 
-        #region Friends/Follw
+        #region Friends/Follow
         public string AddFriend(string userId, string friendId)
         {
             try

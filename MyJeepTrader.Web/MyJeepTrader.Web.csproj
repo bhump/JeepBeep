@@ -268,6 +268,7 @@
     <Content Include="Images\FancyBox\fancybox_sprite.png" />
     <Content Include="Images\jeep-wallpaper-high-resolution-w00.jpg" />
     <Content Include="Images\jeep-wrangler-offroad-wallpaper-04.JPG" />
+    <Content Include="Images\JeepStar.jpg" />
     <Content Include="Images\placeholder.jpg" />
     <Content Include="Images\trintrail6.jpg" />
     <Content Include="Scripts\angular-mocks.js" />

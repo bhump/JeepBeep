@@ -7,8 +7,11 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>@Html.ActionLink("Dashboard", "Index", "Dashboard") </li>
-            <li>
+            @*<li>
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Dashboard", routeValues: null, htmlAttributes: new { title = "Dashboard" })
+            </li>*@
+            <li>
+                <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Account", new { UserName = @User.Identity.Name})' class="img-circle userLogo" />
             </li>
             @if (User.IsInRole("Admin"))
             {

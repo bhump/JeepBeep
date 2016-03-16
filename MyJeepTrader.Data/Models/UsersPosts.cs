@@ -39,6 +39,10 @@ namespace MyJeepTrader.Data.Models
 
         public string PostType { get; set; }
 
+        public int LikeCount { get; set; }
+
+        public int DislikeCount { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime ?DateCreated { get; set; }
     }
