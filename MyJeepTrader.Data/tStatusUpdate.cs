@@ -18,6 +18,7 @@ namespace MyJeepTrader.Data
         {
             this.tStatusControls = new HashSet<tStatusControl>();
             this.tStatusMedias = new HashSet<tStatusMedia>();
+            this.tStatusComments = new HashSet<tStatusComment>();
         }
     
         public int StatusId { get; set; }
@@ -30,5 +31,6 @@ namespace MyJeepTrader.Data
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<tStatusControl> tStatusControls { get; set; }
         public virtual ICollection<tStatusMedia> tStatusMedias { get; set; }
+        public virtual ICollection<tStatusComment> tStatusComments { get; set; }
     }
 }

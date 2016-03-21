@@ -229,6 +229,10 @@
     <Compile Include="ViewModels\StatusCreateViewModel.cs" />
     <Compile Include="ViewModels\UserProfileDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserProfileIndexViewModel.cs" />
+    <Compile Include="WebServices\CommentsWebService.asmx.cs">
+      <DependentUpon>CommentsWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServices\FriendManagementWebService.asmx.cs">
       <DependentUpon>FriendManagementWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -349,6 +353,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="WebServices\CommentsWebService.asmx" />
     <Content Include="WebServices\FriendManagementWebService.asmx" />
     <Content Include="WebServices\SettingsWebService.asmx" />
     <Content Include="WebServices\UserInformationWebService.asmx" />

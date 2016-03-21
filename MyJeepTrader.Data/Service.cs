@@ -489,6 +489,25 @@ namespace MyJeepTrader.Data
                 }
             }
         }
+
+        public List<Comments> GetCommentsForStatus(int statusId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var comments = (from c in context.tStatusComments
+                                join u in context.AspNetUsers on c.Id equals u.Id
+                                where c.StatusId == statusId
+                                select new Comments
+                                {
+                                    CommentId = c.CommentId,
+                                    Comment = c.Comment,
+                                    UserName = u.UserName,
+                                    UserId = u.Id
+                                }).ToList();
+
+                return comments;
+            }
+        }
         #endregion
 
         #region Membership

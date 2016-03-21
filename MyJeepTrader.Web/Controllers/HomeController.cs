@@ -108,17 +108,17 @@ namespace MyJeepTrader.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult AddFriend(string friendName)
-        {
-            Service service = new Service();
+        //[HttpPost]
+        //public ActionResult AddFriend(string friendName)
+        //{
+        //    Service service = new Service();
 
-            var friendId = UserManager.FindByName(friendName);
-            var userId = User.Identity.GetUserId();
+        //    var friendId = UserManager.FindByName(friendName);
+        //    var userId = User.Identity.GetUserId();
 
-            service.AddFriend(userId, friendId.Id);
+        //    service.AddFriend(userId, friendId.Id);
 
-            return View();
-        }
+        //    return View();
+        //}
     }
 }

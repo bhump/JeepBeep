@@ -19,6 +19,8 @@ namespace MyJeepTrader.Web.ViewModels
 
         public List<JeepModels> Models { get; set; }
 
+        public List<Comments> Comments { get; set; }
+
         public LiveStreamViewModel(ICollection<LivePost> lp, ICollection<LiveStream> ls)
         {
             this.LiveFeeds = new List<LiveFeed>();
@@ -69,6 +71,8 @@ namespace MyJeepTrader.Web.ViewModels
             this.FriendsList = new List<string>();
 
             this.Models = new List<JeepModels>();
+
+            this.Comments = new List<Comments>();
         }
     }
 }

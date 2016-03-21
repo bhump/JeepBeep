@@ -68,6 +68,10 @@
         <AssociationConnector Association="MyJeepTraderModel.FK_tSubscriptions_tSubscriptionTypes" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tVehicleProfileControl_tVehicleProfiles" />
         <AssociationConnector Association="MyJeepTraderModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tStatusCommentMedia" Width="1.5" PointX="9.75" PointY="35.875" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tStatusComment" Width="1.5" PointX="7.5" PointY="35.75" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tStatusCommentMedia_tStatusComments" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tStatusComments_tStatusUpdates" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

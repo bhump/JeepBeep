@@ -46,6 +46,7 @@ namespace MyJeepTrader.Data
             {
                 Email = email
             };
+
             Result<Customer> result = PayPalGateway().Customer.Create(request);
 
             bool success = result.IsSuccess();

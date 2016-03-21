@@ -216,6 +216,24 @@
           <Property Name="Country" Type="varchar" MaxLength="50" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tStatusCommentMedia">
+          <Key>
+            <PropertyRef Name="CommentMediaId" />
+          </Key>
+          <Property Name="CommentMediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="MediaLink" Type="varchar" MaxLength="50" />
+          <Property Name="CommentId" Type="int" />
+        </EntityType>
+        <EntityType Name="tStatusComments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="300" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="StatusId" Type="int" />
+        </EntityType>
         <EntityType Name="tStatusControl">
           <Key>
             <PropertyRef Name="StatusControlId" />
@@ -626,6 +644,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tStatusCommentMedia_tStatusComments">
+          <End Role="tStatusComments" Type="Self.tStatusComments" Multiplicity="0..1" />
+          <End Role="tStatusCommentMedia" Type="Self.tStatusCommentMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tStatusComments">
+              <PropertyRef Name="CommentId" />
+            </Principal>
+            <Dependent Role="tStatusCommentMedia">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tStatusComments_tStatusUpdates">
+          <End Role="tStatusUpdates" Type="Self.tStatusUpdates" Multiplicity="0..1" />
+          <End Role="tStatusComments" Type="Self.tStatusComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tStatusUpdates">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="tStatusComments">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tStatusControl_tStatusUpdates">
           <End Role="tStatusUpdates" Type="Self.tStatusUpdates" Multiplicity="1" />
           <End Role="tStatusControl" Type="Self.tStatusControl" Multiplicity="*" />
@@ -756,6 +798,8 @@
           <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSettings" EntityType="Self.tSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStates" EntityType="Self.tStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tStatusCommentMedia" EntityType="Self.tStatusCommentMedia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tStatusComments" EntityType="Self.tStatusComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStatusControl" EntityType="Self.tStatusControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStatusMedia" EntityType="Self.tStatusMedia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tStatusUpdates" EntityType="Self.tStatusUpdates" Schema="dbo" store:Type="Tables" />
@@ -862,6 +906,14 @@
           <AssociationSet Name="FK_tStatus_AspNetUsers" Association="Self.FK_tStatus_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tStatusCommentMedia_tStatusComments" Association="Self.FK_tStatusCommentMedia_tStatusComments">
+            <End Role="tStatusComments" EntitySet="tStatusComments" />
+            <End Role="tStatusCommentMedia" EntitySet="tStatusCommentMedia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tStatusComments_tStatusUpdates" Association="Self.FK_tStatusComments_tStatusUpdates">
+            <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
+            <End Role="tStatusComments" EntitySet="tStatusComments" />
           </AssociationSet>
           <AssociationSet Name="FK_tStatusControl_tStatusUpdates" Association="Self.FK_tStatusControl_tStatusUpdates">
             <End Role="tStatusUpdates" EntitySet="tStatusUpdates" />
@@ -1063,6 +1115,16 @@
           <AssociationSet Name="AspNetUserRoles" Association="MyJeepTraderModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="tStatusCommentMedias" EntityType="MyJeepTraderModel.tStatusCommentMedia" />
+          <EntitySet Name="tStatusComments" EntityType="MyJeepTraderModel.tStatusComment" />
+          <AssociationSet Name="FK_tStatusCommentMedia_tStatusComments" Association="MyJeepTraderModel.FK_tStatusCommentMedia_tStatusComments">
+            <End Role="tStatusComment" EntitySet="tStatusComments" />
+            <End Role="tStatusCommentMedia" EntitySet="tStatusCommentMedias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tStatusComments_tStatusUpdates" Association="MyJeepTraderModel.FK_tStatusComments_tStatusUpdates">
+            <End Role="tStatusUpdate" EntitySet="tStatusUpdates" />
+            <End Role="tStatusComment" EntitySet="tStatusComments" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1348,6 +1410,7 @@
           <NavigationProperty Name="tStatusControls" Relationship="MyJeepTraderModel.FK_tStatusControl_tStatusUpdates" FromRole="tStatusUpdate" ToRole="tStatusControl" />
           <NavigationProperty Name="tStatusMedias" Relationship="MyJeepTraderModel.FK_tStatusMedia_tStatus" FromRole="tStatusUpdate" ToRole="tStatusMedia" />
           <Property Name="DislikeCount" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tStatusComments" Relationship="MyJeepTraderModel.FK_tStatusComments_tStatusUpdates" FromRole="tStatusUpdate" ToRole="tStatusComment" />
         </EntityType>
         <EntityType Name="tSubModel">
           <Key>
@@ -1826,6 +1889,51 @@
           <End Type="MyJeepTraderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="tStatusCommentMedia">
+          <Key>
+            <PropertyRef Name="CommentMediaId" />
+          </Key>
+          <Property Name="CommentMediaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MediaLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CommentId" Type="Int32" />
+          <NavigationProperty Name="tStatusComment" Relationship="MyJeepTraderModel.FK_tStatusCommentMedia_tStatusComments" FromRole="tStatusCommentMedia" ToRole="tStatusComment" />
+        </EntityType>
+        <EntityType Name="tStatusComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comment" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="tStatusCommentMedias" Relationship="MyJeepTraderModel.FK_tStatusCommentMedia_tStatusComments" FromRole="tStatusComment" ToRole="tStatusCommentMedia" />
+          <NavigationProperty Name="tStatusUpdate" Relationship="MyJeepTraderModel.FK_tStatusComments_tStatusUpdates" FromRole="tStatusComment" ToRole="tStatusUpdate" />
+        </EntityType>
+        <Association Name="FK_tStatusCommentMedia_tStatusComments">
+          <End Type="MyJeepTraderModel.tStatusComment" Role="tStatusComment" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tStatusCommentMedia" Role="tStatusCommentMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tStatusComment">
+              <PropertyRef Name="CommentId" />
+            </Principal>
+            <Dependent Role="tStatusCommentMedia">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tStatusComments_tStatusUpdates">
+          <End Type="MyJeepTraderModel.tStatusUpdate" Role="tStatusUpdate" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tStatusComment" Role="tStatusComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tStatusUpdate">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="tStatusComment">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2186,6 +2294,26 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tStatusCommentMedias">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusCommentMedia">
+              <MappingFragment StoreEntitySet="tStatusCommentMedia">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="MediaLink" ColumnName="MediaLink" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CommentMediaId" ColumnName="CommentMediaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tStatusComments">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusComment">
+              <MappingFragment StoreEntitySet="tStatusComments">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
