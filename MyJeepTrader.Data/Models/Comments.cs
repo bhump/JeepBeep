@@ -12,9 +12,13 @@ namespace MyJeepTrader.Data.Models
 
         public string UserId { get; set; }
 
+        public int StatusId { get; set; }
+
         public string UserName { get; set; }
 
         public string Comment { get; set; }
+
+        public DateTime DateCreated { get; set; }
 
         public List<Byte> Images { get; set; }
     }

@@ -148,17 +148,25 @@
                                         <a onclick="UpdateDislikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-thumbs-down"></span></a>
                                         &nbsp;
                                         <a onclick="UpdateDislikeCount('@stream.FeedId')"><span><label id="lblDislikeCount_@stream.FeedId">@stream.FeedDislikeCount</label></span></a>
+                                        &nbsp;
+                                        <a>Comments<span><label id="lblCommentCount_@stream.FeedId" class="commentCount"></label></span></a>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dropdown pull-right">
                                             <a class="btn-link statusDropdown" id="dropdownMenu1" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a id="aComment"><span class="glyphicon glyphicon-comment">&nbsp;<label>Comment</label></span></a></li>
+                                                <li><a id="aComment"><span class="glyphicon glyphicon-comment aComment" data-status="@stream.FeedId">&nbsp;<label>Comment</label></span></a></li>
                                                 <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')" class="addFriend"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
                                                 <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="hidden" id="divCreateComment_@stream.FeedId">
+                                <div>
+                                    <input type="text" id="tbComment_@stream.FeedId" placeholder="Comment Now"/>
+                                    <input type="button" class="btn-primary createComment" value="Comment" onclick="CreateComment(@stream.FeedId)"/>
                                 </div>
                             </div>
                             <div class="hidden" id="divComment_@stream.FeedId">
@@ -185,6 +193,7 @@
 
     $('.Status').click(function () {
         var statusId = $(this).data("status");
+        $('#divCreateComment_' + statusId).removeClass('hidden');
         $('#divComment_' + statusId).removeClass('hidden');
 
         GetComments(statusId);
@@ -212,6 +221,11 @@
     $('.hideComments').click(function () {
         var statusId = $(this).data("status");
         $('#divComment_' + statusId).addClass('hidden');
+    });
+
+    $('.aComment').click(function () {
+        var statusId = $(this).data("status");
+        $('#divCreateComment_' + statusId).removeClass('hidden');
     });
 
     function AddFriend(friendName) {
@@ -308,4 +322,53 @@
             }
         });
     }
+
+    function GetCommentsCount(statusId) {
+        var data = {
+            statusId: statusId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/CommentsWebService.asmx/GetCommentsCount',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+
+                $('#lblCommentCount' + statusId).Text(result.d)
+
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function CreateComment(statusId) {
+
+        var comment = $('#tbComment_' + statusId).val();
+
+        var data = {
+            statusId: statusId,
+            comment: comment
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/CommentsWebService.asmx/CreateComment',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('#tbComment_' + statusId).val('');
+                $('#divComment_' + statusId).html('');
+                GetComments(statusId);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
 </script>

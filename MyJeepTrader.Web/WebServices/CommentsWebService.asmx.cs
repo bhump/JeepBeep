@@ -6,6 +6,9 @@ using System.Web.Services;
 using MyJeepTrader.Data;
 using MyJeepTrader.Data.Models;
 using System.Web.Script.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MyJeepTrader.Web.WebServices
 {
@@ -28,6 +31,28 @@ namespace MyJeepTrader.Web.WebServices
             var comments = service.GetCommentsForStatus(statusId);
 
             return comments;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public tStatusComment CreateComment(string statusId, string comment)
+        {
+            var userId = User.Identity.GetUserId();
+
+            Service service = new Service();
+            var newComment = service.CreateComment(userId, statusId, comment);
+
+            return newComment;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public int GetCommentsCount(int statusId)
+        {
+            Service service = new Service();
+            var count = service.GetCommentsForStatus(statusId).Count();
+
+            return count;
         }
     }
 }

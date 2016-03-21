@@ -23,6 +23,7 @@ namespace MyJeepTrader.Data
         public string Comment { get; set; }
         public string Id { get; set; }
         public Nullable<int> StatusId { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual ICollection<tStatusCommentMedia> tStatusCommentMedias { get; set; }
         public virtual tStatusUpdate tStatusUpdate { get; set; }

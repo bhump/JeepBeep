@@ -233,6 +233,7 @@
           <Property Name="Comment" Type="varchar" MaxLength="300" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" />
           <Property Name="StatusId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tStatusControl">
           <Key>
@@ -1909,6 +1910,7 @@
           <Property Name="StatusId" Type="Int32" />
           <NavigationProperty Name="tStatusCommentMedias" Relationship="MyJeepTraderModel.FK_tStatusCommentMedia_tStatusComments" FromRole="tStatusComment" ToRole="tStatusCommentMedia" />
           <NavigationProperty Name="tStatusUpdate" Relationship="MyJeepTraderModel.FK_tStatusComments_tStatusUpdates" FromRole="tStatusComment" ToRole="tStatusUpdate" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" Nullable="false" />
         </EntityType>
         <Association Name="FK_tStatusCommentMedia_tStatusComments">
           <End Type="MyJeepTraderModel.tStatusComment" Role="tStatusComment" Multiplicity="0..1" />
@@ -2307,6 +2309,7 @@
           <EntitySetMapping Name="tStatusComments">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusComment">
               <MappingFragment StoreEntitySet="tStatusComments">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />

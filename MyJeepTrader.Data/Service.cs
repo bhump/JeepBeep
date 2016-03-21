@@ -502,10 +502,43 @@ namespace MyJeepTrader.Data
                                     CommentId = c.CommentId,
                                     Comment = c.Comment,
                                     UserName = u.UserName,
-                                    UserId = u.Id
-                                }).ToList();
+                                    UserId = u.Id,
+                                    DateCreated = c.DateCreated
+                                }).OrderByDescending(c => c.DateCreated).ToList();
 
                 return comments;
+            }
+        }
+
+        public tStatusComment CreateComment(string userId, string statusId, string comment)
+        {
+            try
+            {
+                var sId = Convert.ToInt32(statusId);
+
+                using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+                {
+                    var newComment = new tStatusComment();
+                    newComment.Id = userId;
+                    newComment.Comment = comment;
+                    newComment.StatusId = sId;
+                    newComment.DateCreated = DateTime.Now;
+
+                    context.tStatusComments.Add(newComment);
+                    context.SaveChanges();
+
+                    return newComment;
+                }
+            }
+            catch(Exception ex)
+            {
+                var failedComment = new tStatusComment();
+                failedComment.StatusId = 0;
+                failedComment.Comment = "Could not post comment!";
+
+                Console.WriteLine(ex);
+
+                return failedComment;
             }
         }
         #endregion
