@@ -589,3 +589,7 @@ table#inbox {
     line-height: 20px;
     color: gray;
 }
+
+.commentBox{
+    width: 100%;
+}

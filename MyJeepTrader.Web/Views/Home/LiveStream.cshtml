@@ -78,7 +78,7 @@
                                     <div class="col-md-10">
                                         <div class="text-left row">
                                             <div class="col-md-12">
-                                                <label id="lblUserName">@stream.FeedUserName</label>
+                                                <label id="lblUserName">@stream.FeedUserName</label>&nbsp;<label class="pull-right">@String.Format("{0:M/dd/yyyy}", @stream.FeedDateCreated)</label>
                                             </div>
                                             <div class="col-md-12">
                                                 @stream.FeedDescription
@@ -124,7 +124,7 @@
                                     <div class="col-md-10">
                                         <div class="text-left row">
                                             <div class="col-md-12">
-                                                <label>@stream.FeedUserName</label>
+                                                <label>@stream.FeedUserName</label><label class="pull-right">@String.Format("{0:M/dd/yyyy}", @stream.FeedDateCreated)</label>
                                             </div>
                                             <div class="col-md-12">
                                                 @stream.FeedDescription
@@ -136,14 +136,14 @@
                                     <div class="col-lg-6">
                                         @if (stream.FeedLikeCount == 0)
                                         {
-                                            <a onclick="UpdateLikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-heart-empty"></span></a>
+                                            <a id="aEmptyLikeCount" data-lcount="@stream.FeedId"><span class="glyphicon glyphicon-heart-empty"></span></a>
                                         }
                                         else
                                         {
-                                            <a onclick="UpdateLikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-heart"></span></a>
+                                            <a id="aHeartLikeCount" data-lcount="@stream.FeedId"><span class="glyphicon glyphicon-heart"></span></a>
                                         }
                                         &nbsp;
-                                        <a onclick="UpdateLikeCount('@stream.FeedId')"><span><label id="lblLikeCount_@stream.FeedId" class="likeCount">@stream.FeedLikeCount</label></span></a>
+                                        <a id="aCountLikeCount" data-lcount="@stream.FeedId"><span><label id="lblLikeCount_@stream.FeedId" class="likeCount">@stream.FeedLikeCount</label></span></a>
                                         &nbsp;
                                         <a onclick="UpdateDislikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-thumbs-down"></span></a>
                                         &nbsp;
@@ -163,13 +163,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="hidden" id="divCreateComment_@stream.FeedId">
-                                <div>
-                                    <input type="text" id="tbComment_@stream.FeedId" placeholder="Comment Now"/>
-                                    <input type="button" class="btn-primary createComment" value="Comment" onclick="CreateComment(@stream.FeedId)"/>
+                            <div class="collapse" id="divCreateComment_@stream.FeedId">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-horizontal">
+                                            <div class="col-lg-12">
+                                                <textarea id="tbComment_@stream.FeedId" rows="3" class="no-max-width input-sm commentBox"></textarea>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <button class="btn btn-primary btn-sm pull-right createComment" onclick="CreateComment(@stream.FeedId)">Comment</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="hidden" id="divComment_@stream.FeedId">
+                            <br />
+                            <div class="collapse" id="divComment_@stream.FeedId">
                             </div>
                             <hr />
                         }
@@ -193,8 +202,9 @@
 
     $('.Status').click(function () {
         var statusId = $(this).data("status");
-        $('#divCreateComment_' + statusId).removeClass('hidden');
-        $('#divComment_' + statusId).removeClass('hidden');
+        $('#divCreateComment_' + statusId).collapse('toggle');
+        $('#divComment_' + statusId).html('');
+        $('#divComment_' + statusId).collapse('toggle');
 
         GetComments(statusId);
     });
@@ -218,14 +228,28 @@
         $(this).next(".dropdown-menu").hide();
     });
 
-    $('.hideComments').click(function () {
+    $('.aComment').click(function (e) {
         var statusId = $(this).data("status");
-        $('#divComment_' + statusId).addClass('hidden');
+        $('#divCreateComment_' + statusId).collapse("toggle");
+        e.stopPropagation();
     });
 
-    $('.aComment').click(function () {
-        var statusId = $(this).data("status");
-        $('#divCreateComment_' + statusId).removeClass('hidden');
+    $('#aEmptyLikeCount').click(function (e) {
+        var statusId = $(this).data("lcount");
+        UpdateLikeCount(statusId);
+        e.stopPropagation();
+    });
+
+    $('#aHeartLikeCount').click(function (e) {
+        var statusId = $(this).data("lcount");
+        UpdateLikeCount(statusId);
+        e.stopPropagation();
+    });
+
+    $('#aCountLikeCount').click(function (e) {
+        var statusId = $(this).data("lcount");
+        UpdateLikeCount(statusId);
+        e.stopPropagation();
     });
 
     function AddFriend(friendName) {
@@ -309,10 +333,16 @@
 
                     var userName = v.UserName;
 
+                    var subCreatedDate = new Date(parseInt(v.DateCreated.substr(6)));
+                    var createdDateDay = subCreatedDate.getDate();
+                    var createdDateMonth = subCreatedDate.getMonth();
+                    var createdDateYear = subCreatedDate.getFullYear();
+                    createdDateMonth++;
+
                     var imageSource = '@Url.Action("ShowAvatar", "Home", new { UserName = "username" })';
                     imageSource = imageSource.replace("username", userName);
 
-                    commentContent = '<div class="row col-sm-offset-1"><div class="col-md-2"><img src="' + imageSource + '" alt="Image Unavailable" class="img-circle streamImage" /></div><div class="col-md-10"><div class="text-left row"><div class="col-md-12"><label>' + v.UserName + '</label></div><div class="col-md-12"><span>' + v.Comment + '</span></div></div></div></div></br>';
+                    commentContent = '<div class="row col-sm-offset-1"><div class="col-md-2"><img src="' + imageSource + '" alt="Image Unavailable" class="img-circle streamImage" /></div><div class="col-md-10"><div class="text-left row"><div class="col-md-12"><label>' + v.UserName + '</label><label class="pull-right">' + createdDateMonth + "/" + createdDateDay + "/" + createdDateYear + '</div><div class="col-md-12"><span>' + v.Comment + '</span></div></div></div></div></br>';
 
                     $('#divComment_' + statusId).append(commentContent);
                 });
