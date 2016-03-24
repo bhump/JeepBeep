@@ -186,6 +186,7 @@
           <Property Name="CityId" Type="int" />
           <Property Name="PostTypeId" Type="int" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="ViewCount" Type="bigint" />
         </EntityType>
         <EntityType Name="tPostType">
           <Key>
@@ -741,18 +742,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tUserProfiles_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="tUserProfiles" Type="Self.tUserProfiles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tUserProfiles">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tVehicleProfileControl_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="tVehicleProfileControl" Type="Self.tVehicleProfileControl" Multiplicity="*" />
@@ -939,10 +928,6 @@
           <AssociationSet Name="FK_tTimelineSettings_AspNetUsers" Association="Self.FK_tTimelineSettings_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tSettings" EntitySet="tSettings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="Self.FK_tUserProfiles_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="tUserProfiles" EntitySet="tUserProfiles" />
           </AssociationSet>
           <AssociationSet Name="FK_tVehicleProfileControl_AspNetUsers" Association="Self.FK_tVehicleProfileControl_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1344,6 +1329,7 @@
           <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tPosts_tStates" FromRole="tPost" ToRole="tState" />
           <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
           <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
+          <Property Name="ViewCount" Type="Int64" />
         </EntityType>
         <EntityType Name="tPostType">
           <Key>
@@ -2112,6 +2098,7 @@
           <EntitySetMapping Name="tPosts">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tPost">
               <MappingFragment StoreEntitySet="tPosts">
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="PostTypeId" ColumnName="PostTypeId" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />

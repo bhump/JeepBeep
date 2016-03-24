@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using MyJeepTrader.Data.Models;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -23,7 +24,7 @@ namespace MyJeepTrader.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateStatus(FormCollection collection)
+        public async Task<ActionResult> CreateStatus(FormCollection collection, IEnumerable<HttpPostedFileBase> files)
         {
             try
             {
@@ -34,6 +35,24 @@ namespace MyJeepTrader.Web.Controllers
                 var status  = collection["status"].ToString();
 
                 var statusId = await service.CreateStatusAsync(userId, status);
+
+                if (files.Count() != 0)
+                {
+                    foreach (var img in files)
+                    {
+                        if (img != null)
+                        {
+                            byte[] imageBytes = null;
+
+                            using (var binaryReader = new BinaryReader(img.InputStream))
+                            {
+                                imageBytes = binaryReader.ReadBytes(img.ContentLength);
+                            }
+
+                            service.AddStatusImage(imageBytes, statusId);
+                        }
+                    }
+                }
 
                 if (ModelState.IsValid)
                 {

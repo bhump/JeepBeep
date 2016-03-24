@@ -43,14 +43,14 @@
                             }
                         }
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
                         @Html.Action("StatusPostSearchPartial", "Status")
                     </div>
-                    <div class="col-md-6">
-                        <div class="well well-sm">
-                            @Html.TextBox("SearchFeed", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Search your feed" })
-                        </div>
-                    </div>
+                    @*<div class="col-md-6">
+                            <div class="well well-sm">
+                                @Html.TextBox("SearchFeed", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Search your feed" })
+                            </div>
+                        </div>*@
                 </div>
             </div>
             <div class="well well-sm">
@@ -83,6 +83,16 @@
                                             <div class="col-md-12">
                                                 @stream.FeedDescription
                                             </div>
+                                            @if (stream.FeedImages != null)
+                                            {
+                                                foreach (var image in stream.FeedImages)
+                                                {
+                                                    string convertedImage = Convert.ToBase64String(image.ToArray());
+                                                    <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                        <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                                    </a>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -128,6 +138,20 @@
                                             </div>
                                             <div class="col-md-12">
                                                 @stream.FeedDescription
+                                            </div>
+                                            <div class="tab_container">
+                                                <p style="display:block">
+                                                    @if (stream.FeedImages != null)
+                                                    {
+                                                        foreach (var image in stream.FeedImages)
+                                                        {
+                                                            string convertedImage = Convert.ToBase64String(image.ToArray());
+                                                            <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                                <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                                            </a>
+                                                        }
+                                                    }
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -193,212 +217,234 @@
         </div>
     </div>
 </div>
-@Scripts.Render("~/bundles/jquery")
-<script>
-    $('.Posts').click(function () {
-        var postId = $(this).data("post");
-        RedirectToPost(postId);
-    });
-
-    $('.Status').click(function () {
-        var statusId = $(this).data("status");
-        $('#divCreateComment_' + statusId).collapse('toggle');
-        $('#divComment_' + statusId).html('');
-        $('#divComment_' + statusId).collapse('toggle');
-
-        GetComments(statusId);
-    });
-
-    $('.postDropdown').click(function () {
-        $(this).next(".dropdown-menu").toggle();
-        return false;
-    });
-
-    $('.postDropdown').focusout(function () {
-        $(this).next(".dropdown-menu").hide();
-        return false;
-    });
-
-    $('.statusDropdown').click(function () {
-        $(this).next(".dropdown-menu").toggle();
-        return false;
-    });
-
-    $('.statusDropdown').focusout(function () {
-        $(this).next(".dropdown-menu").hide();
-    });
-
-    $('.aComment').click(function (e) {
-        var statusId = $(this).data("status");
-        $('#divCreateComment_' + statusId).collapse("toggle");
-        e.stopPropagation();
-    });
-
-    $('#aEmptyLikeCount').click(function (e) {
-        var statusId = $(this).data("lcount");
-        UpdateLikeCount(statusId);
-        e.stopPropagation();
-    });
-
-    $('#aHeartLikeCount').click(function (e) {
-        var statusId = $(this).data("lcount");
-        UpdateLikeCount(statusId);
-        e.stopPropagation();
-    });
-
-    $('#aCountLikeCount').click(function (e) {
-        var statusId = $(this).data("lcount");
-        UpdateLikeCount(statusId);
-        e.stopPropagation();
-    });
-
-    function AddFriend(friendName) {
-
-        var data = {
-            friendName: friendName
-        };
-
-        $.ajax({
-            type: 'POST',
-            url: '/Home/AddFriend',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            success: function (result) {
-                $('#divSuccess').show();
-                $('#spanSuccessMessage').html("Settings Saved Successfully!");
-            }
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jquery")*@
+    <script src="~/Scripts/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script src="~/Scripts/jquery.fancybox.pack.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-buttons.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-media.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-thumbs.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox-thumb").fancybox({
+                prevEffect: 'none',
+                nextEffect: 'none',
+                helpers: {
+                    title: {
+                        type: 'outside'
+                    },
+                    thumbs: {
+                        width: 50,
+                        height: 50
+                    }
+                }
+            });
         });
-    }
 
-    function RedirectToPost(postId) {
-        window.location.href = '/Post/Details?PostId=' + postId;
-    }
+        $('.Posts').click(function () {
+            var postId = $(this).data("post");
+            RedirectToPost(postId);
+        });
 
-    function UpdateLikeCount(statusId) {
+        $('.Status').click(function () {
+            var statusId = $(this).data("status");
+            GetComments(statusId);
+            $('#divCreateComment_' + statusId).collapse('toggle');
+            $('#divComment_' + statusId).html('');
+            $('#divComment_' + statusId).collapse('toggle');
+        });
 
-        var data = {
-            statusId: statusId
+        $('.postDropdown').click(function () {
+            $(this).next(".dropdown-menu").toggle();
+            return false;
+        });
+
+        $('.postDropdown').focusout(function () {
+            $(this).next(".dropdown-menu").hide();
+            return false;
+        });
+
+        $('.statusDropdown').click(function () {
+            $(this).next(".dropdown-menu").toggle();
+            return false;
+        });
+
+        $('.statusDropdown').focusout(function () {
+            $(this).next(".dropdown-menu").hide();
+        });
+
+        $('.aComment').click(function (e) {
+            var statusId = $(this).data("status");
+            $('#divCreateComment_' + statusId).collapse("toggle");
+            e.stopPropagation();
+        });
+
+        $('#aEmptyLikeCount').click(function (e) {
+            var statusId = $(this).data("lcount");
+            UpdateLikeCount(statusId);
+            e.stopPropagation();
+        });
+
+        $('#aHeartLikeCount').click(function (e) {
+            var statusId = $(this).data("lcount");
+            UpdateLikeCount(statusId);
+            e.stopPropagation();
+        });
+
+        $('#aCountLikeCount').click(function (e) {
+            var statusId = $(this).data("lcount");
+            UpdateLikeCount(statusId);
+            e.stopPropagation();
+        });
+
+        function AddFriend(friendName) {
+
+            var data = {
+                friendName: friendName
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/Home/AddFriend',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    $('#divSuccess').show();
+                    $('#spanSuccessMessage').html("Settings Saved Successfully!");
+                }
+            });
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/Webservices/FriendManagementWebService.asmx/UpdateLikeCount',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-                $('#lblLikeCount_' + statusId).text(result.d);
-            },
-            error: function (errorThrown) {
-                console.log(errorThrown);
-            }
-        });
-    }
-
-    function UpdateDislikeCount(statusId) {
-        var data = {
-            statusId: statusId
+        function RedirectToPost(postId) {
+            window.location.href = '/Post/Details?PostId=' + postId;
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/Webservices/FriendManagementWebService.asmx/UpdateDislikeCount',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-                $('#lblDislikeCount_' + statusId).text(result.d);
-            },
-            error: function (errorThrown) {
-                console.log(errorThrown);
-            }
-        });
-    }
+        function UpdateLikeCount(statusId) {
 
-    function GetComments(statusId) {
-        var data = {
-            statusId: statusId
+            var data = {
+                statusId: statusId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/UpdateLikeCount',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#lblLikeCount_' + statusId).text(result.d);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/Webservices/CommentsWebService.asmx/GetCommentsByStatusId',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-                var commentContext = '';
-
-                $.each(result.d, function (k, v) {
-
-                    var userName = v.UserName;
-
-                    var subCreatedDate = new Date(parseInt(v.DateCreated.substr(6)));
-                    var createdDateDay = subCreatedDate.getDate();
-                    var createdDateMonth = subCreatedDate.getMonth();
-                    var createdDateYear = subCreatedDate.getFullYear();
-                    createdDateMonth++;
-
-                    var imageSource = '@Url.Action("ShowAvatar", "Home", new { UserName = "username" })';
-                    imageSource = imageSource.replace("username", userName);
-
-                    commentContent = '<div class="row col-sm-offset-1"><div class="col-md-2"><img src="' + imageSource + '" alt="Image Unavailable" class="img-circle streamImage" /></div><div class="col-md-10"><div class="text-left row"><div class="col-md-12"><label>' + v.UserName + '</label><label class="pull-right">' + createdDateMonth + "/" + createdDateDay + "/" + createdDateYear + '</div><div class="col-md-12"><span>' + v.Comment + '</span></div></div></div></div></br>';
-
-                    $('#divComment_' + statusId).append(commentContent);
-                });
-            },
-            error: function (errorThrown) {
-                console.log(errorThrown);
+        function UpdateDislikeCount(statusId) {
+            var data = {
+                statusId: statusId
             }
-        });
-    }
 
-    function GetCommentsCount(statusId) {
-        var data = {
-            statusId: statusId
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/UpdateDislikeCount',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#lblDislikeCount_' + statusId).text(result.d);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/Webservices/CommentsWebService.asmx/GetCommentsCount',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-
-                $('#lblCommentCount' + statusId).Text(result.d)
-
-            },
-            error: function (errorThrown) {
-                console.log(errorThrown);
+        function GetComments(statusId) {
+            var data = {
+                statusId: statusId
             }
-        });
-    }
 
-    function CreateComment(statusId) {
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/CommentsWebService.asmx/GetCommentsByStatusId',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    var commentContext = '';
 
-        var comment = $('#tbComment_' + statusId).val();
+                    $.each(result.d, function (k, v) {
 
-        var data = {
-            statusId: statusId,
-            comment: comment
+                        var userName = v.UserName;
+
+                        var subCreatedDate = new Date(parseInt(v.DateCreated.substr(6)));
+                        var createdDateDay = subCreatedDate.getDate();
+                        var createdDateMonth = subCreatedDate.getMonth();
+                        var createdDateYear = subCreatedDate.getFullYear();
+                        createdDateMonth++;
+
+                        var imageSource = '@Url.Action("ShowAvatar", "Home", new { UserName = "username" })';
+                        imageSource = imageSource.replace("username", userName);
+
+                        commentContent = '<div class="row col-sm-offset-1"><hr/><div class="col-md-2"><img src="' + imageSource + '" alt="Image Unavailable" class="img-circle streamImage" /></div><div class="col-md-10"><div class="text-left row"><div class="col-md-12"><label>' + v.UserName + '</label><label class="pull-right">' + createdDateMonth + "/" + createdDateDay + "/" + createdDateYear + '</div><div class="col-md-12"><span>' + v.Comment + '</span></div></div></div></div></br>';
+
+                        $('#divComment_' + statusId).append(commentContent);
+                    });
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/Webservices/CommentsWebService.asmx/CreateComment',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-                $('#tbComment_' + statusId).val('');
-                $('#divComment_' + statusId).html('');
-                GetComments(statusId);
-            },
-            error: function (errorThrown) {
-                console.log(errorThrown);
+        function GetCommentsCount(statusId) {
+            var data = {
+                statusId: statusId
             }
-        });
-    }
 
-</script>
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/CommentsWebService.asmx/GetCommentsCount',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+
+                    $('#lblCommentCount' + statusId).Text(result.d)
+
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function CreateComment(statusId) {
+
+            var comment = $('#tbComment_' + statusId).val();
+
+            var data = {
+                statusId: statusId,
+                comment: comment
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/CommentsWebService.asmx/CreateComment',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#tbComment_' + statusId).val('');
+                    $('#divComment_' + statusId).html('');
+                    GetComments(statusId);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+    </script>
+}

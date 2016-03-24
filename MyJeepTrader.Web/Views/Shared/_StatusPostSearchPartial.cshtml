@@ -11,13 +11,13 @@
             </div>
         </div>
         @*<a href="#" class="glyphicon glyphicon-camera glyphicon-camera-input"></a>*@
-        <div class="row hidden" id="divStatusInputs">
+        <div class="row collapse" id="divStatusInputs">
             <br />
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-3">
                         <a id="aImageInput" class="glyphicon glyphicon-camera glyphicon-camera-input icon"></a>
-                        <input id="imageInput" type="file" class="hidden" />
+                        <input id="imageInput" multiple type="file" class="hidden" name="files" />
                     </div>
                 </div>
             </div>
@@ -33,16 +33,9 @@
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/jquery.submissionOK.js"></script>
 <script>
-    //var livePosts = [$('.well-liveposts')];
-    //var i;
-
-    //for (i = 0; i < livePosts.length; i++)
-    //{
-    //    livePosts[i].insertAfter('.well-livestream:eq(1)');
-    //}
-
-    $('#aImageInput').mousedown(function () {
+    $('#aImageInput').mousedown(function (e) {
         $('#imageInput').click();
+        e.stopPropagation();
     });
 
     $('#aSubmitStatus').mousedown(function () {
@@ -63,13 +56,13 @@
         }
     };
 
-    $('#tbStatus').focus(function () {
-        $('#divStatusInputs').fadeIn(1000).removeClass('hidden');
+    $('#tbStatus').click(function () {
+        $('#divStatusInputs').collapse("toggle");
         $(this).attr('rows', '4');
     });
 
     $('#divStatus').focusout(function () {
-        $('#divStatusInputs').fadeOut(1000).addClass('hidden');
+        $('#divStatusInputs').collapse("toggle");
         $('#tbStatus').attr('rows', '1');
     });
 </script>

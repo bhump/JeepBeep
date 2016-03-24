@@ -235,10 +235,6 @@ namespace MyJeepTrader.Data
 
         #endregion
 
-        #region Comments
-
-        #endregion
-
         #region Timeline
         public ICollection<LiveStream> GetLiveStream(string userId)
         {
@@ -246,6 +242,7 @@ namespace MyJeepTrader.Data
             {
                 var privateSettings = GetSettings(userId);
                 var statusList = new List<LiveStream>();
+                var imagesList = new List<byte[]>();
 
                 statusList = (from fl in context.tFriendsLists
                               join su in context.tStatusUpdates on fl.FriendId equals su.Id
@@ -260,11 +257,19 @@ namespace MyJeepTrader.Data
                                       Avatar = up.Avatar,
                                       DateCreated = su.DateCreated,
                                       LikeCount = su.LikeCount,
-                                      DislikeCount = su.DislikeCount
+                                      DislikeCount = su.DislikeCount,
                                   }).OrderByDescending(su => su.DateCreated).ToList();
 
-                return statusList;
+                foreach (var status in statusList)
+                {
+                    if (context.tStatusMedias.Where(x => x.StatusId == status.StatusId).Count() != 0)
+                    {
+                        imagesList = (from i in context.tStatusMedias where i.StatusId == status.StatusId select i.Image).ToList();
+                        status.Images = imagesList;
+                    }
+                }
 
+                return statusList;
             }
         }
 
@@ -289,13 +294,23 @@ namespace MyJeepTrader.Data
                                         DislikeCount = su.DislikeCount
                                     }).OrderByDescending(su => su.DateCreated).ToList();
 
-                return publicStatus;
+                foreach (var status in publicStatus)
+                {
+                    if (context.tStatusMedias.Where(x => x.StatusId == status.StatusId).Count() != 0)
+                    {
+                        var imagesList = (from i in context.tStatusMedias where i.StatusId == status.StatusId select i.Image).ToList();
+                        status.Images = imagesList;
+                    }
+                }
 
+                return publicStatus;
             }
         }
 
         public ICollection<LivePost> GetLivePosts()
         {
+            var images = new List<byte[]>();
+
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var posts = (from p in context.tPosts
@@ -311,6 +326,15 @@ namespace MyJeepTrader.Data
                                      LikeCount = 0,
                                      DislikeCount = 0
                                  }).OrderByDescending(p => p.DateCreated).ToList();
+
+                foreach (var post in posts)
+                {
+                    if (context.tImages.Where(x => x.PostId == post.PostId).Count() != 0)
+                    {
+                        images = (from i in context.tImages where i.PostId == post.PostId select i.Image).ToList();
+                        post.Images = images;
+                    }
+                }
 
                 return posts;
             }
@@ -530,7 +554,7 @@ namespace MyJeepTrader.Data
                     return newComment;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var failedComment = new tStatusComment();
                 failedComment.StatusId = 0;
@@ -540,6 +564,16 @@ namespace MyJeepTrader.Data
 
                 return failedComment;
             }
+        }
+
+        public void AddStatusImage(byte[] imageData, int newStatusId)
+        {
+            dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
+            tStatusMedia imageToInsert = new tStatusMedia();
+            imageToInsert.Image = imageData;
+            imageToInsert.StatusId = newStatusId;
+            context.tStatusMedias.Add(imageToInsert);
+            context.SaveChanges();
         }
         #endregion
 
@@ -723,6 +757,7 @@ namespace MyJeepTrader.Data
                     {
                         Id = userId,
                         Avatar = avatar,
+                        ViewCount = 0
                     };
                     context.tUserProfiles.Add(userProfile);
                     context.SaveChanges();
