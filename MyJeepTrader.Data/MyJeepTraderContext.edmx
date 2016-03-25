@@ -166,6 +166,21 @@
           <Property Name="YearId" Type="int" />
           <Property Name="ModelId" Type="int" />
         </EntityType>
+        <EntityType Name="tNotifications">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="FromUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="CommentId" Type="int" />
+          <Property Name="MessageId" Type="int" />
+          <Property Name="StatusControlId" Type="int" />
+          <Property Name="FriendListId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateRead" Type="datetime" />
+        </EntityType>
         <EntityType Name="tPosts">
           <Key>
             <PropertyRef Name="PostId" />
@@ -550,6 +565,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tNotifications_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="tNotifications" Type="Self.tNotifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tNotifications">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tPosts_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="tPosts" Type="Self.tPosts" Multiplicity="*" />
@@ -742,6 +769,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tUserProfiles_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="tUserProfiles" Type="Self.tUserProfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tUserProfiles">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tVehicleProfileControl_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="tVehicleProfileControl" Type="Self.tVehicleProfileControl" Multiplicity="*" />
@@ -784,6 +823,7 @@
           <EntitySet Name="tModel" EntityType="Self.tModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tModelPostControl" EntityType="Self.tModelPostControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tModelYearControl" EntityType="Self.tModelYearControl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tNotifications" EntityType="Self.tNotifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPosts" EntityType="Self.tPosts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPostType" EntityType="Self.tPostType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSettings" EntityType="Self.tSettings" Schema="dbo" store:Type="Tables" />
@@ -865,6 +905,10 @@
             <End Role="tYear" EntitySet="tYear" />
             <End Role="tModelYearControl" EntitySet="tModelYearControl" />
           </AssociationSet>
+          <AssociationSet Name="FK_tNotifications_AspNetUsers" Association="Self.FK_tNotifications_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="tNotifications" EntitySet="tNotifications" />
+          </AssociationSet>
           <AssociationSet Name="FK_tPosts_AspNetUsers" Association="Self.FK_tPosts_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tPosts" EntitySet="tPosts" />
@@ -928,6 +972,10 @@
           <AssociationSet Name="FK_tTimelineSettings_AspNetUsers" Association="Self.FK_tTimelineSettings_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tSettings" EntitySet="tSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tUserProfiles_AspNetUsers" Association="Self.FK_tUserProfiles_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="tUserProfiles" EntitySet="tUserProfiles" />
           </AssociationSet>
           <AssociationSet Name="FK_tVehicleProfileControl_AspNetUsers" Association="Self.FK_tVehicleProfileControl_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1112,6 +1160,11 @@
             <End Role="tStatusUpdate" EntitySet="tStatusUpdates" />
             <End Role="tStatusComment" EntitySet="tStatusComments" />
           </AssociationSet>
+          <EntitySet Name="tNotifications" EntityType="MyJeepTraderModel.tNotification" />
+          <AssociationSet Name="FK_tNotifications_AspNetUsers" Association="MyJeepTraderModel.FK_tNotifications_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tNotification" EntitySet="tNotifications" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1171,6 +1224,7 @@
           <NavigationProperty Name="tUserProfiles" Relationship="MyJeepTraderModel.FK_tUserProfiles_AspNetUsers" FromRole="AspNetUser" ToRole="tUserProfile" />
           <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="AspNetUser" ToRole="tVehicleProfileControl" />
           <NavigationProperty Name="AspNetRoles" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="tNotifications" Relationship="MyJeepTraderModel.FK_tNotifications_AspNetUsers" FromRole="AspNetUser" ToRole="tNotification" />
         </EntityType>
         <EntityType Name="tCity">
           <Key>
@@ -1922,6 +1976,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tNotification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FromUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="CommentId" Type="Int32" />
+          <Property Name="MessageId" Type="Int32" />
+          <Property Name="StatusControlId" Type="Int32" />
+          <Property Name="FriendListId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateRead" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tNotifications_AspNetUsers" FromRole="tNotification" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_tNotifications_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tNotification" Role="tNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tNotification">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2301,6 +2383,22 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tNotifications">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tNotification">
+              <MappingFragment StoreEntitySet="tNotifications">
+                <ScalarProperty Name="DateRead" ColumnName="DateRead" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="FriendListId" ColumnName="FriendListId" />
+                <ScalarProperty Name="StatusControlId" ColumnName="StatusControlId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

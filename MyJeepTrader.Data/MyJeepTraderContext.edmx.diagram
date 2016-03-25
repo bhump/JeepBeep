@@ -72,6 +72,8 @@
         <EntityTypeShape EntityType="MyJeepTraderModel.tStatusComment" Width="1.5" PointX="7.5" PointY="35.75" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tStatusCommentMedia_tStatusComments" />
         <AssociationConnector Association="MyJeepTraderModel.FK_tStatusComments_tStatusUpdates" />
+        <EntityTypeShape EntityType="MyJeepTraderModel.tNotification" Width="1.5" PointX="5.25" PointY="53.875" />
+        <AssociationConnector Association="MyJeepTraderModel.FK_tNotifications_AspNetUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

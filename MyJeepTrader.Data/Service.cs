@@ -252,6 +252,7 @@ namespace MyJeepTrader.Data
                                   {
                                       Status = su.Status,
                                       UserName = su.AspNetUser.UserName,
+                                      UserId = su.AspNetUser.Id,
                                       IsPost = false,
                                       StatusId = su.StatusId,
                                       Avatar = up.Avatar,
@@ -286,6 +287,7 @@ namespace MyJeepTrader.Data
                                     {
                                         Status = su.Status,
                                         UserName = su.AspNetUser.UserName,
+                                        UserId = su.AspNetUser.Id,
                                         IsPost = false,
                                         StatusId = su.StatusId,
                                         Avatar = up.Avatar,
@@ -318,6 +320,7 @@ namespace MyJeepTrader.Data
                              select new LivePost
                                  {
                                      UserName = p.AspNetUser.UserName,
+                                     UserId = p.AspNetUser.Id,
                                      PostDescription = p.PostDescription,
                                      IsPost = true,
                                      PostId = p.PostId,
@@ -440,6 +443,8 @@ namespace MyJeepTrader.Data
                         context.tStatusControls.Add(statusControl);
                         context.SaveChanges();
 
+                        CreateNotification(userId, "0", 0, 0, 0, statusControl.StatusControlId);
+
                         return status.LikeCount;
                     }
                     else
@@ -494,6 +499,8 @@ namespace MyJeepTrader.Data
 
                     context.tStatusControls.Add(statusControl);
                     context.SaveChanges();
+
+                    CreateNotification(userId, "0", 0, 0, 0, statusControl.StatusControlId);
 
                     return status.DislikeCount;
                 }
@@ -550,6 +557,8 @@ namespace MyJeepTrader.Data
 
                     context.tStatusComments.Add(newComment);
                     context.SaveChanges();
+
+                    CreateNotification(userId, statusId, 0, 0, 0, 0);
 
                     return newComment;
                 }
@@ -1020,7 +1029,7 @@ namespace MyJeepTrader.Data
         #endregion
 
         #region Mailbox And Instant Chat
-        public void CreateMessage(string toUser, string fromUser, string subject, string message, bool isIm)
+        public int CreateMessage(string toUser, string fromUser, string subject, string message, bool isIm)
         {
             using (_context)
             {
@@ -1045,6 +1054,11 @@ namespace MyJeepTrader.Data
                 _context.tMessages.Add(mess);
                 _context.tMessageControls.Add(messControl);
                 _context.SaveChanges();
+
+                CreateNotification(fromUserId, "0", 0, mess.MessageId, 0, 0);
+
+
+                return mess.MessageId;
             }
         }
 
@@ -1133,7 +1147,7 @@ namespace MyJeepTrader.Data
         #endregion
 
         #region Friends/Follow
-        public string AddFriend(string userId, string friendId)
+        public int AddFriend(string userId, string friendId)
         {
             try
             {
@@ -1149,7 +1163,9 @@ namespace MyJeepTrader.Data
                     context.tFriendsLists.Add(friend);
                     context.SaveChanges();
 
-                    return "Friend Added Succesfully!";
+                    CreateNotification(userId, "0", 0, 0, friend.FriendListId, 0);
+
+                    return friend.FriendListId;
                 }
             }
             catch (DbEntityValidationException e)
@@ -1165,7 +1181,7 @@ namespace MyJeepTrader.Data
                     }
                 }
 
-                return "Error";
+                return 0;
             }
         }
 
@@ -1266,6 +1282,7 @@ namespace MyJeepTrader.Data
                     friendsList.FriendsListId = friend.f.FriendListId;
                     friendsList.Avatar = pending.Avatar;
                     friendsList.Blocked = friend.f.Block;
+                    friendsList.FriendId = friend.f.Id;
 
                     followers.Add(friendsList);
                 }
@@ -1521,6 +1538,183 @@ namespace MyJeepTrader.Data
                 return "Settings Could Not Be Saved!";
             }
         }
+        #endregion
+
+        #region Notifications
+        public int CreateNotification(string fromUserId, string statusId, int commentId, int messageId, int friendListId, int statusControlId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                if (statusId != "0")
+                {
+                    var sId = Convert.ToInt32(statusId);
+                    var userId = (from su in context.tStatusUpdates where su.StatusId == sId select su.Id).First();
+                    tNotification notification = new tNotification
+                    {
+                        Id = userId,
+                        FromUserId = fromUserId,
+                        StatusId = (sId == 0) ? (int?)null : sId,
+                        CommentId = (commentId == 0) ? (int?)null : commentId,
+                        MessageId = (messageId == 0) ? (int?)null : messageId,
+                        StatusControlId = (statusControlId == 0) ? (int?)null : statusControlId,
+                        FriendListId = (friendListId == 0) ? (int?)null : friendListId,
+                        DateCreated = DateTime.Now
+                    };
+                    context.tNotifications.Add(notification);
+                    context.SaveChanges();
+
+                    return notification.NotificationId;
+                }
+                else if (messageId != 0)
+                {
+                    var sId = 0;
+                    var userId = (from m in context.tMessageControls where m.MessageId == messageId select m.ToUserId).First();
+
+                    tNotification notification = new tNotification
+                        {
+                            Id = userId,
+                            FromUserId = fromUserId,
+                            StatusId = (sId == 0) ? (int?)null : sId,
+                            CommentId = (commentId == 0) ? (int?)null : commentId,
+                            MessageId = (messageId == 0) ? (int?)null : messageId,
+                            FriendListId = (friendListId == 0) ? (int?)null : friendListId,
+                            StatusControlId = (statusControlId == 0) ? (int?)null : statusControlId,
+                            DateCreated = DateTime.Now
+                        };
+                    context.tNotifications.Add(notification);
+                    context.SaveChanges();
+
+                    return notification.NotificationId;
+                }
+                else if (friendListId != 0)
+                {
+                    var sId = 0;
+                    var userId = (from f in context.tFriendsLists where f.FriendListId == friendListId select f.FriendId).First();
+
+                    tNotification notification = new tNotification
+                    {
+                        Id = userId,
+                        FromUserId = fromUserId,
+                        StatusId = (sId == 0) ? (int?)null : sId,
+                        CommentId = (commentId == 0) ? (int?)null : commentId,
+                        MessageId = (messageId == 0) ? (int?)null : messageId,
+                        FriendListId = (friendListId == 0) ? (int?)null : friendListId,
+                        StatusControlId = (statusControlId == 0) ? (int?)null : statusControlId,
+                        DateCreated = DateTime.Now
+                    };
+                    context.tNotifications.Add(notification);
+                    context.SaveChanges();
+
+                    return notification.NotificationId;
+                }
+                else if (statusControlId != 0)
+                {
+                    var sId = 0;
+                    var userId = (from sc in context.tStatusControls
+                                  join s in context.tStatusUpdates on sc.StatusId equals s.StatusId
+                                  where sc.StatusControlId == statusControlId
+                                  select s.Id).First();
+
+                    tNotification notification = new tNotification
+                    {
+                        Id = userId,
+                        FromUserId = fromUserId,
+                        StatusId = (sId == 0) ? (int?)null : sId,
+                        CommentId = (commentId == 0) ? (int?)null : commentId,
+                        MessageId = (messageId == 0) ? (int?)null : messageId,
+                        FriendListId = (friendListId == 0) ? (int?)null : friendListId,
+                        StatusControlId = (statusControlId == 0) ? (int?)null : statusControlId,
+                        DateCreated = DateTime.Now
+                    };
+                    context.tNotifications.Add(notification);
+                    context.SaveChanges();
+
+                    return notification.NotificationId;
+                }
+            }
+
+            //if it makes it to here, something bad has happened. 
+            return 0;
+        }
+
+        public List<Notifications> GetNotifications(string userId)
+        {
+            var comments = new List<Notifications>();
+            var messages = new List<Notifications>();
+            var likes = new List<Notifications>();
+            var friends = new List<Notifications>();
+
+            var notifications = new List<Notifications>();
+
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                comments = (from n in context.tNotifications
+                            join c in context.tStatusComments on n.StatusId equals c.StatusId
+                            join u in context.AspNetUsers on n.FromUserId equals u.Id
+                            join p in context.tUserProfiles on n.FromUserId equals p.Id
+                            where n.Id == userId
+                            select new Notifications
+                            {
+                                Avatar = p.Avatar,
+                                FromUserName = u.UserName,
+                                NotificationId = n.NotificationId,
+                                CommentId = c.CommentId,
+                                Comment = c.Comment,
+                                DateCreated = n.DateCreated
+                            }).OrderByDescending(x => x.DateCreated).ToList();
+
+                messages = (from n in context.tNotifications
+                            join m in context.tMessages on n.MessageId equals m.MessageId
+                            join u in context.AspNetUsers on n.FromUserId equals u.Id
+                            join p in context.tUserProfiles on n.FromUserId equals p.Id
+                            where n.Id == userId
+                            select new Notifications
+                            {
+                                Avatar = p.Avatar,
+                                FromUserName = u.UserName,
+                                NotificationId = n.NotificationId,
+                                MessageId = m.MessageId,
+                                Message = m.Message,
+                                DateCreated = n.DateCreated
+                            }).OrderByDescending(x => x.DateCreated).ToList();
+
+                likes = (from n in context.tNotifications
+                         join l in context.tStatusControls on n.StatusControlId equals l.StatusControlId
+                         join u in context.AspNetUsers on n.FromUserId equals u.Id
+                         join p in context.tUserProfiles on n.FromUserId equals p.Id
+                         where n.Id == userId
+                         select new Notifications
+                         {
+                             Avatar = p.Avatar,
+                             FromUserName = u.UserName,
+                             NotificationId = n.NotificationId,
+                             LikedBy = l.LikedBy,
+                             DislikedBy = l.DisLikedBy,
+                             DateCreated = n.DateCreated
+                         }).OrderByDescending(x => x.DateCreated).ToList();
+
+                friends = (from n in context.tNotifications
+                           join f in context.tFriendsLists on n.FriendListId equals f.FriendListId
+                           join u in context.AspNetUsers on n.FromUserId equals u.Id
+                           join p in context.tUserProfiles on n.FromUserId equals p.Id
+                           where n.Id == userId && f.Pending == true
+                           select new Notifications
+                             {
+                                 Avatar = p.Avatar,
+                                 FromUserName = u.UserName,
+                                 NotificationId = n.NotificationId,
+                                 FriendListId = f.FriendListId,
+                                 FriendPending = f.Pending,
+                                 DateCreated = n.DateCreated
+                             }).OrderByDescending(x => x.DateCreated).ToList();
+
+                notifications = comments.Concat(messages).Concat(likes).Concat(friends).OrderByDescending(x => x.DateCreated).ToList();
+
+            }
+
+            return notifications;
+        }
+
         #endregion
 
     }// public class service

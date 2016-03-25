@@ -24,6 +24,19 @@ namespace MyJeepTrader.Web.WebServices
     {
 
         [WebMethod]
+        [ScriptMethod]
+        public string AddFriend(string friendId)
+        {
+            Service service = new Service();
+            var userId = User.Identity.GetUserId();
+
+            var addFriend = service.AddFriend(userId, friendId);
+            //service.CreateNotification(userId, "0", 0, 0, addFriend, 0);
+
+            return "Friend added successfully!";
+        }
+
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string AcceptFriend(string friendsListId)
         {

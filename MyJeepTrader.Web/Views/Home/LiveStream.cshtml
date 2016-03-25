@@ -2,7 +2,9 @@
 @{
     ViewBag.Title = "LiveStream";
 }
-
+<link rel="stylesheet" href="~/Content/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-buttons.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-thumbs.css" media="screen" />
 <h2>LiveStream</h2>
 <div class="content">
     <div class="row">
@@ -88,7 +90,7 @@
                                                 foreach (var image in stream.FeedImages)
                                                 {
                                                     string convertedImage = Convert.ToBase64String(image.ToArray());
-                                                    <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                    <a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
                                                         <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
                                                     </a>
                                                 }
@@ -102,7 +104,7 @@
                                             <a class="btn-link postDropdown" id="dropdownMenu1" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                 <li><a id="aFullPost" onclick="RedirectToPost('@stream.FeedId')" class="fullPost"><span class="glyphicon glyphicon-eye-open">&nbsp;<label>View</label></span></a></li>
-                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')" class="addFriend"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aAddFriend" class="addFriend" data-addfriend="@stream.FeedUserId"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
                                                 <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
                                             </ul>
                                         </div>
@@ -146,7 +148,7 @@
                                                         foreach (var image in stream.FeedImages)
                                                         {
                                                             string convertedImage = Convert.ToBase64String(image.ToArray());
-                                                            <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                            <a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
                                                                 <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
                                                             </a>
                                                         }
@@ -160,18 +162,18 @@
                                     <div class="col-lg-6">
                                         @if (stream.FeedLikeCount == 0)
                                         {
-                                            <a id="aEmptyLikeCount" data-lcount="@stream.FeedId"><span class="glyphicon glyphicon-heart-empty"></span></a>
+                                            <a id="aEmptyLikeCount" data-lcount="@stream.FeedId" class="likeCount"><span class="glyphicon glyphicon-heart-empty"></span></a>
                                         }
                                         else
                                         {
-                                            <a id="aHeartLikeCount" data-lcount="@stream.FeedId"><span class="glyphicon glyphicon-heart"></span></a>
+                                            <a id="aHeartLikeCount" data-lcount="@stream.FeedId" class="likeCount"><span class="glyphicon glyphicon-heart"></span></a>
                                         }
                                         &nbsp;
-                                        <a id="aCountLikeCount" data-lcount="@stream.FeedId"><span><label id="lblLikeCount_@stream.FeedId" class="likeCount">@stream.FeedLikeCount</label></span></a>
+                                        <a id="aCountLikeCount" data-lcount="@stream.FeedId" class="likeCount"><span><label id="lblLikeCount_@stream.FeedId">@stream.FeedLikeCount</label></span></a>
                                         &nbsp;
-                                        <a onclick="UpdateDislikeCount('@stream.FeedId')"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+                                        <a class="dislikeCount" data-dcount="@stream.FeedId"><span class="glyphicon glyphicon-thumbs-down"></span></a>
                                         &nbsp;
-                                        <a onclick="UpdateDislikeCount('@stream.FeedId')"><span><label id="lblDislikeCount_@stream.FeedId">@stream.FeedDislikeCount</label></span></a>
+                                        <a class="dislikeCount" data-dcount="@stream.FeedId"><span><label id="lblDislikeCount_@stream.FeedId">@stream.FeedDislikeCount</label></span></a>
                                         &nbsp;
                                         <a>Comments<span><label id="lblCommentCount_@stream.FeedId" class="commentCount"></label></span></a>
                                     </div>
@@ -180,7 +182,7 @@
                                             <a class="btn-link statusDropdown" id="dropdownMenu1" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                 <li><a id="aComment"><span class="glyphicon glyphicon-comment aComment" data-status="@stream.FeedId">&nbsp;<label>Comment</label></span></a></li>
-                                                <li><a id="aAddFriend" onclick="AddFriend('@stream.FeedUserName')" class="addFriend"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aAddFriend" data-addfriend="@stream.FeedUserId" class="addFriend"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
                                                 <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
                                             </ul>
                                         </div>
@@ -226,9 +228,11 @@
     <script src="~/Scripts/jquery.fancybox-thumbs.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $(".fancybox-thumb").fancybox({
+            $('.fancybox-thumb').fancybox({
                 prevEffect: 'none',
                 nextEffect: 'none',
+                openEffect: 'elastic',
+                closeEffect: 'elastic',
                 helpers: {
                     title: {
                         type: 'outside'
@@ -239,6 +243,13 @@
                     }
                 }
             });
+
+        });
+
+        $('.addFriend').click(function (e) {
+            var friendId = $(this).data("addfriend");
+            AddFriend(friendId);
+            e.stopPropagation();
         });
 
         $('.Posts').click(function () {
@@ -279,38 +290,34 @@
             e.stopPropagation();
         });
 
-        $('#aEmptyLikeCount').click(function (e) {
+        $('.likeCount').click(function (e) {
             var statusId = $(this).data("lcount");
             UpdateLikeCount(statusId);
             e.stopPropagation();
         });
 
-        $('#aHeartLikeCount').click(function (e) {
-            var statusId = $(this).data("lcount");
-            UpdateLikeCount(statusId);
+        $('.dislikeCount').click(function (e) {
+            var statusId = $(this).data("dcount");
+            UpdateDislikeCount(statusId);
             e.stopPropagation();
         });
 
-        $('#aCountLikeCount').click(function (e) {
-            var statusId = $(this).data("lcount");
-            UpdateLikeCount(statusId);
-            e.stopPropagation();
-        });
-
-        function AddFriend(friendName) {
-
+        function AddFriend(friendId, row) {
             var data = {
-                friendName: friendName
-            };
+                friendId: friendId
+            }
 
             $.ajax({
                 type: 'POST',
-                url: '/Home/AddFriend',
+                url: '/Webservices/FriendManagementWebService.asmx/AddFriend',
                 data: JSON.stringify(data),
                 contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
                 success: function (result) {
-                    $('#divSuccess').show();
-                    $('#spanSuccessMessage').html("Settings Saved Successfully!");
+                    row.find('.addFriend').text("Unfollow");
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
                 }
             });
         }

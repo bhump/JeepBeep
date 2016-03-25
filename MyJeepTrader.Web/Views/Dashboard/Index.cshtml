@@ -565,7 +565,7 @@
                                             }
                                             else
                                             {
-                                                <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@followers.FriendsListId">Follow</button>
+                                                <button href="#" id="btnAddFriend" class="btn btn-link friend addFriend" data-friendid="@followers.UserId" value="@followers.FriendId">Follow</button>
                                             }
                                             if (following.Blocked == true)
                                             {
@@ -723,6 +723,13 @@
         AcceptFriend(friendsListId, row);
     });
 
+    $('.addFriend').click(function () {
+        var fromUser = $(this).data('friendId');
+        var friendId = $(this).val();
+        var row = $(this).closest('tr');
+        AddFriend(friendId, row);
+    });
+
     $('.rejectFriend').click(function () {
         var friendsListId = $(this).val();
         var row = $(this).closest('tr');
@@ -832,6 +839,26 @@
             dataType: 'json',
             success: function (result) {
                 //row.find('.blockFriend').text("Unblock");
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function AddFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/AddFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').text("Unfollow");
             },
             error: function (errorThrown) {
                 console.log(errorThrown);

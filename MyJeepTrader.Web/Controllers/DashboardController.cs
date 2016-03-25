@@ -327,7 +327,8 @@ namespace MyJeepTrader.Web.Controllers
                 var message = collection["Message"].ToString();
                 var isIm = false;
 
-                service.CreateMessage(to, user.UserName, subject, message, isIm);
+                var messageId = service.CreateMessage(to, user.UserName, subject, message, isIm);
+                //service.CreateNotification(user.Id, "0", 0, messageId, 0, 0);
 
                 return RedirectToAction("Index");
             }

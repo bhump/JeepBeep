@@ -11,6 +11,8 @@ namespace MyJeepTrader.Data.Models
     {
         public abstract string FeedUserName { get; }
 
+        public abstract string FeedUserId { get; }
+
         public abstract string FeedDescription { get; }
 
         public abstract bool IsFeedPost { get; }
@@ -32,6 +34,8 @@ namespace MyJeepTrader.Data.Models
     {
         public string UserName { get; set; }
 
+        public string UserId { get; set; }
+
         public string PostDescription { get; set; }
 
         public bool IsPost { get; set; }
@@ -51,6 +55,11 @@ namespace MyJeepTrader.Data.Models
         public override string FeedUserName
         {
             get { return this.UserName; }
+        }
+
+        public override string FeedUserId
+        {
+            get { return this.UserId; }
         }
 
         public override string FeedDescription
@@ -98,6 +107,8 @@ namespace MyJeepTrader.Data.Models
     {
         public string UserName { get; set; }
 
+        public string UserId { get; set; }
+
         public string Status { get; set; }
 
         public bool IsPost { get; set; }
@@ -117,6 +128,11 @@ namespace MyJeepTrader.Data.Models
         public override string FeedUserName
         {
             get { return this.UserName; }
+        }
+
+        public override string FeedUserId
+        {
+            get { return this.UserId; }
         }
 
         public override string FeedDescription
