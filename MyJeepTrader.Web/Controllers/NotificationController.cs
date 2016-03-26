@@ -14,6 +14,7 @@ namespace MyJeepTrader.Web.Controllers
     public class NotificationController : Controller
     {
         // GET: Notification
+        [Authorize]
         public ActionResult Index()
         {
             Service service = new Service();

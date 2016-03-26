@@ -590,6 +590,33 @@ table#inbox {
     color: gray;
 }
 
-.commentBox{
+.commentBox {
     width: 100%;
+}
+
+label.commentTitle {
+    color: gray;
+    font-weight: bolder;
+}
+
+label.MessageTitle {
+    color: gray;
+    font-weight: bolder;
+}
+
+label.Status {
+    padding-left: 50px;
+    color: gray;
+    font-weight: bold;
+}
+
+label.Comment {
+    color: #f05f40;
+    font-weight: bold;
+}
+
+label.ReplyTo {
+    padding-left: 50px;
+    color: gray;
+    font-weight: bold;
 }

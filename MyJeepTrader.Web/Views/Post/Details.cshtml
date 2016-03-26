@@ -6,12 +6,46 @@
 <link rel="stylesheet" href="~/Content/jquery.fancybox.css" media="screen" />
 <link rel="stylesheet" href="~/Content/jquery.fancybox-buttons.css" media="screen" />
 <link rel="stylesheet" href="~/Content/jquery.fancybox-thumbs.css" media="screen" />
-<div class="container">
-    <div class="row well well-sm center-block">
-        <h2>Post Details</h2>
-        <div class="col-lg-12">
-            <div class="row col-lg-offset-1">
-                <div class="col-lg-4">
+<h2>Post Details</h2>
+<div class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div>
+                    <div class="col-md-12">
+                        @if (ViewBag.Message != null)
+                        {
+                            if (ViewBag.Message.Contains("wrong"))
+                            {
+                                <div id="divError" class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanErrorMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="divSuccess" class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanSuccessMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="well well-sm">
+                <div class=" col-lg-4">
                     <div class="row">
                         <div class="col-lg-12">
                             <label>State: </label>
@@ -58,52 +92,58 @@
                         </div>
                     }
                 </div>
-            </div>
-            <div class="row col-lg-offset-1">
-                <div class="col-lg-6">
-                    <div class="tab_container">
-                        <p style="display:block">
-                            @foreach (var image in Model.Images)
-                            {
-                                string convertedImage = Convert.ToBase64String(image.ToArray());
-                                <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
-                                    <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
-                                </a>
-                            }
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <div class="row col-lg-offset-1">
-                <div class="col-lg-12">
-                    <div class="col-lg-12">
-                        <label>Title: </label>
-                        @Html.DisplayFor(model => model.PostTitle)
-                    </div>
-                    <div class="col-lg-12">
-                        <label>Description: </label>
-                        <div>
-                            <p>
-                                @Html.DisplayFor(model => model.PostDescription)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="tab_container">
+                            <p style="display:block">
+                                @foreach (var image in Model.Images)
+                                {
+                                    string convertedImage = Convert.ToBase64String(image.ToArray());
+                                    <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                        <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                    </a>
+                                }
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-offset-1">
+                <br />
+                <div class="row">
                     <div class="col-lg-12">
-                        <div class="text-right">
-                            <h4>Inquire About this Post</h4>
-                            <a id="aMessageUser" type="button" class="btn-info-home glyphicon glyphicon-inbox btn-lg" href="#"></a>
+                        <div class="col-lg-12">
+                            <label>Title: </label>
+                            @Html.DisplayFor(model => model.PostTitle)
+                        </div>
+                        <div class="col-lg-12">
+                            <label>Description: </label>
+                            <div>
+                                <p>
+                                    @Html.DisplayFor(model => model.PostDescription)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div class="col-lg-12">
+                            <div class="text-right">
+                                <h4>Inquire About this Post</h4>
+                                <a id="aMessageUser" type="button" class="btn-info-home glyphicon glyphicon-inbox btn-lg" href="#"></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="placeholder">
+
+            </div>
+        </div>
     </div>
 </div>
+
 <!-- Modal content-->
 <div id="CreateMessageModal" class="modal fade" role="dialog">
     @using (Ajax.BeginForm("CreateMessage", "Post", FormMethod.Post, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, HttpMethod = "POST" }, new { @class = "create-message" }))
@@ -124,7 +164,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", id="taMessage", req = "taMessage" })
+                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", id = "taMessage", req = "taMessage" })
                     </div>
                 </div>
                 <div class="modal-footer">

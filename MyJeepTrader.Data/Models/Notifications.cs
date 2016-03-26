@@ -20,6 +20,10 @@ namespace MyJeepTrader.Data.Models
 
         public int? MessageId { get; set; }
 
+        public string Status { get; set; }
+
+        public DateTime? StatusDate { get; set; }
+
         public int StatusControlId { get; set; }
 
         public int? FriendListId { get; set; }
@@ -29,6 +33,8 @@ namespace MyJeepTrader.Data.Models
         public DateTime? DateRead { get; set; }
 
         public string Comment { get; set; }
+
+        public string OriginalMessage { get; set; }
 
         public string Message { get; set; }
 

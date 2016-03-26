@@ -68,7 +68,17 @@
                                         {
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <label>@notification.FromUserName <span>commented on your status!</span></label>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label class="commentTitle">Commented on your status from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate) </label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label class="Status">@notification.Status</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label class="Comment">@notification.Comment</label>
                                                 </div>
                                             </div>
                                         }
@@ -76,7 +86,60 @@
                                         {
                                             <div class="row">
                                                 <div class="col-sm-12">
-
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label class="MessageTitle">New Personal Message!</label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <a>Click to View!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (notification.LikedBy != null)
+                                        {
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label class="MessageTitle">@notification.FromUserName loved your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)!</label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label class="Status">@notification.Status</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (notification.DislikedBy != null)
+                                        {
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label class="MessageTitle">Oh No! @notification.FromUserName hated your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)! Better luck next time. :p</label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label class="Status">@notification.Status</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (notification.FriendListId != null)
+                                        {
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label class="MessageTitle">You have a new follower! Accept them now so they can see your beeps!</label>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <a>Accept</a>
+                                                            <a>Reject</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         }
@@ -88,11 +151,12 @@
                     <hr />
                 }
             </div>
-            <div class="col-md-3">
-                <div class="placeholder">
+        </div>
+        <div class="col-md-3">
+            <div class="placeholder">
 
-                </div>
             </div>
         </div>
     </div>
+</div>
 
