@@ -78,6 +78,15 @@ div.Status {
         background-color: lightgrey;
     }
 
+div.Notifications {
+    background-color: none;
+    padding: 10px 10px 10px 10px;
+}
+
+    div.Notifications:hover {
+        background-color: lightgrey;
+    }
+
 .column {
     width: 49.5%;
     margin-right: .5%;
@@ -584,7 +593,7 @@ table#inbox {
     float: left;
     height: 50px;
     width: 50px;
-    /*padding: 15px 5px 15px 25px;*/
+    /*padding: 15px 15px 15px 25px;*/
     font-size: 18px;
     line-height: 20px;
     color: gray;
@@ -619,4 +628,21 @@ label.ReplyTo {
     padding-left: 50px;
     color: gray;
     font-weight: bold;
+}
+
+label.NotificationCount {
+    font-size: xx-small;
+    position: absolute;
+    top: 5px;
+    left: 98px;
+}
+
+li.Notification {
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.notificationIcon{
+    color:red;
 }

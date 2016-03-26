@@ -42,113 +42,124 @@
                 </div>
             </div>
             <div class="well well-sm">
+
                 @foreach (var notification in Model.Notifications)
                 {
-                    <div id="divNotification" class="Posts" data-post="@notification.NotificationId">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="ui-icon-image">
-                                    @if (notification.Avatar != null)
-                                    {
-                                        <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @notification.FromUserName})" alt="Image Unavailable" class="img-circle streamImage" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="text-left row">
-                                    <div class="col-md-12">
-                                        <label id="lblUserName">@notification.FromUserName</label>&nbsp;<label class="pull-right">@String.Format("{0:M/dd/yyyy}", @notification.DateCreated)</label>
+                    <div class="Notifications">
+                        <div id="divNotification" class="divNotifications" data-notification="@notification.NotificationId">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div>
+                                        @if (notification.DateRead == null)
+                                        {
+                                            <span id="notificationId_@notification.NotificationId" class="glyphicon glyphicon-exclamation-sign notificationIcon"></span>
+                                        }
                                     </div>
-                                    <div class="col-md-12">
-                                        @if (notification.Comment != null)
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="ui-icon-image">
+                                        @if (notification.Avatar != null)
                                         {
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label class="commentTitle">Commented on your status from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate) </label>
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @notification.FromUserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="text-left row">
+                                        <div class="col-md-12">
+                                            <label id="lblUserName">@notification.FromUserName</label>&nbsp;<label class="pull-right">@String.Format("{0:M/dd/yyyy}", @notification.DateCreated)</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if (notification.Comment != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="commentTitle">Commented on your status from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate) </label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-sm-12">
-                                                            <label class="Status">@notification.Status</label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <label class="Comment">@notification.Comment</label>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.Message != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">New Personal Message!</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <a href='@Url.RouteUrl("Dashboard", new { MailBox = "MailBox" })'>Go To Mailbox!</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <label class="Comment">@notification.Comment</label>
-                                                </div>
-                                            </div>
-                                        }
-                                        else if (notification.Message != null)
-                                        {
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label class="MessageTitle">New Personal Message!</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <a>Click to View!</a>
+                                            }
+                                            else if (notification.LikedBy != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">@notification.FromUserName loved your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)!</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
-                                        else if (notification.LikedBy != null)
-                                        {
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label class="MessageTitle">@notification.FromUserName loved your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)!</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label class="Status">@notification.Status</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                        else if (notification.DislikedBy != null)
-                                        {
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label class="MessageTitle">Oh No! @notification.FromUserName hated your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)! Better luck next time. :p</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label class="Status">@notification.Status</label>
+                                            }
+                                            else if (notification.DislikedBy != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">Oh No! @notification.FromUserName hated your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)! Better luck next time. :p</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
-                                        else if (notification.FriendListId != null)
-                                        {
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label class="MessageTitle">You have a new follower! Accept them now so they can see your beeps!</label>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <a>Accept</a>
-                                                            <a>Reject</a>
+                                            }
+                                            else if (notification.FriendListId != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">You have a new follower! Accept them now so they can see your beeps!</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <a>Accept</a>
+                                                                <a>Reject</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <hr />
                     </div>
-                    <hr />
                 }
             </div>
         </div>
@@ -159,4 +170,50 @@
         </div>
     </div>
 </div>
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $('.divNotifications').hover(function () {
+        var notificationId = $(this).data('notification');
+        UpdateNotification(notificationId);
+        NotificationCount();
+    });
+
+    function UpdateNotification(notificationId) {
+
+        var data = {
+            notificationId: notificationId
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/NotificationWebService.asmx/UpdateNotification',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('#notificationId_' + notificationId).addClass('hidden');
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function NotificationCount() {
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/NotificationWebService.asmx/GetNotificationCount',
+            data: {},
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('.notification-count').text(result.d);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+</script>
 

@@ -34,7 +34,7 @@
                             <li>@Html.ActionLink("Alpha Testing", "AlphaTesting", "Home")</li>
                             <li>@Html.ActionLink("Feedback", "Index", "Feedback")</li>
                             <li>@Html.ActionLink("Stream", "LiveStream", "Home")</li>
-                            <li>@Html.ActionLink("Notifications", "Index", "Notification")</li>
+                            <li class="Notification">@Html.ActionLink("Notifications", "Index", "Notification")<label class="notification-count NotificationCount"></label></li>
                         }
                     </ul>
                     <div class="navbar-collapse">
@@ -59,6 +59,31 @@
     <script type="text/javascript" src="~/Scripts/jquery.submissionOK.js"></script>
     @Scripts.Render("~/bundles/MyJeepTrader")
     @RenderSection("scripts", required: false)
+    <script>
+
+        $(document).ready(function () {
+            NotificationCount();
+        });
+
+        function NotificationCount() {
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/NotificationWebService.asmx/GetNotificationCount',
+                data: {},
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.d != 0) {
+                        $('.notification-count').text(result.d);
+                    }
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+    </script>
 
 </body>
 </html>

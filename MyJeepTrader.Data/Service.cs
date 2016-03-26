@@ -1584,12 +1584,12 @@ namespace MyJeepTrader.Data
                                   where sc.CommentId == commentId
                                   select s.Id).First();
                     }
-                    else if(statusControlId != 0)
+                    else if (statusControlId != 0)
                     {
-                         userId = (from sc in context.tStatusControls
-                                      join s in context.tStatusUpdates on sc.StatusId equals s.StatusId
-                                      where sc.StatusControlId == statusControlId
-                                      select s.Id).First();
+                        userId = (from sc in context.tStatusControls
+                                  join s in context.tStatusUpdates on sc.StatusId equals s.StatusId
+                                  where sc.StatusControlId == statusControlId
+                                  select s.Id).First();
                     }
 
                     tNotification notification = new tNotification
@@ -1644,7 +1644,8 @@ namespace MyJeepTrader.Data
                                 Comment = c.Comment,
                                 Status = s.Status,
                                 StatusDate = s.DateCreated,
-                                DateCreated = n.DateCreated
+                                DateCreated = n.DateCreated,
+                                DateRead = n.DateRead
                             }).ToList();
 
                 messages = (from n in context.tNotifications
@@ -1659,7 +1660,8 @@ namespace MyJeepTrader.Data
                                 NotificationId = n.NotificationId,
                                 MessageId = m.MessageId,
                                 Message = m.Message,
-                                DateCreated = n.DateCreated
+                                DateCreated = n.DateCreated,
+                                DateRead = n.DateRead
                             }).ToList();
 
                 likes = (from n in context.tNotifications
@@ -1677,7 +1679,8 @@ namespace MyJeepTrader.Data
                              DislikedBy = l.DisLikedBy,
                              Status = s.Status,
                              StatusDate = s.DateCreated,
-                             DateCreated = n.DateCreated
+                             DateCreated = n.DateCreated,
+                             DateRead = n.DateRead
                          }).ToList();
 
                 friends = (from n in context.tNotifications
@@ -1692,7 +1695,8 @@ namespace MyJeepTrader.Data
                                  NotificationId = n.NotificationId,
                                  FriendListId = f.FriendListId,
                                  FriendPending = f.Pending,
-                                 DateCreated = n.DateCreated
+                                 DateCreated = n.DateCreated,
+                                 DateRead = n.DateRead
                              }).ToList();
 
                 notifications = comments.Concat(messages).Concat(likes).Concat(friends).OrderByDescending(x => x.DateCreated).ToList();
@@ -1700,6 +1704,25 @@ namespace MyJeepTrader.Data
             }
 
             return notifications;
+        }
+
+        public int GetNotificationCount(string userId)
+        {
+            var count = GetNotifications(userId).Where(x => x.DateRead == null).Count();
+
+            return count;
+        }
+
+        public string UpdateNotifcation(int notificationId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var notification = (from n in context.tNotifications where n.NotificationId == notificationId select n).First();
+                notification.DateRead = DateTime.Now;
+                context.SaveChanges();
+
+                return "Read";
+            }
         }
 
         #endregion
