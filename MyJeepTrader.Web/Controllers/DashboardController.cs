@@ -72,6 +72,7 @@ namespace MyJeepTrader.Web.Controllers
             var following = service.GetFriends(user.Id);
             var pending = service.GetPendingFriends(user.Id);
             var followers = service.GetFollowerFriends(user.Id);
+            var userPending = service.GetUsersPending(user.Id);
 
             DashboardIndexViewModel model = new DashboardIndexViewModel();
 
@@ -113,6 +114,7 @@ namespace MyJeepTrader.Web.Controllers
             model.Followers = followers;
             model.Following = following;
             model.Pending = pending;
+            model.UsersPending = userPending;
 
             return View(model);
         }
@@ -209,7 +211,7 @@ namespace MyJeepTrader.Web.Controllers
                 AddErrors(result);
             }
 
-            return RedirectToAction("Admin", new { Message = ManageMessageId.Error});
+            return RedirectToAction("Admin", new { Message = ManageMessageId.Error });
         }
 
         [HttpPost]
@@ -236,7 +238,7 @@ namespace MyJeepTrader.Web.Controllers
                 var firstName = collection["FirstName"] == "" ? null : collection["FirstName"].ToString();
                 var lastName = collection["LastName"] == "" ? null : collection["LastName"].ToString();
                 var birthDate = collection["BirthDate"] == " " ? null : collection["BirthDate"].ToString();
-                var avatar = imageData.Length ==  0 ? null : imageData;
+                var avatar = imageData.Length == 0 ? null : imageData;
                 var description = collection["Description"] == "" ? null : collection["Description"].ToString();
                 var facebook = collection["Facebook"] == "" ? null : collection["Facebook"].ToString();
                 var twitter = collection["Twitter"] == "" ? null : collection["Twitter"].ToString();

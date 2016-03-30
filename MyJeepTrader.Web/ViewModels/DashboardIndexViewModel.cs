@@ -173,6 +173,8 @@ namespace MyJeepTrader.Web.ViewModels
         public List<FriendsList> Pending { get; set; }
 
         public List<FriendsList> Followers { get; set; }
+
+        public List<FriendsList> UsersPending { get; set; }
         #endregion
 
         #region privacy settings

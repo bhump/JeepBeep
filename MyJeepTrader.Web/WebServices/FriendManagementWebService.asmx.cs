@@ -60,6 +60,18 @@ namespace MyJeepTrader.Web.WebServices
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string RemoveFriend(string friendId)
+        {
+            Service service = new Service();
+            var userId = User.Identity.GetUserId();
+
+            var removeFriend = service.RemoveFriend(friendId, userId);
+
+            return removeFriend;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string BlockFriend(string friendsListId, string blocked)
         {
             Service service = new Service();

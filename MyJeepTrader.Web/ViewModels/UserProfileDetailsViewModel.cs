@@ -86,7 +86,7 @@ namespace MyJeepTrader.Web.ViewModels
         #endregion
 
         #region status
-        public List<UserStatus> UsersStatus { get; set; }
+        public List<LiveStream> UsersStatus { get; set; }
         #endregion
 
         #region blocked/allowed users

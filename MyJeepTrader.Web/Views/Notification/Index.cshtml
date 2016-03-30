@@ -146,8 +146,9 @@
                                                                 <label class="MessageTitle">You have a new follower! Accept them now so they can see your beeps!</label>
                                                             </div>
                                                             <div class="col-sm-12">
-                                                                <a>Accept</a>
-                                                                <a>Reject</a>
+                                                                <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@notification.FriendListId">Accept</button>
+                                                                <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@notification.FriendListId">Reject</button>
+                                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@notification.FriendListId">Block</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -176,6 +177,39 @@
         var notificationId = $(this).data('notification');
         UpdateNotification(notificationId);
         NotificationCount();
+    });
+
+    $('.acceptFriend').click(function () {
+        var friendsListId = $(this).val();
+        var row = $(this).closest('tr');
+        AcceptFriend(friendsListId, row);
+    });
+
+    $('.addFriend').click(function () {
+        var fromUser = $(this).data('friendId');
+        var friendId = $(this).val();
+        var row = $(this).closest('tr');
+        AddFriend(friendId, row);
+    });
+
+    $('.rejectFriend').click(function () {
+        var friendsListId = $(this).val();
+        var row = $(this).closest('tr');
+        RejectFriend(friendsListId, row);
+    });
+
+    $('.blockFriend').click(function () {
+        var friendsListId = $('#btnBlockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = true;
+        BlockFriend(friendsListId, blocked, row);
+    });
+
+    $('.unblockFriend').click(function () {
+        var friendsListId = $('#btnUnblockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = false;
+        BlockFriend(friendsListId, blocked, row);
     });
 
     function UpdateNotification(notificationId) {
@@ -208,6 +242,121 @@
             dataType: 'json',
             success: function (result) {
                 $('.notification-count').text(result.d);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function AcceptFriend(friendsListId, row) {
+
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/AcceptFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //$('#spanSuccessMessage').html("Friend Accepted!");
+                //$('#divFriendsSuccess').removeClass("in");
+                //$('#divFriendsSuccess').delay(100).addClass("in").fadeOut(2000);
+
+                row.find('td').fadeOut(500, function () {
+                    row.remove();
+                });
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function RejectFriend(friendsListId, row) {
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/RejectFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //$('#divFriendsSuccess').removeClass("hidden alert-success").addClass("alert-info");
+                //$('#spanSuccessMessage').html("Friend Rejected!");
+
+                //row.find('td').fadeOut(500, function () {
+                //    row.remove();
+                //});
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function BlockFriend(friendsListId, block, row) {
+        var data = {
+            friendsListId: friendsListId,
+            blocked: block
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/BlockFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //row.find('.blockFriend').text("Unblock");
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function AddFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/AddFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').addClass('hidden');
+                row.find('.pending').removeClass('hidden');
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function RemoveFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/RemoveFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').removeClass('hidden');
+                row.find('.pending').addClass('hidden');
             },
             error: function (errorThrown) {
                 console.log(errorThrown);

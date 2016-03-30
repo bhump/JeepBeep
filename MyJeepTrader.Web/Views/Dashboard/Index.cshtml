@@ -433,25 +433,18 @@
                                             <span>@friends.LastName</span>
                                         </td>
                                         <td width="30%">
-                                            @foreach (var following in Model.Following)
+
+                                            <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@friends.FriendsListId">Unfollow</button>
+
+                                            @if (friends.Blocked == true)
                                             {
-                                                if (following.UserName == friends.UserName)
-                                                {
-                                                    <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@friends.FriendsListId">Unfollow</button>
-                                                }
-                                                else
-                                                {
-                                                    <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@friends.FriendsListId">Follow</button>
-                                                }
-                                                if (friends.Blocked == true)
-                                                {
-                                                    <button href="#" id="btnUnblockFriend" class="btn btn-link friend unblockFriend" value="@friends.FriendsListId">Unblock</button>
-                                                }
-                                                else
-                                                {
-                                                    <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@friends.FriendsListId">Block</button>
-                                                }
+                                                <button href="#" id="btnUnblockFriend" class="btn btn-link friend unblockFriend" value="@friends.FriendsListId">Unblock</button>
                                             }
+                                            else
+                                            {
+                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@friends.FriendsListId">Block</button>
+                                            }
+
                                         </td>
                                     </tr>
                                 }
@@ -557,24 +550,31 @@
                                             <span>@followers.LastName</span>
                                         </td>
                                         <td width="30%">
-                                            @foreach (var following in Model.Following)
+                                            @if (Model.Following.Any(x => x.FriendsListId == followers.FriendsListId))
                                             {
-                                                if (following.UserName == followers.UserName)
+                                                <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@followers.FriendsListId">Unfollow</button>
+                                            }
+                                            else
+                                            {
+                                                if (Model.UsersPending.Any(x => x.UserId == followers.FriendId))
                                                 {
-                                                    <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@followers.FriendsListId">Unfollow</button>
+                                                    <button href="#" id="btnDeleteFriend" class="btn btn-link friend pending" value="@followers.UserId">Pending</button>
+                                                    <button href="#" id="btnAddFriend" class="btn btn-link friend addFriend hidden" data-friendid="@followers.FriendId" value="@followers.UserId">Follow</button>
+
                                                 }
                                                 else
                                                 {
-                                                    <button href="#" id="btnAddFriend" class="btn btn-link friend addFriend" data-friendid="@followers.UserId" value="@followers.FriendId">Follow</button>
+                                                    <button href="#" id="btnAddFriend" class="btn btn-link friend addFriend" data-friendid="@followers.FriendId" value="@followers.UserId">Follow</button>
+                                                    <button href="#" id="btnDeleteFriend" class="btn btn-link friend pending hidden" value="@followers.UserId">Pending</button>
                                                 }
-                                                if (following.Blocked == true)
-                                                {
-                                                    <button href="#" id="btnUnBlockFriend" class="btn btn-link friend unblockFriend" value="@followers.FriendsListId">Unblock</button>
-                                                }
-                                                else
-                                                {
-                                                    <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@followers.FriendsListId">Block</button>
-                                                }
+                                            }
+                                            @if (followers.Blocked == true)
+                                            {
+                                                <button href="#" id="btnUnBlockFriend" class="btn btn-link friend unblockFriend" value="@followers.FriendsListId">Unblock</button>
+                                            }
+                                            else
+                                            {
+                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@followers.FriendsListId">Block</button>
                                             }
                                         </td>
                                     </tr>
@@ -764,6 +764,12 @@
         BlockFriend(friendsListId, blocked, row);
     });
 
+    $('.pending').click(function () {
+        var friendId = $('.pending').val();
+        var row = $(this).closest('tr');
+        RemoveFriend(friendId, row);
+    });
+
     function UpdateSettings(privateOnly) {
 
         var data = {
@@ -872,7 +878,29 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                row.find('.addFriend').text("Unfollow");
+                row.find('.addFriend').addClass('hidden');
+                row.find('.pending').removeClass('hidden');
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function RemoveFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/RemoveFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').removeClass('hidden');
+                row.find('.pending').addClass('hidden');
             },
             error: function (errorThrown) {
                 console.log(errorThrown);
