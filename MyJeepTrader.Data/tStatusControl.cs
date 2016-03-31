@@ -18,6 +18,7 @@ namespace MyJeepTrader.Data
         public string LikedBy { get; set; }
         public string DisLikedBy { get; set; }
         public int StatusId { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         public virtual tStatusUpdate tStatusUpdate { get; set; }
     }

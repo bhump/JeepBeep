@@ -8,6 +8,12 @@
     <div class="col-lg-6 well well-small" id="column1">
         <div class="form-group-sm">
             <h2>Profile</h2>
+            &nbsp;
+            <button href="#" id="btnBlockFriend" class="btn btn-default friend pull-right" value="">Block</button>
+            &nbsp;
+            <button href="#" id="btnAddFriend" class="btn btn-primary friend pull-right" value="">
+                Follow
+            </button>
             <div class="form-horizontal">
                 <div>
                     <div class="form-group">
@@ -309,6 +315,8 @@
     <script src="~/Scripts/jquery.fancybox-thumbs.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+            var userName = getQueryVariable("UserName");
+
             $('.fancybox-thumb').fancybox({
                 prevEffect: 'none',
                 nextEffect: 'none',
@@ -324,6 +332,8 @@
                     }
                 }
             });
+
+            GetFriendInfo(userName);
 
         });
 
@@ -370,6 +380,34 @@
             var statusId = $(this).data("dcount");
             UpdateDislikeCount(statusId);
             e.stopPropagation();
+        });
+
+        $('#btnAddFriend').hover(function () {
+            var text = $(this).text();
+            var newText;
+            switch (text) {
+                case "Following":
+                    newText = "Unfollow";
+                    break;
+                case "Pending":
+                    newText = "Cancel";
+                    break;
+            }
+
+            $(this).text(newText);
+        }, function () {
+            var text = $(this).text();
+            var newText;
+            switch (text) {
+                case "Unfollow":
+                    newText = "Following";
+                    break;
+                case "Cancel":
+                    newText = "Pending";
+                    break;
+            }
+
+            $(this).text(newText);
         });
 
         function AddFriend(friendName) {
@@ -519,6 +557,51 @@
                     console.log(errorThrown);
                 }
             });
+        }
+
+        function GetFriendInfo(userName) {
+            var data = {
+                userName: userName
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/GetFriendInfo',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result.d.Accepted);
+                    console.log(result.d);
+                    $('#btnAddFriend').val(result.d.FriendsListId);
+                    $('#btnBlockFriend').val(result.d.FriendsListId);
+
+                    if (result.d.Accepted == true) {
+                        $('#btnAddFriend').text("Following");
+                    }
+
+                    if (result.d.Pending == true) {
+                        $('#btnAddFriend').text("Pending");
+                    }
+
+                    if (result.d.Blocked == true) {
+                        $('#btnBlockFriend').text("Unblock");
+                    }
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) { return pair[1]; }
+            }
+            return (false);
         }
     </script>
 }

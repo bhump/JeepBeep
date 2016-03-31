@@ -433,9 +433,9 @@ namespace MyJeepTrader.Data
             {
                 using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
                 {
-                    var getLikedBy = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId select sc).Count();
+                    var getLikedBy = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId select sc).FirstOrDefault();
 
-                    if (getLikedBy == 0)
+                    if (getLikedBy == null)
                     {
                         var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
                         status.LikeCount = status.LikeCount + 1;
@@ -443,7 +443,8 @@ namespace MyJeepTrader.Data
                         tStatusControl statusControl = new tStatusControl
                         {
                             StatusId = statusId,
-                            LikedBy = userId
+                            LikedBy = userId,
+                            Active = true
                         };
 
                         context.tStatusControls.Add(statusControl);
@@ -453,16 +454,30 @@ namespace MyJeepTrader.Data
 
                         return status.LikeCount;
                     }
+                    else if (getLikedBy.Active == false)
+                    {
+                        var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                        status.LikeCount = status.LikeCount + 1;
+
+                        var toActivate = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId && sc.Active == false select sc).First();
+                        toActivate.Active = true;
+
+                        context.SaveChanges();
+
+                        CreateNotification(userId, "0", 0, 0, 0, toActivate.StatusControlId);
+
+                        return status.LikeCount;
+                    }
                     else
                     {
                         var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
                         status.LikeCount = status.LikeCount - 1;
 
-                        var toDelete = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId select sc).First();
+                        var toDelete = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId && sc.Active == true select sc).First();
+                        toDelete.Active = false;
+                        //tStatusControl statusControl = toDelete;
 
-                        tStatusControl statusControl = toDelete;
-
-                        context.tStatusControls.Remove(statusControl);
+                        //context.tStatusControls.Remove(statusControl);
                         context.SaveChanges();
 
                         return status.LikeCount;
@@ -490,9 +505,9 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var getDislikedBy = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId select sc).Count();
+                var getDislikedBy = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId select sc).FirstOrDefault();
 
-                if (getDislikedBy == 0)
+                if (getDislikedBy == null)
                 {
                     var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
                     status.DislikeCount = status.DislikeCount + 1;
@@ -500,7 +515,8 @@ namespace MyJeepTrader.Data
                     tStatusControl statusControl = new tStatusControl
                     {
                         StatusId = statusId,
-                        DisLikedBy = userId
+                        DisLikedBy = userId,
+                        Active = true
                     };
 
                     context.tStatusControls.Add(statusControl);
@@ -510,16 +526,31 @@ namespace MyJeepTrader.Data
 
                     return status.DislikeCount;
                 }
+                else if(getDislikedBy.Active == false)
+                {
+                    var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
+                    status.DislikeCount = status.DislikeCount + 1;
+
+                    var toActivate = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId && sc.Active == false select sc).First();
+                    toActivate.Active = true;
+
+                    CreateNotification(userId, "0", 0, 0, 0, toActivate.StatusControlId);
+
+                    context.SaveChanges();
+
+                    return status.DislikeCount;
+                }
                 else
                 {
                     var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
                     status.DislikeCount = status.DislikeCount - 1;
 
-                    var toDelete = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId select sc).First();
+                    var toDelete = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId && sc.Active == true select sc).First();
+                    toDelete.Active = false;
 
-                    tStatusControl statusControl = toDelete;
+                    //tStatusControl statusControl = toDelete;
 
-                    context.tStatusControls.Remove(statusControl);
+                    //context.tStatusControls.Remove(statusControl);
                     context.SaveChanges();
 
                     return status.DislikeCount;
@@ -1221,6 +1252,26 @@ namespace MyJeepTrader.Data
                 }
 
                 return following;
+            }
+        }
+
+        public FriendsList GetFriendInfo(string userId, string userName)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var friendId = context.AspNetUsers.Where(f => f.UserName == userName).Select(f => f.Id).FirstOrDefault();
+
+                var info = (from f in context.tFriendsLists
+                            where f.Id == userId && f.FriendId == friendId
+                            select new FriendsList
+                                {
+                                    FriendsListId = f.FriendListId,
+                                    Blocked = f.Block,
+                                    Pending = f.Pending,
+                                    Accepted = f.Accepted
+                                }).FirstOrDefault();
+
+                return info;
             }
         }
 

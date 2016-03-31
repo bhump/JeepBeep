@@ -646,3 +646,11 @@ li.Notification {
 .notificationIcon{
     color:red;
 }
+
+.btn:hover .followText, .unfollowText{
+    display: none;
+}
+
+.btn:hover .unfollowText{
+    display:block;
+}

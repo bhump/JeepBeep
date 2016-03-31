@@ -259,6 +259,7 @@
           <Property Name="LikedBy" Type="nvarchar" MaxLength="128" />
           <Property Name="DisLikedBy" Type="nvarchar" MaxLength="128" />
           <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="tStatusMedia">
           <Key>
@@ -1427,6 +1428,7 @@
           <Property Name="DisLikedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tStatusUpdate" Relationship="MyJeepTraderModel.FK_tStatusControl_tStatusUpdates" FromRole="tStatusControl" ToRole="tStatusUpdate" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="tStatusMedia">
           <Key>
@@ -2235,6 +2237,7 @@
           <EntitySetMapping Name="tStatusControls">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tStatusControl">
               <MappingFragment StoreEntitySet="tStatusControl">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="DisLikedBy" ColumnName="DisLikedBy" />
                 <ScalarProperty Name="LikedBy" ColumnName="LikedBy" />

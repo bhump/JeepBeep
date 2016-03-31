@@ -8,6 +8,7 @@ using System.Web.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using MyJeepTrader.Data.Models;
 
 namespace MyJeepTrader.Web.WebServices
 {
@@ -105,6 +106,19 @@ namespace MyJeepTrader.Web.WebServices
             var updateCount = service.UpdateDislikeCount(statusId, userId);
 
             return updateCount;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public FriendsList GetFriendInfo(string userName)
+        {
+            Service service = new Service();
+
+            var userId = User.Identity.GetUserId();
+
+            var friend = service.GetFriendInfo(userId, userName);
+
+            return friend;
         }
     }
 }
