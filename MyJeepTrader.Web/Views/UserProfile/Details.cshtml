@@ -8,12 +8,11 @@
     <div class="col-lg-6 well well-small" id="column1">
         <div class="form-group-sm">
             <h2>Profile</h2>
-            &nbsp;
-            <button href="#" id="btnBlockFriend" class="btn btn-default friend pull-right" value="">Block</button>
-            &nbsp;
-            <button href="#" id="btnAddFriend" class="btn btn-primary friend pull-right" value="">
-                Follow
-            </button>
+            @if (User.Identity.Name != Request.QueryString["UserName"])
+            {
+                @*<button href="#" id="btnBlockFriend" class="btn btn-default friend pull-right" value="">Block</button>*@
+                <button href="#" id="btnAddFriend" class="btn btn-primary friend pull-right" value="">Follow</button>
+            }
             <div class="form-horizontal">
                 <div>
                     <div class="form-group">
@@ -410,6 +409,59 @@
             $(this).text(newText);
         });
 
+        $('#btnAddFriend').click(function () {
+            var text = $(this).text();
+            var friendsListId = $(this).val();
+            var userName = getQueryVariable("UserName");
+            console.log(friendsListId);
+            switch (text) {
+                case "Follow":
+                    AddFriend(userName);
+                    break;
+                case "Unfollow":
+                    RemoveFriend(friendsListId);
+                    break;
+                case "Cancel":
+                    RemoveFriend(friendsListId);
+                    break;
+            }
+        });
+
+        $('#btnBlockFriend').hover(function () {
+            var text = $(this).text();
+            var newText;
+            switch (text) {
+                case "Blocked":
+                    newText = "Unblock";
+                    break;
+
+            }
+            $(this).text(newText);
+        }, function () {
+            var text = $(this).text();
+            var newText;
+            switch (text) {
+                case "Unblock":
+                    newText = "Blocked";
+                    break;
+
+            }
+            $(this).text(newText);
+        });
+
+        $('#btnBlockFriend').click(function () {
+            var text = $(this).text();
+            var friendsListId = $(this).val();
+            switch (text) {
+                case "Block":
+                    BlockFriend(friendsListId, true)
+                    break;
+                case "Unblock":
+                    BlockFriend(friendsListId, false)
+                    break;
+            }
+        });
+
         function AddFriend(friendName) {
 
             var data = {
@@ -559,6 +611,69 @@
             });
         }
 
+        function AddFriend(userName) {
+            var data = {
+                userName: userName
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/AddFriendFromDetails',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result.d);
+                    $('#btnAddFriend').text("Pending");
+                    $('#btnAddFriend').val(result.d);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function RemoveFriend(friendsListId) {
+            var data = {
+                friendsListId: friendsListId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/RemoveFriendFromDetails',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#btnAddFriend').text("Follow");
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function BlockFriend(friendsListId, block) {
+            var data = {
+                friendsListId: friendsListId,
+                blocked: block
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/BlockFriend',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
         function GetFriendInfo(userName) {
             var data = {
                 userName: userName
@@ -571,21 +686,23 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
-                    console.log(result.d.Accepted);
-                    console.log(result.d);
-                    $('#btnAddFriend').val(result.d.FriendsListId);
-                    $('#btnBlockFriend').val(result.d.FriendsListId);
+                    if (result.d !== null) {
+                        console.log(result.d.Accepted);
+                        console.log(result.d);
+                        $('#btnAddFriend').val(result.d.FriendsListId);
+                        $('#btnBlockFriend').val(result.d.FriendsListId);
 
-                    if (result.d.Accepted == true) {
-                        $('#btnAddFriend').text("Following");
-                    }
+                        if (result.d.Accepted == true) {
+                            $('#btnAddFriend').text("Following");
+                        }
 
-                    if (result.d.Pending == true) {
-                        $('#btnAddFriend').text("Pending");
-                    }
+                        if (result.d.Pending == true) {
+                            $('#btnAddFriend').text("Pending");
+                        }
 
-                    if (result.d.Blocked == true) {
-                        $('#btnBlockFriend').text("Unblock");
+                        if (result.d.Blocked == true) {
+                            $('#btnBlockFriend').text("Blocked");
+                        }
                     }
                 },
                 error: function (errorThrown) {

@@ -1,0 +1,46 @@
+﻿@model MyJeepTrader.Web.ViewModels.PopularPostsAndProfilesViewModel
+@{
+    Layout = "";
+}
+@Styles.Render("~/Content/css")
+<div class="row">
+    <div class="col-lg-12 well well-sm">
+        <div class="row">
+            <div class="col-lg-12">
+                <h5>Popular Users</h5>
+                @foreach (var user in Model.PopularProfiles)
+                {
+                    if (user.UserName != User.Identity.Name)
+                    {
+                        <div class="row" id="divUser_@user.UserName">
+                            <div class="col-sm-4">
+                                @if (user.Avatar != null)
+                                {
+                                    <img src="@Url.Action("ShowAvatar", "Home", new { UserName = user.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                }
+                                else
+                                {
+                                    <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                }
+                            </div>
+                            <div class="col-sm-4">
+                                <label>@user.UserName</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        @Html.ActionLink("Profile", "Details", "UserProfile", new { UserName = user.UserName }, new { @class = "btn btn-sm btn-primary" })
+                                    </div>&nbsp;
+                                    <div class="col-sm-12">
+                                        <button href="#" id="btnAddFriend" class="btn btn-sm btn-primary addPopFriend" value="@user.UserName">Follow</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

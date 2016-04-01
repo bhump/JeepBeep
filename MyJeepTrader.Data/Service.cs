@@ -91,6 +91,7 @@ namespace MyJeepTrader.Data
             {
                 dboMyJeepTraderEntities context = new dboMyJeepTraderEntities();
                 post.DateCreated = DateTime.Now;
+                post.ViewCount = 0;
                 context.tPosts.Add(post);
                 context.SaveChanges();
 
@@ -417,9 +418,9 @@ namespace MyJeepTrader.Data
                 var friendId = (from u in context.AspNetUsers where u.UserName == userName select u.Id).First();
 
                 allowedUsers = (from fl in context.tFriendsLists
-                                    join s in context.tSettings on fl.AspNetUser.UserName equals s.AspNetUser.UserName
-                                    where fl.FriendId == friendId && fl.Accepted == true
-                                    select fl.AspNetUser.UserName).ToList();
+                                join s in context.tSettings on fl.AspNetUser.UserName equals s.AspNetUser.UserName
+                                where fl.FriendId == friendId && fl.Accepted == true
+                                select fl.AspNetUser.UserName).ToList();
 
                 allowedUsers.Add(userName);
 
@@ -526,7 +527,7 @@ namespace MyJeepTrader.Data
 
                     return status.DislikeCount;
                 }
-                else if(getDislikedBy.Active == false)
+                else if (getDislikedBy.Active == false)
                 {
                     var status = (from s in context.tStatusUpdates where s.StatusId == statusId select s).First();
                     status.DislikeCount = status.DislikeCount + 1;
@@ -620,6 +621,21 @@ namespace MyJeepTrader.Data
             imageToInsert.StatusId = newStatusId;
             context.tStatusMedias.Add(imageToInsert);
             context.SaveChanges();
+        }
+
+        public List<UserProfiles> GetPopularProfiles()
+        {
+            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var max = (from u in context.tUserProfiles
+                           where u.ViewCount > 10 select new UserProfiles {
+                    Avatar = u.Avatar,
+                    UserName = u.AspNetUser.UserName,
+                    Description = u.Description
+                }).Take(100).ToList();
+
+                return max;
+            }
         }
         #endregion
 
@@ -1222,6 +1238,118 @@ namespace MyJeepTrader.Data
             }
         }
 
+        public int AddFriend(string userId, string userName, bool fromDetails)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var friendId = context.AspNetUsers.Where(u => u.UserName == userName).Select(u => u.Id).First();
+
+                tFriendsList friend = new tFriendsList
+                {
+                    Id = userId,
+                    FriendId = friendId,
+                    Pending = true,
+                    Accepted = false
+                };
+                context.tFriendsLists.Add(friend);
+                context.SaveChanges();
+
+                CreateNotification(friendId, "0", 0, 0, friend.FriendListId, 0);
+
+                return friend.FriendListId;
+            }
+        }
+
+        public string AcceptFriend(string friendsListId)
+        {
+            var id = Convert.ToInt32(friendsListId);
+
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
+
+                acceptFriend.Pending = false;
+                acceptFriend.Accepted = true;
+                context.SaveChanges();
+
+                return "Friend Accepted!";
+            }
+
+        }
+
+        public string RejectFriend(string friendsListId)
+        {
+            var id = Convert.ToInt32(friendsListId);
+
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
+
+                acceptFriend.Pending = false;
+                acceptFriend.Accepted = false;
+                context.SaveChanges();
+
+                return "Friend Rejected!";
+            }
+        }
+
+        public string RemoveFriend(string friendId, string userId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var removeFriend = (from f in context.tFriendsLists where f.FriendId == friendId && f.Id == userId select f).First();
+
+                tFriendsList friendRequestToRemove = removeFriend;
+
+                context.tFriendsLists.Remove(friendRequestToRemove);
+                context.SaveChanges();
+
+                return "Friend Request Removed!";
+            }
+        }
+
+        public string RemoveFriend(string friendsListId)
+        {
+            var id = Convert.ToInt32(friendsListId);
+
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var removeFriend = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
+
+                tFriendsList friendRequestToRemove = removeFriend;
+
+                context.tFriendsLists.Remove(friendRequestToRemove);
+                context.SaveChanges();
+
+                return "Friend Request Removed!";
+            }
+        }
+
+        public string BlockFriend(string friendsListId, string blockFriend)
+        {
+            var id = Convert.ToInt32(friendsListId);
+            var block = Convert.ToBoolean(blockFriend);
+
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var blocked = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
+                blocked.Block = block;
+                blocked.Pending = false;
+                blocked.Accepted = false;
+
+                context.SaveChanges();
+
+                if (block == true)
+                {
+                    return "Friend Blocked!";
+                }
+                else
+                {
+                    return "Friend Unblocked!";
+                }
+            }
+        }
+
         public List<FriendsList> GetFriends(string userId)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
@@ -1264,12 +1392,12 @@ namespace MyJeepTrader.Data
                 var info = (from f in context.tFriendsLists
                             where f.Id == userId && f.FriendId == friendId
                             select new FriendsList
-                                {
-                                    FriendsListId = f.FriendListId,
-                                    Blocked = f.Block,
-                                    Pending = f.Pending,
-                                    Accepted = f.Accepted
-                                }).FirstOrDefault();
+                            {
+                                FriendsListId = f.FriendListId,
+                                Blocked = f.Block,
+                                Pending = f.Pending,
+                                Accepted = f.Accepted
+                            }).FirstOrDefault();
 
                 return info;
             }
@@ -1359,12 +1487,12 @@ namespace MyJeepTrader.Data
                     var friendsList = new FriendsList();
 
                     var pending = (from up in context.tUserProfiles
-                                   where up.Id == friend.u.Id
+                                   where up.Id == friend.f.FriendId
                                    select
                                        up).First();
 
                     friendsList.Email = friend.u.Email;
-                    friendsList.UserName = friend.u.UserName;
+                    friendsList.UserName = pending.AspNetUser.UserName;
                     friendsList.FirstName = pending.FirstName;
                     friendsList.LastName = pending.LastName;
                     friendsList.FriendsListId = friend.f.FriendListId;
@@ -1377,79 +1505,6 @@ namespace MyJeepTrader.Data
                 }
 
                 return pendingFriends;
-            }
-        }
-
-        public string AcceptFriend(string friendsListId)
-        {
-            var id = Convert.ToInt32(friendsListId);
-
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
-
-                acceptFriend.Pending = false;
-                acceptFriend.Accepted = true;
-                context.SaveChanges();
-
-                return "Friend Accepted!";
-            }
-
-        }
-
-        public string RejectFriend(string friendsListId)
-        {
-            var id = Convert.ToInt32(friendsListId);
-
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var acceptFriend = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
-
-                acceptFriend.Pending = false;
-                acceptFriend.Accepted = false;
-                context.SaveChanges();
-
-                return "Friend Rejected!";
-            }
-        }
-
-        public string RemoveFriend(string friendId, string userId)
-        {
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var removeFriend = (from f in context.tFriendsLists where f.FriendId == friendId && f.Id == userId select f).First();
-
-                tFriendsList friendRequestToRemove = removeFriend;
-
-                context.tFriendsLists.Remove(friendRequestToRemove);
-                context.SaveChanges();
-
-                return "Friend Request Removed!";
-            }
-        }
-
-        public string BlockFriend(string friendsListId, string blockFriend)
-        {
-            var id = Convert.ToInt32(friendsListId);
-            var block = Convert.ToBoolean(blockFriend);
-
-            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
-            {
-                var blocked = (from f in context.tFriendsLists where f.FriendListId == id select f).First();
-                blocked.Block = block;
-                blocked.Pending = false;
-                blocked.Accepted = false;
-
-                context.SaveChanges();
-
-                if (block == true)
-                {
-                    return "Friend Blocked!";
-                }
-                else
-                {
-                    return "Friend Unblocked!";
-                }
             }
         }
         #endregion

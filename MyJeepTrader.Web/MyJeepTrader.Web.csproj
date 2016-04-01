@@ -202,6 +202,7 @@
     <Compile Include="Controllers\JeepProfileController.cs" />
     <Compile Include="Controllers\MiniDashboardController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\PopularPostsAndProfilesController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="ViewModels\JeepProfileIndexViewModel.cs" />
     <Compile Include="ViewModels\LiveStreamViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
+    <Compile Include="ViewModels\PopularPostsAndProfilesViewModel.cs" />
     <Compile Include="ViewModels\PostCreateViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -452,10 +454,12 @@
     <Content Include="Views\Shared\_DiscoverPartial.cshtml" />
     <Content Include="Views\Home\Discover.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Shared\_PopularPostsandProfiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\InstantChat\" />
+    <Folder Include="Views\PopularPostsAndProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -214,7 +214,10 @@
         </div>
         <div class="col-md-3">
             <div class="placeholder">
-                <label>Hot Posts and Such</label>
+                <label>Popular Posts and Users</label>
+                <div>
+                    @Html.Action("PopularPostsandProfiles", "PopularPostsAndProfiles")
+                </div>
             </div>
         </div>
     </div>
@@ -246,10 +249,17 @@
 
         });
 
+
         $('.addFriend').click(function (e) {
             var friendId = $(this).data("addfriend");
             AddFriend(friendId);
             e.stopPropagation();
+        });
+
+        $('.addPopFriend').click(function () {
+            var userName = $(this).val();
+            console.log(userName);
+            AddPopFriend(userName);
         });
 
         $('.Posts').click(function () {
@@ -446,6 +456,27 @@
                     $('#tbComment_' + statusId).val('');
                     $('#divComment_' + statusId).html('');
                     GetComments(statusId);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function AddPopFriend(userName) {
+            var data = {
+                userName: userName
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/AddFriendFromDetails',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result.d);
+                    $('#divUser_' + userName).fadeOut("slow");
                 },
                 error: function (errorThrown) {
                     console.log(errorThrown);

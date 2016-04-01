@@ -201,7 +201,7 @@
           <Property Name="CityId" Type="int" />
           <Property Name="PostTypeId" Type="int" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="ViewCount" Type="bigint" />
+          <Property Name="ViewCount" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="tPostType">
           <Key>
@@ -1384,7 +1384,7 @@
           <NavigationProperty Name="tState" Relationship="MyJeepTraderModel.FK_tPosts_tStates" FromRole="tPost" ToRole="tState" />
           <NavigationProperty Name="tSubModel" Relationship="MyJeepTraderModel.FK_tPosts_tSubModel" FromRole="tPost" ToRole="tSubModel" />
           <NavigationProperty Name="tYear" Relationship="MyJeepTraderModel.FK_tPosts_tYear" FromRole="tPost" ToRole="tYear" />
-          <Property Name="ViewCount" Type="Int64" />
+          <Property Name="ViewCount" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="tPostType">
           <Key>

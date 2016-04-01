@@ -36,7 +36,7 @@ namespace MyJeepTrader.Data
         public Nullable<int> CityId { get; set; }
         public Nullable<int> PostTypeId { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public Nullable<long> ViewCount { get; set; }
+        public long ViewCount { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual tCity tCity { get; set; }

@@ -32,9 +32,20 @@ namespace MyJeepTrader.Web.WebServices
             var userId = User.Identity.GetUserId();
 
             var addFriend = service.AddFriend(userId, friendId);
-            //service.CreateNotification(userId, "0", 0, 0, addFriend, 0);
 
             return "Friend added successfully!";
+        }
+
+        [WebMethod]
+        [ScriptMethod]
+        public int AddFriendFromDetails(string userName)
+        {
+            Service service = new Service();
+            var userId = User.Identity.GetUserId();
+
+            var addFriend = service.AddFriend(userId, userName, true);
+
+            return addFriend;
         }
 
         [WebMethod]
@@ -67,6 +78,17 @@ namespace MyJeepTrader.Web.WebServices
             var userId = User.Identity.GetUserId();
 
             var removeFriend = service.RemoveFriend(friendId, userId);
+
+            return removeFriend;
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string RemoveFriendFromDetails(string friendsListId)
+        {
+            Service service = new Service();
+
+            var removeFriend = service.RemoveFriend(friendsListId);
 
             return removeFriend;
         }
