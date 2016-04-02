@@ -234,6 +234,41 @@ namespace MyJeepTrader.Data
             return model;
         }
 
+        public long UpdatePostViewCount(int postId)
+        {
+            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var post = (from p in context.tPosts where p.PostId == postId select p).FirstOrDefault();
+                post.ViewCount = post.ViewCount + 1;
+                context.SaveChanges();
+
+                return post.ViewCount;
+            }
+        }
+
+        public List<UsersPosts> GetPopularUserPost(string userId)
+        {
+            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var result = (from p in context.tPosts
+                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              where p.ViewCount > 10 && p.Id != userId
+                              select new UsersPosts
+                              {
+                                  UserName = p.AspNetUser.UserName,
+                                  PostId = p.PostId,
+                                  PostDescription = p.PostDescription,
+                                  Active = p.Active,
+                                  IsVehicle = p.IsVehicle,
+                                  PostTitle = p.PostTitle,
+                                  PostType = pt.Type,
+                                  DateCreated = p.DateCreated
+                              }).OrderByDescending(p => p.DateCreated).ToList();
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region Timeline
@@ -243,7 +278,9 @@ namespace MyJeepTrader.Data
             {
                 var privateSettings = GetSettings(userId);
                 var statusList = new List<LiveStream>();
+                var ownStatusList = new List<LiveStream>();
                 var imagesList = new List<byte[]>();
+                var ownImageList = new List<byte[]>();
 
                 statusList = (from fl in context.tFriendsLists
                               join su in context.tStatusUpdates on fl.FriendId equals su.Id
@@ -260,7 +297,28 @@ namespace MyJeepTrader.Data
                                       DateCreated = su.DateCreated,
                                       LikeCount = su.LikeCount,
                                       DislikeCount = su.DislikeCount,
-                                  }).OrderByDescending(su => su.DateCreated).ToList();
+                                  }).ToList();
+
+                ownStatusList = (from su in context.tStatusUpdates
+                                 join up in context.tUserProfiles on su.Id equals up.Id
+                                 where su.Id == userId
+                                 select new LiveStream
+                                 {
+                                     Status = su.Status,
+                                     UserName = su.AspNetUser.UserName,
+                                     UserId = su.AspNetUser.Id,
+                                     IsPost = false,
+                                     StatusId = su.StatusId,
+                                     Avatar = up.Avatar,
+                                     DateCreated = su.DateCreated,
+                                     LikeCount = su.LikeCount,
+                                     DislikeCount = su.DislikeCount,
+                                 }).ToList();
+
+                foreach (var own in ownStatusList)
+                {
+                    statusList.Add(own);
+                }
 
                 foreach (var status in statusList)
                 {
@@ -271,7 +329,7 @@ namespace MyJeepTrader.Data
                     }
                 }
 
-                return statusList;
+                return statusList.OrderByDescending(su => su.DateCreated).ToList();
             }
         }
 
@@ -451,7 +509,8 @@ namespace MyJeepTrader.Data
                         context.tStatusControls.Add(statusControl);
                         context.SaveChanges();
 
-                        CreateNotification(userId, "0", 0, 0, 0, statusControl.StatusControlId);
+                        if (context.tStatusUpdates.Where(s => s.StatusId == statusId).Select(u => u.Id).FirstOrDefault() != userId)
+                            CreateNotification(userId, "0", 0, 0, 0, statusControl.StatusControlId);
 
                         return status.LikeCount;
                     }
@@ -462,10 +521,10 @@ namespace MyJeepTrader.Data
 
                         var toActivate = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId && sc.Active == false select sc).First();
                         toActivate.Active = true;
-
                         context.SaveChanges();
 
-                        CreateNotification(userId, "0", 0, 0, 0, toActivate.StatusControlId);
+                        if (context.tStatusUpdates.Where(s => s.StatusId == statusId).Select(u => u.Id).FirstOrDefault() != userId)
+                            CreateNotification(userId, "0", 0, 0, 0, toActivate.StatusControlId);
 
                         return status.LikeCount;
                     }
@@ -476,9 +535,6 @@ namespace MyJeepTrader.Data
 
                         var toDelete = (from sc in context.tStatusControls where sc.LikedBy == userId && sc.StatusId == statusId && sc.Active == true select sc).First();
                         toDelete.Active = false;
-                        //tStatusControl statusControl = toDelete;
-
-                        //context.tStatusControls.Remove(statusControl);
                         context.SaveChanges();
 
                         return status.LikeCount;
@@ -523,7 +579,8 @@ namespace MyJeepTrader.Data
                     context.tStatusControls.Add(statusControl);
                     context.SaveChanges();
 
-                    CreateNotification(userId, "0", 0, 0, 0, statusControl.StatusControlId);
+                    if (context.tStatusUpdates.Where(s => s.StatusId == statusId).Select(u => u.Id).FirstOrDefault() != userId)
+                        CreateNotification(userId, "0", 0, 0, 0, statusControl.StatusControlId);
 
                     return status.DislikeCount;
                 }
@@ -535,7 +592,8 @@ namespace MyJeepTrader.Data
                     var toActivate = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId && sc.Active == false select sc).First();
                     toActivate.Active = true;
 
-                    CreateNotification(userId, "0", 0, 0, 0, toActivate.StatusControlId);
+                    if (context.tStatusUpdates.Where(s => s.StatusId == statusId).Select(u => u.Id).FirstOrDefault() != userId)
+                        CreateNotification(userId, "0", 0, 0, 0, toActivate.StatusControlId);
 
                     context.SaveChanges();
 
@@ -548,10 +606,6 @@ namespace MyJeepTrader.Data
 
                     var toDelete = (from sc in context.tStatusControls where sc.DisLikedBy == userId && sc.StatusId == statusId && sc.Active == true select sc).First();
                     toDelete.Active = false;
-
-                    //tStatusControl statusControl = toDelete;
-
-                    //context.tStatusControls.Remove(statusControl);
                     context.SaveChanges();
 
                     return status.DislikeCount;
@@ -623,16 +677,18 @@ namespace MyJeepTrader.Data
             context.SaveChanges();
         }
 
-        public List<UserProfiles> GetPopularProfiles()
+        public List<UserProfiles> GetPopularProfiles(string userId)
         {
-            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var max = (from u in context.tUserProfiles
-                           where u.ViewCount > 10 select new UserProfiles {
-                    Avatar = u.Avatar,
-                    UserName = u.AspNetUser.UserName,
-                    Description = u.Description
-                }).Take(100).ToList();
+                           where u.ViewCount > 10 && u.Id != userId
+                           select new UserProfiles
+                           {
+                               Avatar = u.Avatar,
+                               UserName = u.AspNetUser.UserName,
+                               Description = u.Description
+                           }).Take(3).ToList();
 
                 return max;
             }
@@ -1254,7 +1310,7 @@ namespace MyJeepTrader.Data
                 context.tFriendsLists.Add(friend);
                 context.SaveChanges();
 
-                CreateNotification(friendId, "0", 0, 0, friend.FriendListId, 0);
+                CreateNotification(userId, "0", 0, 0, friend.FriendListId, 0);
 
                 return friend.FriendListId;
             }
@@ -1762,8 +1818,12 @@ namespace MyJeepTrader.Data
                             StatusControlId = (statusControlId == 0) ? (int?)null : statusControlId,
                             DateCreated = DateTime.Now
                         };
-                    context.tNotifications.Add(notification);
-                    context.SaveChanges();
+
+                    if (userId != fromUserId)
+                    {
+                        context.tNotifications.Add(notification);
+                        context.SaveChanges();
+                    }
 
                     return notification.NotificationId;
                 }

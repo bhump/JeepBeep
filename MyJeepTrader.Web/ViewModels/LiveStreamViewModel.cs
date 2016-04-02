@@ -13,6 +13,8 @@ namespace MyJeepTrader.Web.ViewModels
 
         public ICollection<LiveFeed> PublicFeed { get; private set; }
 
+        public ICollection<LiveFeed> OwnFeed { get; private set; }
+
         public tSetting Settings { get; set; }
 
         public List<string> FriendsList { get; set; }
@@ -27,26 +29,41 @@ namespace MyJeepTrader.Web.ViewModels
             IEnumerator<LiveFeed> livePostEnum = null == lp ? null : lp.GetEnumerator();
             IEnumerator<LiveFeed> liveStreamEnum = null == ls ? null : ls.GetEnumerator();
 
-            if (null != liveStreamEnum)
+            if (lp.Count == 0)
             {
-                liveStreamEnum.MoveNext();
+               if(ls.Count != 0)
+               {
+                   foreach(var stream in ls)
+                   {
+                       this.LiveFeeds.Add(stream);
+                   }
+               }
             }
-
-            if (null != livePostEnum)
+            else
             {
-                while (livePostEnum.MoveNext() == true)
+                if (null != livePostEnum)
                 {
-                    LiveFeed lpCurrent = livePostEnum.Current;
-                    LiveFeed lsCurrent = null == liveStreamEnum ? null : liveStreamEnum.Current;
-                    if (null != liveStreamEnum)
-                    {
-                        liveStreamEnum.MoveNext();
-                    }
+                    livePostEnum.MoveNext();
+                }
 
-                    this.LiveFeeds.Add(lpCurrent);
-                    if (null != lsCurrent)
+                if (null != liveStreamEnum)
+                {
+                    while (liveStreamEnum.MoveNext() == true)
                     {
+                        //LiveFeed lpCurrent = livePostEnum.Current;
+                        //LiveFeed lsCurrent = null == liveStreamEnum ? null : liveStreamEnum.Current;
+                        LiveFeed lsCurrent = liveStreamEnum.Current;
+                        LiveFeed lpCurrent = null == livePostEnum ? null : livePostEnum.Current;
+                        if (null != livePostEnum)
+                        {
+                            livePostEnum.MoveNext();
+                        }
+
                         this.LiveFeeds.Add(lsCurrent);
+                        if (null != lpCurrent)
+                        {
+                            this.LiveFeeds.Add(lpCurrent);
+                        }
                     }
                 }
             }

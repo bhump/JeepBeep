@@ -87,6 +87,7 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
             var post = service.GetPostByPostId(postId);
             post.Images = service.GetPostImages(postId);
+            service.UpdatePostViewCount(postId);
 
             return View(post);
         }

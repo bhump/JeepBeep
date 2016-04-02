@@ -18,11 +18,13 @@ namespace MyJeepTrader.Web.Controllers
             Service service = new Service();
 
             var userId = User.Identity.GetUserId();
-            var popularProfiles = service.GetPopularProfiles();
+            var popularProfiles = service.GetPopularProfiles(userId);
             var getFriends = service.GetFriends(userId);
             var pendingFriends = service.GetUsersPending(userId);
+            var popularPosts = service.GetPopularUserPost(userId);
 
             PopularPostsAndProfilesViewModel model = new PopularPostsAndProfilesViewModel(popularProfiles, getFriends, pendingFriends);
+            model.PopularPosts = popularPosts;
 
             return View("~/Views/Shared/_PopularPostsandProfiles.cshtml", model);
         }

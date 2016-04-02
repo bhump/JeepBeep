@@ -550,7 +550,7 @@
                                             <span>@followers.LastName</span>
                                         </td>
                                         <td width="30%">
-                                            @if (Model.Following.Any(x => x.FriendsListId == followers.FriendsListId))
+                                            @if (Model.Following.Any(x => x.UserName == followers.UserName))
                                             {
                                                 <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@followers.FriendsListId">Unfollow</button>
                                             }
