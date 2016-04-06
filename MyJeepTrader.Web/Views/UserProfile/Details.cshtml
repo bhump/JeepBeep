@@ -95,7 +95,7 @@
                 <div class="form-horizontal">
                     @foreach (var stream in Model.UserPosts)
                     {
-                        <div id="divLiveStream" class="Posts">
+                        <div id="divLiveStream" data-post="@stream.PostId" class="Posts">
                             <div class="row">
                                 <label class="hidden">@stream.PostId</label>
                                 <div class="col-md-2">
