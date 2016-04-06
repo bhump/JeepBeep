@@ -129,7 +129,16 @@
                         <div class="col-lg-12">
                             <div class="text-right">
                                 <h4>Inquire About this Post</h4>
-                                <a id="aMessageUser" type="button" class="btn-info-home glyphicon glyphicon-inbox btn-lg" href="#"></a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a id="aMessageUser" type="button" class="btn-info-home glyphicon glyphicon-inbox btn-lg" href="#"></a>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn-info-home btn-lg" })
+                                    <label>Or</label>
+                                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn-info-home btn-lg" })
+                                }
                             </div>
                         </div>
                     </div>

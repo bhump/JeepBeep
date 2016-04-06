@@ -22,6 +22,8 @@ namespace MyJeepTrader.Data
         public const string monthlyPlanId = "rphr";
 
         public const string annualPlanId = "7rjw";
+
+        public const string freePlanId = "7xs6";
     }
 
 }

@@ -14,30 +14,25 @@ namespace MyJeepTrader.Data
             var gateway = new BraintreeGateway
             {
                 Environment = Braintree.Environment.SANDBOX,
-                MerchantId = "hpjd63fycvh7j38d",
-                PublicKey = "59yht5x4w7rn4pj7",
-                PrivateKey = "6d39af34433ba58f94be9153a77eb427"
+                MerchantId = "49d6wj6x7fbjzzm5",
+                PublicKey = "fzwyjc36mk8tsmfy",
+                PrivateKey = "6457701accfac3929af1290750fee1c2"
             };
 
             return gateway;
         }
 
-        //not currently used.
-        public string PayPalSubscription(string planId, string clientToken, string name)
+        public Result<Subscription> PayPalSubscription(string nonce, string planId)
         {
             var request = new SubscriptionRequest
             {
-                PaymentMethodToken = clientToken,
-                PlanId = planId,
-                Descriptor = new DescriptorRequest
-                {
-                    Name = name
-                }
+                PaymentMethodNonce = nonce,
+                PlanId = planId
             };
 
             Result<Subscription> result = PayPalGateway().Subscription.Create(request);
 
-            return result.Message;
+            return result;
         }
 
         public void PayPalCreateCustomer(string email, string userId, string userName, DateTime startDate, DateTime expireDate)

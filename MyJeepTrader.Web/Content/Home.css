@@ -20,6 +20,16 @@ body {
     padding-right: 15px;
 }
 
+.homeImage {
+    max-width: 100%;
+    height: auto;
+    height: calc(100% - 1px);
+    background-image: url('../Images/grayscale-wallpapers-1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -658,7 +668,7 @@ li.Notification {
 .navbar-default {
     border-color: rgba(34,34,34,.05);
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
-    background-color: gray;
+    background-color: #fff;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -673,7 +683,7 @@ li.Notification {
 
         .navbar-default .navbar-header .navbar-brand:hover,
         .navbar-default .navbar-header .navbar-brand:focus {
-            color: #f05f40;
+            color: #eb3812;
         }
 
     .navbar-default .nav > li > a,
@@ -707,7 +717,7 @@ li.Notification {
     }
 
         .navbar-default .navbar-header .navbar-brand {
-            color: lightgray;
+            color: rgba(255,255,255,.7);
         }
 
             .navbar-default .navbar-header .navbar-brand:hover,
@@ -717,7 +727,7 @@ li.Notification {
 
         .navbar-default .nav > li > a,
         .navbar-default .nav > li > a:focus {
-            color: lightgray;
+            color: rgba(255,255,255,.7);
         }
 
             .navbar-default .nav > li > a:hover,
@@ -755,8 +765,16 @@ li.Notification {
     min-height: 300px;
     background: none;
     border: none;
+    padding-top: 85px;
 }
 
-.no-border{
+.panel-posts {
+    min-height: 300px;
+    background: transparent;
+    border: none;
+    padding-top: 150px;
+}
+
+.no-border {
     border: none;
 }

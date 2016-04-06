@@ -36,7 +36,12 @@ namespace MyJeepTrader.Web.Controllers
         [RequireHttps]
         public ActionResult Index()
         {
-            return View();
+            PopularPostsAndProfilesViewModel model = new PopularPostsAndProfilesViewModel();
+
+            Service service = new Service();
+            model.PopularPosts = service.GetPopularUserPost();
+
+            return View(model);
         }
 
         public ActionResult Chat()

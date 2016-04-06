@@ -252,9 +252,11 @@ namespace MyJeepTrader.Data
             {
                 var result = (from p in context.tPosts
                               join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              join up in context.tUserProfiles on p.Id equals up.Id
                               where p.ViewCount > 10 && p.Id != userId
                               select new UsersPosts
                               {
+                                  Avatar = up.Avatar,
                                   UserName = p.AspNetUser.UserName,
                                   PostId = p.PostId,
                                   PostDescription = p.PostDescription,
@@ -264,6 +266,36 @@ namespace MyJeepTrader.Data
                                   PostType = pt.Type,
                                   DateCreated = p.DateCreated
                               }).OrderByDescending(p => p.DateCreated).ToList();
+
+                return result;
+            }
+        }
+
+        public List<UsersPosts> GetPopularUserPost()
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var result = (from p in context.tPosts
+                              join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
+                              join up in context.tUserProfiles on p.Id equals up.Id
+                              where p.ViewCount > 10
+                              select new UsersPosts
+                              {
+                                  Avatar = up.Avatar,
+                                  UserName = p.AspNetUser.UserName,
+                                  PostId = p.PostId,
+                                  PostDescription = p.PostDescription,
+                                  Active = p.Active,
+                                  IsVehicle = p.IsVehicle,
+                                  PostTitle = p.PostTitle,
+                                  PostType = pt.Type,
+                                  DateCreated = p.DateCreated,
+                                  Year = p.tYear.Year,
+                                  City = p.tCity.City,
+                                  State = p.tState.State,
+                                  Model = p.tModelPostControls.Select(m => m.tModel.Model).ToList(),
+                                  PartType = p.PartType
+                              }).OrderByDescending(p => p.DateCreated).Take(3).ToList();
 
                 return result;
             }
@@ -1633,7 +1665,7 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var count = (from tc in context.tTestingCodes where tc.Code == code select tc.Count).First();
+                var count = (from tc in context.tTestingCodes where tc.Code == code select tc.Count).FirstOrDefault();
 
                 return count;
             }

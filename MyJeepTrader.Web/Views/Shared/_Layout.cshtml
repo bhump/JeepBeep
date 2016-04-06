@@ -11,8 +11,8 @@
 </head>
 <body>
     <div class="ribbon-wrapper-orange"><div class="ribbon-orange">Alpha Testing</div></div>
-    <div class="navbar navbar-simple navbar-static-top">
-        <div class="container">
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
             <div class="navbar-inner">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -37,9 +37,7 @@
                             <li class="Notification">@Html.ActionLink("Notifications", "Index", "Notification")<label class="notification-count NotificationCount"></label></li>
                         }
                     </ul>
-                    <div class="navbar-collapse">
-                        @Html.Partial("_LoginPartial")
-                    </div>
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
         </div>

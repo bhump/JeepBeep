@@ -254,7 +254,6 @@ namespace MyJeepTrader.Web.Controllers
                             var stream = new MemoryStream();
                             defaultImage.Save(stream, ImageFormat.Jpeg);
 
-
                             var imageData = ConvertToBytes(stream);
 
                             service.CreateProfile(user.Id, imageData);

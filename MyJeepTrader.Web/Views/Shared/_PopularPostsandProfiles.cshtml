@@ -53,17 +53,27 @@
                                 <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
                             }
                         </div>
-                        <div class="col-sm-4">
-                            <label>@post.UserName</label>
-                        </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>@post.UserName</label>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <label>@post.PostDescription</label>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-sm btn-primary">View</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <hr />
                 }
             </div>
         </div>

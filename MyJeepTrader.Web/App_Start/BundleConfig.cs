@@ -30,6 +30,10 @@ namespace MyJeepTrader.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new StyleBundle("~/Content/home").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/Home.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/MyJeepTrader")
                 .IncludeDirectory("~/Scripts/Controllers", "*.js")
                 .Include("~/Scripts/MyJeepTrader.js"));

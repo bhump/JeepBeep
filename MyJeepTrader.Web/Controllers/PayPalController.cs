@@ -86,12 +86,7 @@ namespace MyJeepTrader.Web.Controllers
             {
                 expireDate.AddMonths(1);
 
-                var subRequest = new SubscriptionRequest
-                {
-                    PaymentMethodNonce = nonce,
-                    PlanId = ConstantStrings.monthlyPlanId
-                };
-                Result<Subscription> subResult = gateway.Subscription.Create(subRequest);
+                Result<Subscription> subResult = PayPalService.PayPalSubscription(nonce, ConstantStrings.annualPlanId);
 
                 if (subResult.IsSuccess())
                 {
@@ -109,13 +104,7 @@ namespace MyJeepTrader.Web.Controllers
             {
                 expireDate.AddYears(1);
 
-                var subRequest = new SubscriptionRequest
-                {
-                    PaymentMethodNonce = nonce,
-                    PlanId = ConstantStrings.annualPlanId
-                };
-
-                Result<Subscription> subResult = gateway.Subscription.Create(subRequest);
+                Result<Subscription> subResult = PayPalService.PayPalSubscription(nonce, ConstantStrings.annualPlanId);
 
                 if (subResult.IsSuccess())
                 {
