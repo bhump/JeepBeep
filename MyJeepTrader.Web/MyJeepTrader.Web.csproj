@@ -275,6 +275,7 @@
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Images\delete.png" />
+    <Content Include="Images\download.jpeg" />
     <Content Include="Images\FancyBox\blank.gif" />
     <Content Include="Images\FancyBox\fancybox_buttons.png" />
     <Content Include="Images\FancyBox\fancybox_loading%402x.gif" />
