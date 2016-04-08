@@ -43,6 +43,7 @@ namespace MyJeepTrader.Data
                 predicate = predicate.Or(p => p.tPostType.Type.Contains(temp));
                 predicate = predicate.Or(p => p.tYear.Year.Contains(temp));
                 predicate = predicate.Or(p => p.tModelPostControls.Any(m => m.tModel.Model == temp));
+                predicate = predicate.Or(p => p.AspNetUser.UserName.Contains(temp));
             }
 
             return _context.tPosts.AsExpandable().Where(predicate);

@@ -485,17 +485,28 @@ a {
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
+    overflow: hidden;
 }
 
     .nav > li {
         position: relative;
         display: block;
     }
+        .nav > li.logout {
+        position: relative;
+        display: block;
+        width:100px;
+    }
 
         .nav > li > a {
             position: relative;
             display: block;
-            padding: 10px 15px;
+            padding-right: 25px;
+            padding-left:10px;
+        }
+
+        .nav > li > a.logout{
+            padding-right:30px;
         }
 
             .nav > li > a:hover,
@@ -663,8 +674,8 @@ label.transboxLabel{
 }
 
 li.Notification {
-    width: 30px;
-    height: 30px;
+    width: 100px;
+    height: 40px;
     position: relative;
 }
 
@@ -825,9 +836,9 @@ li.Notification {
                 }
 }
 
-.panel {
+.panel-home {
     min-height: 300px;
-    background: none;
+    background: transparent;
     border: none;
     padding-top: 85px;
 }
@@ -841,4 +852,9 @@ li.Notification {
 
 .no-border {
     border: none;
+}
+
+h1{
+    color:gray;
+    font-weight: bold;
 }

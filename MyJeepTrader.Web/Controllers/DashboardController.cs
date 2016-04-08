@@ -87,6 +87,7 @@ namespace MyJeepTrader.Web.Controllers
             model.GooglePlus = profileInfo == null ? "" : profileInfo.GooglePlus;
             model.Website = profileInfo == null ? "" : profileInfo.Website;
             model.Ello = profileInfo == null ? "" : profileInfo.Ello;
+            model.Instagram = profileInfo == null ? "" : profileInfo.Instagram;
             model.Avatar = profileInfo == null ? null : profileInfo.Avatar;
             model.SubscriptionType = subscriptionType == null ? null : subscriptionType;
             model.ExpirationDate = subscriptionInfo == null ? null : subscriptionInfo.ExpireDate;

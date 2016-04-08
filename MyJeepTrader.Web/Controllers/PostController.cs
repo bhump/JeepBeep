@@ -66,6 +66,16 @@ namespace MyJeepTrader.Web.Controllers
             return View("Index", model);
         }
 
+        public ActionResult ShowAvatar(string UserName)
+        {
+            Service service = new Service();
+            var getAvatar = service.GetAvatarImage(UserName);
+
+            var stream = new MemoryStream(getAvatar.ToArray());
+
+            return new FileStreamResult(stream, "image/jpg");
+        }
+
         public ActionResult GetPostImages(int postId)
         {
             Service service = new Service();

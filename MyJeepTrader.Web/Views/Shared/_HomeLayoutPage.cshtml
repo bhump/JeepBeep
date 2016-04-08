@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My Jeep Trader</title>
+    <title>@ViewBag.Title - Jeepbeep</title>
     <link rel="stylesheet" href="~/Content/submissionOK.css" />
     <link rel="stylesheet" href="~/Content/animate.min.css" type="text/css">
     @Styles.Render("~/Content/home")
@@ -21,7 +21,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        @Html.ActionLink("MyJeepBeep", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Jeepbeep", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
@@ -35,7 +35,6 @@
                                 <li>@Html.ActionLink("Alpha Testing", "AlphaTesting", "Home")</li>
                                 <li>@Html.ActionLink("Feedback", "Index", "Feedback")</li>
                                 <li>@Html.ActionLink("Stream", "LiveStream", "Home")</li>
-                                <li class="Notification">@Html.ActionLink("Notifications", "Index", "Notification")<label class="notification-count NotificationCount"></label></li>
                             }
                         </ul>
                         @Html.Partial("_LoginPartial")

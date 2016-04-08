@@ -6,14 +6,15 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink("Dashboard", "Index", "Dashboard") </li>
-            <li>
-                <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Account", new { UserName = @User.Identity.Name})' class="img-circle userLogo" />
-            </li>
             @if (User.IsInRole("Admin"))
             {
                 <li>@Html.ActionLink("Garage", "Admin", "Dashboard") </li>
             }
+            <li class="Notification">@Html.ActionLink("Notifications", "Index", "Notification")<label class="notification-count NotificationCount"></label></li>
+            <li>@Html.ActionLink("Dashboard", "Index", "Dashboard") </li>
+            <li>
+                <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Account", new { UserName = @User.Identity.Name})' class="img-circle userLogo" />
+            </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
