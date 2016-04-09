@@ -351,11 +351,15 @@ namespace MyJeepTrader.Data
 
                 foreach (var own in ownStatusList)
                 {
+                    var commentCount = GetCommentCount(own.StatusId);
+                    own.CommentCount = commentCount;
                     statusList.Add(own);
                 }
 
                 foreach (var status in statusList)
                 {
+                    var commentCount = GetCommentCount(status.StatusId);
+                    status.CommentCount = commentCount;
                     if (context.tStatusMedias.Where(x => x.StatusId == status.StatusId).Count() != 0)
                     {
                         imagesList = (from i in context.tStatusMedias where i.StatusId == status.StatusId select i.Image).ToList();
@@ -664,6 +668,16 @@ namespace MyJeepTrader.Data
                                 }).OrderByDescending(c => c.DateCreated).ToList();
 
                 return comments;
+            }
+        }
+
+        public long GetCommentCount(int statusId)
+        {
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                var count = (from c in context.tStatusComments where c.StatusId == statusId select c).Count();
+
+                return count;
             }
         }
 

@@ -27,6 +27,8 @@ namespace MyJeepTrader.Data.Models
 
         public abstract long FeedDislikeCount { get; }
 
+        public abstract long FeedCommentCount { get; }
+
         public abstract List<byte[]> FeedImages { get; }
     }
 
@@ -51,6 +53,8 @@ namespace MyJeepTrader.Data.Models
         public long DislikeCount { get; set; }
 
         public List<byte[]> Images { get; set; }
+
+        public long CommentCount { get; set; }
 
         public override string FeedUserName
         {
@@ -101,6 +105,11 @@ namespace MyJeepTrader.Data.Models
         {
             get { return this.Images; }
         }
+
+        public override long FeedCommentCount
+        {
+            get { return this.CommentCount; }
+        }
     }
 
     public class LiveStream : LiveFeed
@@ -124,6 +133,8 @@ namespace MyJeepTrader.Data.Models
         public long DislikeCount { get; set; }
 
         public List<byte[]> Images { get; set; }
+
+        public long CommentCount { get; set; }
 
         public override string FeedUserName
         {
@@ -173,6 +184,11 @@ namespace MyJeepTrader.Data.Models
         public override List<byte[]> FeedImages
         {
             get { return this.Images; }
+        }
+
+        public override long FeedCommentCount
+        {
+            get { return this.CommentCount; }
         }
     }
 }

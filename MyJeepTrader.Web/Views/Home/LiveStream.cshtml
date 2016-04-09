@@ -177,7 +177,8 @@
                                         &nbsp;
                                         <a class="dislikeCount" data-dcount="@stream.FeedId"><span><label id="lblDislikeCount_@stream.FeedId">@stream.FeedDislikeCount</label></span></a>
                                         &nbsp;
-                                        <a class="comments"><strong>Comments</strong><span><label id="lblCommentCount_@stream.FeedId" class="commentCount"></label></span></a>
+                                        <a class="comments"><strong>Comments</strong></a>
+                                        <a><span><label id="lblCommentCount_@stream.FeedId" class="commentCount">@stream.FeedCommentCount</label></span></a>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dropdown pull-right">
@@ -477,9 +478,7 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
-
                     $('#lblCommentCount' + statusId).Text(result.d)
-
                 },
                 error: function (errorThrown) {
                     console.log(errorThrown);
