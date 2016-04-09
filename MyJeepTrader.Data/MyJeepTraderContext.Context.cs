@@ -59,5 +59,6 @@ namespace MyJeepTrader.Data
         public virtual DbSet<tStatusCommentMedia> tStatusCommentMedias { get; set; }
         public virtual DbSet<tStatusComment> tStatusComments { get; set; }
         public virtual DbSet<tNotification> tNotifications { get; set; }
+        public virtual DbSet<tMention> tMentions { get; set; }
     }
 }

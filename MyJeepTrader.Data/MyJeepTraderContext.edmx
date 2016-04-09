@@ -120,6 +120,15 @@
           <Property Name="Active" Type="bit" />
           <Property Name="PayPalCustomerId" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="tMentions">
+          <Key>
+            <PropertyRef Name="MentionId" />
+          </Key>
+          <Property Name="MentionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MentionedUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="MentionedByUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
         <EntityType Name="tMessageControl">
           <Key>
             <PropertyRef Name="MessageControlId" />
@@ -494,6 +503,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tMentions_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="tMentions" Type="Self.tMentions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tMentions">
+              <PropertyRef Name="MentionedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tMessageControl_tMessages">
           <End Role="tMessages" Type="Self.tMessages" Multiplicity="0..1" />
           <End Role="tMessageControl" Type="Self.tMessageControl" Multiplicity="*" />
@@ -819,6 +840,7 @@
           <EntitySet Name="tImages" EntityType="Self.tImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMake" EntityType="Self.tMake" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMemberships" EntityType="Self.tMemberships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tMentions" EntityType="Self.tMentions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMessageControl" EntityType="Self.tMessageControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMessages" EntityType="Self.tMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tModel" EntityType="Self.tModel" Schema="dbo" store:Type="Tables" />
@@ -881,6 +903,10 @@
           <AssociationSet Name="FK_tMemberships_AspNetUsers" Association="Self.FK_tMemberships_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="tMemberships" EntitySet="tMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tMentions_AspNetUsers" Association="Self.FK_tMentions_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="tMentions" EntitySet="tMentions" />
           </AssociationSet>
           <AssociationSet Name="FK_tMessageControl_tMessages" Association="Self.FK_tMessageControl_tMessages">
             <End Role="tMessages" EntitySet="tMessages" />
@@ -1166,6 +1192,11 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="tNotification" EntitySet="tNotifications" />
           </AssociationSet>
+          <EntitySet Name="tMentions" EntityType="MyJeepTraderModel.tMention" />
+          <AssociationSet Name="FK_tMentions_AspNetUsers" Association="MyJeepTraderModel.FK_tMentions_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="tMention" EntitySet="tMentions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1226,6 +1257,7 @@
           <NavigationProperty Name="tVehicleProfileControls" Relationship="MyJeepTraderModel.FK_tVehicleProfileControl_AspNetUsers" FromRole="AspNetUser" ToRole="tVehicleProfileControl" />
           <NavigationProperty Name="AspNetRoles" Relationship="MyJeepTraderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
           <NavigationProperty Name="tNotifications" Relationship="MyJeepTraderModel.FK_tNotifications_AspNetUsers" FromRole="AspNetUser" ToRole="tNotification" />
+          <NavigationProperty Name="tMentions" Relationship="MyJeepTraderModel.FK_tMentions_AspNetUsers" FromRole="AspNetUser" ToRole="tMention" />
         </EntityType>
         <EntityType Name="tCity">
           <Key>
@@ -2006,6 +2038,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tMention">
+          <Key>
+            <PropertyRef Name="MentionId" />
+          </Key>
+          <Property Name="MentionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MentionedUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MentionedByUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tMentions_AspNetUsers" FromRole="tMention" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_tMentions_AspNetUsers">
+          <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MyJeepTraderModel.tMention" Role="tMention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tMention">
+              <PropertyRef Name="MentionedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2402,6 +2456,16 @@
                 <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tMentions">
+            <EntityTypeMapping TypeName="MyJeepTraderModel.tMention">
+              <MappingFragment StoreEntitySet="tMentions">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="MentionedByUserId" ColumnName="MentionedByUserId" />
+                <ScalarProperty Name="MentionedUserId" ColumnName="MentionedUserId" />
+                <ScalarProperty Name="MentionId" ColumnName="MentionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

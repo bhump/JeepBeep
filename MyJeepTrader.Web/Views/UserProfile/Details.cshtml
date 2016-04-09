@@ -8,10 +8,13 @@
     <div class="col-lg-6 well well-small" id="column1">
         <div class="form-group-sm">
             <h2>Profile</h2>
-            @if (User.Identity.Name != Request.QueryString["UserName"])
+            @if (User.Identity.IsAuthenticated)
             {
-                @*<button href="#" id="btnBlockFriend" class="btn btn-default friend pull-right" value="">Block</button>*@
-                <button href="#" id="btnAddFriend" class="btn btn-primary friend pull-right" value="">Follow</button>
+                if (User.Identity.Name != Request.QueryString["UserName"])
+                {
+                    @*<button href="#" id="btnBlockFriend" class="btn btn-default friend pull-right" value="">Block</button>*@
+                    <button href="#" id="btnAddFriend" class="btn btn-primary friend pull-right" value="">Follow</button>
+                }
             }
             <div class="form-horizontal">
                 <div>
