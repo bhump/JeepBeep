@@ -24,6 +24,7 @@ namespace MyJeepTrader.Data
         public Nullable<int> FriendListId { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateRead { get; set; }
+        public Nullable<int> MentionId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

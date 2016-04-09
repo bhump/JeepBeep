@@ -12,6 +12,8 @@ using MyJeepTrader.Data.Models;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -35,6 +37,14 @@ namespace MyJeepTrader.Web.Controllers
                 var status  = collection["status"].ToString();
 
                 var statusId = await service.CreateStatusAsync(userId, status);
+
+                string mentionPattern = @"@\w* ";
+                MatchCollection matches = Regex.Matches(status, mentionPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase);
+                foreach (Match match in matches)
+                {
+                    var mentionedUserName = match.ToString().Replace("@", "");
+                    service.CreateMention(mentionedUserName, userId, statusId, 0);
+                }
 
                 if (files.Count() != 0)
                 {

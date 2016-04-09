@@ -76,6 +76,7 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Models\AutoCompleteUsers.cs" />
     <Compile Include="Models\CityDropDown.cs" />
     <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\FriendsList.cs" />
@@ -126,6 +127,9 @@
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tMembership.cs">
+      <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tMention.cs">
       <DependentUpon>MyJeepTraderContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tMessage.cs">

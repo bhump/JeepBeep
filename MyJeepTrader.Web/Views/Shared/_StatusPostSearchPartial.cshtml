@@ -33,6 +33,55 @@
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/jquery.submissionOK.js"></script>
 <script>
+    $(function () {
+        var names = [];
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/UserInformationWebService.asmx/GetMentionUserNames',
+            data: "",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $.each(result.d, function (i) {
+                    console.log(result.d[i]);
+                    names[i] = "@@" + result.d[i].UserName + " ";
+                });
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+        var accentMap = {
+            "á": "a",
+            "ö": "o"
+        };
+        var normalize = function (term) {
+            var ret = "";
+            for (var i = 0; i < term.length; i++) {
+                ret += accentMap[term.charAt(i)] || term.charAt(i);
+            }
+            return ret;
+        };
+
+        $('#tbStatus').keyup(function (e) {
+            console.log(String.fromCharCode(e.which));
+            if (String.fromCharCode(e.which) === "2") {
+                $('#tbStatus').autocomplete({
+                    source: function (request, response) {
+                        var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                        response($.grep(names, function (value) {
+                            value = value.label || value.value || value;
+                            return matcher.test(value) || matcher.test(normalize(value));
+                        }));
+                    }
+                });
+            }
+        });
+    });
+
+
     $('#spanImageInput').mousedown(function () {
         $('#imageInput').click();
     });

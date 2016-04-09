@@ -33,5 +33,17 @@ namespace MyJeepTrader.Web.WebServices
 
             return userInfo;
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<AutoCompleteUsers> GetMentionUserNames()
+        {
+            Service service = new Service();
+
+            var autocomplete = service.GetAutoCompleteUsers();
+
+            return autocomplete;
+        }
+
     }
 }

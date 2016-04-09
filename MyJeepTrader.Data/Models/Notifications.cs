@@ -20,6 +20,8 @@ namespace MyJeepTrader.Data.Models
 
         public int? MessageId { get; set; }
 
+        public int? MentionId { get; set; }
+
         public string Status { get; set; }
 
         public DateTime? StatusDate { get; set; }

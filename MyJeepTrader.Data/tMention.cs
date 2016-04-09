@@ -18,6 +18,8 @@ namespace MyJeepTrader.Data
         public string MentionedUserId { get; set; }
         public string MentionedByUserId { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<int> StatusId { get; set; }
+        public Nullable<int> CommentId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

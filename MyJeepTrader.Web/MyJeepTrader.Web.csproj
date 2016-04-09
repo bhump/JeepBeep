@@ -302,10 +302,7 @@
     <Content Include="Content\fonts\ionicons.ttf" />
     <Content Include="Content\fonts\ionicons.eot" />
     <Content Include="Scripts\angular.min.js.map" />
-    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\creative.js" />
-    <Content Include="Scripts\jquery-2.2.0.js" />
-    <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-2.2.1.js" />
     <Content Include="Scripts\jquery-2.2.1.min.js" />
     <Content Include="Scripts\jquery.bootstrap.wizard.js" />
@@ -377,13 +374,11 @@
     <Content Include="WebServices\SettingsWebService.asmx" />
     <Content Include="WebServices\UserInformationWebService.asmx" />
     <None Include="Properties\PublishProfiles\Development.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\jeep.png" />
     <Content Include="Images\jeep_tires.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Controllers\PostController.js" />
-    <Content Include="Scripts\jquery-2.2.0.min.map" />
     <Content Include="Scripts\jquery-2.2.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />

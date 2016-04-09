@@ -127,6 +127,8 @@
           <Property Name="MentionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MentionedUserId" Type="nvarchar" MaxLength="128" />
           <Property Name="MentionedByUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="CommentId" Type="int" />
           <Property Name="DateCreated" Type="datetime" />
         </EntityType>
         <EntityType Name="tMessageControl">
@@ -187,6 +189,7 @@
           <Property Name="MessageId" Type="int" />
           <Property Name="StatusControlId" Type="int" />
           <Property Name="FriendListId" Type="int" />
+          <Property Name="MentionId" Type="int" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateRead" Type="datetime" />
         </EntityType>
@@ -2025,6 +2028,7 @@
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateRead" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tNotifications_AspNetUsers" FromRole="tNotification" ToRole="AspNetUser" />
+          <Property Name="MentionId" Type="Int32" />
         </EntityType>
         <Association Name="FK_tNotifications_AspNetUsers">
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -2047,6 +2051,8 @@
           <Property Name="MentionedByUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetUser" Relationship="MyJeepTraderModel.FK_tMentions_AspNetUsers" FromRole="tMention" ToRole="AspNetUser" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="CommentId" Type="Int32" />
         </EntityType>
         <Association Name="FK_tMentions_AspNetUsers">
           <End Type="MyJeepTraderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -2446,6 +2452,7 @@
           <EntitySetMapping Name="tNotifications">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tNotification">
               <MappingFragment StoreEntitySet="tNotifications">
+                <ScalarProperty Name="MentionId" ColumnName="MentionId" />
                 <ScalarProperty Name="DateRead" ColumnName="DateRead" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="FriendListId" ColumnName="FriendListId" />
@@ -2462,6 +2469,8 @@
           <EntitySetMapping Name="tMentions">
             <EntityTypeMapping TypeName="MyJeepTraderModel.tMention">
               <MappingFragment StoreEntitySet="tMentions">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="MentionedByUserId" ColumnName="MentionedByUserId" />
                 <ScalarProperty Name="MentionedUserId" ColumnName="MentionedUserId" />

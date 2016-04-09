@@ -41,7 +41,6 @@ namespace MyJeepTrader.Web.WebServices
 
             Service service = new Service();
             var newComment = service.CreateComment(userId, statusId, comment);
-            //service.CreateNotification(userId, statusId, 0, 0, 0, 0);
 
             return newComment;
         }

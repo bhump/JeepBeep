@@ -19,5 +19,7 @@ namespace MyJeepTrader.Web.ViewModels
         public int likeCount { get; set; }
 
         public HttpPostedFileBase Image { get; set; }
+
+        public tMention mention { get; set; }
     }
 }
