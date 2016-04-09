@@ -666,6 +666,7 @@ label.NotificationCount {
     position: absolute;
     top: 5px;
     left: 98px;
+    color:#f05f40;
 }
 
 label.transboxLabel{
