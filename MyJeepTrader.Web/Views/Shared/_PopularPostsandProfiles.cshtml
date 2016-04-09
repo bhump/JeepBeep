@@ -7,7 +7,7 @@
     <div class="col-lg-12 well well-sm">
         <div class="row">
             <div class="col-lg-12">
-                <h5>Popular Users</h5>
+                <h4>Popular Users</h4>
                 @foreach (var user in Model.PopularProfiles)
                 {
                     <div class="row" id="divUser_@user.UserName">
@@ -39,7 +39,7 @@
                 }
             </div>
             <div class="col-lg-12">
-                <h5>Popular Posts</h5>
+                <h4>Popular Posts</h4>
                 @foreach (var post in Model.PopularPosts)
                 {
                     <div class="row" id="divPost_@post.PostId">

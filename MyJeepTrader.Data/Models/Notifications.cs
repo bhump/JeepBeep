@@ -22,6 +22,8 @@ namespace MyJeepTrader.Data.Models
 
         public int? MentionId { get; set; }
 
+        public int? MentionedCommentId { get; set; }
+
         public string Status { get; set; }
 
         public DateTime? StatusDate { get; set; }

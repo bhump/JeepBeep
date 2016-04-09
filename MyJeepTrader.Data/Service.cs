@@ -8,6 +8,7 @@ using MyJeepTrader.Data.Models;
 using System.IO;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Text.RegularExpressions;
 
 namespace MyJeepTrader.Data
 {
@@ -683,7 +684,21 @@ namespace MyJeepTrader.Data
                     context.tStatusComments.Add(newComment);
                     context.SaveChanges();
 
-                    CreateNotification(userId, "0", newComment.CommentId, 0, 0, 0, 0);
+
+                    string mentionPattern = @"@\w* ";
+                    MatchCollection matches = Regex.Matches(comment, mentionPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase);
+                    if (matches.Count != 0)
+                    {
+                        foreach (Match match in matches)
+                        {
+                            var mentionedUserName = match.ToString().Replace("@", "");
+                            CreateMention(mentionedUserName, userId, 0, newComment.CommentId);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotification(userId, "0", newComment.CommentId, 0, 0, 0, 0);
+                    }
 
                     return newComment;
                 }
@@ -2026,9 +2041,9 @@ namespace MyJeepTrader.Data
                             }).ToList();
 
                 mentionsComments = (from n in context.tNotifications
-                                    join c in context.tStatusComments on n.CommentId equals c.CommentId
                                     join m in context.tMentions on n.MentionId equals m.MentionId
-                                    join s in context.tStatusUpdates on m.StatusId equals s.StatusId
+                                    join c in context.tStatusComments on m.CommentId equals c.CommentId
+                                    join s in context.tStatusUpdates on c.StatusId equals s.StatusId
                                     join u in context.AspNetUsers on n.FromUserId equals u.Id
                                     join p in context.tUserProfiles on n.FromUserId equals p.Id
                                     where n.Id == userId
@@ -2037,7 +2052,7 @@ namespace MyJeepTrader.Data
                                         Avatar = p.Avatar,
                                         FromUserName = u.UserName,
                                         NotificationId = n.NotificationId,
-                                        CommentId = c.CommentId,
+                                        MentionedCommentId = m.CommentId,
                                         Comment = c.Comment,
                                         Status = s.Status,
                                         StatusDate = s.DateCreated,

@@ -74,13 +74,13 @@
                                             <label id="lblUserName">@notification.FromUserName</label>&nbsp;<label class="pull-right">@String.Format("{0:M/dd/yyyy}", @notification.DateCreated)</label>
                                         </div>
                                         <div class="col-md-12">
-                                            @if (notification.Comment != null)
+                                            @if (notification.CommentId != null)
                                             {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-12">
-                                                                <label class="commentTitle">Commented on your status from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate) </label>
+                                                                <label class="commentTitle">Commented on your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate) </label>
                                                             </div>
                                                             <div class="col-sm-12">
                                                                 <label class="Status">@notification.Status</label>
@@ -154,18 +154,36 @@
                                                     </div>
                                                 </div>
                                             }
-                                            else if (notification.MentionId != null)
+                                            else if (notification.MentionId != null && notification.MentionedCommentId == null)
                                             {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-12">
-                                                                <label class="commentTitle">Someone beeped you! </label>
+                                                                <label class="commentTitle">beeped you! </label>
                                                             </div>
                                                             <div class="col-sm-12">
                                                                 <label class="Status">@notification.Status</label>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.MentionedCommentId != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="commentTitle">beeped you in a comment! </label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <label class="Comment">@notification.Comment</label>
                                                     </div>
                                                 </div>
                                             }

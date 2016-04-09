@@ -65,7 +65,7 @@
             return ret;
         };
 
-        $('#tbStatus').keyup(function (e) {
+        $('#tbStatus').keydown(function (e) {
             console.log(String.fromCharCode(e.which));
             if (String.fromCharCode(e.which) === "2") {
                 $('#tbStatus').autocomplete({
