@@ -23,6 +23,7 @@
             </div>
             <div class="col-sm-6 text-right">
                 <div class="text-right">
+                    <button id="btnCancel" class="btn btn-default" type="button">Cancel</button>
                     <a id="aSubmitStatus" class="btn btn-primary">Submit</a>
                     <input id="btnSubmitStatus" type="submit" class="btn hidden" />
                 </div>
@@ -82,8 +83,9 @@
     });
 
 
-    $('#spanImageInput').mousedown(function () {
+    $('#spanImageInput').mousedown(function (e) {
         $('#imageInput').click();
+        e.stopPropagation();
     });
 
     $('#aSubmitStatus').mousedown(function () {
@@ -101,7 +103,7 @@
         $(this).attr('rows', '4');
     });
 
-    $('#divStatus').focusout(function () {
+    $('#btnCancel').click(function () {
         $('#divStatusInputs').collapse("toggle");
         $('#tbStatus').attr('rows', '1');
     });
