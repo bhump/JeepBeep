@@ -79,24 +79,36 @@ div.Posts {
         padding-right: 15px;
     }
 
-    div.Posts .fancybox-thumb img {
-        margin-top: 15px;
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
-    }
+        div.Posts .fancybox-thumb img {
+            margin-top: 15px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
 
     div.Posts:hover {
         background-color: rgba(204, 204, 204, .3);
     }
 
-    div.Posts:hover .postDropdown {
-        color: #A9A9A9;
+        div.Posts:hover .postDropdown {
+            color: #A9A9A9;
+        }
+
+            div.Posts:hover .postDropdown:hover,
+            div.Posts:hover .postDropdown:focus {
+                color: #f05f40;
+            }
+
+div.PostPage {
+    border-bottom: 2px solid white;
+    padding: 10px 10px 10px 10px;
+}
+    div.PostPage img {
+        margin-left:15px;
+        margin-top: 15px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
     }
 
-    div.Posts:hover .postDropdown:hover,
-    div.Posts:hover .postDropdown:focus {
-        color: #f05f40;
-    }
 
 div.Status {
     border-bottom: 2px solid white;
@@ -108,26 +120,26 @@ div.Status {
         padding-right: 15px;
     }
 
-    div.Status .fancybox-thumb img {
-        margin-top: 15px;
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
-    }
+        div.Status .fancybox-thumb img {
+            margin-top: 15px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
 
-    .statusDropdown {
-        color: #f05f40;
-    }
+.statusDropdown {
+    color: #f05f40;
+}
 
     .statusDropdown:hover,
     .statusDropdown:focus {
         color: #A9A9A9;
     }
 
-    div.Status:hover {
-        background-color: rgba(204, 95, 64, .1);
-    }
+div.Status:hover {
+    background-color: rgba(204, 95, 64, .1);
+}
 
-    div.Status:hover a.likeCount, div.Status:hover a.dislikeCount, div.Status:hover a.comments, div.Status:hover .likeCount label, div.Status:hover .dislikeCount label {
+    div.Status:hover a.likeCount, div.Status:hover a.dislikeCount, div.Status:hover a.commentCount, div.Status:hover a.comments, div.Status:hover .likeCount label, div.Status:hover .dislikeCount label, div.Status:hover .commentCount label {
         color: #f05f40;
         text-decoration: none;
         cursor: pointer;
@@ -586,6 +598,12 @@ a {
         border: 1px solid #f05f40;
     }
 
+    .nav-pills > li.active > a,
+    .nav-pills > li.active > a:hover,
+    .nav-pills > li.active > a:focus {
+        color: #fff;
+        background-color: gray;
+    }
 @media (min-width: 768px) {
     .nav-tabs-justified > li > a {
         border-bottom: 1px solid #f05f40;
@@ -691,7 +709,7 @@ label.NotificationCount {
     position: absolute;
     top: 5px;
     left: 98px;
-    color:#f05f40;
+    color: #f05f40;
 }
 
 li.Notification {

@@ -118,55 +118,6 @@ namespace MyJeepTrader.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetCityByStateId(int StateId)
-        {
-            Service service = new Service();
-            var cities = service.GetCityByStateId(StateId);
-            var json = Json(cities);
-
-            return json;
-        }
-
-        [HttpPost]
-        public ActionResult GetStateNameById(int StateId)
-        {
-            Service service = new Service();
-            var state = service.GetStateById(StateId);
-
-            var json = Json(state);
-
-            return json;
-        }
-
-        [HttpPost]
-        public ActionResult GetYearById(int YearId)
-        {
-            Service service = new Service();
-            var year = service.GetYearById(YearId);
-
-            var json = Json(year);
-
-            return json;
-        }
-
-        [HttpPost]
-        public ActionResult GetModelNameById(List<int> modelIds)
-        {
-            Service service = new Service();
-
-            foreach (int id in modelIds)
-            {
-                var models = service.GetModelById(id);
-
-                var json = Json(models);
-
-                return json;
-            }
-
-            return null;
-        }
-
-        [HttpPost]
         public ActionResult Create(PostCreateViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
             try
@@ -178,7 +129,7 @@ namespace MyJeepTrader.Web.Controllers
                 model.Post.YearId = model.SelectedYearId;
                 model.Post.PostTitle = model.Title;
                 model.Post.Active = true;
-                model.Post.MakeId = 1; 
+                model.Post.MakeId = 1;
                 model.Post.StateId = model.SelectedStateId;
                 model.Post.CityId = model.SelectedCityId;
                 model.Post.Id = userId;
@@ -272,6 +223,55 @@ namespace MyJeepTrader.Web.Controllers
 
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult GetCityByStateId(int StateId)
+        {
+            Service service = new Service();
+            var cities = service.GetCityByStateId(StateId);
+            var json = Json(cities);
+
+            return json;
+        }
+
+        [HttpPost]
+        public ActionResult GetStateNameById(int StateId)
+        {
+            Service service = new Service();
+            var state = service.GetStateById(StateId);
+
+            var json = Json(state);
+
+            return json;
+        }
+
+        [HttpPost]
+        public ActionResult GetYearById(int YearId)
+        {
+            Service service = new Service();
+            var year = service.GetYearById(YearId);
+
+            var json = Json(year);
+
+            return json;
+        }
+
+        [HttpPost]
+        public ActionResult GetModelNameById(List<int> modelIds)
+        {
+            Service service = new Service();
+
+            foreach (int id in modelIds)
+            {
+                var models = service.GetModelById(id);
+
+                var json = Json(models);
+
+                return json;
+            }
+
+            return null;
         }
 
         [HttpPost]

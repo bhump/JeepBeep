@@ -6,17 +6,17 @@
 <link rel="stylesheet" href="~/Content/jquery.fancybox.css" media="screen" />
 <link rel="stylesheet" href="~/Content/jquery.fancybox-buttons.css" media="screen" />
 <link rel="stylesheet" href="~/Content/jquery.fancybox-thumbs.css" media="screen" />
-<h2>Post Details</h2>
+<h1>Post Details</h1>
 <div class="content">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12">
 
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="row">
                 <div>
                     <div class="col-md-12">
@@ -44,24 +44,22 @@
                     </div>
                 </div>
             </div>
-            <div class="well well-sm">
-                <div class=" col-lg-4">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label>State: </label>
-                            @Html.DisplayFor(model => model.State)
-                        </div>
-                        <div class="col-lg-12">
-                            <label>City: </label>
-                            @Html.DisplayFor(model => model.City)
-                        </div>
-                        <div class="col-lg-12">
-                            <label>Date Posted: </label>
-                            @Html.DisplayFor(model => model.DateCreated)
-                        </div>
+            <div class="well well-sm Posts">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-lg-12">
+                        <label>State: </label>
+                        @Html.DisplayFor(model => model.State)
+                    </div>
+                    <div class="col-lg-12">
+                        <label>City: </label>
+                        @Html.DisplayFor(model => model.City)
+                    </div>
+                    <div class="col-lg-12">
+                        <label>Date Posted: </label>
+                        @String.Format("{0:M/dd/yyyy}", @Html.DisplayFor(model => model.DateCreated))
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-sm-4 col-md-4 col-lg-4">
                     <div class="col-lg-12">
                         <label>Posted By: </label>
                         @Html.DisplayFor(model => model.UserName)
@@ -75,7 +73,7 @@
                         @(Model.Active)
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-sm-4 col-md-4 col-lg-4">
                     <div class="col-lg-12">
                         <label>Post Type: </label>
                         @Html.DisplayFor(model => model.PostType)
@@ -93,23 +91,28 @@
                     }
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-sm-12 col-lg-12 col-lg-12">
                         <div class="tab_container">
                             <p style="display:block">
-                                @foreach (var image in Model.Images)
-                                {
-                                    string convertedImage = Convert.ToBase64String(image.ToArray());
-                                    <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
-                                        <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
-                                    </a>
-                                }
+                                <ul class="list-inline">
+                                    @foreach (var image in Model.Images)
+                                    {
+                                        string convertedImage = Convert.ToBase64String(image.ToArray());
+                                        <li>
+                                            <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                            </a>
+                                        </li>
+
+                                    }
+                                </ul>
                             </p>
                         </div>
                     </div>
                 </div>
                 <br />
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="col-lg-12">
                             <label>Title: </label>
                             @Html.DisplayFor(model => model.PostTitle)
@@ -126,7 +129,7 @@
                 </div>
                 <div class="row">
                     <div>
-                        <div class="col-lg-12">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="text-right">
                                 <h4>Inquire About this Post</h4>
                                 @if (User.Identity.IsAuthenticated)
@@ -145,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="placeholder">
 
             </div>

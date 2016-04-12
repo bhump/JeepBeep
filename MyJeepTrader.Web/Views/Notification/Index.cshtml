@@ -209,7 +209,6 @@
     $('.divNotifications').hover(function () {
         var notificationId = $(this).data('notification');
         UpdateNotification(notificationId);
-        NotificationCount();
     });
 
     $('.acceptFriend').click(function () {
@@ -258,7 +257,8 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                $('#notificationId_' + notificationId).addClass('hidden');
+                $('#notificationId_' + notificationId).addClass('invisible');
+                NotificationCount();
             },
             error: function (errorThrown) {
                 console.log(errorThrown);
@@ -275,6 +275,7 @@
             dataType: 'json',
             success: function (result) {
                 $('.notification-count').text(result.d);
+                console.log(result.d);
             },
             error: function (errorThrown) {
                 console.log(errorThrown);
@@ -295,10 +296,6 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                //$('#spanSuccessMessage').html("Friend Accepted!");
-                //$('#divFriendsSuccess').removeClass("in");
-                //$('#divFriendsSuccess').delay(100).addClass("in").fadeOut(2000);
-
                 row.find('td').fadeOut(500, function () {
                     row.remove();
                 });

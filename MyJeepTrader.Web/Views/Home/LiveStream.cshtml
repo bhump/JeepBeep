@@ -67,14 +67,7 @@
                                     <label class="hidden">@stream.FeedId</label>
                                     <div class="col-md-2">
                                         <div class="ui-icon-image">
-                                            @if (stream.FeedAvatar != null)
-                                            {
-                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName})" alt="Image Unavailable" class="img-circle streamImage" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
-                                            }
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName})" alt="Image Unavailable" class="img-circle streamImage" />
                                         </div>
                                     </div>
                                     <div class="col-md-10">
@@ -86,16 +79,18 @@
                                                 @stream.FeedDescription
                                             </div>
                                             <ul class="list-inline">
-                                            @if (stream.FeedImages != null)
-                                            {
-                                                foreach (var image in stream.FeedImages)
+                                                @if (stream.FeedImages != null)
                                                 {
-                                                    string convertedImage = Convert.ToBase64String(image.ToArray());
-                                                    <li><a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
-                                                        <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
-                                                    </a></li>
+                                                    foreach (var image in stream.FeedImages)
+                                                    {
+                                                        string convertedImage = Convert.ToBase64String(image.ToArray());
+                                                        <li>
+                                                            <a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                                <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                                            </a>
+                                                        </li>
+                                                    }
                                                 }
-                                            }
                                             </ul>
                                         </div>
                                     </div>
@@ -125,14 +120,7 @@
                                     <label class="hidden">@stream.FeedId</label>
                                     <div class="col-md-2">
                                         <div class="ui-icon-image">
-                                            @if (stream.FeedAvatar != null)
-                                            {
-                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName })" alt="Image Unavailable" class="img-circle streamImage" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
-                                            }
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName })" alt="Image Unavailable" class="img-circle streamImage" />
                                         </div>
                                     </div>
                                     <div class="col-md-10">
@@ -150,9 +138,11 @@
                                                         foreach (var image in stream.FeedImages)
                                                         {
                                                             string convertedImage = Convert.ToBase64String(image.ToArray());
-                                                            <li><a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
-                                                                <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
-                                                            </a></li>
+                                                            <li>
+                                                                <a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                                    <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                                                </a>
+                                                            </li>
                                                         }
                                                     }
                                                 </ul>
@@ -178,7 +168,7 @@
                                         <a class="dislikeCount" data-dcount="@stream.FeedId"><span><label id="lblDislikeCount_@stream.FeedId">@stream.FeedDislikeCount</label></span></a>
                                         &nbsp;
                                         <a class="comments"><strong>Comments</strong></a>
-                                        <a><span><label id="lblCommentCount_@stream.FeedId" class="commentCount">@stream.FeedCommentCount</label></span></a>
+                                        <a class="commentCount"><span><label id="lblCommentCount_@stream.FeedId" class="commentCount">@stream.FeedCommentCount</label></span></a>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dropdown pull-right">
