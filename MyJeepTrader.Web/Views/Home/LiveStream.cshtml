@@ -48,11 +48,6 @@
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         @Html.Action("StatusPostSearchPartial", "Status")
                     </div>
-                    @*<div class="col-md-6">
-                            <div class="well well-sm">
-                                @Html.TextBox("SearchFeed", null, new { @class = "form-control input-sm no-max-width", @placeholder = "Search your feed" })
-                            </div>
-                        </div>*@
                 </div>
             </div>
             <div class="well well-sm">
@@ -132,7 +127,7 @@
                                                 @stream.FeedDescription
                                             </div>
                                             <div class="tab_container">
-                                                <ul>
+                                                <ul class="list-inline">
                                                     @if (stream.FeedImages != null)
                                                     {
                                                         foreach (var image in stream.FeedImages)

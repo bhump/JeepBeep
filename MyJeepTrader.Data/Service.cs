@@ -238,7 +238,7 @@ namespace MyJeepTrader.Data
 
         public long UpdatePostViewCount(int postId)
         {
-            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var post = (from p in context.tPosts where p.PostId == postId select p).FirstOrDefault();
                 post.ViewCount = post.ViewCount + 1;
@@ -250,7 +250,7 @@ namespace MyJeepTrader.Data
 
         public List<UsersPosts> GetPopularUserPost(string userId)
         {
-            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var result = (from p in context.tPosts
                               join pt in context.tPostTypes on p.PostTypeId equals pt.PostTypeId
@@ -766,7 +766,7 @@ namespace MyJeepTrader.Data
                 {
                     MentionedUserId = mentionedUserdId,
                     MentionedByUserId = mentionedByUserId,
-                    StatusId = (statusId == 0) ? (int?)null :statusId,
+                    StatusId = (statusId == 0) ? (int?)null : statusId,
                     CommentId = (commentId == 0) ? (int?)null : commentId,
                     DateCreated = DateTime.Now
                 };
@@ -782,11 +782,12 @@ namespace MyJeepTrader.Data
 
         public List<tMention> MentionsByUserId(string userId)
         {
-            using(dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
                 var mentions = (from m in context.tMentions
                                 join u in context.AspNetUsers on m.MentionedByUserId equals u.Id
-                                where m.MentionedUserId == userId select m).ToList();
+                                where m.MentionedUserId == userId
+                                select m).ToList();
 
                 return mentions;
             }
@@ -796,10 +797,12 @@ namespace MyJeepTrader.Data
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
-                var usernames = (from u in context.AspNetUsers select new AutoCompleteUsers 
-                { 
-                    UserName = u.UserName
-                }).ToList();
+                var usernames = (from u in context.AspNetUsers
+                                 join p in context.tUserProfiles on u.Id equals p.Id
+                                 select new AutoCompleteUsers
+                                 {
+                                     UserName = u.UserName
+                                 }).ToList();
 
                 return usernames;
             }
@@ -1931,7 +1934,7 @@ namespace MyJeepTrader.Data
                             MessageId = (messageId == 0) ? (int?)null : messageId,
                             FriendListId = (friendListId == 0) ? (int?)null : friendListId,
                             StatusControlId = (statusControlId == 0) ? (int?)null : statusControlId,
-                            MentionId = (mentionId == 0) ? (int?)null: mentionId,
+                            MentionId = (mentionId == 0) ? (int?)null : mentionId,
                             DateCreated = DateTime.Now
                         };
 
@@ -2037,22 +2040,22 @@ namespace MyJeepTrader.Data
                              }).ToList();
 
                 mentionsStatus = (from n in context.tNotifications
-                            join m in context.tMentions on n.MentionId equals m.MentionId
-                            join s in context.tStatusUpdates on m.StatusId equals s.StatusId
-                            join u in context.AspNetUsers on n.FromUserId equals u.Id
-                            join p in context.tUserProfiles on n.FromUserId equals p.Id
-                            where n.Id == userId
-                            select new Notifications
-                            {
-                                Avatar = p.Avatar,
-                                FromUserName = u.UserName,
-                                NotificationId = n.NotificationId,
-                                MentionId = m.MentionId,
-                                Status = s.Status,
-                                StatusDate = s.DateCreated,
-                                DateCreated = n.DateCreated,
-                                DateRead = n.DateRead
-                            }).ToList();
+                                  join m in context.tMentions on n.MentionId equals m.MentionId
+                                  join s in context.tStatusUpdates on m.StatusId equals s.StatusId
+                                  join u in context.AspNetUsers on n.FromUserId equals u.Id
+                                  join p in context.tUserProfiles on n.FromUserId equals p.Id
+                                  where n.Id == userId
+                                  select new Notifications
+                                  {
+                                      Avatar = p.Avatar,
+                                      FromUserName = u.UserName,
+                                      NotificationId = n.NotificationId,
+                                      MentionId = m.MentionId,
+                                      Status = s.Status,
+                                      StatusDate = s.DateCreated,
+                                      DateCreated = n.DateCreated,
+                                      DateRead = n.DateRead
+                                  }).ToList();
 
                 mentionsComments = (from n in context.tNotifications
                                     join m in context.tMentions on n.MentionId equals m.MentionId

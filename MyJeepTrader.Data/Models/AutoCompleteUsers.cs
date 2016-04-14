@@ -8,6 +8,8 @@ namespace MyJeepTrader.Data.Models
 {
     public class AutoCompleteUsers
     {
+        public byte[] Avatar { get; set; }
+
         public string UserName { get; set; }
 
         public string UserId { get; set; }

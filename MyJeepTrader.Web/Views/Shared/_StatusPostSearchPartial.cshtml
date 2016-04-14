@@ -36,6 +36,7 @@
 <script>
     $(function () {
         var names = [];
+        var avatar = [];
 
         $.ajax({
             type: 'POST',
@@ -46,7 +47,7 @@
             success: function (result) {
                 $.each(result.d, function (i) {
                     console.log(result.d[i]);
-                    names[i] = "@@" + result.d[i].UserName + " ";
+                    names[i] = "@@" + result.d[i].UserName;
                 });
             },
             error: function (errorThrown) {
@@ -66,18 +67,47 @@
             return ret;
         };
 
-        $('#tbStatus').keydown(function (e) {
-            console.log(String.fromCharCode(e.which));
+        $('#tbStatus').keyup(function (e) {
             if (String.fromCharCode(e.which) === "2") {
                 $('#tbStatus').autocomplete({
+                    minLength: 3,
                     source: function (request, response) {
-                        var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
-                        response($.grep(names, function (value) {
+                        var term = request.term;
+
+                        if (term.indexOf(' ') > 0) {
+                            var index = term.lastIndexOf(' ');
+                            term = term.substring(index + 2);
+                        }
+
+                        var re = $.ui.autocomplete.escapeRegex(term);
+                        var matcher = new RegExp($.ui.autocomplete.escapeRegex(term), "i");
+                        var regex_validated_array = $.grep(names, function (value) {
                             value = value.label || value.value || value;
                             return matcher.test(value) || matcher.test(normalize(value));
-                        }));
+                        });
+                        response($.ui.autocomplete.filter(regex_validated_array,
+                        extractLast(term)));
+                    },
+                    focus: function () {
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        terms.pop();
+                        terms.push(ui.item.value);
+                        terms.push("");
+                        this.value = terms.join(" ");
+                        return false;
                     }
                 });
+
+                function split(val) {
+                    return val.split(/ \s*/);
+                }
+
+                function extractLast(term) {
+                    return split(term).pop();
+                }
             }
         });
     });
