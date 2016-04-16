@@ -118,6 +118,17 @@
         e.stopPropagation();
     });
 
+    $('#imageInput').bind('change', function () {
+        var files = $('#imageInput').prop("files");
+        $.each(files, function () {
+            if (this.size > 500000) {
+                alert(this.name + " is too big.");
+                resetFormElement($('#imageInput'));
+            }
+            return false;
+        })
+    });
+
     $('#aSubmitStatus').mousedown(function () {
         jQuery('.create-status [req]').submissionOK({
             displayOnForm: false,
@@ -130,7 +141,7 @@
 
     $('#tbStatus').click(function () {
         $('#divStatusInputs').collapse("toggle");
-        if ($(this).attr('rows', 4)) {
+        if ($(this).attr('rows', '4')) {
             $(this).attr('rows', '1');
         }
         else {
@@ -141,6 +152,7 @@
     $('#btnCancel').click(function () {
         $('#divStatusInputs').collapse("toggle");
         $('#tbStatus').attr('rows', '1');
+        resetFormElement($('#imageInput'));
     });
 
     $.fn.submissionOK.formSubmission = function (o) {
@@ -150,4 +162,13 @@
                 break;
         }
     };
+
+    function resetFormElement(e) {
+        e.wrap('<form>').closest('form').get(0).reset();
+        e.unwrap();
+
+        // Prevent form submission
+        e.stopPropagation();
+        e.preventDefault();
+    }
 </script>
