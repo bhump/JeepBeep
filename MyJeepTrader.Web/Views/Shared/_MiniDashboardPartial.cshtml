@@ -1,0 +1,164 @@
+﻿@using MyJeepTrader.Data
+@model MyJeepTrader.Web.ViewModels.PostCreateViewModel
+@{
+    Layout = "";
+}
+@Styles.Render("~/Content/css")
+<div class="row">
+    <div class="col-lg-12 well well-sm">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>
+                    Quick Post
+                    <a href="#" id="aShowHide" class="btn btn-xs icon pull-right">
+                        <span class="glyphicon glyphicon-collapse-down"></span>
+                    </a>
+                </h4>
+            </div>
+            <div class="col-lg-12">
+                <div id="alertRequiredFields" class="alert alert-danger fade hidden">
+                    <a href="#" class="close" aria-label="close">&times;</a>
+                    <strong>Error!</strong> There are one or more required fields missing!
+                </div>
+            </div>
+        </div>
+        <div id="divMiniPost" class="collapse">
+            @using (Html.BeginForm("Create", "MiniDashboard", FormMethod.Post, new { enctype = "multipart/form-data", @id = "CreatePost", @class = "create-post" }))
+            {
+                <div class="row miniDash">
+                    <div class="col-sm-12">
+                        @Html.DropDownListFor(model => model.SelectedPostTypeId, new SelectList(Model.PostTypes, "PostTypeId", "Type"), "Select Post Type", new { @class = "form-control", id = "ddlPostType", req = "ddlPostType" })
+                    </div>
+                </div>
+                <div class="row miniDash">
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "State", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);", id = "ddlState", req = "ddlState" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(model => model.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()), "City", new { @class = "form-control", id = "ddlCity", req = "ddlCity" })
+                    </div>
+                </div>
+                <div class="row miniDash">
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(model => model.SelectedModelId, new SelectList(Model.MiniDashModel, "ModelId", "Model"), "Model", new { @class = "form-control", id = "ddlModel", req = "ddlModel" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "Year", new { @class = "form-control", id = "ddlYear", req = "ddlYear" })
+                    </div>
+                </div>
+                <div class="row miniDash">
+                    <div class="col-xs-offset-3 col-xs-12 col-sm-offset-3 col-sm-12">
+                        <input type="file" name="files" id="files" class="filestyle" multiple data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" />
+                    </div>
+                </div>
+                <div class="row miniDash">
+                    <div class="col-sm-12">
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control no-max-width", id = "tbTitle", req = "tbTitle", @placeholder = "Your Post Title" })
+                    </div>
+                </div>
+                <div class="row miniDash">
+                    <div class="col-sm-12">
+                        @Html.TextAreaFor(model => model.Post.PostDescription, new { @class = "form-control no-max-width", id = "tbDescription", req = "tbDescription", @placeholder = "Your Post Description" })
+                    </div>
+                </div>
+                <div class="row miniDash">
+                    <div class="col-sm-12">
+                        <div class="pull-right">
+                            <input id="btnCreate" type="submit" value="Create" class="invisible" />
+                            <a href="#" id="aCancel" class="btn btn-default">Cancel</a>
+                            <a href="#" id="aCreate" class="btn btn-primary text-right">Create</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="~/Scripts/jquery.submissionOK.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $('#ddlState').on("change", function () {
+        var _stateId = $('#ddlState').val();
+        var url = "/Post/GetStateNameById";
+
+        $.ajax({
+            url: url,
+            data: { StateId: _stateId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                $('#spanState').html(data);
+            },
+            error: function (reponse) {
+                alert("error : " + JSON.stringify(reponse));
+            }
+        });
+    });
+
+    function GetCity(_stateId) {
+        var procemessage = "<option value='0'>City</option>";
+        $("#ddlCity").html(procemessage).show();
+        var url = "/Post/GetCityByStateId";
+
+        $.ajax({
+            url: url,
+            data: { stateid: _stateId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value=''>City</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].CityId + ">" + data[x].City + "</option>";
+                }
+                $("#ddlCity").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + JSON.stringify(reponse));
+            }
+        });
+    }
+
+    $('#aCreate').click(function () {
+        jQuery('.create-post [req]').submissionOK({
+            displayOnForm: false,
+            highlight: true,
+            submissionOKName: 'Create-Post',
+            submitButtonId: 'btnCreate'
+        });
+        return false;
+    });
+
+    $('body').bind('ErrorOccurred', function () {
+        $('#alertRequiredFields').removeClass('hidden').addClass('in');
+    });
+
+    $('.close').click(function () {
+        $(this).parent().removeClass('in').addClass('in');
+    });
+
+    $.fn.submissionOK.formSubmission = function (o) {
+        switch (o.submissionOKName) {
+            case 'Create-Post':
+                jQuery('#' + o.submitButtonId).click();
+                break;
+        }
+    };
+
+    $('#aShowHide').click(function () {
+
+        $('#divMiniPost').collapse("toggle");
+
+        $("#divMiniPost").on("hide.bs.collapse", function () {
+            $("#aShowHide").html('<span class="glyphicon glyphicon-collapse-down"></span>');
+        });
+
+        $("#divMiniPost").on("show.bs.collapse", function () {
+            $("#aShowHide").html('<span class="glyphicon glyphicon-collapse-up"></span>');
+        });
+
+    });
+
+</script>

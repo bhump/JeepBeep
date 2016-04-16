@@ -1,0 +1,293 @@
+﻿@model MyJeepTrader.Web.ViewModels.DashboardIndexViewModel
+@{
+    ViewBag.Title = "Admin";
+}
+
+<title>Admin Area</title>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6" id="column1">
+            <div>
+                <div class="form-group-sm">
+                    <h2>Find User</h2>
+                    <div class="form-horizontal">
+                        @using (Html.BeginForm("SearchUsers", "Dashboard", FormMethod.Post))
+                        {
+                            <div class="form-group-sm">
+                                <div class="col-md-8 input-group">
+                                    @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Who are you looking for?" })
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-group-sm btn-sm" type="button">Search</button>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <br>
+                    <div class="form-horizontal">
+                        <div class="col-md-8">
+                            @if (Model != null && Model.Users != null)
+                            {
+                                <table class="table">
+                                    <tr>
+                                        <th>UserName</th>
+                                        <th>Email</th>
+                                        <th></th>
+                                    </tr>
+                                    @foreach (var item in Model.Users)
+                                    {
+                                        <tr id="@item.Id">
+                                            <td>@item.UserName</td>
+                                            <td>@item.Email</td>
+                                            <td>
+                                                <button type="button" class="btn-link" onclick="loadUserModal('@item.Id', '@item.UserName', '@item.Email' )">View</button>
+                                            </td>
+                                        </tr>
+
+                                    }
+
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6" id="column2">
+            <div>
+                <div class="form-group-sm">
+                    <h2>View Posts</h2>
+                    <div class="form-horizontal">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divUserInfo" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group-sm">
+                            <div class="form-horizontal">
+                                <h4 class="modal-title"><span id="spanUserName"></span>&nbsp;<span>Info</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group-sm">
+                            <div class="form-horizontal">
+                                <div>
+                                    <h2>Personal</h2>
+                                    <div class="form-group">
+                                        <label class="col-md-5">First Name:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanFirstName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5">Last Name:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanLastName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5">Birth Date:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanBirthDate"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5">Email:</label>
+                                        <div class="col-md-3">
+                                            <span id="spanEmail"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2>Subscription</h2>
+                                    <div class="form-group">
+                                        <label class="col-md-5">Subscription:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanSubscription"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5">Active:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanSubActive"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5">Start:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanSubStart"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5">Expires:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanSubExpire"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group-sm">
+                            <div class="form-horizontal">
+                                <div>
+                                    <h2>Membership</h2>
+                                    <div class="form-group">
+                                        <label class="col-md-6">Member Since:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanMemberSince"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-6">Membership #:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanMembershipId"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-6">Active:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanMembershipActive"></span>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group placeholder">
+                                            <label class="col-md-6 placeholder"></label>
+                                            <div class="col-md-2 placeholder">
+                                                <span class="placeholder" id=""></span>
+                                            </div>
+                                        </div>*@
+                                    <br />
+                                </div>
+                                <div>
+                                    <h2>PayPal</h2>
+                                    <div class="form-group">
+                                        <label class="col-md-6">PayPal ID:</label>
+                                        <div class="col-md-2">
+                                            <span id="spanPayPalCustomerId"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2>Reset Password</h2>
+                                    @using (Html.BeginForm("ResetPassword", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        <div class="form-group">
+                                            <div>
+                                                @Html.TextAreaFor(m => m.Id, new { ID = "spanUserToResetId", @class = "hidden" }) <span id="spanUserToResetId"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ResetPassword, new { @class = "col-sm-6 control-label" })
+                                            <div class="col-md-6">
+                                                @Html.PasswordFor(m => m.ResetPassword, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Reset" class="btn btn-default" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    function loadUserModal(id, username, email) {
+        $('#divUserInfo').modal('show');
+        $('#spanUserName').html(username + "'s");
+        $('#spanEmail').html(email);
+
+        var data = {};
+        data.userId = id;
+
+        $.ajax({
+            url: '/WebServices/UserInformationWebService.asmx/GetUserInformation',
+            method: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            success: function (result) {
+                var firstName = result.d.FirstName;
+                var lastName = result.d.LastName;
+
+                var birthDate = new Date(parseInt(result.d.BirthDate.substr(6)));
+                var birthMonth = birthDate.getMonth();
+                birthMonth++;
+                var birthDay = birthDate.getDate();
+                var birthYear = birthDate.getFullYear();
+
+                var subType = result.d.SubscriptionType;
+                var subActive = result.d.SubscriptionActive;
+
+                var subStartDate = new Date(parseInt(result.d.StartDate.substr(6)));
+                var startDateDay = subStartDate.getDate();
+                var startDateMonth = subStartDate.getMonth();
+                startDateMonth++;
+
+                var startDateYear = subStartDate.getFullYear();
+                var expireDate = new Date(parseInt(result.d.ExpireDate.substr(6)));
+                var expireDay = expireDate.getDate();
+                var expireMonth = expireDate.getMonth();
+                expireMonth++;
+                var expireYear = expireDate.getFullYear();
+
+                var memDate = new Date(parseInt(result.d.MemberSince.substr(6)));
+                var memDay = memDate.getDate();
+                var memMonth = memDate.getMonth();
+                memMonth++;
+                var memYear = memDate.getFullYear();
+
+                var memberId = result.d.MembershipId;
+                var memberActive = result.d.MembershipActive;
+
+                var payPalId = result.d.PayPalCustomerId;
+
+                $('#spanFirstName').html(firstName);
+                $('#spanLastName').html(lastName);
+                $('#spanBirthDate').html(birthMonth + "/" + birthDay + "/" + birthYear);
+                $('#spanSubscription').html(subType);
+                $('#spanSubActive').html(subActive);
+                $('#spanMemberSince').html(memMonth + "/" + memDay + "/" + memYear);
+                $('#spanSubStart').html(startDateMonth + "/" + startDateDay + "/" + startDateYear);
+                $('#spanSubExpire').html(expireMonth + "/" + expireDay + "/" + expireYear);
+                $('#spanMembershipId').html(memberId);
+                $('#spanMembershipActive').html(memberActive);
+                $('#spanPayPalCustomerId').html(payPalId);
+                $('#spanUserToResetId').html(id);
+            },
+            error: function (err) {
+                alert("Error");
+            }
+
+        });
+    }
+
+</script>

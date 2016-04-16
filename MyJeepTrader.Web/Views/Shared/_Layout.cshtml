@@ -1,31 +1,43 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="MyJeepTrader" ng-controller="PostController">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Jeepbeep</title>
+    <link rel="stylesheet" href="~/Content/submissionOK.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @Styles.Render("~/Content/themes/base/css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+    <div class="ribbon-wrapper-orange"><div class="ribbon-orange">Alpha Testing</div></div>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-inner">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Jeepbeep", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
+                        <li>@Html.ActionLink("Posts", "Index", "Post")</li>
+                        <li>@Html.ActionLink("Users", "Index", "UserProfile")</li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Alpha Testing", "AlphaTesting", "Home")</li>
+                            <li>@Html.ActionLink("Feedback", "Index", "Feedback")</li>
+                            <li>@Html.ActionLink("Stream", "LiveStream", "Home")</li>
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
         </div>
     </div>
@@ -33,12 +45,42 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Lonely Sasquatch LLC</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.submissionOK.js"></script>
+    @Scripts.Render("~/bundles/MyJeepTrader")
     @RenderSection("scripts", required: false)
+    <script>
+
+        $(document).ready(function () {
+            NotificationCount();
+        });
+
+        function NotificationCount() {
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/NotificationWebService.asmx/GetNotificationCount',
+                data: {},
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.d != 0) {
+                        $('.notification-count').text(result.d);
+                    }
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+    </script>
+
 </body>
 </html>

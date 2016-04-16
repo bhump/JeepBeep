@@ -1,0 +1,492 @@
+﻿@using MyJeepTrader.Data
+@model MyJeepTrader.Web.ViewModels.PostCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+<h3>New Posting</h3>
+<div class="form-horizontal">
+    <div id="alertRequiredFields" class="alert alert-danger fade">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong>Error!</strong> There are one or more required fields missing! Please check each step!
+    </div>
+    <div id="rootwizard" class="well well-sm PostPage">
+        <div class="navbar col-sm-offset-4">
+            <div class="navbar-inner">
+                <div>
+                    <ul>
+                        <li><a href="#tab1" data-toggle="tab">Step 1</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Step 2</a></li>
+                        <li><a href="#tab3" data-toggle="tab">Step 3</a></li>
+                        <li><a href="#tab4" data-toggle="tab">Step 4</a></li>
+                        <li><a href="#tab5" data-toggle="tab">Step 5</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data", @id = "CreatePost", @class = "create-post" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="tab-content col-sm-offset-3">
+                <div class="tab-pane" id="tab1">
+                    <h2>Step 1</h2>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <h4>Select a type of post.</h4>
+                            @foreach (tPostType item in Model.PostTypes)
+                            {
+                                <div class="form-group-sm">
+                                    @Html.RadioButtonFor(model => model.SelectedPostTypeId, item.PostTypeId, new { id = item.Type, req = item.Type })
+                                    <label id="lblPostType" for="@item.Type">@item.Type </label>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Select a state.</h4>
+                            @Html.DropDownListFor(model => model.SelectedStateId, new SelectList(Model.States, "StateId", "State"), "Select State", new { @class = "form-control", @onchange = "javascript:GetCity(this.value);", id = "ddlState", req = "ddlState" })
+                            <h4>Select a city.</h4>
+                            @Html.DropDownListFor(m => m.SelectedCityId, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", id = "ddlCity", req = "ddlCity" })
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <h2>Step 2</h2>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <h4>Choose a jeep model.</h4>
+                            @for (var i = 0; i < Model.Models.Count(); i++)
+                            {
+                                <div class="form-group-sm">
+                                    @Html.HiddenFor(model => model.Models[i].TModel.ModelId, new { id = "hdModelVal" })
+                                    @Html.CheckBoxFor(model => model.Models[i].IsSelected, new { @class = "chk", id = @Model.Models[i].TModel.Model })
+                                    <label>@Model.Models[i].TModel.Model</label>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <h4>Choose a model year.</h4>
+                                @Html.DropDownListFor(model => model.SelectedYearId, new SelectList(Model.Years, "YearId", "Year"), "Select Year", new { @class = "form-control", id = "ddlYear", req = "ddlYear" })
+                            </div>
+                            <div>
+                                <h4>Jeep or Accessory?</h4>
+                                <div class="form-group-sm">
+                                    <div class="col-md-4">
+                                        @Html.RadioButtonFor(model => model.Post.IsVehicle, "True", new { Checked = "checked", @class = "rbJeep" })
+                                        <label id="lblJeepLabel" for="rbJeep">Jeep</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.RadioButtonFor(model => model.Post.IsVehicle, "False", new { @class = "rbPart" })
+                                        <label id="lblAccessoryLabel" for="rbAccessory">Part</label>
+                                    </div>
+                                </div>
+                                <div class="form-group-sm">
+                                    <div class="hidden partTypes">
+                                        <div class="col-sm-6">
+                                            <label>Part Type:</label>
+                                            @Html.TextBoxFor(model => model.Post.PartType, new { @class = "form-control no-max-width", id = "tbPartType" })
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Part Brand:</label>
+                                            @Html.TextBoxFor(model => model.Post.PartBrand, new { @class = "form-control no-max-width", id = "tbPartBrand" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab3">
+                    <h2>Step 3</h2>
+                    <h4>Select Images</h4>
+                    <div class="form-group">
+                        <div class="upload-container col-md-4">
+                            <div class="upload">
+                                <input type="file" name="files" id="file1" class="filestyle" multiple data-classbutton="btn btn-primary" data-input="false" accept="image/*" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab4">
+                    <h2>Step 4</h2>
+                    <h4>Create post title and description.</h4>
+                    <div class="form-group">
+                        <label class="col-sm-2">Title:</label>
+                        <div class="col-sm-5" id="jeepTypeDiv">
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control no-max-width", id = "tbTitle", req = "tbTitle" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2">Description:</label>
+                        <div class="col-sm-5" id="jeepTypeDiv">
+                            @Html.TextAreaFor(model => model.Post.PostDescription, new { @class = "form-control no-max-width", id = "tbDescription", req = "tbDescription" })
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab5">
+                    <h2>Step 5</h2>
+                    <h4>Review and Create</h4>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-sm-2">Post Type:</label>
+                                <div class="col-sm-5">
+                                    <span id="spanPostType" class="col-sm-3"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label class="col-sm-2">Model:</label>
+                                    <span id="spanModel" class="col-sm-2"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div>
+                                    <label class="col-sm-2">Year:</label><span id="spanYear" class="col-sm-2"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label class="col-sm-2">State:</label><span id="spanState" class="col-sm-2"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label class="col-sm-2">City:</label><span id="spanCity" class="col-sm-2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                    <div class="form-group">
+                                        <div id="divImages">
+                                            <ul id="imageList" class="list-inline"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div>
+                                            <label class="col-sm-2">Title: </label><span id="spanTitle" class="col-sm-5"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div>
+                                            <label class="col-sm-2">Description: </label>
+                                            <span id="spanDescription" class="col-sm-5"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div>
+                                            <a href="#" id="aCreate" class="btn btn-default">Create</a>
+                                            <input id="btnCreate" type="submit" value="Create" class="invisible" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="placeholder"></div>
+                <br />
+                <div class="col-sm-offset-5">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <input type='button' class='btn btn-default button-previous' name='previous' value='Previous' width="30" />
+                        </div>
+                        <div class="col-md-3">
+                            <input type='button' class='btn btn-default button-next' name='next' value='Next' width="30" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modal content-->
+<div id="RequiredFieldsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">One or more required fields missing!</h4>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>
+                            Please check each step to see if all fields are filled out!
+                            Required fields will be in red!
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.bootstrap.wizard.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $('#rootwizard').bootstrapWizard({ 'nextSelector': '.button-next', 'previousSelector': '.button-previous' });
+
+            $('#Sell').click(function () {
+                if ($('#Sell').val() == 1) {
+                    $('#spanPostType').text("Sell");
+                }
+            });
+
+            $('#Trade').click(function () {
+                if ($('#Trade').val() == 2) {
+                    $('#spanPostType').text("Trade");
+                }
+            });
+
+            $('#Buy').click(function () {
+                if ($('#Buy').val() == 3) {
+                    $('#spanPostType').text("Buy");
+                }
+            });
+
+            $('#ddlState').on("change", function () {
+                var _stateId = $('#ddlState').val();
+                var url = "/Post/GetStateNameById";
+
+                $.ajax({
+                    url: url,
+                    data: { StateId: _stateId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        $('#spanState').html(data);
+                    },
+                    error: function (reponse) {
+                        alert("error : " + JSON.stringify(reponse));
+                    }
+                });
+            });
+
+            $('.button-next').click(function () {
+                getModelValues();
+            });
+
+            $('#tab5').click(function () {
+                getModelValues();
+            });
+
+            $('.rbJeep').click(function () {
+                $('.partTypes').addClass('hidden');
+            });
+
+            $('.rbPart').click(function () {
+                $('.partTypes').removeClass('hidden');
+            });
+
+            $('#ddlCity').on("change", function () {
+                var ddlCity = document.getElementById("ddlCity");
+
+                $('#spanCity').html(ddlCity.options[ddlCity.selectedIndex].text);
+            });
+
+            $('#ddlYear').on("change", function () {
+                var _yearId = $('#ddlYear').val();
+                var url = "/Post/GetYearById";
+
+                $.ajax({
+                    url: url,
+                    data: { YearId: _yearId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        $('#spanYear').html(data);
+                        getModelValues();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + JSON.stringify(reponse));
+                    }
+                });
+            });
+
+            $('#tbTitle').keyup(function () {
+                $('#spanTitle').html($(this).val());
+            });
+
+            $('#tbDescription').keyup(function () {
+                $('#spanDescription').html($(this).val());
+            });
+
+            //$("input[type='submit']").click(function () {
+            //    var $fileUpload = $("input[type='file']");
+            //    if (parseInt($fileUpload.get(0).files.length) > 2) {
+            //        alert("You can only upload a maximum of 5 files");
+            //    }
+            //});
+        });
+
+        function GetCity(_stateId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#ddlCity").html(procemessage).show();
+            var url = "/Post/GetCityByStateId";
+
+            $.ajax({
+                url: url,
+                data: { stateid: _stateId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>Select City</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].CityId + ">" + data[x].City + "</option>";
+                    }
+                    $("#ddlCity").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + JSON.stringify(reponse));
+                }
+            });
+
+        }
+
+        function getModelValues() {
+            /* declare an checkbox array */
+            var chkArray = [];
+
+            /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+            $(".chk:checked").each(function () {
+                /*sets the id's which in this case are the Jeep's Models.*/
+                chkArray.push($(this).attr("id"));
+            });
+
+            /* we join the array separated by the comma */
+            var selected;
+            selected = chkArray.join(',') + ",";
+
+            /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+            if (selected.length > 1) {
+                var lastChar = selected.slice(-1);
+                if (lastChar == ',') {
+                    selected = selected.slice(0, -1);
+                    $('#spanModel').html(selected);
+                }
+            } else {
+                'TODO: Change Errors.'
+                //alert("Please at least one of the checkbox");
+            }
+        }
+
+        jQuery('#aCreate').click(function () {
+            jQuery('.create-post [req]').submissionOK({
+                displayOnForm: false,
+                highlight: true,
+                submissionOKName: 'Create-Post',
+                submitButtonId: 'btnCreate'
+            });
+            return false;
+        });
+
+        jQuery('body').bind('ErrorOccurred', function () {
+            $('#alertRequiredFields').addClass('in');
+        });
+
+        $('.close').click(function () {
+            $(this).parent().removeClass('in');
+        });
+
+        jQuery.fn.submissionOK.formSubmission = function (o) {
+            switch (o.submissionOKName) {
+                case 'Create-Post':
+                    jQuery('#' + o.submitButtonId).click();
+                    break;
+            }
+        };
+
+
+        var selDiv = "";
+
+        document.addEventListener("DOMContentLoaded", init, false);
+
+        function init() {
+            document.querySelector('#file1').addEventListener('change', handleFileSelect, false);
+            selDiv = document.querySelector("#imageList");
+        }
+
+        function handleFileSelect(e) {
+
+            if (!e.target.files || !window.FileReader) return;
+
+            selDiv.innerHTML = "";
+
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+            filesArr.forEach(function (f) {
+                if (!f.type.match("image.*")) {
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var html = "<li><img class='img' src=\"" + e.target.result + "\" width='87px' height='87px'></li>";
+                    selDiv.innerHTML += html;
+                }
+                reader.readAsDataURL(f);
+            });
+
+        }
+
+        //function readURL(input) {
+        //    if (input.files && input.files[0]) {
+        //        var reader = new FileReader();
+
+        //        reader.onload = function (e) {
+        //            $('#blah')
+        //                .attr('src', e.target.result)
+        //                .width(87)
+        //                .height(87);
+        //        };
+
+        //        reader.readAsDataURL(input.files[0]);
+        //    }
+        //}
+
+        @*$(function () {
+            var currentImage = 1;
+            $("body").on("change", "input[name='files']", function () {
+                var pathToRemoveIcon = "@Url.Content("~/Images/delete.png")";
+                currentImage = currentImage + 1;
+                var htmlToAppend = '<div class="upload"><input type="file" name="files" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83" id="file' + currentImage + '" /><img src="' + pathToRemoveIcon + '" alt="Remove picture." /></div>';
+                $('.upload-container').append(htmlToAppend);
+            }).on("click", ".upload img", function () {
+                if ($(this).parent().siblings().length > 0) {
+                    $(this).parent().remove();
+                }
+            });
+        });*@
+
+    </script>
+}

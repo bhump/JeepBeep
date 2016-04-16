@@ -1,0 +1,65 @@
+﻿@model MyJeepTrader.Web.ViewModels.UserProfileIndexViewModel
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                @foreach (var item in Model.UserProfiles)
+                {
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div>
+                            @if (item.Avatar != null)
+                            {
+                                <a href='@Url.RouteUrl("Details", new { UserName = item.UserName })'>
+                                    <img src='@Url.Action("ShowAvatar", "UserProfile", new { UserName = item.UserName })' width="43" height="43" class="img-circle" />
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="~/Images/placeholder.jpg" width="43" height="43" class="img-circle" />
+                            }
+                        </div>
+                        <div>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </div>
+
+                            <div>
+                                @Html.DisplayFor(modelItem => item.Website)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(function () {
+        $("table").each(function () {
+            var $this = $(this);
+            var newrows = [];
+            $this.find("tr").each(function () {
+                var i = 0;
+                $(this).find("td").each(function () {
+                    i++;
+                    if (newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                    newrows[i].append($(this));
+                });
+            });
+            $this.find("tr").remove();
+            $.each(newrows, function () {
+                $this.append(this);
+            });
+        });
+
+        return false;
+    });
+</script>
+

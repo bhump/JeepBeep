@@ -1,0 +1,398 @@
+﻿@model MyJeepTrader.Web.ViewModels.NotificationViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Notifications</h2>
+<div class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div>
+                    <div class="col-md-12">
+                        @if (ViewBag.Message != null)
+                        {
+                            if (ViewBag.Message.Contains("wrong"))
+                            {
+                                <div id="divError" class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanErrorMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="divSuccess" class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanSuccessMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="well well-sm">
+
+                @foreach (var notification in Model.Notifications)
+                {
+                    <div class="Notifications">
+                        <div id="divNotification" class="divNotifications" data-notification="@notification.NotificationId">
+                            <div class="row">
+                                <div class="col-sm-1 col-md-1">
+                                    <div>
+                                        @if (notification.DateRead == null)
+                                        {
+                                            <span id="notificationId_@notification.NotificationId" class="glyphicon glyphicon-exclamation-sign notificationIcon"></span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2">
+                                    <div class="ui-icon-image">
+                                        @if (notification.Avatar != null)
+                                        {
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @notification.FromUserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 col-md-9">
+                                    <div class="text-left row">
+                                        <div class="col-md-12">
+                                            <label id="lblUserName">@notification.FromUserName</label>&nbsp;<label class="pull-right">@String.Format("{0:M/dd/yyyy}", @notification.DateCreated)</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if (notification.CommentId != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="commentTitle">Commented on your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate) </label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <label class="Comment">@notification.Comment</label>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.Message != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">New Personal Message!</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <a href='@Url.RouteUrl("Dashboard", new { MailBox = "MailBox" })'>Go To Mailbox!</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.LikedBy != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">@notification.FromUserName loved your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)!</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.DislikedBy != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">Oh No! @notification.FromUserName hated your beep from @String.Format("{0:M/dd/yyyy}", @notification.StatusDate)! Better luck next time. :p</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.FriendListId != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="MessageTitle">You have a new follower! Accept them now so they can see your beeps!</label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@notification.FriendListId">Accept</button>
+                                                                <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@notification.FriendListId">Reject</button>
+                                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@notification.FriendListId">Block</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.MentionId != null && notification.MentionedCommentId == null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="commentTitle">beeped you! </label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (notification.MentionedCommentId != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="commentTitle">beeped you in a comment! </label>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <label class="Status">@notification.Status</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <label class="Comment">@notification.Comment</label>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="placeholder">
+
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $('.divNotifications').hover(function () {
+        var notificationId = $(this).data('notification');
+        UpdateNotification(notificationId);
+    });
+
+    $('.acceptFriend').click(function () {
+        var friendsListId = $(this).val();
+        var row = $(this).closest('tr');
+        AcceptFriend(friendsListId, row);
+    });
+
+    $('.addFriend').click(function () {
+        var fromUser = $(this).data('friendId');
+        var friendId = $(this).val();
+        var row = $(this).closest('tr');
+        AddFriend(friendId, row);
+    });
+
+    $('.rejectFriend').click(function () {
+        var friendsListId = $(this).val();
+        var row = $(this).closest('tr');
+        RejectFriend(friendsListId, row);
+    });
+
+    $('.blockFriend').click(function () {
+        var friendsListId = $('#btnBlockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = true;
+        BlockFriend(friendsListId, blocked, row);
+    });
+
+    $('.unblockFriend').click(function () {
+        var friendsListId = $('#btnUnblockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = false;
+        BlockFriend(friendsListId, blocked, row);
+    });
+
+    function UpdateNotification(notificationId) {
+
+        var data = {
+            notificationId: notificationId
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/NotificationWebService.asmx/UpdateNotification',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('#notificationId_' + notificationId).addClass('invisible');
+                NotificationCount();
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function NotificationCount() {
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/NotificationWebService.asmx/GetNotificationCount',
+            data: {},
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('.notification-count').text(result.d);
+                console.log(result.d);
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function AcceptFriend(friendsListId, row) {
+
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/AcceptFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('td').fadeOut(500, function () {
+                    row.remove();
+                });
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function RejectFriend(friendsListId, row) {
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/RejectFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //$('#divFriendsSuccess').removeClass("hidden alert-success").addClass("alert-info");
+                //$('#spanSuccessMessage').html("Friend Rejected!");
+
+                //row.find('td').fadeOut(500, function () {
+                //    row.remove();
+                //});
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function BlockFriend(friendsListId, block, row) {
+        var data = {
+            friendsListId: friendsListId,
+            blocked: block
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/BlockFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //row.find('.blockFriend').text("Unblock");
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function AddFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/AddFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').addClass('hidden');
+                row.find('.pending').removeClass('hidden');
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function RemoveFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/RemoveFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').removeClass('hidden');
+                row.find('.pending').addClass('hidden');
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+</script>
+

@@ -1,31 +1,101 @@
-﻿@{
+﻿@model MyJeepTrader.Web.ViewModels.PopularPostsAndProfilesViewModel
+@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_HomeLayoutPage.cshtml";
+    //Layout = "";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="panel-home">
+                    <div class="form-horizontal no-border">
+                        @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
+                        {
+                            <h1>Welcome to Jeepbeep</h1>
+                            <div class="input-group col-lg-12">
+                                @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "What are you looking for?" })
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-group-lg btn-lg" type="submit">Search</button>
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel-posts">
+            <div class="row">
+                @foreach (var post in Model.PopularPosts)
+                {
+                    <div class="col-sm-12 col-md-4 col-lg-4" id="divPost_@post.PostId">
+                        <div class="transbox">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            @if (post.Avatar != null)
+                                            {
+                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = post.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="row topSpace">
+                                        <div class="col-sm-offset-1 col-sm-12">
+                                            @Html.ActionLink("View", "Details", "Post", new { PostId = @post.PostId }, new { @class = "btn btn-sm btn-default" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label class="transboxLabel">Post By: </label>
+                                            <label class="transboxLabel">@post.UserName</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <label class="transboxLabel">Models:</label>
+                                            @foreach (var item in post.Model)
+                                            {
+                                                <label class="transboxLabel">@item</label>
+                                            }
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <label class="transboxLabel">Year: </label>
+                                            <label class="transboxLabel">@post.Year</label>
+                                        </div>
+                                    </div>
+                                    @*<div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <label class="transboxLabel">@post.City,</label>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <label class="transboxLabel">@post.State</label>
+                                        </div>
+                                    </div>*@
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <label class="transboxLabel">@post.PostDescription</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>

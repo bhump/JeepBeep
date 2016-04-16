@@ -1,93 +1,205 @@
-﻿@model IEnumerable<MyJeepTrader.Data.tPost>
+﻿@using System.Web.UI.WebControls
+@model MyJeepTrader.Web.ViewModels.PostIndexViewModel
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-buttons.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-thumbs.css" media="screen" />
+<div class="content">
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <h2>Jeepbeep Posts</h2>
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    @ViewBag.Message
+                </div>
+            }
+
+
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp;@Html.ActionLink("Create New Posting", "Create")
+                </div>
+            }
+
+            <br />
+
+            @using (Html.BeginForm("SearchPosts", "Post", FormMethod.Post))
+            {
+                <div class="input-group">
+                    @Html.TextBox("Search", null, new { @class = "form-control input-lg no-max-width", @placeholder = "Search Posts" })
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-group-lg btn-lg" type="submit">Go!</button>
+                    </span>
+                </div>
+
+            }
+
+            <br />
+
+            @if (Model != null && Model.SearchedPosts != null)
+            {
+                <div class="well well-sm">
+                    @foreach (var post in Model.SearchedPosts)
+                    {
+                        <div id="divLivePost" class="Posts" data-post="@post.PostId">
+                            <div class="row">
+                                <label class="hidden">@post.PostId</label>
+                                <div class="col-md-2">
+                                    <div class="ui-icon-image">
+                                        <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @post.AspNetUser.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="text-left row">
+                                        <div class="col-md-12">
+                                            <label id="lblUserName">@post.AspNetUser.UserName</label>&nbsp;<label class="pull-right">@String.Format("{0:M/dd/yyyy}", @post.DateCreated)</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @post.PostDescription
+                                        </div>
+                                        <ul class="list-inline">
+                                            @if (post.tImages.Where(i => i.PostId == post.PostId) != null)
+                                            {
+                                                foreach (var image in post.tImages.Select(i => i.Image).ToArray())
+                                                {
+                                                    string convertedImage = Convert.ToBase64String(image.ToArray());
+                                                    <li>
+                                                        <a class="fancybox-thumb" rel="group_@post.PostId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                            <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="dropdown pull-right">
+                                        <a class="btn-link postDropdown" id="dropdownMenu1" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a id="aFullPost" onclick="RedirectToPost('@post.PostId')" class="fullPost"><span class="glyphicon glyphicon-eye-open">&nbsp;<label>View</label></span></a></li>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <li><a id="aAddFriend" class="addFriend" data-addfriend="@post.AspNetUser.Id"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a>Register Now</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    }
+                </div>
+            }
+
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    @*@Scripts.Render("~/bundles/jquery")*@
+    <script src="~/Scripts/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script src="~/Scripts/jquery.fancybox.pack.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-buttons.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-media.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-thumbs.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.fancybox-thumb').fancybox({
+                prevEffect: 'none',
+                nextEffect: 'none',
+                openEffect: 'elastic',
+                closeEffect: 'elastic',
+                helpers: {
+                    title: {
+                        type: 'outside'
+                    },
+                    thumbs: {
+                        width: 50,
+                        height: 50
+                    }
+                }
+            });
+            @*alert(@ViewBag.Message);
+            var message = @ViewBag.Message;
+            if (message) {
+                alert("test");
+                sweetAlert("@ViewBag.Header", "@ViewBag.Message", "info");
+            }*@
+        });
+
+        $('.addFriend').click(function (e) {
+            var friendId = $(this).data("addfriend");
+            AddFriend(friendId);
+            e.stopPropagation();
+        });
+
+        $('.postDropdown').click(function () {
+            $(this).next(".dropdown-menu").toggle();
+            return false;
+        });
+
+        $('.postDropdown').focusout(function () {
+            $(this).next(".dropdown-menu").hide();
+            return false;
+        });
+
+        $('.Posts').click(function (event) {
+            if (event.toElement.nodeName !== 'IMG') {
+                var postId = $(this).data("post");
+                RedirectToPost(postId);
+            }
+        });
+
+        function AddFriend(friendId, row) {
+            var data = {
+                friendId: friendId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/AddFriend',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    row.find('.addFriend').text("Unfollow");
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function RedirectToPost(postId) {
+            window.location.href = '/Post/Details?PostId=' + postId;
+        }
+    </script>
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PostTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Part)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PartType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PartBrand)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PartName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleMake)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleModel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VehicleYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Part)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartBrand)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vehicle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleMake)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleModel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VehicleYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Active)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
-        </td>
-    </tr>
-}
-
-</table>

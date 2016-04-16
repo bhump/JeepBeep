@@ -1,0 +1,101 @@
+﻿@model MyJeepTrader.Web.ViewModels.FeedbackViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div>
+    <div class="col-lg-12">
+        <div id="alertRequiredFields" class="alert alert-danger fade">
+            <a href="#" class="close" aria-label="close">&times;</a>
+            <strong>Error!</strong> There are one or more required fields missing!
+        </div>
+    </div>
+</div>
+<div class="row col-lg-offset-2">
+    <div class="form-group-sm">
+        @using (Html.BeginForm("SendFeedback", "Feedback", FormMethod.Post, new { @class = "form-horizontal feedback", role = "form" }))
+        {
+            <div>
+                <div>
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Scale, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.Scale, new SelectList(
+                  new List<Object>{
+                       new { value = "" , text = "Select Scale"},
+                       new { value = 1 , text = "1" },
+                       new { value = 2 , text = "2" },
+                       new { value = 3 , text = "3"},
+                       new { value = 4 , text = "4"},
+                       new { value = 5 , text = "5"}
+                    },
+                  "value",
+                  "text",
+     0), new { @class = "form-control", id = "ddlScale", req = "ddlScale" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Overall, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.Overall, new SelectList(
+                  new List<Object>{
+                       new { value = "" , text = "Select Overall"},
+                       new { value = 1 , text = "1"  },
+                       new { value = 2 , text = "2" },
+                       new { value = 3 , text = "3"},
+                       new { value = 4 , text = "4"},
+                       new { value = 5 , text = "5"}
+                    },
+                  "value",
+                  "text",
+     0), new { @class = "form-control", id = "ddlOverall", req = "ddlOverall" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Description, new { @class = "col-sm-3 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", id = "taDescription", req = "taDescription" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <a href="#" id="aSubmit" class="btn btn-default">Submit</a>
+                        <input id="btnSubmit" type="submit" value="Submit" class="btn btn-default invisible" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    <script>
+        jQuery('#aSubmit').click(function () {
+            jQuery('.feedback [req]').submissionOK({
+                displayOnForm: false,
+                highlight: true,
+                submissionOKName: 'Feedback',
+                submitButtonId: 'btnSubmit'
+            });
+            return false;
+        });
+
+        jQuery('body').bind('ErrorOccurred', function () {
+            $('#alertRequiredFields').addClass('in');
+        });
+
+        $('.close').click(function () {
+            $(this).parent().removeClass('in');
+        });
+
+        jQuery.fn.submissionOK.formSubmission = function (o) {
+            switch (o.submissionOKName) {
+                case 'Feedback':
+                    jQuery('#' + o.submitButtonId).click();
+                    break;
+            }
+        };
+    </script>
+}

@@ -1,0 +1,920 @@
+﻿@model MyJeepTrader.Web.ViewModels.DashboardIndexViewModel
+@{
+
+    ViewBag.Title = "Dashboard";
+}
+
+<title>My Dashboard</title>
+<div class="content">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6 well well-small" id="column1">
+            <div>
+                <div class="form-group-sm">
+                    <h2>Membership</h2>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <label class="col-md-8">Member Since: </label>
+                                @Html.DisplayFor(m => m.MemberSince, "{0:MM/dd/yyyy}")
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <label class="col-md-8">Subscription: </label>
+                                @Html.DisplayFor(m => m.SubscriptionType)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <label class="col-md-8">Expiration Date: </label>
+                                @Html.DisplayFor(m => m.ExpirationDate, "{0:MM/dd/yyyy}")
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                @Html.ActionLink("Upgrade", "Index", "PayPal", new { UserName = @User.Identity.Name }, new { @class = "btn btn-primary" })
+                                <input type="button" class="btn btn-default" value="Cancel" onclick="loadCancel()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group-sm">
+                    <h2>Change Email</h2>
+                    @using (Html.BeginForm("ChangeEmail", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <div>
+                            <div>
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "col-sm-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Change e-mail" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <hr />
+                <div class=" form-group-sm">
+                    <h2>Change Password</h2>
+                    @using (Html.BeginForm("ChangePassword", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.OldPassword, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.NewPassword, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Change password" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <hr />
+                <div class=" form-group-sm">
+                    <h2>Update Primary Jeep</h2>
+                    @using (Html.BeginForm("CreateJeepProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Image, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @if (Model.Image != null)
+                                {
+                                    <img src="@Url.Action("ShowJeepImage", "Dashboard", new { UserName = @User.Identity.Name })" alt="Image Unavailable" width="87" height="85" class="img-circle" />
+                                }
+                                else
+                                {
+                                    <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle" />
+                                }
+                                <input type="file" name="Image" id="Image" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Manufactuer, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Manufactuer, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Model, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Model, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Make, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Make, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Year, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @if (Model.Year != 0)
+                                {
+                                    @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Year, " ", new { @class = "form-control" })
+                                }
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                                @Html.LabelFor(m => m.PrimaryJeep, new { @class = "col-sm-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.CheckBoxFor(m => m.PrimaryJeep, new { @checked = "checked" })
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.JeepDescription, new { @class = "col-sm-3 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(m => m.JeepDescription, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Update Jeep" class="btn btn-primary" />
+                                @Html.ActionLink("Add Another Jeep", "Index", "JeepProfile", new { UserName = @User.Identity.Name }, new { })
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 well well-sm" id="column2">
+            <div class=" form-group-sm">
+                <h2>Update Your Profile</h2>
+                @using (Html.BeginForm("CreateUserProfile", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                {
+                    <div class="hidden">
+                        @Html.LabelFor(m => m.UserProfileId, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.UserProfileId, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Avatar, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @if (Model.Avatar != null)
+                            {
+                                <img id="imgAvatar" src='@Url.Action("ShowAvatar", "Dashboard", new { UserName = @User.Identity.Name })' width="87" height="85" class="img-circle" />
+                            }
+                            else
+                            {
+                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle" />
+                            }
+                            <input type="file" name="Avatar" id="Avatar" class="filestyle" data-classbutton="btn btn-primary" data-input="false" data-iconname="glyphicon glyphicon-picture" data-buttontext="Upload" width="83">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BirthDate, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @if (Model.BirthDate != DateTime.MinValue)
+                            {
+                                @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}", new { @class = "form-control" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.BirthDate, " ", new { @class = "form-control" })
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Website, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Facebook, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Facebook, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Twitter, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Twitter, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.GooglePlus, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.GooglePlus, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Ello, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Ello, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Instagram, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Instagram, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description, new { @class = "col-sm-3 control-label" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Update Profile" class="btn btn-primary" />
+                            @Html.ActionLink("View Profile", "Details", "UserProfile", new { UserName = @User.Identity.Name }, new { })
+                        </div>
+                    </div>
+                }
+            </div>
+            <hr />
+            <div id="divMailBox" class="form-group">
+                <h2>Your Mailbox</h2>
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a data-toggle="pill" href="#Inbox">Inbox</a></li>
+                    <li><a data-toggle="pill" href="#CreateMessage">Create Message</a></li>
+                    <li><a data-toggle="pill" href="#SentMessages">Sent Messages</a></li>
+                </ul>
+                <br />
+                <div class="tab-content">
+                    <div id="Inbox" class="tab-pane fade in active">
+                        <div>
+
+                            @if (Model.Inbox != null)
+                            {
+                                <table class="table table-responsive" id="inbox">
+                                    <tr>
+                                        <th></th>
+                                        <th>Date Sent</th>
+                                        <th>From</th>
+                                        <th>Subject</th>
+                                    </tr>
+
+                                    @foreach (var item in Model.Inbox)
+                                    {
+                                        <tr id="@item.MessageId">
+                                            <td>
+                                                <button type="button" class="btn-link" onclick="loadModal('@item.From', '@item.Message', '@item.Subject', '@item.FromUserId', '@item.MessageId')">View</button>
+                                            </td>
+                                            @if (item.DateRead == null)
+                                            {
+                                                <td style="font-weight:bold">@item.DateSent</td>
+                                                <td style="font-weight:bold">@item.From</td>
+                                                <td style="font-weight:bold">@item.Subject</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.DateSent</td>
+                                                <td>@item.From</td>
+                                                <td>@item.Subject</td>
+                                            }
+
+                                        </tr>
+                                    }
+
+                                </table>
+                            }
+                        </div>
+                    </div>
+                    <div id="CreateMessage" class="tab-pane fade">
+                        <div>
+                            @using (Html.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", role = "form" }))
+                            {
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.To, new { @class = "col-sm-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Subject, new { @class = "col-sm-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Message, new { @class = "col-sm-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Send Message" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div id="SentMessages" class="tab-pane fade">
+                        <div>
+                            @if (Model.SentMessages != null)
+                            {
+                                <table class="table table-responsive">
+                                    <tr>
+                                        <th></th>
+                                        <th>Date Sent</th>
+                                        <th>To</th>
+                                        <th>Subject</th>
+                                    </tr>
+
+                                    @foreach (var item in Model.SentMessages)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <button type="button" class="btn-link" onclick="loadSentModal('@item.Message')">View</button>
+                                            </td>
+                                            <td>@item.DateSent</td>
+                                            <td>@item.To</td>
+                                            <td>@item.Subject</td>
+                                        </tr>
+                                    }
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div id="divFriendsSuccess" class="alert alert-success alert-dismissible fade" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span id="spanSuccessMessage"></span>
+                </div>
+                <h2>Manage Friends</h2>
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a data-toggle="pill" href="#Following">Following</a></li>
+                    <li><a data-toggle="pill" href="#Pending">Pending</a></li>
+                    <li><a data-toggle="pill" href="#Followers">Followers</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="Following" class="tab-pane fade in active">
+                        <table id="tableFriends" class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        <span>User</span>
+                                    </th>
+                                    <th>
+                                        <span>First Name</span>
+                                    </th>
+                                    <th>
+                                        <span>Last Name</span>
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var friends in Model.Following)
+                                {
+                                    <tr id="@friends.FriendsListId">
+                                        <td>
+                                            @if (friends.Avatar != null)
+                                            {
+                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @friends.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                            }
+                                        </td>
+                                        <td>
+                                            <span>@friends.UserName</span>
+                                        </td>
+                                        <td>
+                                            <span>@friends.FirstName</span>
+                                        </td>
+                                        <td>
+                                            <span>@friends.LastName</span>
+                                        </td>
+                                        <td width="30%">
+
+                                            <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@friends.FriendsListId">Unfollow</button>
+
+                                            @if (friends.Blocked == true)
+                                            {
+                                                <button href="#" id="btnUnblockFriend" class="btn btn-link friend unblockFriend" value="@friends.FriendsListId">Unblock</button>
+                                            }
+                                            else
+                                            {
+                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@friends.FriendsListId">Block</button>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="Pending" class="tab-pane fade">
+                        <table id="tablePendingFriends" class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        <span>User</span>
+                                    </th>
+                                    <th>
+                                        <span>First Name</span>
+                                    </th>
+                                    <th>
+                                        <span>Last Name</span>
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pending in Model.Pending)
+                                {
+                                    <tr id="@pending.FriendsListId">
+                                        <td>
+                                            @if (pending.Avatar != null)
+                                            {
+                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @pending.UserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                            }
+                                        </td>
+                                        <td>
+                                            <span>@pending.UserName</span>
+                                        </td>
+                                        <td>
+                                            <span>@pending.FirstName</span>
+                                        </td>
+                                        <td>
+                                            <span>@pending.LastName</span>
+                                        </td>
+                                        <td width="30%">
+                                            <button href="#" id="btnAcceptFriend" class="btn btn-link friend acceptFriend" value="@pending.FriendsListId">Accept</button>
+                                            <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@pending.FriendsListId">Reject</button>
+                                            <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@pending.FriendsListId">Block</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="Followers" class="tab-pane fade">
+                        <table id="tableFollowers" class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        <span>User</span>
+                                    </th>
+                                    <th>
+                                        <span>First Name</span>
+                                    </th>
+                                    <th>
+                                        <span>Last Name</span>
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var followers in Model.Followers)
+                                {
+                                    <tr id="@followers.FriendsListId">
+                                        <td>
+                                            @if (followers.Avatar != null)
+                                            {
+                                                <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @followers.UserName })" alt="Image Unavailable" class="img-circle streamImage" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/placeholder.jpg" width="87" height="85" class="img-circle streamImage" />
+                                            }
+                                        </td>
+                                        <td>
+                                            <span>@followers.UserName</span>
+                                        </td>
+                                        <td>
+                                            <span>@followers.FirstName</span>
+                                        </td>
+                                        <td>
+                                            <span>@followers.LastName</span>
+                                        </td>
+                                        <td width="30%">
+                                            @if (Model.Following.Any(x => x.UserName == followers.UserName))
+                                            {
+                                                <button href="#" id="btnRejectFriend" class="btn btn-link friend rejectFriend" value="@followers.FriendsListId">Unfollow</button>
+                                            }
+                                            else
+                                            {
+                                                if (Model.UsersPending.Any(x => x.UserId == followers.FriendId))
+                                                {
+                                                    <button href="#" id="btnDeleteFriend" class="btn btn-link friend pending" value="@followers.UserId">Pending</button>
+                                                    <button href="#" id="btnAddFriend" class="btn btn-link friend addFriend hidden" data-friendid="@followers.FriendId" value="@followers.UserId">Follow</button>
+
+                                                }
+                                                else
+                                                {
+                                                    <button href="#" id="btnAddFriend" class="btn btn-link friend addFriend" data-friendid="@followers.FriendId" value="@followers.UserId">Follow</button>
+                                                    <button href="#" id="btnDeleteFriend" class="btn btn-link friend pending hidden" value="@followers.UserId">Pending</button>
+                                                }
+                                            }
+                                            @if (followers.Blocked == true)
+                                            {
+                                                <button href="#" id="btnUnBlockFriend" class="btn btn-link friend unblockFriend" value="@followers.FriendsListId">Unblock</button>
+                                            }
+                                            else
+                                            {
+                                                <button href="#" id="btnBlockFriend" class="btn btn-link friend blockFriend" value="@followers.FriendsListId">Block</button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class=" form-group-sm">
+                <h2>Privacy Settings</h2>
+                <div class="row">
+                    <div class="col-mg-6">
+                        <div class="form-horizontal">
+                            <div class="col-md-8">
+                                <h4>Status Privacy</h4>
+                                <p>Make Status Private?</p>
+                                @Html.CheckBoxFor(model => model.PrivateStatusUpdates, new { id = "cbPrivateStatus" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myMessage" class="modal fade" role="dialog">
+    @using (Ajax.BeginForm("CreateMessage", "Dashboard", FormMethod.Post, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, HttpMethod = "POST" }))
+    {
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Read Message</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="hidden">
+                            @Html.TextAreaFor(m => m.MessageId, new { @class = "form-control", ID = "messageId" })
+                            @Html.TextAreaFor(m => m.To, new { @class = "form-control readonly", ID = "from" })
+                            @Html.TextAreaFor(m => m.Subject, new { @class = "form-control readonly", ID = "subject" })
+                        </div>
+                        <label>Message: </label><p id="message"></p>
+                    </div>
+                    <div class="form-group">
+                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" data->Reply</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div id="mySentMessage" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sent Message</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Message: </label><p id="sentMessage"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="cancelModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cancel Subscription</h4>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Are you sure you want to cancel your subscription?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        @Html.ActionLink("Confirm", "Cancel", "Dashboard", new { @class = "btn btn-default" })
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"> </script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var mailbox = getQueryVariable("MailBox");
+
+        if (mailbox != "") {
+            $('html, body').animate({
+                scrollTop: $("#divMailBox").offset().top
+            }, 1000);
+        }
+
+    });
+
+    function loadModal(from, message, subject, fromUserId, messageId) {
+        $('#myMessage').modal('show'); //show bootsrap modal manually
+        $('#from').html(from);
+        $('#message').html(message);
+        $('#subject').html("RE: " + subject);
+
+
+        var data = {
+            MessageId: messageId
+        };
+
+        $.ajax({
+            url: '/Dashboard/UpdateReadMessage',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var item = document.getElementById(messageId).style.fontWeight = "normal";
+            }
+        });
+    }
+
+    function loadSentModal(message) {
+        $('#mySentMessage').modal('show'); //show bootsrap modal manually
+        $('#sentMessage').html(message);
+    }
+
+    function loadCancel() {
+        $('#cancelModal').modal('show');
+    }
+
+    $('#cbPrivateStatus').click(function () {
+        var cbPricateStatus = $('#cbPrivateStatus:checkbox:checked').length > 0;
+        UpdateSettings(cbPricateStatus);
+    });
+
+    $('.acceptFriend').click(function () {
+        var friendsListId = $(this).val();
+        var row = $(this).closest('tr');
+        AcceptFriend(friendsListId, row);
+    });
+
+    $('.addFriend').click(function () {
+        var fromUser = $(this).data('friendId');
+        var friendId = $(this).val();
+        var row = $(this).closest('tr');
+        AddFriend(friendId, row);
+    });
+
+    $('.rejectFriend').click(function () {
+        var friendsListId = $(this).val();
+        var row = $(this).closest('tr');
+        RejectFriend(friendsListId, row);
+    });
+
+    $('.blockFriend').click(function () {
+        var friendsListId = $('#btnBlockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = true;
+        BlockFriend(friendsListId, blocked, row);
+    });
+
+    $('.unblockFriend').click(function () {
+        var friendsListId = $('#btnUnblockFriend').val();
+        var row = $(this).closest('tr');
+        var blocked = false;
+        BlockFriend(friendsListId, blocked, row);
+    });
+
+    $('.pending').click(function () {
+        var friendId = $('.pending').val();
+        var row = $(this).closest('tr');
+        RemoveFriend(friendId, row);
+    });
+
+    function UpdateSettings(privateOnly) {
+
+        var data = {
+            privateOnly: privateOnly,
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/SettingsWebService.asmx/UpdatePrivacy',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                alert(JSON.stringify(result));
+                $('#divSettingsSuccess').removeClass("in");
+                $('#divSettingsSuccess').delay(200).addClass("in").fadeOut(2000);
+                $('#spanSuccessMessage').html("Settings Saved Successfully!");
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function AcceptFriend(friendsListId, row) {
+
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/AcceptFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //$('#spanSuccessMessage').html("Friend Accepted!");
+                //$('#divFriendsSuccess').removeClass("in");
+                //$('#divFriendsSuccess').delay(100).addClass("in").fadeOut(2000);
+
+                row.find('td').fadeOut(500, function () {
+                    row.remove();
+                });
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function RejectFriend(friendsListId, row) {
+        var data = {
+            friendsListId: friendsListId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/RejectFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //$('#divFriendsSuccess').removeClass("hidden alert-success").addClass("alert-info");
+                //$('#spanSuccessMessage').html("Friend Rejected!");
+
+                //row.find('td').fadeOut(500, function () {
+                //    row.remove();
+                //});
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function BlockFriend(friendsListId, block, row) {
+        var data = {
+            friendsListId: friendsListId,
+            blocked: block
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/BlockFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                //row.find('.blockFriend').text("Unblock");
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function AddFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/AddFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').addClass('hidden');
+                row.find('.pending').removeClass('hidden');
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function RemoveFriend(friendId, row) {
+        var data = {
+            friendId: friendId
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/FriendManagementWebService.asmx/RemoveFriend',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                row.find('.addFriend').removeClass('hidden');
+                row.find('.pending').addClass('hidden');
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) { return pair[1]; }
+        }
+        return (false);
+    }
+</script>

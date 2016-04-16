@@ -1,0 +1,95 @@
+﻿@model MyJeepTrader.Web.Models.PayPalIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+<script>
+    braintree.setup('@Model.ClientToken', "dropin", {
+        container: "payment-form"
+    });
+
+</script>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Upgrade to Premium!</h2>
+        <div>
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <p>
+                        <h5>Upgrade to Premium for more features!</h5>
+                        <ul>
+                            <li>Post up to 15 images!</li>
+                            <li>No Ads!</li>
+                            <li>Posts expire after 90 days!</li>
+                            <li>Able to Initiate Instant Chat Messages!</li>
+                            <li>Monthly or Annual Subscriptions Available!</li>
+                            <li>Email Notifications, Text Notifications, and Message Box!</li>
+                            <li>View and Chat with other paid members</li>
+                            <li>Access to members only forum!</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <form id="checkout" method="post" action="/PayPal/Checkout">
+            <div class="form-group">
+                <div class="radio">
+                    <div class="list-group">
+                        <h2>Premium</h2>
+                        <h4>All Access</h4>
+                        <ul>
+                            <li>
+                                <div class="radio">
+                                    <label>
+                                        <input id="Monthly" name="radioButton" value="Monthly" type="radio">
+                                        $3.99/Monthly
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="radio">
+                                    <label>
+                                        <input id="Annual" name="radioButton" value="Annually" type="radio">
+                                        $39.99/Annually
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="payment-form"></div>
+            <div>
+                <input type="submit" class="btn btn-default">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@*<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="MCV5WP4DHVQ34">
+        <table>
+            <tr><td><input type="hidden" name="on0" value="Account Options">Purchase Premium!</td></tr>
+            <tr>
+                <td>
+                    <select name="os0">
+                        <option value="Premium">Premium $5.00 USD</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    </form>*@
+
+
+
+

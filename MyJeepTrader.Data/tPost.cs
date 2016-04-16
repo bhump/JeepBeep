@@ -16,24 +16,36 @@ namespace MyJeepTrader.Data
     {
         public tPost()
         {
-            this.tImageControls = new HashSet<tImageControl>();
-            this.tPostsControls = new HashSet<tPostsControl>();
+            this.tImages = new HashSet<tImage>();
+            this.tModelPostControls = new HashSet<tModelPostControl>();
         }
     
         public int PostId { get; set; }
+        public string Id { get; set; }
         public string PostTitle { get; set; }
         public string PostDescription { get; set; }
-        public Nullable<bool> Part { get; set; }
         public string PartType { get; set; }
         public string PartBrand { get; set; }
         public string PartName { get; set; }
-        public Nullable<bool> Vehicle { get; set; }
-        public string VehicleMake { get; set; }
-        public string VehicleModel { get; set; }
-        public Nullable<System.DateTime> VehicleYear { get; set; }
+        public Nullable<bool> IsVehicle { get; set; }
+        public Nullable<int> MakeId { get; set; }
+        public Nullable<int> SubModelId { get; set; }
+        public Nullable<int> YearId { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<int> StateId { get; set; }
+        public Nullable<int> CityId { get; set; }
+        public Nullable<int> PostTypeId { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public long ViewCount { get; set; }
     
-        public virtual ICollection<tImageControl> tImageControls { get; set; }
-        public virtual ICollection<tPostsControl> tPostsControls { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual tCity tCity { get; set; }
+        public virtual ICollection<tImage> tImages { get; set; }
+        public virtual tMake tMake { get; set; }
+        public virtual ICollection<tModelPostControl> tModelPostControls { get; set; }
+        public virtual tPostType tPostType { get; set; }
+        public virtual tState tState { get; set; }
+        public virtual tSubModel tSubModel { get; set; }
+        public virtual tYear tYear { get; set; }
     }
 }

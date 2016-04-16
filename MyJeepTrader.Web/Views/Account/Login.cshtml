@@ -8,56 +8,87 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal login", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Use a local account to log in.</h4>
                 <hr />
+                <div id="alertRequiredFields" class="alert alert-danger fade">
+                    <a href="#" class="close" aria-label="close">&times;</a>
+                    <strong>Error!</strong> There are one or more required fields missing!
+                </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", id = "tbUserName", req = "tbUserName" })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "tbPassword", req = "tbPassword" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.RememberMe, new { @class = "col-md-12 control-label" })
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                        <a href="#" id="aSubmit" class="btn btn-default">Log in</a>
+                        <input id="btnSubmit" type="submit" value="Log in" class="btn btn-default invisible" />
                     </div>
                 </div>
                 <p>
                     @Html.ActionLink("Register as a new user", "Register")
                 </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>
             }
         </section>
     </div>
     <div class="col-md-4">
         <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            @*@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
         </section>
     </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        jQuery('#aSubmit').click(function () {
+            jQuery('.login [req]').submissionOK({
+                displayOnForm: false,
+                highlight: true,
+                submissionOKName: 'Login',
+                submitButtonId: 'btnSubmit'
+            });
+            return false;
+        });
+
+        jQuery('body').bind('ErrorOccurred', function () {
+            $('#alertRequiredFields').addClass('in');
+        });
+
+        $('.close').click(function () {
+            $(this).parent().removeClass('in');
+        });
+
+        jQuery.fn.submissionOK.formSubmission = function (o) {
+            switch (o.submissionOKName) {
+                case 'Login':
+                    jQuery('#' + o.submitButtonId).click();
+                    break;
+            }
+        };
+    </script>
+
 }

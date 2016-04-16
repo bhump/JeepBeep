@@ -1,0 +1,522 @@
+﻿@model MyJeepTrader.Web.ViewModels.LiveStreamViewModel
+@{
+    ViewBag.Title = "LiveStream";
+}
+<link rel="stylesheet" href="~/Content/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-buttons.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-thumbs.css" media="screen" />
+<h1>LiveStream</h1>
+<div class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Mini Dashboard</h3>
+                    <div>
+                        @Html.Action("MiniDashboardPartial", "MiniDashboard")
+                        @Html.Action("TimelineSettingsPartial", "MiniDashboard")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div>
+                    <div class="col-md-12">
+                        @if (ViewBag.Message != null)
+                        {
+                            if (ViewBag.Message.Contains("wrong"))
+                            {
+                                <div id="divError" class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanErrorMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="divSuccess" class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanSuccessMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        @Html.Action("StatusPostSearchPartial", "Status")
+                    </div>
+                </div>
+            </div>
+            <div class="well well-sm">
+                @foreach (var stream in Model.LiveFeeds)
+                {
+                    if (stream.IsFeedPost == true)
+                    {
+                        if (Model.Settings.Posts == true)
+                        {
+                            <div id="divLivePost" class="Posts" data-post="@stream.FeedId">
+                                <div class="row">
+                                    <label class="hidden">@stream.FeedId</label>
+                                    <div class="col-md-2">
+                                        <div class="ui-icon-image">
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName})" alt="Image Unavailable" class="img-circle streamImage" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="text-left row">
+                                            <div class="col-md-12">
+                                                <label id="lblUserName">@stream.FeedUserName</label>&nbsp;<label class="pull-right">@String.Format("{0:M/dd/yyyy}", @stream.FeedDateCreated)</label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                @stream.FeedDescription
+                                            </div>
+                                            <ul class="list-inline">
+                                                @if (stream.FeedImages != null)
+                                                {
+                                                    foreach (var image in stream.FeedImages)
+                                                    {
+                                                        string convertedImage = Convert.ToBase64String(image.ToArray());
+                                                        <li>
+                                                            <a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                                <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="dropdown pull-right">
+                                            <a class="btn-link postDropdown" id="dropdownMenu1" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a id="aFullPost" onclick="RedirectToPost('@stream.FeedId')" class="fullPost"><span class="glyphicon glyphicon-eye-open">&nbsp;<label>View</label></span></a></li>
+                                                <li><a id="aAddFriend" class="addFriend" data-addfriend="@stream.FeedUserId"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                    }
+                    else
+                    {
+                        if (Model.Settings.Status == true)
+                        {
+                            <div id="divLiveStream" class="Status" data-status="@stream.FeedId">
+                                <div class="row">
+                                    <label class="hidden">@stream.FeedId</label>
+                                    <div class="col-md-2">
+                                        <div class="ui-icon-image">
+                                            <img src="@Url.Action("ShowAvatar", "Home", new { UserName = @stream.FeedUserName })" alt="Image Unavailable" class="img-circle streamImage" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="text-left row">
+                                            <div class="col-md-12">
+                                                <label>@stream.FeedUserName</label><label class="pull-right">@String.Format("{0:M/dd/yyyy}", @stream.FeedDateCreated)</label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                @stream.FeedDescription
+                                            </div>
+                                            <div class="tab_container">
+                                                <ul class="list-inline">
+                                                    @if (stream.FeedImages != null)
+                                                    {
+                                                        foreach (var image in stream.FeedImages)
+                                                        {
+                                                            string convertedImage = Convert.ToBase64String(image.ToArray());
+                                                            <li>
+                                                                <a class="fancybox-thumb" rel="group_@stream.FeedId" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                                    <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        @if (stream.FeedLikeCount == 0)
+                                        {
+                                            <a id="aEmptyLikeCount" data-lcount="@stream.FeedId" class="likeCount"><span class="glyphicon glyphicon-heart-empty"></span></a>
+                                        }
+                                        else
+                                        {
+                                            <a id="aHeartLikeCount" data-lcount="@stream.FeedId" class="likeCount"><span class="glyphicon glyphicon-heart"></span></a>
+                                        }
+                                        &nbsp;
+                                        <a id="aCountLikeCount" data-lcount="@stream.FeedId" class="likeCount"><span><label id="lblLikeCount_@stream.FeedId">@stream.FeedLikeCount</label></span></a>
+                                        &nbsp;
+                                        <a class="dislikeCount" data-dcount="@stream.FeedId"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+                                        &nbsp;
+                                        <a class="dislikeCount" data-dcount="@stream.FeedId"><span><label id="lblDislikeCount_@stream.FeedId">@stream.FeedDislikeCount</label></span></a>
+                                        &nbsp;
+                                        <a class="comments"><strong>Comments</strong></a>
+                                        <a class="commentCount"><span><label id="lblCommentCount_@stream.FeedId" class="commentCount">@stream.FeedCommentCount</label></span></a>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dropdown pull-right">
+                                            <a class="btn-link statusDropdown" id="dropdownMenu1" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a id="aComment"><span class="glyphicon glyphicon-comment aComment" data-status="@stream.FeedId">&nbsp;<label>Comment</label></span></a></li>
+                                                <li><a id="aAddFriend" data-addfriend="@stream.FeedUserId" class="addFriend"><span class="glyphicon glyphicon-plus">&nbsp;<label>Follow </label></span></a></li>
+                                                <li><a id="aDirectMessage"><span class="glyphicon glyphicon-envelope">&nbsp;<label>Message</label></span></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="divCreateComment_@stream.FeedId">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <textarea id="tbComment_@stream.FeedId" rows="3" class="no-max-width input-sm commentBox"></textarea>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <button class="btn btn-primary btn-sm pull-right createComment" onclick="CreateComment(@stream.FeedId)">Comment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="collapse" id="divComment_@stream.FeedId">
+                            </div>
+                            <hr />
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="placeholder">
+                <h3>Popular</h3>
+                <div>
+                    @Html.Action("PopularPostsandProfiles", "PopularPostsAndProfiles")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="~/Scripts/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script src="~/Scripts/jquery.fancybox.pack.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-buttons.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-media.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-thumbs.js" type="text/javascript"></script>
+    <script>
+        $(function () {
+            var names = [];
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/UserInformationWebService.asmx/GetMentionUserNames',
+                data: "",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $.each(result.d, function (i) {
+                        console.log(result.d[i]);
+                        names[i] = "@@" + result.d[i].UserName + " ";
+                    });
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+            var accentMap = {
+                "á": "a",
+                "ö": "o"
+            };
+            var normalize = function (term) {
+                var ret = "";
+                for (var i = 0; i < term.length; i++) {
+                    ret += accentMap[term.charAt(i)] || term.charAt(i);
+                }
+                return ret;
+            };
+
+            $('.commentBox').keyup(function (e) {
+                console.log(String.fromCharCode(e.which));
+                if (String.fromCharCode(e.which) === "2") {
+                    $('.commentBox').autocomplete({
+                        source: function (request, response) {
+                            var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                            response($.grep(names, function (value) {
+                                value = value.label || value.value || value;
+                                return matcher.test(value) || matcher.test(normalize(value));
+                            }));
+                        }
+                    });
+                }
+            });
+        });
+
+
+        $('.addFriend').click(function (e) {
+            var friendId = $(this).data("addfriend");
+            AddFriend(friendId);
+            e.stopPropagation();
+        });
+
+        $('.addPopFriend').click(function () {
+            var userName = $(this).val();
+            console.log(userName);
+            AddPopFriend(userName);
+        });
+
+        $('.Posts').click(function (event) {
+            if (event.toElement.nodeName !== 'IMG') {
+                var postId = $(this).data("post");
+                RedirectToPost(postId);
+            }
+        });
+
+        $('.Status').click(function () {
+            var statusId = $(this).data("status");
+            GetComments(statusId);
+            $('#divCreateComment_' + statusId).collapse('toggle');
+            $('#divComment_' + statusId).html('');
+            $('#divComment_' + statusId).collapse('toggle');
+        });
+
+        $('.postDropdown').click(function () {
+            $(this).next(".dropdown-menu").toggle();
+            return false;
+        });
+
+        $('.postDropdown').focusout(function () {
+            $(this).next(".dropdown-menu").hide();
+            return false;
+        });
+
+        $('.statusDropdown').click(function () {
+            $(this).next(".dropdown-menu").toggle();
+            return false;
+        });
+
+        $('.statusDropdown').focusout(function () {
+            $(this).next(".dropdown-menu").hide();
+        });
+
+        $('.Posts .fancybox-thumb, .Status .fancybox-thumb').fancybox({
+            prevEffect: 'none',
+            nextEffect: 'none',
+            openEffect: 'elastic',
+            closeEffect: 'elastic',
+            helpers: {
+                title: {
+                    type: 'outside'
+                },
+                thumbs: {
+                    width: 50,
+                    height: 50
+                }
+            }
+        });
+
+        $('.aComment').click(function (e) {
+            var statusId = $(this).data("status");
+            $('#divCreateComment_' + statusId).collapse("toggle");
+            e.stopPropagation();
+        });
+
+        $('.likeCount').click(function (e) {
+            var statusId = $(this).data("lcount");
+            UpdateLikeCount(statusId);
+            e.stopPropagation();
+        });
+
+        $('.dislikeCount').click(function (e) {
+            var statusId = $(this).data("dcount");
+            UpdateDislikeCount(statusId);
+            e.stopPropagation();
+        });
+
+        function AddFriend(friendId, row) {
+            var data = {
+                friendId: friendId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/AddFriend',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    row.find('.addFriend').text("Unfollow");
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function RedirectToPost(postId) {
+            window.location.href = '/Post/Details?PostId=' + postId;
+        }
+
+        function UpdateLikeCount(statusId) {
+
+            var data = {
+                statusId: statusId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/UpdateLikeCount',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#lblLikeCount_' + statusId).text(result.d);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function UpdateDislikeCount(statusId) {
+            var data = {
+                statusId: statusId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/UpdateDislikeCount',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#lblDislikeCount_' + statusId).text(result.d);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function GetComments(statusId) {
+            var data = {
+                statusId: statusId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/CommentsWebService.asmx/GetCommentsByStatusId',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    var commentContext = '';
+
+                    $.each(result.d, function (k, v) {
+
+                        var userName = v.UserName;
+
+                        var subCreatedDate = new Date(parseInt(v.DateCreated.substr(6)));
+                        var createdDateDay = subCreatedDate.getDate();
+                        var createdDateMonth = subCreatedDate.getMonth();
+                        var createdDateYear = subCreatedDate.getFullYear();
+                        createdDateMonth++;
+
+                        var imageSource = '@Url.Action("ShowAvatar", "Home", new { UserName = "username" })';
+                        imageSource = imageSource.replace("username", userName);
+
+                        commentContent = '<div class="row col-xs-offset-1 Comment"><div class="col-md-2"><img src="' + imageSource + '" alt="Image Unavailable" class="img-circle streamImage" /></div><div class="col-md-10"><div class="text-left row"><div class="col-md-12"><label>' + v.UserName + '</label><label class="pull-right">' + createdDateMonth + "/" + createdDateDay + "/" + createdDateYear + '</div><div class="col-md-12"><span>' + v.Comment + '</span></div></div></div></div>';
+
+                        $('#divComment_' + statusId).append(commentContent);
+                    });
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function GetCommentsCount(statusId) {
+            var data = {
+                statusId: statusId
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/CommentsWebService.asmx/GetCommentsCount',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#lblCommentCount' + statusId).Text(result.d)
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function CreateComment(statusId) {
+
+            var comment = $('#tbComment_' + statusId).val();
+
+            var data = {
+                statusId: statusId,
+                comment: comment
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/CommentsWebService.asmx/CreateComment',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    $('#tbComment_' + statusId).val('');
+                    $('#divComment_' + statusId).html('');
+                    GetComments(statusId);
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function AddPopFriend(userName) {
+            var data = {
+                userName: userName
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Webservices/FriendManagementWebService.asmx/AddFriendFromDetails',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result.d);
+                    $('#divUser_' + userName).fadeOut("slow");
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+    </script>
+}

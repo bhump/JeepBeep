@@ -1,0 +1,174 @@
+﻿@model MyJeepTrader.Web.ViewModels.StatusCreateViewModel
+@{
+    Layout = "";
+}
+<div id="divStatus" class="well well-sm">
+    @using (Html.BeginForm("CreateStatus", "Status", FormMethod.Post, new { enctype = "multipart/form-data", @id = "CreateStatus", @class = "create-status form-group-sm" }))
+    {
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.TextAreaFor(model => model.status, new { cols = "1", rows = "1", @class = "form-control no-max-width input-sm", id = "tbStatus", placeholder = "Beep Here", req = "tbStatus" })
+            </div>
+        </div>
+        @*<a href="#" class="glyphicon glyphicon-camera glyphicon-camera-input"></a>*@
+        <div class="row collapse" id="divStatusInputs">
+            <br />
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a class="icon"><span id="spanImageInput" class="glyphicon glyphicon-camera glyphicon-camera-input icon"></span></a>
+                        <input id="imageInput" multiple type="file" class="hidden" name="files" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="text-right">
+                    <button id="btnCancel" class="btn btn-default" type="button">Cancel</button>
+                    <a id="aSubmitStatus" class="btn btn-primary">Submit</a>
+                    <input id="btnSubmitStatus" type="submit" class="btn hidden" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery.submissionOK.js"></script>
+<script>
+    $(function () {
+        var names = [];
+        var avatar = [];
+
+        $.ajax({
+            type: 'POST',
+            url: '/Webservices/UserInformationWebService.asmx/GetMentionUserNames',
+            data: "",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $.each(result.d, function (i) {
+                    console.log(result.d[i]);
+                    names[i] = "@@" + result.d[i].UserName;
+                });
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+        var accentMap = {
+            "á": "a",
+            "ö": "o"
+        };
+        var normalize = function (term) {
+            var ret = "";
+            for (var i = 0; i < term.length; i++) {
+                ret += accentMap[term.charAt(i)] || term.charAt(i);
+            }
+            return ret;
+        };
+
+        $('#tbStatus').keyup(function (e) {
+            if (String.fromCharCode(e.which) === "2") {
+                $('#tbStatus').autocomplete({
+                    minLength: 3,
+                    source: function (request, response) {
+                        var term = request.term;
+
+                        if (term.indexOf(' ') > 0) {
+                            var index = term.lastIndexOf(' ');
+                            term = term.substring(index + 2);
+                        }
+
+                        var re = $.ui.autocomplete.escapeRegex(term);
+                        var matcher = new RegExp($.ui.autocomplete.escapeRegex(term), "i");
+                        var regex_validated_array = $.grep(names, function (value) {
+                            value = value.label || value.value || value;
+                            return matcher.test(value) || matcher.test(normalize(value));
+                        });
+                        response($.ui.autocomplete.filter(regex_validated_array,
+                        extractLast(term)));
+                    },
+                    focus: function () {
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        terms.pop();
+                        terms.push(ui.item.value);
+                        terms.push("");
+                        this.value = terms.join(" ");
+                        return false;
+                    }
+                });
+
+                function split(val) {
+                    return val.split(/ \s*/);
+                }
+
+                function extractLast(term) {
+                    return split(term).pop();
+                }
+            }
+        });
+    });
+
+
+    $('#spanImageInput').mousedown(function (e) {
+        $('#imageInput').click();
+        e.stopPropagation();
+    });
+
+    $('#imageInput').bind('change', function () {
+        var files = $('#imageInput').prop("files");
+        $.each(files, function () {
+            if (this.size > 500000) {
+                alert(this.name + " is too big.");
+                resetFormElement($('#imageInput'));
+            }
+            return false;
+        })
+    });
+
+    $('#aSubmitStatus').mousedown(function () {
+        jQuery('.create-status [req]').submissionOK({
+            displayOnForm: false,
+            highlight: true,
+            submissionOKName: 'Create-Status',
+            submitButtonId: 'btnSubmitStatus'
+        });
+        return false;
+    });
+
+    $('#tbStatus').click(function () {
+        $('#divStatusInputs').collapse("toggle");
+        if ($(this).attr('rows', '4')) {
+            $(this).attr('rows', '1');
+        }
+        else {
+            $(this).attr('rows', '4');
+        }
+    });
+
+    $('#btnCancel').click(function () {
+        $('#divStatusInputs').collapse("toggle");
+        $('#tbStatus').attr('rows', '1');
+        resetFormElement($('#imageInput'));
+    });
+
+    $.fn.submissionOK.formSubmission = function (o) {
+        switch (o.submissionOKName) {
+            case 'Create-Status':
+                jQuery('#' + o.submitButtonId).click();
+                break;
+        }
+    };
+
+    function resetFormElement(e) {
+        e.wrap('<form>').closest('form').get(0).reset();
+        e.unwrap();
+
+        // Prevent form submission
+        e.stopPropagation();
+        e.preventDefault();
+    }
+</script>

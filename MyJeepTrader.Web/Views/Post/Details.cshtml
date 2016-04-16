@@ -1,0 +1,242 @@
+﻿@model MyJeepTrader.Data.Models.SearchedPosts
+
+@{
+    ViewBag.Title = "Details";
+}
+<link rel="stylesheet" href="~/Content/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-buttons.css" media="screen" />
+<link rel="stylesheet" href="~/Content/jquery.fancybox-thumbs.css" media="screen" />
+<h1>Post Details</h1>
+<div class="content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div>
+                    <div class="col-md-12">
+                        @if (ViewBag.Message != null)
+                        {
+                            if (ViewBag.Message.Contains("wrong"))
+                            {
+                                <div id="divError" class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanErrorMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="divSuccess" class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <span id="spanSuccessMessage">@ViewBag.Message</span>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="well well-sm Posts">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-lg-12">
+                        <label>State: </label>
+                        @Html.DisplayFor(model => model.State)
+                    </div>
+                    <div class="col-lg-12">
+                        <label>City: </label>
+                        @Html.DisplayFor(model => model.City)
+                    </div>
+                    <div class="col-lg-12">
+                        <label>Date Posted: </label>
+                        @String.Format("{0:M/dd/yyyy}", @Html.DisplayFor(model => model.DateCreated))
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-lg-12">
+                        <label>Posted By: </label>
+                        @Html.DisplayFor(model => model.UserName)
+                    </div>
+                    <div class="col-lg-12">
+                        <label>Year: </label>
+                        @Html.DisplayFor(model => model.Year)
+                    </div>
+                    <div class="col-lg-12">
+                        <label>Active: </label>
+                        @(Model.Active)
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-lg-12">
+                        <label>Post Type: </label>
+                        @Html.DisplayFor(model => model.PostType)
+                    </div>
+                    @if (Model.PartBrand != null)
+                    {
+                        <div class="col-lg-12">
+                            <label>Part Brand: </label>
+                            @Html.DisplayFor(model => model.PartBrand)
+                        </div>
+                        <div class="col-lg-12">
+                            <label>Part Name:</label>
+                            @Html.DisplayFor(model => model.PartName)
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-lg-12">
+                        <div class="tab_container">
+                            <p style="display:block">
+                                <ul class="list-inline">
+                                    @foreach (var image in Model.Images)
+                                    {
+                                        string convertedImage = Convert.ToBase64String(image.ToArray());
+                                        <li>
+                                            <a class="fancybox-thumb" rel="group" href="@String.Format("data:image/jpg;base64,{0}", convertedImage)">
+                                                <img src="@String.Format("data:image/jpg;base64,{0}", convertedImage)" width="80px" height="80px" />
+                                            </a>
+                                        </li>
+
+                                    }
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-12">
+                            <label>Title: </label>
+                            @Html.DisplayFor(model => model.PostTitle)
+                        </div>
+                        <div class="col-lg-12">
+                            <label>Description: </label>
+                            <div>
+                                <p>
+                                    @Html.DisplayFor(model => model.PostDescription)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="text-right">
+                                <h4>Inquire About this Post</h4>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a id="aMessageUser" type="button" class="btn-info-home glyphicon glyphicon-inbox btn-lg" href="#"></a>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn-info-home btn-lg" })
+                                    <label>Or</label>
+                                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn-info-home btn-lg" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="placeholder">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal content-->
+<div id="CreateMessageModal" class="modal fade" role="dialog">
+    @using (Ajax.BeginForm("CreateMessage", "Post", FormMethod.Post, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, HttpMethod = "POST" }, new { @class = "create-message" }))
+    {
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Message</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="hidden">
+                            @Html.TextAreaFor(m => m.PostId)
+                            @Html.TextAreaFor(m => m.UserName, new { @class = "form-control", ID = "to" })
+                            @Html.TextAreaFor(m => m.PostTitle, new { @class = "form-control readonly", ID = "subject" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", id = "taMessage", req = "taMessage" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <a id="aSend" href="#" class="btn btn-primary">Send</a>
+                        <button id="btnSend" type="submit" class="btn btn-primary invisible"></button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script src="~/Scripts/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script src="~/Scripts/jquery.fancybox.pack.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-buttons.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-media.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.fancybox-thumbs.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".fancybox-thumb").fancybox({
+                prevEffect: 'none',
+                nextEffect: 'none',
+                helpers: {
+                    title: {
+                        type: 'outside'
+                    },
+                    thumbs: {
+                        width: 50,
+                        height: 50
+                    }
+                }
+            });
+        });
+
+        $('#aMessageUser').click(function () {
+            $('#CreateMessageModal').modal('show');
+        });
+
+        jQuery('#aSend').click(function () {
+            jQuery('.create-message [req]').submissionOK({
+                displayOnForm: false,
+                highlight: true,
+                submissionOKName: 'Create-Message',
+                submitButtonId: 'btnSend'
+            });
+            return false;
+        });
+
+        jQuery.fn.submissionOK.formSubmission = function (o) {
+            switch (o.submissionOKName) {
+                case 'Create-Message':
+                    jQuery('#' + o.submitButtonId).click();
+                    break;
+            }
+        };
+
+    </script>
+}

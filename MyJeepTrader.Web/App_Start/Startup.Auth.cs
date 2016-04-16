@@ -3,9 +3,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
-using Owin;
 using MyJeepTrader.Web.Models;
+using Owin;
+using Microsoft.Owin.Security.Google;
 
 namespace MyJeepTrader.Web
 {
@@ -58,11 +58,11 @@ namespace MyJeepTrader.Web
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "589971894253-m9b8120sg9vtk317grc8m0o9aenrhpnh.apps.googleusercontent.com",
+                ClientSecret = "I_rVRaBLFRfzgfJ6SV-MGnio"
+            });
         }
     }
 }

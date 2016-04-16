@@ -15,10 +15,10 @@ namespace MyJeepTrader.Data
     public partial class tVehicleProfileControl
     {
         public int VehicleProfileControlId { get; set; }
-        public Nullable<int> AccountId { get; set; }
+        public string Id { get; set; }
         public Nullable<int> VehicleProfileId { get; set; }
     
-        public virtual tAccount tAccount { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual tVehicleProfile tVehicleProfile { get; set; }
     }
 }

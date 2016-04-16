@@ -9,6 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MyJeepTrader.Web.Models;
+using MyJeepTrader.Data;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -22,7 +27,7 @@ namespace MyJeepTrader.Web.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +39,9 @@ namespace MyJeepTrader.Web.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -50,6 +55,16 @@ namespace MyJeepTrader.Web.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        public ActionResult ShowAvatar(string UserName)
+        {
+            Service service = new Service();
+            var getAvatar = service.GetAvatarImage(UserName);
+
+            var stream = new MemoryStream(getAvatar.ToArray());
+
+            return new FileStreamResult(stream, "image/jpg");
         }
 
         //
@@ -75,7 +90,8 @@ namespace MyJeepTrader.Web.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -120,7 +136,7 @@ namespace MyJeepTrader.Web.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -144,32 +160,131 @@ namespace MyJeepTrader.Web.Controllers
 
         //
         // POST: /Account/Register
+        //Commented out for aplha testing!!!!
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(RegisterViewModel model)
+        //{
+        //    using (var context = new ApplicationDbContext())
+        //    {
+
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+        //            var result = await UserManager.CreateAsync(user, model.Password);
+        //            var roleStore = new RoleStore<IdentityRole>(context);
+        //            var roleManager = new RoleManager<IdentityRole>(roleStore);
+        //            var startDate = DateTime.Now;
+
+        //            Service service = new Service();
+        //            PayPalService ppService = new PayPalService();
+
+        //            if (result.Succeeded)
+        //            {
+        //                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+        //                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+        //                // Send an email with this link
+        //                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+        //                await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+        //                service.CreateMembership(user.Id);
+        //                //this creates the paypal customer-then on success creates the membership and the free subscription.
+        //                ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
+
+        //                UserManager.AddToRole(user.Id, "Basic");
+
+        //                return RedirectToAction("Index", "Home");
+        //            }
+        //            AddErrors(result);
+        //        }
+
+        //        // If we got this far, something failed, redisplay form
+        //        return View(model);
+        //    }
+        //}
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(AlphaTestingViewModel model)
         {
-            if (ModelState.IsValid)
+            using (var context = new ApplicationDbContext())
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+
+                if (ModelState.IsValid)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    Service service = new Service();
+                    PayPalService ppService = new PayPalService();
 
-                    return RedirectToAction("Index", "Home");
+                    var currentTesters = service.GetCurrentAlphaTesters(model.AlphaCode);
+                    var codeCount = service.GetCodeCount(model.AlphaCode);
+                    var codeId = service.GetCodeId(model.AlphaCode);
+
+                    if (currentTesters.Count == codeCount)
+                    {
+                        ModelState.AddModelError("", "Invite Code is either invalid or has been used the maximum allowed times.");
+                    }
+                    else
+                    {
+                        model.CodeId = codeId;
+                        var user = new ApplicationUser { UserName = model.Username, Email = model.Email, CodeId = model.CodeId };
+                        var result = await UserManager.CreateAsync(user, model.Password);
+                        var roleStore = new RoleStore<IdentityRole>(context);
+                        var roleManager = new RoleManager<IdentityRole>(roleStore);
+                        var startDate = DateTime.Now;
+
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                            // Send an email with this link
+                            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                            service.CreateMembership(user.Id);
+
+                            service.CreateSettings(user.Id);
+
+                            var defaultImage = Image.FromFile(Server.MapPath("~/Images/JeepStar.jpg"));
+                            var stream = new MemoryStream();
+                            defaultImage.Save(stream, ImageFormat.Jpeg);
+
+                            var imageData = ConvertToBytes(stream);
+
+                            service.CreateProfile(user.Id, imageData);
+
+                            //this creates the paypal customer-then on success creates the membership and the free subscription.
+                            ppService.PayPalCreateCustomer(user.Email, user.Id, user.UserName, startDate, startDate.AddYears(100));
+
+                            UserManager.AddToRole(user.Id, "Basic");
+
+                            return RedirectToAction("AlphaTesting", "Home");
+                        }
+
+                        AddErrors(result);
+                    }
+
                 }
-                AddErrors(result);
-            }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+
+                // If we got this far, something failed, redisplay form
+                return View(model);
+            }
+        }
+
+        public static byte[] ConvertToBytes(Stream input)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                input.Position = 0;
+                input.CopyTo(ms);
+                return ms.ToArray();
+            }
         }
 
         //
@@ -211,10 +326,10 @@ namespace MyJeepTrader.Web.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
