@@ -30,39 +30,49 @@ namespace MyJeepTrader.Web.Controllers
         {
             try
             {
+                var mentionedUsers = new List<string>();
+                var images = new List<byte[]>();
                 var userId = User.Identity.GetUserId();
+                var status = collection["status"].ToString();
 
-                Service service = new Service();
-
-                var status  = collection["status"].ToString();
-
-                var statusId = await service.CreateStatusAsync(userId, status);
 
                 string mentionPattern = @"@\w* ";
                 MatchCollection matches = Regex.Matches(status, mentionPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase);
-                foreach (Match match in matches)
+
+                Service service = new Service();
+
+                if (matches != null)
                 {
-                    var mentionedUserName = match.ToString().Replace("@", "");
-                    service.CreateMention(mentionedUserName, userId, statusId, 0);
+                    foreach (Match match in matches)
+                    {
+                        var mentionedUserName = match.ToString().Replace("@", "");
+                        mentionedUsers.Add(mentionedUserName);
+                    }
                 }
 
-                if (files.Count() != 0)
+                foreach (var img in files)
                 {
-                    foreach (var img in files)
+                    if (img != null)
                     {
-                        if (img != null)
+                        if (img.ContentLength > 500000)
                         {
-                            byte[] imageBytes = null;
+                            TempData["Message"] = "Something went wrong! Image too big!";
 
-                            using (var binaryReader = new BinaryReader(img.InputStream))
-                            {
-                                imageBytes = binaryReader.ReadBytes(img.ContentLength);
-                            }
+                            return RedirectToAction("LiveStream", "Home");
+                        }
 
-                            service.AddStatusImage(imageBytes, statusId);
+                        byte[] imageBytes = null;
+
+                        using (var binaryReader = new BinaryReader(img.InputStream))
+                        {
+                            imageBytes = binaryReader.ReadBytes(img.ContentLength);
+                            images.Add(imageBytes);
                         }
                     }
                 }
+
+                var statusId = await service.CreateStatusAsync(userId, status, images, mentionedUsers);
+
 
                 if (ModelState.IsValid)
                 {
@@ -71,23 +81,31 @@ namespace MyJeepTrader.Web.Controllers
                     return RedirectToAction("LiveStream", "Home");
                 }
             }
+            catch (HttpException hex)
+            {
+                Debug.WriteLine("------------ " + hex);
+
+                TempData["Message"] = "Something went wrong! Looks like the image is too big! Try a smaller image size!";
+
+                return RedirectToAction("LiveStream", "Home");
+            }
             catch (DbEntityValidationException e)
             {
                 foreach (var eve in e.EntityValidationErrors)
                 {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
                         eve.Entry.Entity.GetType().Name, eve.Entry.State);
                     foreach (var ve in eve.ValidationErrors)
                     {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
                     }
                 }
 
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
-                Console.WriteLine("------------ " + ex);
+                Debug.WriteLine("------------ " + ex);
 
                 TempData["Message"] = "Something went wrong with posting your new status! Try again!";
 

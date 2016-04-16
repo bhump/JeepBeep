@@ -127,6 +127,8 @@ div.Status {
             border-radius: 5px;
         }
 
+
+
 .statusDropdown {
     color: #f05f40;
 }
@@ -141,6 +143,29 @@ div.Status:hover {
 }
 
     div.Status:hover a.likeCount, div.Status:hover a.dislikeCount, div.Status:hover a.commentCount, div.Status:hover a.comments, div.Status:hover .likeCount label, div.Status:hover .dislikeCount label, div.Status:hover .commentCount label {
+        color: #f05f40;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+div.Comment {
+    border-bottom: 2px solid white;
+    padding: 10px 10px 10px 10px;
+    background-color: rgba(204, 95, 64, .1);
+}
+
+    div.Comment .fancybox-thumb {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+        div.Comment .fancybox-thumb img {
+            margin-top: 15px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+    div.Comment:hover a.likeCount, div.Status:hover a.dislikeCount, div.Status:hover a.commentCount, div.Status:hover a.comments, div.Status:hover .likeCount label, div.Status:hover .dislikeCount label, div.Status:hover .commentCount label {
         color: #f05f40;
         text-decoration: none;
         cursor: pointer;

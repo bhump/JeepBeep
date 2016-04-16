@@ -213,6 +213,7 @@
     </Compile>
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="ImageResize\ResizeImage.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Chat\MessageDetail.cs" />
     <Compile Include="Models\Chat\UserDetail.cs" />

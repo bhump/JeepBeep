@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.IO;
 using System.Data.Entity.Validation;
+using MyJeepTrader.Web.ImageResize;
 
 namespace MyJeepTrader.Web.Controllers
 {
@@ -30,7 +31,6 @@ namespace MyJeepTrader.Web.Controllers
                 States = service.GetAllStates()
             };
 
-            //return PartialView("~/Views/Shared/_MiniDashboardPartial.cshtml", model);
             return View("~/Views/Shared/_MiniDashboardPartial.cshtml", model);
         }
 
@@ -55,6 +55,8 @@ namespace MyJeepTrader.Web.Controllers
             try
             {
                 var userId = User.Identity.GetUserId();
+
+                ResizeImage resizer = new ResizeImage();
 
                 Service service = new Service();
                 model.Post.PostTypeId = model.SelectedPostTypeId;

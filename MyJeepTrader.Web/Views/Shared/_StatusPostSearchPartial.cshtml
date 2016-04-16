@@ -130,7 +130,12 @@
 
     $('#tbStatus').click(function () {
         $('#divStatusInputs').collapse("toggle");
-        $(this).attr('rows', '4');
+        if ($(this).attr('rows', 4)) {
+            $(this).attr('rows', '1');
+        }
+        else {
+            $(this).attr('rows', '4');
+        }
     });
 
     $('#btnCancel').click(function () {

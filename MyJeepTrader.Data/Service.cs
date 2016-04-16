@@ -440,7 +440,37 @@ namespace MyJeepTrader.Data
             }
         }
 
-        public async Task<int> CreateStatusAsync(string userId, string status)
+        public async Task<int> CreateStatusAsync(string userId, string status, List<string> mentions)
+        {
+
+            using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
+            {
+                tStatusUpdate statusUpdate = new tStatusUpdate
+                {
+                    DateCreated = DateTime.Now,
+                    LikeCount = 0,
+                    DislikeCount = 0,
+                    Status = status,
+                    Id = userId
+                };
+                context.tStatusUpdates.Add(statusUpdate);
+
+
+
+                context.SaveChanges();
+
+                Task<int> t = new Task<int>(() =>
+                {
+                    return statusUpdate.StatusId;
+
+                });
+
+                t.Start();
+                return await t;
+            }
+        }
+
+        public async Task<int> CreateStatusAsync(string userId, string status, List<byte[]> images, List<string> mentions)
         {
             using (dboMyJeepTraderEntities context = new dboMyJeepTraderEntities())
             {
@@ -454,6 +484,23 @@ namespace MyJeepTrader.Data
                 };
                 context.tStatusUpdates.Add(statusUpdate);
                 context.SaveChanges();
+
+                if(images.Count > 0)
+                {
+                    foreach(var image in images)
+                    {
+                        AddStatusImage(image, statusUpdate.StatusId);
+                    }
+                }
+
+                if(mentions.Count > 0)
+                {
+                    foreach (var mention in mentions)
+                    {
+                        CreateMention(mention, userId, statusUpdate.StatusId, 0);
+                    }
+                }
+
 
                 Task<int> t = new Task<int>(() =>
                 {
@@ -665,7 +712,7 @@ namespace MyJeepTrader.Data
                                     UserName = u.UserName,
                                     UserId = u.Id,
                                     DateCreated = c.DateCreated
-                                }).OrderByDescending(c => c.DateCreated).ToList();
+                                }).OrderBy(c => c.DateCreated).ToList();
 
                 return comments;
             }
